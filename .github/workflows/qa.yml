@@ -1,0 +1,18 @@
+name: QA
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and validate
+        uses: w3c/spec-prod@v2
+        with:
+          VALIDATE_MARKUP: false
