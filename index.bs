@@ -20,17 +20,13 @@ This document describes the [generic data model](https://netwerk-digitaal-erfgoe
 for publishing linked data.
 It is designed as a Schema.org application profile.
 
-Classes {#classes}
+Data model {#data-model}
 ===============
 
-Publishers *MUST* type each published resource as one or more of the following classes: 
+Classes {#classes}
+--------------------
 
-- schema:CreativeWork
-- schema:Event
-- schema:ImageObject / schema:VideoObject / schema:MediaObject
-- schema:Organization
-- schema:Person
-- schema:Place
+Publishers *MUST* type each published resource as one or more of the following classes.
 
 Publishers *MAY* use more fine-grained classes alongside these top-level classes.
 
@@ -46,24 +42,36 @@ Publishers *MAY* use more fine-grained classes alongside these top-level classes
     </pre>
 </div>
 
+### CreativeWork ### {#creative-work}
+
+### Event ### {#event}
+
+### ImageObject ### {#image-object}
+
+Vs. VideoObject / MediaObject
+
+### Organization ### {#organization}
+
+### Person ### {#person}
+
+### Place ### {#place}
+
 Properties {#properties}
-===============
+--------------------
 
-### schema:name (required) ### {#schema-name}
+### name (required) ### {#name}
 
-### schema:description ### {#schema-description}
+### description ### {#description}
 
-### schema:image ### {#schema-image}
+### image ### {#image}
 
+### license ### {#license}
 
-
-### schema:license ### {#schema-license}
-
-### schema:author ### {#schema-author}
+### author ### {#author}
 
 Use this instead of schema:creator.
 
-### schema:geo ### {#schema-geo}
+### geo ### {#geo}
 
 <div class="example">
     A place with coordinates:
