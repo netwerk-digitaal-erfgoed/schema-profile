@@ -14,10 +14,10 @@ Abstract: This document prescribes a data model to be used when publishing linke
 Introduction {#intro}
 ===============
 
-Issue: please don’t rely on this document yet as it’s still under discussion and development. 
+Issue: Please don’t rely on this document yet as it’s still under discussion and development. 
 
-This document describes the [generic data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model)
-for publishing linked data.
+This document prescribes the [generic data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model)
+to be used when publishing linked data.
 It is designed as a Schema.org application profile.
 
 Data model {#data-model}
@@ -46,9 +46,9 @@ Publishers *MAY* use more fine-grained classes alongside these top-level classes
 
 ### Event ### {#event}
 
-### ImageObject ### {#image-object}
+### MediaObject ### {#media-object}
 
-Vs. VideoObject / MediaObject
+Issue: Should we only have MediaObject or the more specific types VideoObject, AudioObject, ImageObject etc., too?
 
 ### Organization ### {#organization}
 
@@ -61,11 +61,15 @@ Properties {#properties}
 
 ### name (required) ### {#name}
 
+Issue: Use schema:name and/or rdfs:label?
+
 ### description ### {#description}
 
 ### image ### {#image}
 
 ### license ### {#license}
+
+Issue: Does license make sense on the level of individual resources? Or perhaps only on certain types of resources, such as media?
 
 ### author ### {#author}
 
