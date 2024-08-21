@@ -23,7 +23,7 @@ It is based on:
 
 1. the current state of datasets in the heritage network,
     as observed in the [Dataset Knowledge Graph](https://github.com/netwerk-digitaal-erfgoed/dataset-knowledge-graph),
-    particularly the [property partitions analysis](https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin);
+    particularly the <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
 2. the needs of service platform builders for processing and presenting the data.
 
 Examples {#examples}
