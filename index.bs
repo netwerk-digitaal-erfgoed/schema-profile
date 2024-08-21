@@ -1,17 +1,82 @@
 <pre class='metadata'>
-Title: Your Spec Title
-Shortname: your-spec
+Title: Requirements for Data
+Shortname: nde-data
 Level: 1
 Status: LS
 Markup Shorthands: css yes, markdown yes
-URL: http://example.com/url-this-spec-will-live-at
-Editor: Your Name, Your Company http://example.com/your-company, your-email@example.com, http://example.com/your-personal-website
-Abstract: A short description of your spec, one or two sentences.
+URL: https://netwerk-digitaal-erfgoed.github.io/requirements-data/
+Editor: 
+    David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
+Abstract: This document prescribes a data model to be used when publishing linked data. 
+    By publishing data according to this model, data owners enable users and software developers 
 </pre>
 
 Introduction {#intro}
-=====================
+===============
 
-Introduction here.
+Issue: please don’t rely on this document yet as it’s still under discussion and development. 
 
-Test build: d929bb9
+This document describes the [generic data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model)
+for publishing linked data.
+It is designed as a Schema.org application profile.
+
+Classes {#classes}
+===============
+
+Publishers *MUST* type each published resource as one or more of the following classes: 
+
+- schema:CreativeWork
+- schema:Event
+- schema:ImageObject / schema:VideoObject / schema:MediaObject
+- schema:Organization
+- schema:Person
+- schema:Place
+
+Publishers *MAY* use more fine-grained classes alongside these top-level classes.
+
+<div class="example">
+    A photograph is typed as both top-level schema:CreativeWork and the more specific schema:Photograph:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1"
+          "@type": ["CreativeWork", "Photograph"]
+        }
+    </pre>
+</div>
+
+Properties {#properties}
+===============
+
+### schema:name (required) ### {#schema-name}
+
+### schema:description ### {#schema-description}
+
+### schema:image ### {#schema-image}
+
+
+
+### schema:license ### {#schema-license}
+
+### schema:author ### {#schema-author}
+
+Use this instead of schema:creator.
+
+### schema:geo ### {#schema-geo}
+
+<div class="example">
+    A place with coordinates:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org",
+          "@type": "Place",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "40.75",
+            "longitude": "-73.98"
+          },
+        }
+    </pre>
+</div>
