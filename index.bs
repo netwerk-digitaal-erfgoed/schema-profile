@@ -17,18 +17,64 @@ Introduction {#intro}
 Issue: Please don’t rely on this document yet as it’s still under discussion and development. 
 
 This document prescribes the [generic data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model)
-to be used when publishing linked data.
-It is designed as a Schema.org application profile.
+to be used when publishing linked data in the Dutch heritage network.
+The model is designed as a Schema.org application profile.
+It is based on:
+
+1. the current state of datasets in the heritage network,
+    as observed in the [Dataset Knowledge Graph](https://github.com/netwerk-digitaal-erfgoed/dataset-knowledge-graph),
+    particularly the [property partitions analysis](https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin);
+2. the needs of service platform builders for processing and presenting the data.
+
+Examples {#examples}
+--------------------
+
+RDF examples are in the [[JSON-LD]] RDF serialization, but publishers *MAY* use any other RDF serialization format,
+such as [[Turtle]] or [[N3]].
 
 Data model {#data-model}
 ===============
+
+Publishers *MUST* publish data using the classes and properties described below.
+
+However, these classes and properties constitute a generic data model that, in most cases, will only be a subset of the published data.
+Therefore, publishers *SHOULD* use more classes and properties as needed, either from the Schema.org or other ontologies.
+In other words, publishers are free to publish their data in any [domain-specific data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#domain-data-model)
+alongside the generic data model presented here. This may 
+
+<div class="example">
+    Redundant but useful modelling of name/label and author/creator:
+
+    <pre highlight=json-ld>
+        {
+          "@context": {
+            "schema": "https://schema.org/",
+            "edm": "http://www.europeana.eu/schemas/edm/",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "dcterms": "http://purl.org/dc/terms/"
+          }
+          "@id": "https://literatuurmuseum.nl/id/123456789"
+          "@type": ["schema:CreativeWork", "schema:VisualArtwork"],
+          "schema:name": "Het fluitketeltje en andere versjes",
+          "rdfs:label": "Het fluitketeltje en andere versjes",
+          "schema:author": {
+            "@type": "schema:Person",
+            "@id": "http://data.rkd.nl/artists/8342"
+          },
+          "dcterms:creator": {
+            "@type": "dcterms:Agent",
+            "@id": "http://data.rkd.nl/artists/8342"
+          }
+    </pre>
+</div>
+
 
 Classes {#classes}
 --------------------
 
 Publishers *MUST* type each published resource as one or more of the following classes.
 
-Publishers *MAY* use more fine-grained classes alongside these top-level classes.
+Publishers *SHOULD* use more fine-grained classes alongside these top-level classes.
 
 <div class="example">
     A photograph is typed as both top-level schema:CreativeWork and the more specific schema:Photograph:
@@ -59,6 +105,8 @@ Issue: Should we only have MediaObject or the more specific types VideoObject, A
 Properties {#properties}
 --------------------
 
+Issue: How to describe dates? Require only very weak schema:temporal?
+
 ### name (required) ### {#name}
 
 Issue: Use schema:name and/or rdfs:label?
@@ -74,6 +122,8 @@ Issue: Does license make sense on the level of individual resources? Or perhaps 
 ### author ### {#author}
 
 Use this instead of schema:creator.
+
+Where available, reference a person from the Network of Terms.
 
 ### geo ### {#geo}
 
