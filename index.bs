@@ -49,9 +49,9 @@ To facilitate further exploration, publishers *SHOULD* use [=domain data models=
 Domain-specific data models add precision at the cost of complexity.
 Examples are:
 
-- [CIDOC-CRM](https://cidoc-crm.org) and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
+- <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
 - [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
-- [RDA](https://www.rdaregistry.info/Elements/) for libraries.
+- <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
 
 With RDF, it’s perfectly fine to express the same data in multiple ways. 
 Therefore, the generic and domain data models *SHOULD* be combined in the same information resource. 
@@ -96,14 +96,14 @@ Definitions {#definitions}
 
 : <dfn>Generic data model</dfn>
 :: A simple, shared [=data model=]; the scope of this document.
-    See also the [Implementation guidelines for NDE alignment of cultural heritage data management and publication infrastructure](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model).
-    Can be used alongside [=domain-specific data models=].
+    See also the [NDE Implementation Guidelines](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model).
+    Can be used alongside [=domain data models=].
 
 : <dfn>Domain data model</dfn>
-:: A domain-specific [=data model=], such as CIDOC-CRM, Linked Art, RiC-O or RDA.
+:: A domain-specific [=data model=], such as <a href="https://cidoc-crm.org">CIDOC-CRM</a>, [Linked Art](https://linked.art/model/), [RiC-O](https://github.com/ICA-EGAD/RiC-O) or <a href="https://www.rdaregistry.info/Elements/">RDA</a>.
     Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
 
-Data model {#data-model}
+Data model {#data-model-section}
 ===============
 
 Publishers *MUST* express data with the classes and properties described below.
@@ -261,7 +261,7 @@ Where available, reference a person from the Network of Terms.
     </pre>
 </div>
 
-Formal definitions
+Formal definitions {#formal-definitions}
 ==========
 
 In RDFS {#definition-rdfs}
