@@ -3,7 +3,7 @@ Title: Requirements for Data
 Shortname: nde-data
 Level: 1
 Status: LS
-Markup Shorthands: css yes, markdown yes
+Markup Shorthands: css yes, markdown yes, biblio yes
 URL: https://netwerk-digitaal-erfgoed.github.io/requirements-data/
 Editor: 
     David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
@@ -16,6 +16,9 @@ Issue: Please don’t rely on this document yet as it’s still under discussion
 
 Introduction {#intro}
 ===============
+
+Goal {#goal}
+---
 
 This document prescribes the [=generic data model=] to be used when publishing linked data in the heritage network.
 The model contains a minimal set of classes and properties.
@@ -31,30 +34,53 @@ By adhering to this model, dataset publishers ensure that their data is visible 
 Schema.org {#schema-org}
 ----------
 
-The generic data model is designed as a [[!SCHEMA-ORG]] application profile.
-The choice for [Schema.org](https://schema.org) is substantiated in the [Implementation guidelines for NDE alignment](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model):
+The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
+The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT]]):
 
 > Because the heritage network spans institutions from the library, archive and museum domains,
 > a generic data model that can support general visibility on the web is needed.
 > To support broader visibility on the web outside the cultural heritage domain, data should be published with [Schema.org](https://schema.org).
 > Schema.org is a joint initiative of three major search engines, Bing, Google and Yahoo, to set up a shared scheme to structure data. Vocabularies from Schema.org are developed through an open community process.
 
-Generic and domain-specific data models {#generic-and-domain-specific-data-models}
+Examples {#examples}
+--------------------
+
+While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any other RDF serialization format,
+such as [[!Turtle]] or [[!N3]].
+
+Definitions {#definitions}
+==========================
+
+: <dfn>Data model</dfn>
+:: Set of classes and their properties that defines how data is expressed. 
+
+: <dfn>Generic data model</dfn>
+:: A simple, shared [=data model=]; the scope of this document.
+    See also [[NDE-ALIGNMENT]]).
+    Can be used alongside [=domain data models=].
+
+: <dfn>Domain data model</dfn>
+:: A domain-specific [=data model=], such as <a href="https://cidoc-crm.org">CIDOC-CRM</a>, [Linked Art](https://linked.art/model/), [RiC-O](https://github.com/ICA-EGAD/RiC-O) or <a href="https://www.rdaregistry.info/Elements/">RDA</a>.
+    Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
+
+Data model {#data-model-section}
+===============
+
+Generic and domain data models {#generic-and-domain-specific-data-models}
 ---
 
 This document is limited to a set of classes and properties that together form the [=generic data model=].
 In most cases, this generic data model expresses only a subset of the data that is available.
 If done well, the generic data invites consumers to explore the data in more depth.
 To facilitate further exploration, publishers *SHOULD* use [=domain data models=] of their choosing alongside the generic data model.
-Domain-specific data models add precision at the cost of complexity.
 Examples are:
 
 - <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
 - [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
 
-With RDF, it’s perfectly fine to express the same data in multiple ways. 
-Therefore, the generic and domain data models *SHOULD* be combined in the same information resource. 
+With RDF, it’s perfectly fine to express the same data in multiple ways.
+Therefore, the generic and domain data models *SHOULD* coexist in the same information resource.
 
 <div class="example">
     Combine generic (Schema.org) with domain-specific (Linked Art) modelling.    
@@ -81,30 +107,6 @@ Therefore, the generic and domain data models *SHOULD* be combined in the same i
           }
     </pre>
 </div>
-
-Examples {#examples}
---------------------
-
-While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any other RDF serialization format,
-such as [[!Turtle]] or [[!N3]].
-
-Definitions {#definitions}
-==========================
-
-: <dfn>Data model</dfn>
-:: Set of classes and their properties that defines how data is expressed. 
-
-: <dfn>Generic data model</dfn>
-:: A simple, shared [=data model=]; the scope of this document.
-    See also the [NDE Implementation Guidelines](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model).
-    Can be used alongside [=domain data models=].
-
-: <dfn>Domain data model</dfn>
-:: A domain-specific [=data model=], such as <a href="https://cidoc-crm.org">CIDOC-CRM</a>, [Linked Art](https://linked.art/model/), [RiC-O](https://github.com/ICA-EGAD/RiC-O) or <a href="https://www.rdaregistry.info/Elements/">RDA</a>.
-    Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
-
-Data model {#data-model-section}
-===============
 
 Publishers *MUST* express data with the classes and properties described below.
 
@@ -187,7 +189,7 @@ The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘
         <tr>
             <th scope="row">schema:name</th>
             <td>Name of a person, title of a book etc.</td>
-            <td>String, optionally language-tagged</td>
+            <td>Language-tagged string</td>
             <td>1</td>
             <td>Required</td>
         </tr>
@@ -228,6 +230,8 @@ Issue: How to describe dates? Require only very weak schema:temporal?
 ### name (required) ### {#name}
 
 Issue: Use schema:name and/or rdfs:label?
+
+Issue: Should we require a language-tagged string? E.g. person (Vincent van Gogh) or organization names (Van Gogh Museum) can be considered to be untagged.
 
 ### description ### {#description}
 

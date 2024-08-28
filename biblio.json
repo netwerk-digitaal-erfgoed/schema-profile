@@ -1,0 +1,28 @@
+{
+  "dera": {
+    "href": "https://dera.netwerkdigitaalerfgoed.nl",
+    "title": "Digital Heritage Reference Architecture"
+  },
+  "nde-datasets": {
+    "href": "https://netwerk-digitaal-erfgoed.github.io/requirements-datasets/",
+    "title": "Requirements for Datasets",
+    "authors": [
+      "David de Boer",
+      "Netwerk Digitaal Erfgoed"
+    ]
+  },
+  "nde-alignment": {
+    "href": "https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/",
+    "title": "Implementation guidelines for NDE alignment",
+    "authors": [
+      "Sjors de Valk",
+      "Ivo Zandhuis",
+      "Bob Coret"
+    ]
+  },
+  "URI": {
+    "href": "https://www.rfc-editor.org/rfc/rfc3986#section-1.1.3",
+    "title": "Uniform Resource Identifier",
+    "authors": ["T. Berners-Lee"]
+  }
+}
