@@ -7,43 +7,57 @@ Markup Shorthands: css yes, markdown yes
 URL: https://netwerk-digitaal-erfgoed.github.io/requirements-data/
 Editor: 
     David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
-Abstract: This document prescribes a data model to be used when publishing linked data. 
-    By publishing data according to this model, data owners enable users and software developers 
+Abstract: This document specifies the generic data model to be used when publishing linked data in the heritage network. 
+    The model enables dataset consumers and software developers of data-consuming applications to use, understand and combine datasets from multiple sources,
+    thus fulfilling the promise of linked data.
 </pre>
+
+Issue: Please don’t rely on this document yet as it’s still under discussion and development. 
 
 Introduction {#intro}
 ===============
 
-Issue: Please don’t rely on this document yet as it’s still under discussion and development. 
-
-This document prescribes the [generic data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model)
-to be used when publishing linked data in the Dutch heritage network.
-The model is designed as a Schema.org application profile.
+This document prescribes the [=generic data model=] to be used when publishing linked data in the heritage network.
+The model contains a minimal set of classes and properties.
 It is based on:
 
 1. the current state of datasets in the heritage network,
     as observed in the [Dataset Knowledge Graph](https://github.com/netwerk-digitaal-erfgoed/dataset-knowledge-graph),
-    particularly the <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
+    particularly its <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
 2. the needs of service platform builders for processing and presenting the data.
 
-Examples {#examples}
---------------------
+By adhering to this model, dataset publishers ensure that their data is visible and can be easily consumed and combined.
 
-RDF examples are in the [[JSON-LD]] RDF serialization, but publishers *MAY* use any other RDF serialization format,
-such as [[Turtle]] or [[N3]].
+Schema.org {#schema-org}
+----------
 
-Data model {#data-model}
-===============
+The generic data model is designed as a [[!SCHEMA-ORG]] application profile.
+The choice for [Schema.org](https://schema.org) is substantiated in the [Implementation guidelines for NDE alignment](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model):
 
-Publishers *MUST* publish data using the classes and properties described below.
+> Because the heritage network spans institutions from the library, archive and museum domains,
+> a generic data model that can support general visibility on the web is needed.
+> To support broader visibility on the web outside the cultural heritage domain, data should be published with [Schema.org](https://schema.org).
+> Schema.org is a joint initiative of three major search engines, Bing, Google and Yahoo, to set up a shared scheme to structure data. Vocabularies from Schema.org are developed through an open community process.
 
-However, these classes and properties constitute a generic data model that, in most cases, will only be a subset of the published data.
-Therefore, publishers *SHOULD* use more classes and properties as needed, either from the Schema.org or other ontologies.
-In other words, publishers are free to publish their data in any [domain-specific data model](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#domain-data-model)
-alongside the generic data model presented here. This may 
+Generic and domain-specific data models {#generic-and-domain-specific-data-models}
+---
+
+This document is limited to a set of classes and properties that together form the [=generic data model=].
+In most cases, this generic data model expresses only a subset of the data that is available.
+If done well, the generic data invites consumers to explore the data in more depth.
+To facilitate further exploration, publishers *SHOULD* use [=domain data models=] of their choosing alongside the generic data model.
+Domain-specific data models add precision at the cost of complexity.
+Examples are:
+
+- [CIDOC-CRM](https://cidoc-crm.org) and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
+- [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
+- [RDA](https://www.rdaregistry.info/Elements/) for libraries.
+
+With RDF, it’s perfectly fine to express the same data in multiple ways. 
+Therefore, the generic and domain data models *SHOULD* be combined in the same information resource. 
 
 <div class="example">
-    Redundant but useful modelling of name/label and author/creator:
+    Combine generic (Schema.org) with domain-specific (Linked Art) modelling.    
 
     <pre highlight=json-ld>
         {
@@ -57,7 +71,7 @@ alongside the generic data model presented here. This may
           "@type": ["schema:CreativeWork", "schema:VisualArtwork"],
           "schema:name": "Het fluitketeltje en andere versjes",
           "rdfs:label": "Het fluitketeltje en andere versjes",
-          "schema:author": {
+          "schema:creator": {
             "@type": "schema:Person",
             "@id": "http://data.rkd.nl/artists/8342"
           },
@@ -67,6 +81,34 @@ alongside the generic data model presented here. This may
           }
     </pre>
 </div>
+
+Examples {#examples}
+--------------------
+
+While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any other RDF serialization format,
+such as [[!Turtle]] or [[!N3]].
+
+Definitions {#definitions}
+==========================
+
+: <dfn>Data model</dfn>
+:: Set of classes and their properties that defines how data is expressed. 
+
+: <dfn>Generic data model</dfn>
+:: A simple, shared [=data model=]; the scope of this document.
+    See also the [Implementation guidelines for NDE alignment of cultural heritage data management and publication infrastructure](https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#generic-data-model).
+    Can be used alongside [=domain-specific data models=].
+
+: <dfn>Domain data model</dfn>
+:: A domain-specific [=data model=], such as CIDOC-CRM, Linked Art, RiC-O or RDA.
+    Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
+
+Data model {#data-model}
+===============
+
+Publishers *MUST* express data with the classes and properties described below.
+
+
 
 
 Classes {#classes}
@@ -105,6 +147,82 @@ Issue: Should we only have MediaObject or the more specific types VideoObject, A
 Properties {#properties}
 --------------------
 
+This section describes how to express the data using a minimal set of properties (RDF predicates), and their ranges.
+The range of an RDF predicate is the set of allowed values for that predicate.
+
+### Language ### {#language}
+
+For each property with a literal value, the value’s language *MUST* be specified.
+The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl-NL’.
+
+<div class="example">
+    Redundant but useful modelling of name/label and author/creator:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1"
+          "@type": ["CreativeWork"],
+          "name": {
+            "@language": "nl-NL",
+            "@value": "Het fluitketeltje en andere versjes"
+          }  
+        }
+    </pre>
+</div>
+
+### Overview ### {#overview}
+
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Range</th>
+            <th>Cardinality</th>
+            <th>Usage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">schema:name</th>
+            <td>Name of a person, title of a book etc.</td>
+            <td>String, optionally language-tagged</td>
+            <td>1</td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th scope="row">schema:description</th>
+            <td>A description of the resource.</td>
+            <td>Language-tagged string</td>
+            <td>0..n</td>
+            <td>Required (if available)</td>
+        </tr>
+        <tr>
+            <th scope="row">schema:image</th>
+            <td>An image of the resource.</td>
+            <td>0..n</td>
+            <td>URL?</td>
+            <td>Required (if available)</td>
+        </tr>
+        <tr>
+            <th scope="row">schema:creator</th>
+            <td>An image of the resource.</td>
+            <td>0..n</td>
+            <td>URI</td>
+            <td>Required (if available)</td>
+        </tr>
+        <tr>
+            <th scope="row">schema:geo</th>
+            <td>An image of the resource.</td>
+            <td>0..n</td>
+            <td>GeoCoordinates or GeoShape</td>
+            <td>Required (if available)</td>
+        </tr>
+    </tbody>
+</table>
+
+
 Issue: How to describe dates? Require only very weak schema:temporal?
 
 ### name (required) ### {#name}
@@ -121,7 +239,7 @@ Issue: Does license make sense on the level of individual resources? Or perhaps 
 
 ### author ### {#author}
 
-Use this instead of schema:creator.
+Issue: Use schema:author or schema:creator?
 
 Where available, reference a person from the Network of Terms.
 
@@ -140,5 +258,32 @@ Where available, reference a person from the Network of Terms.
             "longitude": "-73.98"
           },
         }
+    </pre>
+</div>
+
+Formal definitions
+==========
+
+In RDFS {#definition-rdfs}
+-------
+
+<div class="example">
+    A formal definition of the [=generic data model=] in [[!RDF-SCHEMA]].
+
+    <pre class=include-code>
+    path: data-model.ttl
+    highlight: turtle
+    </pre>
+</div>
+
+In SHACL {#definition-shacl}
+-------- 
+
+<div class="example">
+    A formal definition of the [=generic data model=] in [[!SHACL]].
+
+    <pre class=include-code>
+    path: data-model-shape.ttl
+    highlight: turtle
     </pre>
 </div>
