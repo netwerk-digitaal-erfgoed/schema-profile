@@ -3,14 +3,6 @@
     "href": "https://dera.netwerkdigitaalerfgoed.nl",
     "title": "Digital Heritage Reference Architecture"
   },
-  "nde-datasets": {
-    "href": "https://netwerk-digitaal-erfgoed.github.io/requirements-datasets/",
-    "title": "Requirements for Datasets",
-    "authors": [
-      "David de Boer",
-      "Netwerk Digitaal Erfgoed"
-    ]
-  },
   "nde-alignment": {
     "href": "https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/",
     "title": "Implementation guidelines for NDE alignment",
