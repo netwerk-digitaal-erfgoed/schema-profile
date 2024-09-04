@@ -8,7 +8,8 @@ URL: https://netwerk-digitaal-erfgoed.github.io/requirements-data/
 Editor: 
     David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
 Abstract: This document specifies the generic data model to be used when publishing linked data in the heritage network. 
-    The model enables dataset consumers and software developers of data-consuming applications to use, understand and combine datasets from multiple sources,
+    The model enables dataset consumers, including software developers building data-consuming applications,
+    to use, understand and combine datasets from multiple sources,
     thus fulfilling the promise of linked data.
 </pre>
 
@@ -21,31 +22,30 @@ Goal {#goal}
 ---
 
 This document prescribes the [=generic data model=] to be used when publishing linked data in the heritage network.
-The model contains a minimal set of classes and properties.
+The model consists of a minimal set of classes and properties.
 It is based on:
 
-1. the current state of datasets in the heritage network,
+- the current state of datasets in the heritage network,
     as observed in the [Dataset Knowledge Graph](https://github.com/netwerk-digitaal-erfgoed/dataset-knowledge-graph),
     particularly its <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
-2. the needs of service platform builders for processing and presenting the data.
+- the needs of service platform builders for understanding, processing and presenting data.
 
-By adhering to this model, dataset publishers ensure that their data is visible and can be easily consumed and combined.
+By adhering to this model, [[NDE-DATASETS#publisher|dataset publishers]] ensure that their data is visible and can be consumed and combined
+with other datasets in the network.
 
-Schema.org {#schema-org}
-----------
+Scope {#scope}
+-----
 
-The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
-The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT]]):
+These requirements are restricted in three ways:
 
-> Because the heritage network spans institutions from the library, archive and museum domains,
-> a generic data model that can support general visibility on the web is needed.
-> To support broader visibility on the web outside the cultural heritage domain, data should be published with [Schema.org](https://schema.org).
-> Schema.org is a joint initiative of three major search engines, Bing, Google and Yahoo, to set up a shared scheme to structure data. Vocabularies from Schema.org are developed through an open community process.
+1. they apply only to the way published data is expressed, not how it is stored or managed internally;
+2. they prescribe a [=generic data model=] for publishing the data and leave the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
+3. they bear upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
 
 Examples {#examples}
 --------------------
 
-While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any other RDF serialization format,
+While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any RDF serialization format,
 such as [[!Turtle]] or [[!N3]].
 
 Definitions {#definitions}
@@ -56,7 +56,7 @@ Definitions {#definitions}
 
 : <dfn>Generic data model</dfn>
 :: A simple, shared [=data model=]; the scope of this document.
-    See also [[NDE-ALIGNMENT]]).
+    See also [[NDE-ALIGNMENT]].
     Can be used alongside [=domain data models=].
 
 : <dfn>Domain data model</dfn>
@@ -69,8 +69,12 @@ Data model {#data-model-section}
 Generic and domain data models {#generic-and-domain-specific-data-models}
 ---
 
+The purpose of generic data models is to integrate data in the heritage network and make it more visible.
+Domain models are usually more richly populated and provide consumers with more possibilities for further processing,
+for example in service platforms.
+
 This document is limited to a set of classes and properties that together form the [=generic data model=].
-In most cases, this generic data model expresses only a subset of the data that is available.
+For most datasets, this generic data model expresses only a subset of the data that is available.
 If done well, the generic data invites consumers to explore the data in more depth.
 To facilitate further exploration, publishers *SHOULD* use [=domain data models=] of their choosing alongside the generic data model.
 Examples are:
@@ -108,10 +112,13 @@ Therefore, the generic and domain data models *SHOULD* coexist in the same infor
     </pre>
 </div>
 
-Publishers *MUST* express data with the classes and properties described below.
+Schema.org {#schema-org}
+----------
 
+The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
+The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT#generic-data-model]].
 
-
+Publishers *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
 
 Classes {#classes}
 --------------------
@@ -152,26 +159,7 @@ Properties {#properties}
 This section describes how to express the data using a minimal set of properties (RDF predicates), and their ranges.
 The range of an RDF predicate is the set of allowed values for that predicate.
 
-### Language ### {#language}
-
-For each property with a literal value, the value’s language *MUST* be specified.
-The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl-NL’.
-
-<div class="example">
-    Redundant but useful modelling of name/label and author/creator:
-
-    <pre highlight=json-ld>
-        {
-          "@context": "https://schema.org/",
-          "@id": "https://example.com/dataset1/resource1"
-          "@type": ["CreativeWork"],
-          "name": {
-            "@language": "nl-NL",
-            "@value": "Het fluitketeltje en andere versjes"
-          }  
-        }
-    </pre>
-</div>
+Publishers *MUST* express data with these properties.
 
 ### Overview ### {#overview}
 
@@ -224,8 +212,28 @@ The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘
     </tbody>
 </table>
 
-
 Issue: How to describe dates? Require only very weak schema:temporal?
+
+### Language ### {#language}
+
+For each property with a literal value, the value’s language *MUST* be specified.
+The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl-NL’.
+
+<div class="example">
+    Specifying the language of the https://schema.org/name property:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1"
+          "@type": ["CreativeWork"],
+          "name": {
+            "@language": "nl-NL",
+            "@value": "Het fluitketeltje en andere versjes"
+          }  
+        }
+    </pre>
+</div>
 
 ### name (required) ### {#name}
 
