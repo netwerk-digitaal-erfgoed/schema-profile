@@ -4,7 +4,7 @@ help:
 	@echo "  make watch   Generate HTML each time the source changes"
 
 spec:
-	docker run --rm -v "`pwd`:/spec" -w /spec netwerkdigitaalerfgoed/bikeshed:3.11.21
+	docker run --rm -v "`pwd`:/spec" -w /spec netwerkdigitaalerfgoed/bikeshed:4.1.0
 
 watch:
-	docker run --rm -v "`pwd`:/spec" -w /spec netwerkdigitaalerfgoed/bikeshed:1.7.0 sh -c "bikeshed watch"
+	docker run --rm -v "`pwd`:/spec" -w /spec netwerkdigitaalerfgoed/bikeshed:4.1.0 sh -c "bikeshed watch"
