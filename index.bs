@@ -167,6 +167,7 @@ Issue: Should we only have MediaObject or the more specific types VideoObject, A
             "streetAddress": "Prinsengracht 263",
             "postalCode": "1016 GV",
             "addressLocality": "Amsterdam",
+            "addressRegion": "Noord-Holland",
             "addressCountry": "Netherlands"
           }
         }
