@@ -300,10 +300,10 @@ Formal definition {#formal-definition}
 ==========
 
 <div class="example">
-    A formal definition of the [=generic data model=] in [[!RDF-SCHEMA]].
+    A formal definition of the [=generic data model=] in [[!SHACL]].
 
     <pre class=include-code>
-    path: data-model.ttl
+    path: data-model-shape.ttl
     highlight: turtle
     </pre>
 </div>
