@@ -296,29 +296,14 @@ Where available, reference a person from the Network of Terms.
     </pre>
 </div>
 
-Formal definitions {#formal-definitions}
+Formal definition {#formal-definition}
 ==========
-
-In RDFS {#definition-rdfs}
--------
 
 <div class="example">
     A formal definition of the [=generic data model=] in [[!RDF-SCHEMA]].
 
     <pre class=include-code>
     path: data-model.ttl
-    highlight: turtle
-    </pre>
-</div>
-
-In SHACL {#definition-shacl}
--------- 
-
-<div class="example">
-    A formal definition of the [=generic data model=] in [[!SHACL]].
-
-    <pre class=include-code>
-    path: data-model-shape.ttl
     highlight: turtle
     </pre>
 </div>
