@@ -240,7 +240,7 @@ Issue: How to describe dates? Require only very weak schema:temporal?
 ### Language ### {#language}
 
 For each property with a literal value, the value’s language *MUST* be specified.
-The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl-NL’.
+The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ or ‘nl-NL’.
 
 <div class="example">
     Specifying the language of the https://schema.org/name property:
