@@ -214,22 +214,22 @@ Publishers *MUST* express data with these properties.
         <tr>
             <th scope="row">schema:image</th>
             <td>An image of the resource.</td>
-            <td>0..n</td>
             <td>URL?</td>
+            <td>0..n</td>
             <td>Required (if available)</td>
         </tr>
         <tr>
             <th scope="row">schema:creator</th>
             <td>An image of the resource.</td>
-            <td>0..n</td>
             <td>URI</td>
+            <td>0..n</td>
             <td>Required (if available)</td>
         </tr>
         <tr>
             <th scope="row">schema:geo</th>
             <td>An image of the resource.</td>
-            <td>0..n</td>
             <td>GeoCoordinates or GeoShape</td>
+            <td>0..n</td>
             <td>Required (if available)</td>
         </tr>
     </tbody>
