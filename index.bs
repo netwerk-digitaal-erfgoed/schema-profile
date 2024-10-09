@@ -81,6 +81,7 @@ Examples are:
 
 - <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
 - [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
+- [PiCo](https://personsincontext.org) for biographical data;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
 
 With RDF, it’s perfectly fine to express the same data in multiple ways.
