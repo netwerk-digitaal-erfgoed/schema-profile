@@ -76,7 +76,7 @@ for example in service platforms.
 This document is limited to a set of classes and properties that together form the [=generic data model=].
 For most datasets, this generic data model expresses only a subset of the data that is available.
 If done well, the generic data invites consumers to explore the data in more depth.
-To facilitate further exploration, publishers *SHOULD* use [=domain data models=] of their choosing alongside the generic data model.
+To facilitate further exploration, publishers *MAY* use [=domain data models=] of their choosing alongside the generic data model.
 Examples are:
 
 - <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
