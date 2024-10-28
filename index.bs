@@ -39,7 +39,7 @@ Scope {#scope}
 These requirements are restricted in three ways:
 
 1. they apply only to the way published data is expressed, not how it is stored or managed internally;
-2. they prescribe a [=generic data model=] for publishing the data and leave the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
+2. they prescribe a [=generic data model=] and leave the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
 3. they bear upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
 
 Examples {#examples}
@@ -74,7 +74,7 @@ Domain models are usually more richly populated and provide consumers with more 
 for example in service platforms.
 
 This document is limited to a set of classes and properties that together form the [=generic data model=].
-For most datasets, this generic data model expresses only a subset of the data that is available.
+For most datasets, this generic data model expresses only a subset of data properties that are available.
 If done well, the generic data invites consumers to explore the data in more depth.
 To facilitate further exploration, publishers *MAY* use [=domain data models=] of their choosing alongside the generic data model.
 Examples are:
