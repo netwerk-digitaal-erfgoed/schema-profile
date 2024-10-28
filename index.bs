@@ -66,7 +66,7 @@ Definitions {#definitions}
 Data model {#data-model-section}
 ===============
 
-Generic and domain data models {#generic-and-domain-specific-data-models}
+Generic and domain data models {#generic-and-domain-data-models}
 ---
 
 The purpose of generic data models is to integrate data in the heritage network and make it more visible.
@@ -119,7 +119,10 @@ Schema.org {#schema-org}
 The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
 The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT#generic-data-model]].
 
-Publishers *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
+While the Scheme.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”, 
+mixing the namespaces makes it harder to consume datasets.
+
+Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
 
 Classes {#classes}
 --------------------
