@@ -84,8 +84,12 @@ Examples are:
 - [PiCo](https://personsincontext.org) for biographical data;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
 
+
+Publication principles {#principles}
+---
+
 With RDF, it’s perfectly fine to express the same data in multiple ways.
-Therefore, the generic and domain data models *SHOULD* coexist in the same information resource.
+Therefore, the generic and domain data models *MAY* coexist in the same information resource.
 
 <div class="example">
     Combine generic (Schema.org) with domain-specific (Linked Art) modelling.    
@@ -113,7 +117,35 @@ Therefore, the generic and domain data models *SHOULD* coexist in the same infor
     </pre>
 </div>
 
-Schema.org {#schema-org}
+Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
+To do so, publish a profile with URI https://netwerk-digitaal-erfgoed.github.io/requirements-data/:
+
+<div class="example">
+    Expose the generic data model in its own content-negotiated profile.    
+
+    <pre highlight=http>
+        # Get the list of profiles.
+        GET /resource/a?profile=alt HTTP/1.1
+        
+        # Server responds with a list of profiles that includes the NDE generic data model.
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+        
+        {
+            "resource": "http://example.org/resource/a",
+            "profiles": [
+                {
+                    "token": "nde",
+                    "uri": "https://netwerk-digitaal-erfgoed.github.io/requirements-data/",
+                    "media_types": ["application/ld+json", "text/turtle"]
+                },
+                ...
+            ]
+        }
+    </pre>
+</div>
+
+Schema.org vocabulary {#schema-org}
 ----------
 
 The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
