@@ -155,7 +155,7 @@ Schema.org vocabulary {#schema-org}
 The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
 The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT#generic-data-model]].
 
-While the Scheme.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”, 
+While the Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”, 
 mixing the namespaces makes it harder to consume datasets.
 
 Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
