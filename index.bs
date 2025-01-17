@@ -293,6 +293,22 @@ The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘
     </pre>
 </div>
 
+### URI ### {#URI}
+
+Each class *MUST* be identified by a URI (so blank nodes are not allowed).
+
+<div class="example">
+    Specifying the URI in the JSON-LD `@id` property:
+
+    <pre highlight=json-ld line-numbers line-highlight="3">
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1",
+          "@type": ["CreativeWork"]
+        }
+    </pre>
+</div>
+
 ### name (required) ### {#name}
 
 Issue: Use schema:name and/or rdfs:label?
