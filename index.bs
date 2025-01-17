@@ -299,7 +299,7 @@ The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘
 
 ### URI ### {#URI}
 
-Each class *MUST* be identified by a URI (so blank nodes are not allowed).
+Each class *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persitent<a> URI (so blank nodes are not allowed).
 
 <div class="example">
     Specifying the URI in the JSON-LD `@id` property:
