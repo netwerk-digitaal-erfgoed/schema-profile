@@ -403,7 +403,7 @@ An *OPTIONAL* property that provides a longer summarizing description of the [=m
 
 ### license ### {#license}
 
-Issue: Does license make sense on the level of individual resources? Or perhaps only on certain types of resources, such as media?
+Issue: Does license make sense on the level of individual resources of should we delegate to the level of the dataset? Or perhaps only on certain types of resources, such as media?
 
 ### contentLocation ### {#contentLocation}
 
