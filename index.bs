@@ -696,7 +696,7 @@ Example {#example}
 ==========
 
 <div class="example">
-    A full example of a resource with related resources.
+    A full example of a [=metadata record=]:
 
     Issue: Add full example.
 

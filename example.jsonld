@@ -1,0 +1,17 @@
+{
+  "@context": "https://schema.org/",
+  "@id": "https://literatuurmuseum.nl/id/123456789",
+  "@type": "CreativeWork",
+  "name": "Het fluitketeltje en andere versjes",
+  "creator": {
+    "@type": "Person",
+    "@id": "http://data.rkd.nl/artists/8342"
+  },
+  "material": {
+    "@id": "https://data.cultureelerfgoed.nl/term/id/cht/2d28d9aa-77e8-40ab-b0fe-f04d99f57955"
+  },
+  "dateCreated": {
+    "@type": "xsd:gYear",
+    "@value": 1950
+  }
+}
