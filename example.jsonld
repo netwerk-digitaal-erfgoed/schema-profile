@@ -10,8 +10,5 @@
   "material": {
     "@id": "https://data.cultureelerfgoed.nl/term/id/cht/2d28d9aa-77e8-40ab-b0fe-f04d99f57955"
   },
-  "dateCreated": {
-    "@type": "xsd:gYear",
-    "@value": 1950
-  }
+  "dateCreated": "1950"
 }
