@@ -669,7 +669,7 @@ Issue: TODO
 
 Issue: TODO
 
-## Place ### {#place}
+## Place ## {#place}
 
 Issue: How to relate schema:Place data, such as geo coordinates, to location terms in the Network of Terms. We need geo for clients that want to display resources on a map, a common visualisation method.
 
