@@ -13,7 +13,7 @@ Abstract: This document specifies the generic data model to be used when publish
     thus fulfilling the promise of linked data.
 </pre>
 
-Issue: Please don’t rely on this document yet as it’s still under discussion and development. 
+Note: Please don’t rely on this document yet as it’s still under discussion and development.
 
 Introduction {#intro}
 ===============
@@ -43,13 +43,13 @@ These requirements are restricted in three ways:
 3. they bear upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
 
 Examples {#examples}
---------------------
+---
 
 While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any RDF serialization format,
 such as [[!Turtle]] or [[!N3]].
 
 Definitions {#definitions}
-==========================
+===
 
 : <dfn>Data model</dfn>
 :: Set of classes and their properties that defines how data is expressed. 
@@ -63,8 +63,14 @@ Definitions {#definitions}
 :: A domain-specific [=data model=], such as <a href="https://cidoc-crm.org">CIDOC-CRM</a>, [Linked Art](https://linked.art/model/), [RiC-O](https://github.com/ICA-EGAD/RiC-O) or <a href="https://www.rdaregistry.info/Elements/">RDA</a>.
     Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
 
-Data model {#data-model-section}
-===============
+: <dfn>Metadata record</dfn>
+:: An RDF resource that expresses one of the top-level classes in the [[#data-model-section]].
+
+: <dfn>Term</dfn>
+:: A word, name, acronym, phrase or other symbol with a formal definition, published in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl).
+
+General considerations {#general-considerations}
+==========
 
 Generic and domain data models {#generic-and-domain-data-models}
 ---
@@ -74,9 +80,12 @@ Domain models are usually more richly populated and provide consumers with more 
 for example in service platforms.
 
 This document is limited to a set of classes and properties that together form the [=generic data model=].
-For most datasets, this generic data model expresses only a subset of data properties that are available.
-If done well, the generic data invites consumers to explore the data in more depth.
-To facilitate further exploration, publishers *MAY* use [=domain data models=] of their choosing alongside the generic data model.
+For most datasets, the generic data model expresses only a subset of data properties that are available.
+This document’s purpose, therefore, is not a complete and correct expression of the source data,
+but an easily understandable and usable one.
+
+If done well, the generic data invites consumers to explore the data in more depth using the [=domain data models=].
+So to facilitate further exploration, publishers *MAY* use [=domain data models=] of their choosing alongside the generic data model.
 Examples are:
 
 - <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
@@ -84,6 +93,38 @@ Examples are:
 - [PiCo](https://personsincontext.org) for biographical data;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
 
+Vocabulary {#vocabulary}
+---
+
+The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
+The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT#generic-data-model]].
+
+While the Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”,
+mixing the namespaces makes it harder to consume datasets.
+
+Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
+
+Language {#language}
+----------
+
+For each property with a literal value, the value’s language *MUST* be specified.
+The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ or ‘nl-NL’.
+
+<div class="example">
+    Specifying the language of the https://schema.org/name property:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1",
+          "@type": ["CreativeWork"],
+          "name": {
+            "@language": "nl-NL",
+            "@value": "Het fluitketeltje en andere versjes"
+          }  
+        }
+    </pre>
+</div>
 
 Publication method {#publication-method}
 ---
@@ -103,8 +144,8 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
             "edm": "http://www.europeana.eu/schemas/edm/",
             "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
             "dcterms": "http://purl.org/dc/terms/"
-          }
-          "@id": "https://literatuurmuseum.nl/id/123456789"
+          },
+          "@id": "https://literatuurmuseum.nl/id/123456789",
           "@type": ["schema:CreativeWork", "schema:VisualArtwork"],
           "schema:name": "Het fluitketeltje en andere versjes",
           "rdfs:label": "Het fluitketeltje en andere versjes",
@@ -116,13 +157,14 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
             "@type": "dcterms:Agent",
             "@id": "http://data.rkd.nl/artists/8342"
           }
+       }
     </pre>
 </div>
 
 ### Separate profiles ### {#profiles}
 
 Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
-To do so, publish a profile with URI https://netwerk-digitaal-erfgoed.github.io/requirements-data/:
+To do so, publish a profile with URI `https://netwerk-digitaal-erfgoed.github.io/requirements-data/`.
 
 <div class="example">
     Expose the generic data model in its own content-negotiated profile.    
@@ -149,47 +191,483 @@ To do so, publish a profile with URI https://netwerk-digitaal-erfgoed.github.io/
     </pre>
 </div>
 
-Schema.org vocabulary {#schema-org}
-----------
+Data model {#data-model-section}
+==========
 
-The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
-The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT#generic-data-model]].
+This section describes the classes and properties that *MUST* be used to publish [=metadata records=] in the heritage network.
 
-While the Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”, 
-mixing the namespaces makes it harder to consume datasets.
+Each record *MUST* be typed as one of the following classes:
 
-Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
+- [[#CreativeWork|CreativeWork]]
+- [[#Person|Person]]
+- [[#MediaObject|MediaObject]]
 
-Classes {#classes}
---------------------
+For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL* properties.
 
-Publishers *MUST* type each published resource as one or more of the following classes.
+## CreativeWork ## {#CreativeWork}
 
-Publishers *SHOULD* use more fine-grained classes alongside these top-level classes.
+The most generic kind of item created by humans, i.e. heritage objects.
+
+### Subclasses ### {#subclasses} 
+
+Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
+Examples include:
+
+- [Article](https://schema.org/Article) for stories;
+- [ArchiveComponent](https://schema.org/ArchiveComponent) for archival items and collections;
+- [Book](https://schema.org/Book);
+- [Manuscript](https://schema.org/Manuscript);
+- [Message](https://schema.org/Message) for letters;
+- [MusicComposition](https://schema.org/MusicComposition), [MusicRecording](https://schema.org/MusicRecording) and [MusicAlbum](https://schema.org/MusicAlbum) for musical items and collections;
+- [Painting](https://schema.org/Painting);
+- [Photograph](https://schema.org/Photograph).
 
 <div class="example">
-    A photograph is typed as both top-level schema:CreativeWork and the more specific schema:Photograph:
+    A painting is typed as both top-level CreativeWork and the more specific Painting:
 
     <pre highlight=json-ld>
         {
           "@context": "https://schema.org/",
-          "@id": "https://example.com/dataset1/resource1"
-          "@type": ["CreativeWork", "Photograph"]
+          "@id": "https://n2t.net/ark:/123456/1",
+          "@type": ["CreativeWork", "Painting"]
         }
     </pre>
 </div>
 
-### CreativeWork ### {#creative-work}
+### URI (required) ### {#URI}
 
-### Event ### {#event}
+Each [[#CreativeWork|CreativeWork]] *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI. 
+Blank nodes *MUST NOT* be used for CreativeWorks.
 
-### MediaObject ### {#media-object}
+<div class="example">
+    Specify the URI in the JSON-LD `@id` property:
 
-Issue: Should we only have MediaObject or the more specific types VideoObject, AudioObject, ImageObject etc., too?
+    <pre highlight=json-ld line-numbers line-highlight="3">
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1",
+          "@type": "CreativeWork"
+        }
+    </pre>
+</div>
 
-### Organization ### {#organization}
+Issue: Do we need identifier alongside URI? Not from a web perspective (where we care only about URIs) but perhaps identifier *is* useful to reference physical objects, e.g. in a museum. 
 
-### Person ### {#person}
+### name (required) ### {#name}
+
+A *REQUIRED* property to indicate the [[#CreativeWork|CreativeWork]]’s name, assigned either by its creator or by others.
+The name *MUST* be a [[#language|language-tagged]] string:
+
+<div class="example">
+    A language-tagged name:
+
+    <pre highlight=json-ld line-numbers line-highlight="5-14">
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1",
+          "@type": "CreativeWork",
+          "name": [
+            {
+              "@language": "nl",
+              "@value": "De Sterrennacht"
+            },
+            {
+              "@language": "en",
+              "@value": "The Starry Night"
+            }
+          ]
+        }
+    </pre>
+</div>
+
+### creator (required) ### {#creator}
+
+A *REQUIRED* property that identifies the person(s) or organization that created the [[#CreativeWork|CreativeWork]].
+If a [=term=] is available, that *MUST* be referenced.
+If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* be used instead.
+
+<div class="example">
+    Van Gogh’s painting The Starry Night:
+
+    <pre highlight=json-ld line-numbers line-highlight="5-9">
+        {
+          "@context": "https://schema.org",
+          "@type": ["CreativeWork", "Painting"],
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "creator": {
+            "@id": "https://data.rkd.nl/artists/32439",
+            "@type": "Person",
+            "name": "Rembrandt"
+          }
+        }
+    </pre>
+</div>
+
+Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
+such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
+the `creator` property *MUST* be used for consistency.
+
+### isPartOf (required) ### {#isPartOf}
+
+A *REQUIRED* property that points to the dataset(s) that the [=metadata record=] is part of.
+Note that a record may be part of multiple datasets.
+The dataset *MUST* be typed as a `Dataset`.
+
+<div class="example">
+
+    <pre highlight=json-ld line-numbers line-highlight="5-8">
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://n2t.net/ark:/123456/1",
+          "@type": "CreativeWork",
+          "isPartOf": {
+            "@id": "https://organization.com/dataset1",
+            "@type": "Dataset"
+          }
+        }
+    </pre>
+</div>
+
+### associatedMedia (required) ### {#associatedMedia}
+
+Issue: Or use specialized properties schema:image, schema:video, schema:audio alongside or without schema:associatedMedia?
+
+A media object that represents the [[#CreativeWork|CreativeWork]].
+This property is *REQUIRED* if applicable, i.e. if at least one media object is available for the [=metadata record=].
+
+<div class="example">
+    A IIIF image representation of The Starry Night:
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org/",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
+          "associatedMedia": {
+            "@id": "https://demo.limb-gallery.com/idurl/1/25290",
+            "@type": "ImageObject",
+            "contentUrl": "https://demo.limb-gallery.com/iiif/25290/manifest",
+            "encodingFormat": "application/ld+json"
+          }
+        }
+    </pre>
+</div>
+
+See [[#MediaObject|MediaObject]] for this property’s allowed values.
+
+### description ### {#description}
+
+A one-sentence description of the object. Make sure the description is free of jargon and abbreviations so it can be understood by others.
+The value *MUST* be a [[#language|language-tagged]] string.
+
+<div class="example">
+    A one-sentence description:
+
+    <pre highlight=json-ld line-numbers line-highlight="4-13">
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1",
+          "description": [
+            {
+              "@language": "nl",
+              "@value": "Olieverfschilderij van het uitzicht uit Van Goghs ziekenhuiskamer in Saint-Rémy-de-Provence, vlak voor zonsopkomst."
+            },
+            {
+              "@language": "en",
+              "@value": "Oil-on-canvas painting depicting the view from his asylum room at Saint-Rémy-de-Provence, just before sunrise."
+            }
+          ]
+        }
+    </pre>
+</div>
+
+### abstract ### {#abstract-section}
+
+An *OPTIONAL* property that provides a longer summarizing description of the [=metadata record=] that is longer than [[#description|description]].
+
+<div class="example">
+
+    <pre highlight=json-ld line-numbers line-highlight="4-9">
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset1/resource1",
+          "abstract": [
+            {
+              "@language": "nl",
+              "@value": "Het schilderij is een nachttafereel met gele sterren boven een kleine stad met heuvels. Het is een uitzicht vanuit een denkbeeldig punt over een dorp met kerktoren, met links een vlammende cipres en rechts olijfbomen tegen de heuvels op."
+            }
+          ]
+        }
+    </pre>
+</div>
+
+### license ### {#license}
+
+Issue: Does license make sense on the level of individual resources? Or perhaps only on certain types of resources, such as media?
+
+### contentLocation ### {#contentLocation}
+
+An *OPTIONAL* property that indicates the location depicted or described in the [[#CreativeWork|CreativeWork]].
+For example, the location in a photograph or painting.
+
+The property *MUST* reference a [=term=].
+
+<div class="example">
+    Van Gogh’s painting The Starry Night:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "contentLocation": {
+            "@id": "http://www.wikidata.org/entity/Q221507",
+            "name": "Saint-Rémy-de-Provence"
+         }
+       }
+    </pre>
+</div>
+
+If more specific geo coordinates are known, these *SHOULD* be added in a `geo` property:
+
+### locationCreated ### {#locationCreated}
+
+An *OPTIONAL* property that indicates the location where the [[#CreativeWork|CreativeWork]] was created,
+which may not be the same as its [[#contentLocation|contentLocation]].
+
+The date *MUST* adhere to [[!ISO8601]].
+
+<div class="example">
+    Van Gogh’s painting The Starry Night:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "locationCreated": {
+            "@id": "http://www.wikidata.org/entity/Q221507",
+            "name": "Saint-Rémy-de-Provence"
+         }
+       }
+    </pre>
+</div>
+
+### dateCreated ### {#dateCreated}
+
+An *OPTIONAL* property that indicates the date the [[#CreativeWork|CreativeWork]] was created.
+
+The value *MUST* be in [[!ISO8601]] format. Partial dates *MAY* be used if the exact date is unknown.
+
+<div class="example">
+    Van Gogh painted The Starry Night in June 1889:    
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "dateCreated": "1889-06"
+       }
+    </pre>
+</div>
+
+### about ### {#about}
+
+An *OPTIONAL* property to indicate the subject-matter of the [=metadata record=]’s content.
+For example, which subjects are depicted in a painting or photograph? Or which subjects is a story about?
+
+The value *MUST* reference [=terms=].
+
+If the subject is a location, it *MUST* be listed under [[#contentLocation|contentLocation]] instead.
+
+<div class="example">
+    The Starry Night depicts ‘starry sky’ and ‘Moon’.
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "about": [
+            {
+              "@id": "http://www.wikidata.org/entity/Q149908",
+              "@type": "DefinedTerm"
+            },
+            {
+              "@id": "http://www.wikidata.org/entity/Q405",
+              "@type": "DefinedTerm"
+            },
+          ]
+       }
+    </pre>
+</div>
+
+### material ### {#material}
+
+An *OPTIONAL* property that indicates the material(s) that the [[#CreativeWork|CreativeWork]] is made from, e.g. leather, wool, cotton, paper.
+The value *MUST* reference [=terms=].
+
+<div class="example">
+    The Starry Night is made from ‘oil paint’ and ‘canvas’:
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "material": [
+            {
+              "@id": "http://vocab.getty.edu/aat/300015050"
+            },
+            {
+              "@id": "http://vocab.getty.edu/aat/300014078"
+            }
+          }
+        }
+    </pre>
+</div>
+
+Issue: Whereas schema:about has range schema:Thing, schema:material does not. This means we can use schema:DefinedTerm for schema:about but not for schema:material. Should we drop schema:DefinedTerm completely?
+
+## Person ## {#Person}  
+
+If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
+If a  [=term=] is available for the person, that *MUST* be referenced.
+If not, the person *MUST* be defined by the required properties listed below.
+
+The objective for the Person model is not to fully describe all aspects of a person,
+but to easily identify and distinguish between similar persons.
+
+Issue: Consider candidate properties nationality, description, familyName, givenName.
+
+### name (required) ### {#person-name}
+
+A *REQUIRED* property that indicates the [[#Person|Person]]’s full name in its preferred display form:
+
+<div class="example">
+    Person with a language-tagged name:
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://n2t.net/ark:/123456/2",
+          "name": {
+            "@language": "nl-NL",
+            "@value": "Pluk van de Petteflat"
+          }
+        }
+    </pre>
+</div>
+
+Issue: Does it make sense to require person names to be language-tagged? Think about languages that show names in a different format, such as ZH.
+
+### birthDate ### {#birthDate}
+
+An *OPTIONAL* property that indicates the person’s date of birth in [[!ISO8601]] format.
+
+### birthPlace ### {#birthPlace}
+
+An *OPTIONAL* property that references the person’s place of birth.
+The value *MUST* reference a [=term=].
+
+<div class="example">
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org",
+          "@id": "https://n2t.net/ark:/123456/2",
+          "birthPlace": {
+            "@id": "https://sws.geonames.org/2745912/"
+          }
+        }
+    </pre>
+</div>
+
+### deathDate ### {#deathDate}
+
+An *OPTIONAL* property that indicates the person’s date of death in [[!ISO8601]] format.
+
+### deathPlace ### {#deathPlace}
+
+An *OPTIONAL* property that references the person’s place of death.
+The value *MUST* reference a [=term=].
+
+<div class="example">
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org",
+          "@id": "https://n2t.net/ark:/123456/2",
+          "deathPlace": {
+            "@id": "http://www.wikidata.org/entity/Q131153786"
+          }
+        }
+    </pre>
+</div>
+
+### hasOccupation ### {#hasOccupation}
+
+An *OPTIONAL* property that indicates the person’s occupation.
+The value *MUST* reference a [=term=].
+
+<div class="example">
+    A carpenter:
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org",
+          "@id": "https://n2t.net/ark:/123456/2",
+          "hasOccupation": {
+            "@id": "http://vocab.getty.edu/aat/300025008"
+          }
+        }
+    </pre>
+</div>
+
+## Organization ## {#Organization}
+
+### name (required) ### {#organization-name}
+
+A *REQUIRED* property that indicates the [[#Organization|Organization]]’s full name in its preferred display form.
+
+Issue: Do we need more properties for Organization?
+
+## MediaObject ## {#MediaObject}
+
+In case of image, video or audio objects, the relevant subclass *MUST* be used:
+
+- [[#ImageObject|ImageObject]]
+- [[#VideoObject|VideoObject]]
+- [[#AudioObject|AudioObject]]
+
+In case of other types of media, the generic class [[#MediaObject|MediaObject]] *MUST* be used.
+
+### ImageObject ### {#ImageObject}
+
+An ImageObject *MUST* have a `contentUrl` property that points to a [IIIF Presentation API](https://netwerk-digitaal-erfgoed.github.io/requirements-collection-management-systems/#serving-images-through-iiif) manifest.
+
+Issue: Or point to Image API (`info.json`)?
+
+Issue: Should we support non-IIIF clients/users?
+
+<div class="example">
+    A simple image of a painting.
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/image1",
+          "@type": "ImageObject",
+          "contentUrl": "https://example.com/image1/manifest.json",
+          "encodingFormat": "application/ld+json"
+        }
+    </pre>
+</div>
+
+### AudioObject ### {#AudioObject}
+
+Issue: TODO
+
+### VideoObject ### {#VideoObject}
+
+Issue: TODO
 
 ### Place ### {#place}
 
@@ -214,145 +692,24 @@ Issue: Should we only have MediaObject or the more specific types VideoObject, A
     </pre>
 </div>
 
-
-Properties {#properties}
---------------------
-
-This section describes how to express the data using a minimal set of properties (RDF predicates), and their ranges.
-The range of an RDF predicate is the set of allowed values for that predicate.
-
-Publishers *MUST* express data with these properties.
-
-### Overview ### {#overview}
-
-<table>
-    <thead>
-        <tr>
-            <th>Property</th>
-            <th>Description</th>
-            <th>Range</th>
-            <th>Cardinality</th>
-            <th>Usage</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">schema:name</th>
-            <td>Name of a person, title of a book etc.</td>
-            <td>Language-tagged string</td>
-            <td>1</td>
-            <td>Required</td>
-        </tr>
-        <tr>
-            <th scope="row">schema:description</th>
-            <td>A description of the resource.</td>
-            <td>Language-tagged string</td>
-            <td>0..n</td>
-            <td>Required (if available)</td>
-        </tr>
-        <tr>
-            <th scope="row">schema:image</th>
-            <td>An image of the resource.</td>
-            <td>URL?</td>
-            <td>0..n</td>
-            <td>Required (if available)</td>
-        </tr>
-        <tr>
-            <th scope="row">schema:creator</th>
-            <td>An image of the resource.</td>
-            <td>URI</td>
-            <td>0..n</td>
-            <td>Required (if available)</td>
-        </tr>
-        <tr>
-            <th scope="row">schema:geo</th>
-            <td>An image of the resource.</td>
-            <td>GeoCoordinates or GeoShape</td>
-            <td>0..n</td>
-            <td>Required (if available)</td>
-        </tr>
-    </tbody>
-</table>
-
-Issue: How to describe dates? Require only very weak schema:temporal?
-
-### Language ### {#language}
-
-For each property with a literal value, the value’s language *MUST* be specified.
-The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ or ‘nl-NL’.
+Example {#example}
+==========
 
 <div class="example">
-    Specifying the language of the https://schema.org/name property:
+    A full example of a resource with related resources.
 
-    <pre highlight=json-ld>
-        {
-          "@context": "https://schema.org/",
-          "@id": "https://example.com/dataset1/resource1"
-          "@type": ["CreativeWork"],
-          "name": {
-            "@language": "nl-NL",
-            "@value": "Het fluitketeltje en andere versjes"
-          }  
-        }
-    </pre>
-</div>
+    Issue: Add full example.
 
-### URI ### {#URI}
-
-Each class *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persitent<a> URI (so blank nodes are not allowed).
-
-<div class="example">
-    Specifying the URI in the JSON-LD `@id` property:
-
-    <pre highlight=json-ld line-numbers line-highlight="3">
-        {
-          "@context": "https://schema.org/",
-          "@id": "https://example.com/dataset1/resource1",
-          "@type": ["CreativeWork"]
-        }
-    </pre>
-</div>
-
-### name (required) ### {#name}
-
-Issue: Use schema:name and/or rdfs:label?
-
-Issue: Should we require a language-tagged string? E.g. person (Vincent van Gogh) or organization names (Van Gogh Museum) can be considered to be untagged.
-
-### description ### {#description}
-
-### image ### {#image}
-
-### license ### {#license}
-
-Issue: Does license make sense on the level of individual resources? Or perhaps only on certain types of resources, such as media?
-
-### author ### {#author}
-
-Issue: Use schema:author or schema:creator?
-
-Where available, reference a person from the Network of Terms.
-
-### geo ### {#geo}
-
-<div class="example">
-    A place with coordinates:
-
-    <pre highlight=json-ld>
-        {
-          "@context": "https://schema.org",
-          "@type": "Place",
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "40.75",
-            "longitude": "-73.98"
-          },
-        }
+    <pre class=include-code>
+    path: example.jsonld
+    highlight: jsonld
     </pre>
 </div>
 
 Formal definition {#formal-definition}
 ==========
+
+Issue: This SHACL file does not yet reflect all changes in the text above.
 
 <div class="example">
     A formal definition of the [=generic data model=] in [[!SHACL]].
