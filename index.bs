@@ -527,6 +527,27 @@ The value *MUST* reference [=terms=].
 
 Issue: Whereas schema:about has range schema:Thing, schema:material does not. This means we can use schema:DefinedTerm for schema:about but not for schema:material. Should we drop schema:DefinedTerm completely?
 
+### genre ### {#genre}
+
+An *OPTIONAL* property that indicates the genre(s) of the [[#CreativeWork|CreativeWork]],
+for example art movements or periods.
+
+The value *MUST* reference a [=term=].
+
+<div class="example">
+    The Starry Night belongs to the Post-Impressionist art movement:
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "genre": {
+            "@id": "http://vocab.getty.edu/aat/300021508"
+          }
+        }
+    </pre>
+</div>
+
 ## Person ## {#Person}  
 
 If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
