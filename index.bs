@@ -643,7 +643,7 @@ In case of other types of media, the generic class [[#MediaObject|MediaObject]] 
 
 An ImageObject *MUST* have a `contentUrl` property that points to a [IIIF Presentation API](https://netwerk-digitaal-erfgoed.github.io/requirements-collection-management-systems/#serving-images-through-iiif) manifest.
 
-Issue: Or point to Image API (`info.json`)?
+Issue(2): See
 
 Issue: Should we support non-IIIF clients/users?
 
