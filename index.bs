@@ -208,6 +208,8 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 
 The most generic kind of item created by humans, i.e. heritage objects.
 
+Issue(3): Properties not (yet) added
+
 ### Subclasses ### {#subclasses} 
 
 Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
