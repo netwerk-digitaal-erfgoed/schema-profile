@@ -107,24 +107,47 @@ Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.
 Language {#language}
 ----------
 
-For each property with a literal value, the value’s language *MUST* be specified.
+For each property with a literal value, the value’s language *MUST* be specified,
 The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ or ‘nl-NL’.
 
 <div class="example">
-    Specifying the language of the https://schema.org/name property:
+    Specifying the language of the `name` property:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="5-14">
         {
           "@context": "https://schema.org/",
-          "@id": "https://example.com/dataset1/resource1",
-          "@type": ["CreativeWork"],
-          "name": {
-            "@language": "nl-NL",
-            "@value": "Het fluitketeltje en andere versjes"
-          }  
+          "@id": "https://n2t.net/ark:/123456/1",
+          "@type": "CreativeWork",
+          "name": [
+            {
+              "@language": "nl",
+              "@value": "De Sterrennacht"
+            },
+            {
+              "@language": "en",
+              "@value": "The Starry Night"
+            }
+          ]
         }
     </pre>
 </div>
+
+Even if only one language is available, the language *MUST* be specified.
+
+<div class="example">
+    Specify the language property even for a single value:
+
+    <pre highlight=json-ld line-numbers line-highlight="3-6">
+        {
+          "@context": "https://schema.org/",
+          "name": {
+            "@language": "nl",
+            "@value": "De Sterrennacht"
+          }
+        }
+    </pre>
+</div>
+
 
 Publication method {#publication-method}
 ---
