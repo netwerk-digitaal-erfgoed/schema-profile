@@ -426,6 +426,7 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
           "@id": "http://www.wikidata.org/entity/Q45585",
           "contentLocation": {
             "@id": "http://www.wikidata.org/entity/Q221507",
+            "@type": "Place",
             "name": "Saint-Rémy-de-Provence"
          }
        }
@@ -448,6 +449,7 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
           "@id": "http://www.wikidata.org/entity/Q45585",
           "locationCreated": {
             "@id": "http://www.wikidata.org/entity/Q221507",
+            "@type": "Place",
             "name": "Saint-Rémy-de-Provence"
          }
        }
