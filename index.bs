@@ -208,7 +208,7 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 
 The most generic kind of item created by humans, i.e. heritage objects.
 
-Issue(3): Properties not (yet) added
+Issue(3): Candidate properties
 
 ### Subclasses ### {#subclasses} 
 
@@ -311,8 +311,8 @@ the `creator` property *MUST* be used for consistency.
 
 ### isPartOf (required) ### {#isPartOf}
 
-A *REQUIRED* property that points to the dataset(s) that the [=metadata record=] is part of.
-Note that a record may be part of multiple datasets.
+A *REQUIRED* property that points to the dataset(s) that the [[#CreativeWork|CreativeWork]] is part of.
+Note that a CreativeWork may be part of multiple datasets.
 The dataset *MUST* be typed as a `Dataset`.
 
 <div class="example">
@@ -357,9 +357,12 @@ This property is *REQUIRED* if applicable, i.e. if at least one media object is 
 
 See [[#MediaObject|MediaObject]] for this property’s allowed values.
 
+Issue: How to refer to media that is not part of the dataset, such as external images that are used not as unique representations but as illustrations of the CreativeWork?
+
 ### description ### {#description}
 
-A one-sentence description of the object. Make sure the description is free of jargon and abbreviations so it can be understood by others.
+An *OPTIONAL* property that describes the [[#CreativeWork|CreativeWork]] in one sentence.
+The description *MUST* be free of jargon and abbreviations so it can be understood by others.
 The value *MUST* be a [[#language|language-tagged]] string.
 
 <div class="example">
@@ -385,7 +388,7 @@ The value *MUST* be a [[#language|language-tagged]] string.
 
 ### abstract ### {#abstract-section}
 
-An *OPTIONAL* property that provides a longer summarizing description of the [=metadata record=] that is longer than [[#description|description]].
+An *OPTIONAL* property that provides a longer summarizing description of the [[#CreativeWork|CreativeWork]].
 
 <div class="example">
 
@@ -412,7 +415,7 @@ Issue: Does license make sense on the level of individual resources of should we
 An *OPTIONAL* property that indicates the location depicted or described in the [[#CreativeWork|CreativeWork]].
 For example, the location in a photograph or painting.
 
-The property *MUST* reference a [=term=].
+If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used.
 
 <div class="example">
     Van Gogh’s painting The Starry Night:
@@ -429,14 +432,12 @@ The property *MUST* reference a [=term=].
     </pre>
 </div>
 
-If more specific geo coordinates are known, these *SHOULD* be added in a `geo` property:
-
 ### locationCreated ### {#locationCreated}
 
-An *OPTIONAL* property that indicates the location where the [[#CreativeWork|CreativeWork]] was created,
-which may not be the same as its [[#contentLocation|contentLocation]].
+An *OPTIONAL* property that indicates the location where the [[#CreativeWork|CreativeWork]] was created
+(which may be different from its [[#contentLocation|contentLocation]]).
 
-The date *MUST* adhere to [[!ISO8601]].
+If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used.
 
 <div class="example">
     Van Gogh’s painting The Starry Night:
@@ -473,8 +474,9 @@ The value *MUST* be in [[!ISO8601]] format. Partial dates *MAY* be used if the e
 
 ### about ### {#about}
 
-An *OPTIONAL* property to indicate the subject-matter of the [=metadata record=]’s content.
-For example, which subjects are depicted in a painting or photograph? Or which subjects is a story about?
+An *OPTIONAL* property to indicate the subject-matter of the [[#CreativeWork|CreativeWork]].
+For example, which subjects are depicted in a painting or photograph?
+Or which subjects is a story about?
 
 The value *MUST* reference [=terms=].
 
@@ -495,11 +497,13 @@ If the subject is a location, it *MUST* be listed under [[#contentLocation|conte
             {
               "@id": "http://www.wikidata.org/entity/Q405",
               "@type": "DefinedTerm"
-            },
+            }
           ]
        }
     </pre>
 </div>
+
+Issue: Whereas schema:about has range schema:Thing, schema:material and other properties do not. This means we can use schema:DefinedTerm for schema:about but not for schema:material. Should we drop schema:DefinedTerm completely?
 
 ### material ### {#material}
 
@@ -525,7 +529,6 @@ The value *MUST* reference [=terms=].
     </pre>
 </div>
 
-Issue: Whereas schema:about has range schema:Thing, schema:material does not. This means we can use schema:DefinedTerm for schema:about but not for schema:material. Should we drop schema:DefinedTerm completely?
 
 ### genre ### {#genre}
 
@@ -692,9 +695,62 @@ Issue: TODO
 
 Issue: TODO
 
-## Place ## {#place}
+## Place ## {#Place}
 
-Issue: How to relate schema:Place data, such as geo coordinates, to location terms in the Network of Terms. We need geo for clients that want to display resources on a map, a common visualisation method.
+For properties that reference locations, if no [=term=] is available, a custom Place resource *MUST* be used.
+
+### address (required) ### {#address}
+
+A property that indicates the [[#Place|Place]]’s address, *REQUIRED* if known.
+
+*REQUIRED* address properties are:
+- `streetAddress`
+- `postalCode`
+- `addressLocality` (city)
+- `addressRegion` (province)
+- `addressCountry` (*MUST* be in [[!ISO3166-1]] format).
+
+<div class="example">
+    A place with an address:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset/place",
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Street 123",
+            "postalCode": "1234 AB",
+            "addressLocality": "City",
+            "addressRegion": "Noord-Holland",
+            "addressCountry": "NL"
+          }
+        }
+    </pre>
+</div>
+
+### geo (required) ### {#geo}
+
+A property that indicates the [[#Place|Place]]’s geo coordinates, *REQUIRED* if known.
+
+<div class="example">
+    A place with coordinates:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@id": "https://example.com/dataset/place",
+          "@type": "Place",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "37.42242",
+            "longitude": "-122.08585"
+          }
+        }
+    </pre>
+</div>
+
 
 <div class="example">
     A place with required name and optional address:
@@ -703,7 +759,7 @@ Issue: How to relate schema:Place data, such as geo coordinates, to location ter
         {
           "@context": "https://schema.org/",
           "@id": "https://example.com/dataset/place"
-          "@type": ["Place"],
+          "@type": "Place",
           "name": "Anne Frank Huis",
           "address": {
             "@type": "PostalAddress",
