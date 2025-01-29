@@ -776,28 +776,6 @@ A property that indicates the [[#Place|Place]]’s geo coordinates, *REQUIRED* i
     </pre>
 </div>
 
-
-<div class="example">
-    A place with required name and optional address:
-
-    <pre highlight=json-ld>
-        {
-          "@context": "https://schema.org/",
-          "@id": "https://example.com/dataset/place"
-          "@type": "Place",
-          "name": "Anne Frank Huis",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Prinsengracht 263",
-            "postalCode": "1016 GV",
-            "addressLocality": "Amsterdam",
-            "addressRegion": "Noord-Holland",
-            "addressCountry": "Netherlands"
-          }
-        }
-    </pre>
-</div>
-
 Example {#example}
 ==========
 
