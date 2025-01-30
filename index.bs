@@ -1,6 +1,6 @@
 <pre class='metadata'>
-Title: Requirements for Data
-Shortname: nde-data
+Title: Schema.org Application Profile
+Shortname: nde-schema-ap
 Level: 1
 Status: LS
 Markup Shorthands: css yes, markdown yes, biblio yes
