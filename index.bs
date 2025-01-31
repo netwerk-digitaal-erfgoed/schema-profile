@@ -4,7 +4,7 @@ Shortname: nde-schema-ap
 Level: 1
 Status: LS
 Markup Shorthands: css yes, markdown yes, biblio yes
-URL: https://netwerk-digitaal-erfgoed.github.io/requirements-data/
+URL: https://netwerk-digitaal-erfgoed.github.io/schema-profile/
 Editor: 
     David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
 Abstract: This document specifies the generic data model to be used when publishing linked data in the heritage network. 
@@ -187,7 +187,7 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
 ### Separate profiles ### {#profiles}
 
 Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
-To do so, publish a profile with URI `https://netwerk-digitaal-erfgoed.github.io/requirements-data/`.
+To do so, publish a profile with URI `https://netwerk-digitaal-erfgoed.github.io/schema-profile/`.
 
 <div class="example">
     Expose the generic data model in its own content-negotiated profile.    
@@ -205,7 +205,7 @@ To do so, publish a profile with URI `https://netwerk-digitaal-erfgoed.github.io
             "profiles": [
                 {
                     "token": "nde",
-                    "uri": "https://netwerk-digitaal-erfgoed.github.io/requirements-data/",
+                    "uri": "https://netwerk-digitaal-erfgoed.github.io/schema-profile/",
                     "media_types": ["application/ld+json", "text/turtle"]
                 },
                 ...
