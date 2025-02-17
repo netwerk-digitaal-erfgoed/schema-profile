@@ -21,7 +21,7 @@ Introduction {#intro}
 Goal {#goal}
 ---
 
-This document prescribes the SCHEMA-AP-NDE [=generic data model=] to be used when publishing linked data in the heritage network.
+This document prescribes the SCHEMA-AP-NDE [=generic data model=] to be used when publishing linked data in the Dutch heritage network.
 The model consists of a minimal set of classes and properties.
 It is based on:
 
@@ -38,11 +38,12 @@ By adhering to this model, [[NDE-DATASETS#publisher|dataset publishers]] ensure 
 Scope {#scope}
 -----
 
-These requirements are restricted in three ways:
+The document is restricted in four ways:
 
-1. they apply only to the way published data is expressed, not how it is stored or managed internally;
-2. they prescribe a [=generic data model=] and leave the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
-3. they bear upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
+1. it applies to the Dutch heritage network, which implements the [[NDHS|National Digital Heritage Strategy]] and [[DERA|Digital Reference Heritage Architecture]];  
+2. it applies to the way published data is expressed, not how it is stored or managed internally;
+3. it prescribes a [=generic data model=] and leaves the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
+4. it bears upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
 
 Examples {#examples}
 ---

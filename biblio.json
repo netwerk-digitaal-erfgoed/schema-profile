@@ -3,6 +3,11 @@
     "href": "https://dera.netwerkdigitaalerfgoed.nl",
     "title": "Digital Heritage Reference Architecture"
   },
+  "ndhs": {
+    "href": "https://zenodo.org/records/14760720",
+    "title": "National Digital Heritage Strategy",
+    "authors": ["NDE", "Ministerie van Onderwijs, Cultuur en Wetenschap"]
+  },
   "nde-alignment": {
     "href": "https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/",
     "title": "Implementation guidelines for NDE alignment",
@@ -11,10 +16,5 @@
       "Ivo Zandhuis",
       "Bob Coret"
     ]
-  },
-  "URI": {
-    "href": "https://www.rfc-editor.org/rfc/rfc3986#section-1.1.3",
-    "title": "Uniform Resource Identifier",
-    "authors": ["T. Berners-Lee"]
   }
 }
