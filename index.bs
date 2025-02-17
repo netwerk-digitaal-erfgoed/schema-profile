@@ -1,6 +1,6 @@
 <pre class='metadata'>
 Title: Schema.org Application Profile
-Shortname: nde-schema-ap
+Shortname: schema-ap-nde
 Level: 1
 Status: LS
 Markup Shorthands: css yes, markdown yes, biblio yes
@@ -21,7 +21,7 @@ Introduction {#intro}
 Goal {#goal}
 ---
 
-This document prescribes the [=generic data model=] to be used when publishing linked data in the heritage network.
+This document prescribes the SCHEMA-AP-NDE [=generic data model=] to be used when publishing linked data in the heritage network.
 The model consists of a minimal set of classes and properties.
 It is based on:
 
@@ -30,8 +30,10 @@ It is based on:
     particularly its <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
 - the needs of service platform builders for understanding, processing and presenting data.
 
-By adhering to this model, [[NDE-DATASETS#publisher|dataset publishers]] ensure that their data is visible and can be consumed and combined
-with other datasets in the network.
+By adhering to this model, [[NDE-DATASETS#publisher|dataset publishers]] ensure that their data can be:
+
+1. discovered, understood and combined with other datasets in the network;
+2. used in service platforms to build applications and visualisations.
 
 Scope {#scope}
 -----
@@ -92,6 +94,8 @@ Examples are:
 - [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
 - [PiCo](https://personsincontext.org) for biographical data;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
+
+<img style="width: 60%" src="https://mermaid.ink/svg/pako:eNpdkEFrhDAQhf_K4ELZhXrZdoNYKKhRemlZ2N7qHtIkVmliJHEtpdTf3mhcleY0k_neY-b9eFQx7oVeIdQXLYluIX7Na7DP0JJLsj0lT-lz5EdH_wWnuzAMmXRzpiSp6rfcw2MBjLQEpHUTW7PLvfMKNY3FTlx3FeVwFKQtlJbGMabJ64lqvwUH1kBRCRFu8CEN8P2tabX65OEm2Md3CDmSCmIM5gUwOcFZlu2TZIYxitEBAfzDzewdpUG24CgJ0jh7mBe5vH9o0pSAh5Ps6mBXdaMlmKV3Qbie1-zqwoajR4frxdYFfB8arbqKcWPrx8kMbmYXJx51fd_DEI-LcJBeDB9Vw3j9zypDVcf1ytL7_QMFgpGN">
 
 Vocabulary {#vocabulary}
 ---
