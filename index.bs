@@ -249,7 +249,7 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 
 The most generic kind of item created by humans, i.e. heritage objects.
 
-Issue(3): Candidate properties
+Issue(3): CreativeWork candidate properties
 
 ### Subclasses ### {#subclasses} 
 
@@ -606,7 +606,7 @@ Blank nodes *MUST NOT* be used for Persons.
 The objective for the Person model is not to fully describe all aspects of a person,
 but to easily identify and distinguish between similar persons.
 
-Issue: Consider candidate properties nationality, description, familyName, givenName.
+Issue(12): Person candidate properties
 
 ### name (required) ### {#person-name}
 
