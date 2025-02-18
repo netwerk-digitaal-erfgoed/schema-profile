@@ -48,8 +48,7 @@ The document is restricted in four ways:
 Examples {#examples}
 ---
 
-While RDF examples in this document are in the [[!JSON-LD]] RDF serialization, publishers *MAY* use any RDF serialization format,
-such as [[!Turtle]] or [[!N3]].
+RDF examples in this document are in the *RECOMMENDED* JSON-LD [[#serialization]] format. 
 
 Definitions {#definitions}
 ===
@@ -153,6 +152,16 @@ Even if only one language is available, the language *MUST* be specified.
     </pre>
 </div>
 
+Serialization {#serialization}
+---
+
+The [[!JSON-LD]] RDF serialization format is *RECOMMENDED* because it is the most accessible for web platform builders.
+Supporting multiple RDF serialization formats using [[RFC9110#content.negotiation|content negotiation]] is *RECOMMENDED*.
+Servers *MUST* provide at least one of the following RDF serialization formats:
+
+* [[!JSON-LD]] for web platform builders;
+* [[!N-Triples]] for efficient processing;
+* [[!Turtle]] for good readability.
 
 Publication method {#publication-method}
 ---
