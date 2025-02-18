@@ -178,7 +178,6 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
         {
           "@context": {
             "schema": "https://schema.org/",
-            "edm": "http://www.europeana.eu/schemas/edm/",
             "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
             "dcterms": "http://purl.org/dc/terms/"
           },
