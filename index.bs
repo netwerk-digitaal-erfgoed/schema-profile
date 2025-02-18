@@ -232,6 +232,10 @@ Each record *MUST* be typed as one of the following classes:
 
 For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL* properties.
 
+## Class diagram
+
+<img src="https://mermaid.ink/svg/pako:eNqNlEFP6zAMx79KlCOiCK45ICGGBBKwiYGe9F44eKnXBdJkSlwkhPbdX5p2kMJG10ObOL_Y_jtuPrhyJXLBi6KQljQZFGx-eX11d1FczIr7yZW0aUkZCGGiofJQS8vikyzs0iOQfsM_zr-yj26lfZ4ebkR83bJ_Z89fVgt19O_LpTBgqzl5batInJwcZZAOM_A0XQo2AYKA9IMoMSiv16Sd_entdMjCIpAHRaNgCYRJDZaCBbXCGkRMAB91jQneCtl0n7wKM_TB2Vz_QUoX2tOqjTEIOAjWyYUxbEdOd1hqmC5eUFGemHKW0NKTN9_OZ5csAwrzzXvJR_T1juO_GbjvBoOOKYpzJnlbFsm3VRRMtYjzY3yuULCYhlO6Pb5k37v5tA-WtIltPW6dgraf9sfM9pge7ttlLFQqTkxw4Ro6kK2jX6_BHIhXaD12bF_ETyrPO_Vbmoyzqel-YbPoKwhTpZp1X0B-zOu4ALqM90rqCckpti1KLuKwxCU0hiSXdhNRaMjN363ignyDx9y7plpxsQQT4qxZt79lf-98Wtdg_zq3nW_-A_M-cRM">
+
 ## CreativeWork ## {#CreativeWork}
 
 The most generic kind of item created by humans, i.e. heritage objects.
