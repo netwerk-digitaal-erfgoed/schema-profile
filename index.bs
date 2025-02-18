@@ -781,7 +781,7 @@ A property that indicates the [[#Place|Place]]’s address, *REQUIRED* if known.
 
 ### geo (required) ### {#geo}
 
-A property that indicates the [[#Place|Place]]’s geo coordinates, *REQUIRED* if known.
+A property that indicates the [[#Place|Place]]’s [[!WGS84]] geo coordinates, *REQUIRED* if known.
 
 <div class="example">
     A place with coordinates:
