@@ -112,7 +112,7 @@ Language {#language}
 ----------
 
 For each property with a literal value, the value’s language *MUST* be specified,
-The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ or ‘nl-NL’.
+The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ (language only) or ‘nl-NL’ (including region).
 
 <div class="example">
     Specifying the language of the `name` property:
@@ -621,7 +621,7 @@ A *REQUIRED* property that indicates the [[#Person|Person]]’s full name in its
           "@type": "Person",
           "@id": "https://n2t.net/ark:/123456/2",
           "name": {
-            "@language": "nl-NL",
+            "@language": "nl",
             "@value": "Pluk van de Petteflat"
           }
         }
