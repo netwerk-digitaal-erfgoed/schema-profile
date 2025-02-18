@@ -111,7 +111,7 @@ Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.
 Language {#language}
 ----------
 
-For each property with a literal value, the value’s language *MUST* be specified,
+For all name and description values, their language *MUST* be specified.
 The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ (language only) or ‘nl-NL’ (including region).
 
 <div class="example">
@@ -628,7 +628,7 @@ A *REQUIRED* property that indicates the [[#Person|Person]]’s full name in its
     </pre>
 </div>
 
-Issue: Does it make sense to require person names to be language-tagged? Think about languages that show names in a different format, such as ZH.
+Issue(10): Does it make sense to require person names to be language-tagged? Think about languages that show names in a different format, such as ZH.
 
 ### birthDate ### {#birthDate}
 
