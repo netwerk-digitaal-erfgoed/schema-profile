@@ -276,6 +276,10 @@ Examples include:
     </pre>
 </div>
 
+Even though the superclass can be derived from its subclasses using RDF inferencing
+(in this example, CreativeWork from Painting),
+the superclass *MUST* be provided explicitly to help users understand the data.
+
 ### URI (required) ### {#URI}
 
 Each [[#CreativeWork|CreativeWork]] *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI. 
