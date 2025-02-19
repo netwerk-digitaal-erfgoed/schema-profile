@@ -202,6 +202,8 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
 Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
 To do so, publish a profile with URI `https://netwerk-digitaal-erfgoed.github.io/schema-profile/`.
 
+Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by [The Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).  
+
 <div class="example">
     Expose the generic data model in its own content-negotiated profile.    
 
