@@ -461,7 +461,7 @@ Issue: Does license make sense on the level of individual resources of should we
 An *OPTIONAL* property that indicates the location depicted or described in the [[#CreativeWork|CreativeWork]].
 For example, the location in a photograph or painting.
 
-If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used.
+If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used instead.
 
 <div class="example">
     Van Gogh’s painting The Starry Night:
