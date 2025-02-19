@@ -285,7 +285,7 @@ the superclass *MUST* be provided explicitly to help users understand the data.
 ### URI (required) ### {#URI}
 
 Each [[#CreativeWork|CreativeWork]] *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI. 
-Blank nodes *MUST NOT* be used for CreativeWorks.
+Blank nodes *MUST NOT* be used for identifying CreativeWorks.
 
 <div class="example">
     Specify the URI in the JSON-LD `@id` property:
@@ -606,7 +606,7 @@ If a  [=term=] is available for the person, that *MUST* be referenced.
 If not, the person *MUST* be defined by the required properties listed below.
 
 Each Person *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI.
-Blank nodes *MUST NOT* be used for Persons.
+Blank nodes *MUST NOT* be used for identifying Persons.
 
 The objective for the Person model is not to fully describe all aspects of a person,
 but to easily identify and distinguish between similar persons.
@@ -701,7 +701,7 @@ The value *MUST* reference a [=term=].
 ## Organization ## {#Organization}
 
 Each Organization *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI.
-Blank nodes *MUST NOT* be used for Organization.
+Blank nodes *MUST NOT* be used for identifying Organizations.
 
 ### name (required) ### {#organization-name}
 
