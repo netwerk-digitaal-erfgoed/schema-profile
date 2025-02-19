@@ -69,7 +69,7 @@ Definitions {#definitions}
 :: An RDF resource that expresses one of the top-level classes in the [[#data-model-section]].
 
 : <dfn>Term</dfn>
-:: A word, name, acronym, phrase or other symbol with a formal definition, published in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl).
+:: A word, name, acronym, phrase or other symbol with a formal definition, available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl).
 
 General considerations {#general-considerations}
 ==========
