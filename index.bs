@@ -479,6 +479,10 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
     </pre>
 </div>
 
+Issue: The range for `contentLocation` is `schema:Place`. 
+Can we directly reference terms (such as http://www.wikidata.org/entity/Q221507)
+if these are not typed `schema:Place` in the terminology source? Or do we need to add a `schema:sameAs` in-between?
+
 ### locationCreated ### {#locationCreated}
 
 An *OPTIONAL* property that indicates the location where the [[#CreativeWork|CreativeWork]] was created
