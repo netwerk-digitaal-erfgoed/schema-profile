@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: Schema.org Application Profile
+Title: Schema.org Application Profile for NDE (SCHEMA-AP-NDE)
 Shortname: schema-ap-nde
 Level: 1
 Status: LS
