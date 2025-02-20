@@ -434,6 +434,8 @@ An *OPTIONAL* property that describes the [[#CreativeWork|CreativeWork]] in one 
 The description *MUST* be free of jargon and abbreviations so it can be understood by others.
 The value *MUST* be a [[#language|language-tagged]] string.
 
+Issue(14): Description as single sentence.
+
 <div class="example">
     A one-sentence description:
 
