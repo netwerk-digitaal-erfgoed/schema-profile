@@ -344,12 +344,13 @@ If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* b
           "@id": "http://www.wikidata.org/entity/Q45585",
           "creator": {
             "@id": "https://data.rkd.nl/artists/32439",
-            "@type": "Person",
-            "name": "Rembrandt"
+            "@type": "Person"
           }
         }
     </pre>
 </div>
+
+Issue(11): Can we do without term labels? 
 
 Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
 such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
@@ -472,8 +473,7 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
           "@id": "http://www.wikidata.org/entity/Q45585",
           "contentLocation": {
             "@id": "http://www.wikidata.org/entity/Q221507",
-            "@type": "Place",
-            "name": "Saint-Rémy-de-Provence"
+            "@type": "Place"
          }
        }
     </pre>
@@ -499,8 +499,7 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
           "@id": "http://www.wikidata.org/entity/Q45585",
           "locationCreated": {
             "@id": "http://www.wikidata.org/entity/Q221507",
-            "@type": "Place",
-            "name": "Saint-Rémy-de-Provence"
+            "@type": "Place"
          }
        }
     </pre>
@@ -606,7 +605,7 @@ The value *MUST* reference a [=term=].
 ## Person ## {#Person}  
 
 If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-If a  [=term=] is available for the person, that *MUST* be referenced.
+If a [=term=] is available for the person, that *MUST* be referenced.
 If not, the person *MUST* be defined by the required properties listed below.
 
 Each Person *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI.
