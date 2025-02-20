@@ -112,7 +112,7 @@ Language {#language}
 ----------
 
 For all name and description values, their language *MUST* be specified.
-The language *MUST* be expressed as a language code from [[!BCP47]], such as ‘nl’ (language only) or ‘nl-NL’ (including region).
+The language *MUST* be expressed as a well-formed language tag according to [[!BCP47]], such as ‘nl’ (language only) or ‘nl-NL’ (including region).
 
 <div class="example">
     Specifying the language of the `name` property:
