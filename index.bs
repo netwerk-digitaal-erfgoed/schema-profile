@@ -152,6 +152,28 @@ Even if only one language is available, the language *MUST* be specified.
     </pre>
 </div>
 
+Each language *MUST* occur only once, so only a single value per language is allowed.
+
+<div class="example">
+    ❌ Do not specify the same language twice:
+
+    <pre highlight=json-ld line-numbers line-highlight="5,9">
+        {
+          "@context": "https://schema.org/",
+          "name": [
+            {
+              "@language": "en",
+              "@value": "The Starry Night"
+            },
+            {
+              "@language": "en",
+              "@value": "Repeated English name while only one is allowed"
+            }
+          ]
+        }
+    </pre>
+</div>
+
 Serialization {#serialization}
 ---
 
