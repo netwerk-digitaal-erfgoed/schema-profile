@@ -670,7 +670,7 @@ An *OPTIONAL* property that indicates the person’s date of birth in [[!ISO8601
 ### birthPlace ### {#birthPlace}
 
 An *OPTIONAL* property that references the person’s place of birth.
-The value *MUST* reference a [=term=].
+The value *MUST* reference a [=term=]. If no term is available, a custom [[#Place|Place]] resource *MUST* be used.
 
 <div class="example">
 
@@ -678,8 +678,9 @@ The value *MUST* reference a [=term=].
         {
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
-          "birthPlace": {
-            "@id": "https://sws.geonames.org/2745912/"
+          "birthPlace": {"
+            "@id": "https://sws.geonames.org/2745912/",
+            "@type": "Place"
           }
         }
     </pre>
@@ -692,7 +693,7 @@ An *OPTIONAL* property that indicates the person’s date of death in [[!ISO8601
 ### deathPlace ### {#deathPlace}
 
 An *OPTIONAL* property that references the person’s place of death.
-The value *MUST* reference a [=term=].
+The value *MUST* reference a [=term=]. If no term is available, a custom [[#Place|Place]] resource *MUST* be used.
 
 <div class="example">
 
@@ -701,7 +702,8 @@ The value *MUST* reference a [=term=].
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
           "deathPlace": {
-            "@id": "http://www.wikidata.org/entity/Q131153786"
+            "@id": "http://www.wikidata.org/entity/Q131153786",
+            "@type": "Place"
           }
         }
     </pre>
