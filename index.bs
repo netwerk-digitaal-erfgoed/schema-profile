@@ -48,7 +48,7 @@ The document is restricted in four ways:
 Examples {#examples}
 ---
 
-RDF examples in this document are in the *RECOMMENDED* JSON-LD [[#serialization]] format. 
+[[RDF-PRIMER|RDF]] examples in this document are in the *RECOMMENDED* JSON-LD [[#serialization]] format. 
 
 Definitions {#definitions}
 ===
@@ -66,7 +66,7 @@ Definitions {#definitions}
     Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
 
 : <dfn>Metadata record</dfn>
-:: An RDF resource that expresses one of the top-level classes in the [[#data-model-section]]. Description of a heritage object.
+:: An [[RDF-PRIMER|RDF]] resource that expresses one of the top-level classes in the [[#data-model-section]]. Description of a heritage object.
 
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl).
