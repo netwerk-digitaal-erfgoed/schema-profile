@@ -352,7 +352,7 @@ The name *MUST* be a [[#language|language-tagged]] string:
 
 ### creator (required) ### {#creator}
 
-A *REQUIRED* property that identifies the person(s) or organization that created the [[#CreativeWork|CreativeWork]].
+A *REQUIRED* property that identifies the person(s) or organization(s) that created the [[#CreativeWork|CreativeWork]].
 If a [=term=] is available, that *MUST* be referenced.
 If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* be used instead.
 
@@ -458,6 +458,7 @@ The value *MUST* be a [[#language|language-tagged]] string.
 ### abstract ### {#abstract-section}
 
 An *OPTIONAL* property that provides a longer summarizing description of the [[#CreativeWork|CreativeWork]].
+The value *MUST* be a [[#language|language-tagged]] string.
 
 <div class="example">
 
@@ -481,7 +482,7 @@ Issue: Does license make sense on the level of individual resources of should we
 
 ### contentLocation ### {#contentLocation}
 
-An *OPTIONAL* property that indicates the location depicted or described in the [[#CreativeWork|CreativeWork]].
+An *OPTIONAL* property that indicates the location(s) depicted or described in the [[#CreativeWork|CreativeWork]].
 For example, the location in a photograph or painting.
 
 If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used instead.
@@ -507,10 +508,10 @@ if these are not typed `schema:Place` in the terminology source? Or do we need t
 
 ### locationCreated ### {#locationCreated}
 
-An *OPTIONAL* property that indicates the location where the [[#CreativeWork|CreativeWork]] was created
+An *OPTIONAL* property that indicates the location(s) where the [[#CreativeWork|CreativeWork]] was created
 (which may be different from its [[#contentLocation|contentLocation]]).
 
-If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used.
+If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used instead.
 
 <div class="example">
     Van Gogh’s painting The Starry Night:
@@ -706,7 +707,7 @@ The value *MUST* reference a [=term=].
 
 ### hasOccupation ### {#hasOccupation}
 
-An *OPTIONAL* property that indicates the person’s occupation.
+An *OPTIONAL* property that indicates the person’s occupation(s).
 The value *MUST* reference a [=term=].
 
 <div class="example">
