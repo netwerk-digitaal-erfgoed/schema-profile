@@ -206,13 +206,13 @@ Publishers *SHOULD* add the term’s name in any language(s) they know about for
 Serialization {#serialization}
 ---
 
-The [[!JSON-LD]] RDF serialization format is *RECOMMENDED* because it is the most accessible for web platform builders.
-Supporting multiple RDF serialization formats using [[RFC9110#content.negotiation|content negotiation]] is *RECOMMENDED*.
-Servers *MUST* provide at least one of the following RDF serialization formats:
+Servers *MUST* provide at least one RDF serialization format. 
+Supporting multiple formats using [[RFC9110#content.negotiation|content negotiation]] is *RECOMMENDED*.
 
-* [[!JSON-LD]] for web platform builders;
-* [[!N-Triples]] for efficient processing;
-* [[!Turtle]] for good readability.
+The following formats are *RECOMMENDED*:
+
+- [[!JSON-LD]] when serving an individual resource at its URI, because of its accessibility to web platform builders;
+- [[!N-QUADS]] for RDF dumps containing multiple resources, because of its efficiency.
 
 Publication method {#publication-method}
 ---
