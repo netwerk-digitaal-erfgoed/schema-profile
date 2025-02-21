@@ -174,6 +174,35 @@ Each language *MUST* occur only once, so only a single value per language is all
     </pre>
 </div>
 
+Reference terms {#reference-terms}
+---
+
+When referencing [=terms=], publishers *MUST* use the term’s URI. 
+
+The term *MUST* be typed as `DefinedTerm` so it is clear to consumers that the term can be looked up through the Network of Terms.
+
+Publishers *SHOULD* add the term’s name in any language(s) they know about for readability:
+
+<div class="example">
+    Use the term’s URI and add its name:
+
+    <pre highlight=json-ld line-numbers line-highlight="4-11">
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "creator": {
+            "@id": "https://data.rkd.nl/artists/32439",
+            "@type": ["Person", "DefinedTerm"],
+            "name": {
+              "@language": "nl",
+              "@value": "Vincent van Gogh"
+            }
+          }
+        }
+    </pre>
+</div>
+
+
 Serialization {#serialization}
 ---
 
@@ -353,7 +382,7 @@ The name *MUST* be a [[#language|language-tagged]] string:
 ### creator (required) ### {#creator}
 
 A *REQUIRED* property that identifies the person(s) or organization(s) that created the [[#CreativeWork|CreativeWork]].
-If a [=term=] is available, that *MUST* be referenced.
+If a [=term=] is available, that *MUST* be [[#reference-terms|referenced]].
 If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* be used instead.
 
 <div class="example">
@@ -366,13 +395,15 @@ If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* b
           "@id": "http://www.wikidata.org/entity/Q45585",
           "creator": {
             "@id": "https://data.rkd.nl/artists/32439",
-            "@type": "Person"
+            "@type": ["Person", "DefinedTerm"],
+            "name": {
+              "@language": "nl",
+              "@value": "Vincent van Gogh"
+            }
           }
         }
     </pre>
 </div>
-
-Issue(11): Can we do without term labels? 
 
 Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
 such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
@@ -487,7 +518,7 @@ Issue: Does license make sense on the level of individual resources of should we
 An *OPTIONAL* property that indicates the location(s) depicted or described in the [[#CreativeWork|CreativeWork]].
 For example, the location in a photograph or painting.
 
-If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used instead.
+If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[#Place|Place]] resource *MUST* be used instead.
 
 <div class="example">
     Van Gogh’s painting The Starry Night:
@@ -498,22 +529,22 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
           "@id": "http://www.wikidata.org/entity/Q45585",
           "contentLocation": {
             "@id": "http://www.wikidata.org/entity/Q221507",
-            "@type": "Place"
+            "@type": ["Place", "DefinedTerm"],
+            "name": {
+              "@language": "fr",
+              "@value": "Saint-Rémy-de-Provence"
+            }
          }
        }
     </pre>
 </div>
-
-Issue: The range for `contentLocation` is `schema:Place`. 
-Can we directly reference terms (such as http://www.wikidata.org/entity/Q221507)
-if these are not typed `schema:Place` in the terminology source? Or do we need to add a `schema:sameAs` in-between?
 
 ### locationCreated ### {#locationCreated}
 
 An *OPTIONAL* property that indicates the location(s) where the [[#CreativeWork|CreativeWork]] was created
 (which may be different from its [[#contentLocation|contentLocation]]).
 
-If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resource *MUST* be used instead.
+If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[#Place|Place]] resource *MUST* be used instead.
 
 <div class="example">
     Van Gogh’s painting The Starry Night:
@@ -524,7 +555,11 @@ If available, a [=term=] *MUST* be referenced. If not, a [[#Place|Place]] resour
           "@id": "http://www.wikidata.org/entity/Q45585",
           "locationCreated": {
             "@id": "http://www.wikidata.org/entity/Q221507",
-            "@type": "Place"
+            "@type": ["Place", "DefinedTerm"],
+            "name": {
+              "@language": "fr",
+              "@value": "Saint-Rémy-de-Provence"
+            }
          }
        }
     </pre>
@@ -554,7 +589,7 @@ An *OPTIONAL* property to indicate the subject-matter of the [[#CreativeWork|Cre
 For example, which subjects are depicted in a painting or photograph?
 Or which subjects is a story about?
 
-The value *MUST* reference [=terms=].
+The value *MUST* [[#reference-terms|reference]] [=terms=].
 
 If the subject is a location, it *MUST* be listed under [[#contentLocation|contentLocation]] instead.
 
@@ -568,11 +603,19 @@ If the subject is a location, it *MUST* be listed under [[#contentLocation|conte
           "about": [
             {
               "@id": "http://www.wikidata.org/entity/Q149908",
-              "@type": "DefinedTerm"
+              "@type": "DefinedTerm",
+              "name": {
+                "@language": "en",
+                "@value": "starry sky"
+              }
             },
             {
               "@id": "http://www.wikidata.org/entity/Q405",
-              "@type": "DefinedTerm"
+              "@type": "DefinedTerm",
+              "name": {
+                "@language": "en",
+                "@value": "Moon"
+              }
             }
           ]
        }
@@ -595,10 +638,20 @@ The value *MUST* reference [=terms=].
           "@id": "http://www.wikidata.org/entity/Q45585",
           "material": [
             {
-              "@id": "http://vocab.getty.edu/aat/300015050"
+              "@id": "http://vocab.getty.edu/aat/300015050",
+              "@type": "DefinedTerm",
+              "name": {
+                "@language": "en",
+                "@value": "oil paint (paint)"
+              }
             },
             {
-              "@id": "http://vocab.getty.edu/aat/300014078"
+              "@id": "http://vocab.getty.edu/aat/300014078",
+              "@type": "DefinedTerm",
+              "name": {
+                "@language": "en",
+                "@value": "canvas (textile material)"
+              }
             }
           }
         }
@@ -621,7 +674,12 @@ The value *MUST* reference a [=term=].
           "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "genre": {
-            "@id": "http://vocab.getty.edu/aat/300021508"
+            "@id": "http://vocab.getty.edu/aat/300021508",
+            "@type": "DefinedTerm",
+              "name": {
+                "@language": "en",
+                "@value": "Post-Impressionist"
+              }
           }
         }
     </pre>
@@ -630,7 +688,7 @@ The value *MUST* reference a [=term=].
 ## Person ## {#Person}  
 
 If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-If a [=term=] is available for the person, that *MUST* be referenced.
+If a [=term=] is available for the person, that *MUST* be [[#reference-terms|referenced]].
 If not, the person *MUST* be defined by the required properties listed below.
 
 Each Person *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI.
