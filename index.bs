@@ -444,7 +444,7 @@ This usage is out of scope for this document.
 Issue: Or use specialized properties schema:image, schema:video, schema:audio alongside or without schema:associatedMedia?
 
 A media object that represents the [[#CreativeWork|CreativeWork]].
-This property is *REQUIRED* if applicable, i.e. if at least one media object is available for the [=metadata record=].
+This property is *REQUIRED* if at least one media object is available for the CreativeWork.
 
 <div class="example">
     A IIIF image representation of The Starry Night:
