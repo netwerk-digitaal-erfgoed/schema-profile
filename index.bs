@@ -412,7 +412,12 @@ the `creator` property *MUST* be used for consistency.
 ### isPartOf (required) ### {#isPartOf}
 
 A *REQUIRED* property that points to the dataset(s) that the [[#CreativeWork|CreativeWork]] is part of.
+This contextualizes the CreativeWork for consumers, with the [[NDE-DATASETS|dataset’s description]] providing
+information about properties that are shared between CreativeWorks in the same dataset,
+such as publisher and license.
+
 Note that a CreativeWork may be part of multiple datasets.
+
 The dataset *MUST* be typed as a `Dataset`.
 
 <div class="example">
@@ -429,6 +434,10 @@ The dataset *MUST* be typed as a `Dataset`.
         }
     </pre>
 </div>
+
+The `isPartOf` property *MAY* also be used to indicate hierarchical relations between CreativeWorks within the dataset.
+In that case, the value’s type will be something other than `Dataset`.
+This usage is out of scope for this document.
 
 ### associatedMedia (required) ### {#associatedMedia}
 
