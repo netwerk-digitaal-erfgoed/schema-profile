@@ -28,7 +28,7 @@ It is based on:
 - the current state of datasets in the heritage network,
     as observed in the [Dataset Knowledge Graph](https://github.com/netwerk-digitaal-erfgoed/dataset-knowledge-graph),
     particularly its <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
-- the needs of service platform builders for understanding, processing and presenting data.
+- the needs of service platform builders for understanding, processing and presenting data, particularly across datasets and publishers.
 
 By adhering to this model, [[NDE-DATASETS#publisher|dataset publishers]] ensure that their data can be:
 
