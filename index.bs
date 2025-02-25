@@ -335,7 +335,7 @@ the superclass *MUST* be provided explicitly to help users understand the data.
 
 ### URI (required) ### {#URI}
 
-Each [[#CreativeWork|CreativeWork]] *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI. 
+Each [[#CreativeWork|CreativeWork]] *MUST* be identified by a [[NDE-COLLECTION-MANAGEMENT-SYSTEMS#persistent-uri|persistent URI]]. 
 Blank nodes *MUST NOT* be used for identifying CreativeWorks.
 
 <div class="example">
@@ -700,7 +700,7 @@ If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
 If a [=term=] is available for the person, that *MUST* be [[#reference-terms|referenced]].
 If not, the person *MUST* be defined by the required properties listed below.
 
-Each Person *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI.
+Each Person *MUST* be identified by a [[NDE-COLLECTION-MANAGEMENT-SYSTEMS#persistent-uri|persistent URI]].
 Blank nodes *MUST NOT* be used for identifying Persons.
 
 The objective for the Person model is not to fully describe all aspects of a person,
@@ -797,7 +797,8 @@ The value *MUST* reference a [=term=].
 
 ## Organization ## {#Organization}
 
-Each Organization *MUST* be identified by a <a href="https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/#persistent-identifiers">persistent</a> URI.
+Each Organization *MUST* be identified by a [[NDE-COLLECTION-MANAGEMENT-SYSTEMS#persistent-uri|persistent URI]]. 
+
 Blank nodes *MUST NOT* be used for identifying Organizations.
 
 ### name (required) ### {#organization-name}
