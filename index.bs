@@ -487,13 +487,6 @@ The value *MUST* be a [[#language|language-tagged]] string.
     </pre>
 </div>
 
-### identifier ### {#identifier} 
-
-An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork|CreativeWork]],
-usually an assigned alphanumeric string.
-The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
-Note that this is different from the CreativeWork’s [[#URI|URI]].
-
 ### abstract ### {#abstract-section}
 
 An *OPTIONAL* property that summarizes the [[#CreativeWork|CreativeWork]] in one sentence.
@@ -522,6 +515,13 @@ The value *MUST* be a [[#language|language-tagged]] string.
         }
     </pre>
 </div>
+
+### identifier ### {#identifier}
+
+An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork|CreativeWork]],
+usually an assigned alphanumeric string.
+The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
+Note that this is different from the CreativeWork’s [[#URI|URI]].
 
 ### license ### {#license}
 
