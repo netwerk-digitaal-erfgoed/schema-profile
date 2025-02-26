@@ -470,11 +470,9 @@ Issue: How to refer to media that is not part of the dataset, such as external i
 
 ### description ### {#description}
 
-An *OPTIONAL* property that describes the [[#CreativeWork|CreativeWork]] in one sentence.
-The description *MUST* be free of jargon and abbreviations so it can be understood by others.
-The value *MUST* be a [[#language|language-tagged]] string.
+An *OPTIONAL* property that gives a full description of the [[#CreativeWork|CreativeWork]].
 
-Issue(14): Description as single sentence.
+The value *MUST* be a [[#language|language-tagged]] string.
 
 <div class="example">
     A one-sentence description:
@@ -499,7 +497,10 @@ Issue(14): Description as single sentence.
 
 ### abstract ### {#abstract-section}
 
-An *OPTIONAL* property that provides a longer summarizing description of the [[#CreativeWork|CreativeWork]].
+An *OPTIONAL* property that summarizes the [[#CreativeWork|CreativeWork]] in one sentence.
+
+The abstract *SHOULD* be free of jargon and abbreviations so it can be understood by others.
+
 The value *MUST* be a [[#language|language-tagged]] string.
 
 <div class="example">
