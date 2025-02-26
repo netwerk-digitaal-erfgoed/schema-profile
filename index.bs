@@ -386,7 +386,7 @@ If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* b
 <div class="example">
     Van Gogh’s painting The Starry Night:
 
-    <pre highlight=json-ld line-numbers line-highlight="5-9">
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
           "@context": "https://schema.org",
           "@type": ["CreativeWork", "Painting"],
