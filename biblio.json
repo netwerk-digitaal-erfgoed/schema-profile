@@ -8,13 +8,12 @@
     "title": "National Digital Heritage Strategy",
     "authors": ["NDE", "Ministerie van Onderwijs, Cultuur en Wetenschap"]
   },
-  "nde-alignment": {
-    "href": "https://netwerk-digitaal-erfgoed.github.io/cm-implementation-guidelines/",
-    "title": "Implementation guidelines for NDE alignment",
+  "nde-collection-management-systems": {
+    "href": "https://netwerk-digitaal-erfgoed.github.io/requirements-collection-management-systems/",
+    "title": "Requirements for Collection Management Systems",
     "authors": [
-      "Sjors de Valk",
-      "Ivo Zandhuis",
-      "Bob Coret"
+      "Gertjan Filarski",
+      "Enno Meijers"
     ]
   }
 }
