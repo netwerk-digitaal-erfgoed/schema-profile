@@ -58,7 +58,6 @@ Definitions {#definitions}
 
 : <dfn>Generic data model</dfn>
 :: A simple, shared [=data model=]; the scope of this document.
-    See also [[NDE-ALIGNMENT]].
     Can be used alongside [=domain data models=].
 
 : <dfn>Domain data model</dfn>
@@ -101,7 +100,8 @@ Vocabulary {#vocabulary}
 ---
 
 The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
-The choice for [Schema.org](https://schema.org) is substantiated in [[NDE-ALIGNMENT#generic-data-model]].
+Schema.org is a widely adopted cross-domain metadata standard.
+It is, therefore, well-suited for the heritage network, which spans datasets from the library, archive, museum and other domains.
 
 While the Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”,
 mixing the namespaces makes it harder to consume datasets.
