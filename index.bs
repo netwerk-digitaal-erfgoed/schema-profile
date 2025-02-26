@@ -729,8 +729,6 @@ A *REQUIRED* property that indicates the [[#Person|Person]]’s full name in its
     </pre>
 </div>
 
-Issue(10): Does it make sense to require person names to be language-tagged? Think about languages that show names in a different format, such as ZH.
-
 ### birthDate ### {#birthDate}
 
 An *OPTIONAL* property that indicates the person’s date of birth in [[!ISO8601]] format.
