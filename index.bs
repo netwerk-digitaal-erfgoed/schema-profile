@@ -293,7 +293,7 @@ Each record *MUST* be typed as one of the following classes:
 
 For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL* properties.
 
-## Class diagram
+## Class diagram ## {#class-diagram}
 
 <img src="https://mermaid.ink/svg/pako:eNqNlEFP6zAMx79KlCOiCK45ICGGBBKwiYGe9F44eKnXBdJkSlwkhPbdX5p2kMJG10ObOL_Y_jtuPrhyJXLBi6KQljQZFGx-eX11d1FczIr7yZW0aUkZCGGiofJQS8vikyzs0iOQfsM_zr-yj26lfZ4ebkR83bJ_Z89fVgt19O_LpTBgqzl5batInJwcZZAOM_A0XQo2AYKA9IMoMSiv16Sd_entdMjCIpAHRaNgCYRJDZaCBbXCGkRMAB91jQneCtl0n7wKM_TB2Vz_QUoX2tOqjTEIOAjWyYUxbEdOd1hqmC5eUFGemHKW0NKTN9_OZ5csAwrzzXvJR_T1juO_GbjvBoOOKYpzJnlbFsm3VRRMtYjzY3yuULCYhlO6Pb5k37v5tA-WtIltPW6dgraf9sfM9pge7ttlLFQqTkxw4Ro6kK2jX6_BHIhXaD12bF_ETyrPO_Vbmoyzqel-YbPoKwhTpZp1X0B-zOu4ALqM90rqCckpti1KLuKwxCU0hiSXdhNRaMjN363ignyDx9y7plpxsQQT4qxZt79lf-98Wtdg_zq3nW_-A_M-cRM">
 
@@ -349,8 +349,6 @@ Blank nodes *MUST NOT* be used for identifying CreativeWorks.
         }
     </pre>
 </div>
-
-Issue: Do we need identifier alongside URI? Not from a web perspective (where we care only about URIs) but perhaps identifier *is* useful to reference physical objects, e.g. in a museum. 
 
 ### name (required) ### {#name}
 
@@ -443,11 +441,11 @@ This usage is out of scope for this document.
 
 Issue: Or use specialized properties schema:image, schema:video, schema:audio alongside or without schema:associatedMedia?
 
-A media object that represents the [[#CreativeWork|CreativeWork]].
-This property is *REQUIRED* if at least one media object is available for the CreativeWork.
+One or more media objects that represent the [[#CreativeWork|CreativeWork]].
+This property is *REQUIRED* if at least one media object is available.
 
 <div class="example">
-    A IIIF image representation of The Starry Night:
+    An image representation of the Starry Night:
 
     <pre highlight=json-ld line-numbers>
         {
@@ -455,10 +453,8 @@ This property is *REQUIRED* if at least one media object is available for the Cr
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
           "associatedMedia": {
-            "@id": "https://demo.limb-gallery.com/idurl/1/25290",
             "@type": "ImageObject",
-            "contentUrl": "https://demo.limb-gallery.com/iiif/25290/manifest",
-            "encodingFormat": "application/ld+json"
+            ...
           }
         }
     </pre>
@@ -821,29 +817,61 @@ In case of image, video or audio objects, the relevant subclass *MUST* be used:
 - [[#VideoObject|VideoObject]]
 - [[#AudioObject|AudioObject]]
 
-In case of other types of media, the generic class [[#MediaObject|MediaObject]] *MUST* be used.
+For other types of media, the generic class [[#MediaObject|MediaObject]] *MUST* be used.
 
 ### ImageObject ### {#ImageObject}
 
-An ImageObject *MUST* have a `contentUrl` property that points to a [IIIF Presentation API](https://netwerk-digitaal-erfgoed.github.io/requirements-collection-management-systems/#serving-images-through-iiif) manifest.
+*REQUIRED* properties for an ImageObject are:
 
-Issue(2): See
+- `contentUrl`: URL to the image object, *RECOMMENDED* to be in high-resolution;
+- `thumbnailUrl`: URL to a smaller version of the image object (usually for displaying in lists, search results etc.)
 
-Issue: Should we support non-IIIF clients/users?
+Issue: must MediaObjects have a URI?
 
 <div class="example">
-    A simple image of a painting.
+    A full-size and thumbnail image of a painting.
 
     <pre highlight=json-ld>
         {
           "@context": "https://schema.org/",
-          "@id": "https://example.com/image1",
           "@type": "ImageObject",
-          "contentUrl": "https://example.com/image1/manifest.json",
-          "encodingFormat": "application/ld+json"
+          "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg",
+          "thumbnailUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/^!256,256/0/default.jpg"
         }
     </pre>
 </div>
+
+If an <a href="https://iiif.io/api/">IIIF Image API</a> and/or
+<a href="https://iiif.io/api/presentation/3.0/">IIIF Presentation API</a> manifest is available,
+these *MUST* be specified through `isBasedOn`,
+while keeping `contentUrl` and `thumbnailURL` for non-IIIF consumers:
+
+<div class="example">
+    IIIF Image API and Presentation API.
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@type": "ImageObject",
+          "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg",
+          "thumbnailUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/^!256,256/0/default.jpg",
+          "isBasedOn": [
+            {
+              "@type": "CreativeWork",
+              "@id": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/info.json",
+              "encodingFormat": "application/ld+json;profile='http://iiif.io/api/image/3/context.json'"
+            },
+            {
+              "@type": "CreativeWork",
+              "@id": "https://demo.limb-gallery.com/iiif/25290/manifest",
+              "encodingFormat": "application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'"
+            }
+          ]
+        }
+    </pre>
+</div>
+
+Issue(2): See
 
 ### AudioObject ### {#AudioObject}
 
@@ -855,7 +883,7 @@ Issue: TODO
 
 ## Place ## {#Place}
 
-For properties that reference locations, if no [=term=] is available, a custom Place resource *MUST* be used.
+For properties that reference locations, if no [=term=] is available, a custom Place resource *MUST* be used instead.
 
 ### address (required) ### {#address}
 
