@@ -564,7 +564,6 @@ The value *MUST* reference [=terms=].
     </pre>
 </div>
 
-
 ### description ### {#description}
 
 An *OPTIONAL* property that gives a full description of the [[#CreativeWork|CreativeWork]].
@@ -614,6 +613,23 @@ The value *MUST* be a [[#language|language-tagged]] string.
             }
           ]
         }
+    </pre>
+</div>
+
+### size ### {#size}
+
+An *OPTIONAL* property that indicates the physical size of the [[#CreativeWork|CreativeWork]] in its preferred display form.
+
+<div class="example">
+    The dimensions of Van Gogh’s Starry Night:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "size": "74 × 92 cm"
+         }
+       }
     </pre>
 </div>
 
