@@ -821,7 +821,10 @@ Issue(12): Person candidate properties
 
 ### name (required) ### {#person-name}
 
-A *REQUIRED* property that indicates the [[#Person|Person]]’s full name in its preferred display form:
+A *REQUIRED* property that indicates the [[#Person|Person]]’s full name in its preferred display form.
+
+The name *MUST NOT* contain information that belongs to other properties, 
+such as [[#birthDate|birthDate]] or [[#deathDate|deathDate]].
 
 <div class="example">
     Person with a language-tagged name:
