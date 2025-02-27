@@ -878,27 +878,63 @@ Issue: Do we need more properties for Organization?
 
 ## MediaObject ## {#MediaObject}
 
-In case of image, video or audio objects, the relevant subclass *MUST* be used:
+In case of image, video, audio or 3d model objects, the relevant subclass *MUST* be used:
 
-- [[#ImageObject|ImageObject]]
-- [[#VideoObject|VideoObject]]
-- [[#AudioObject|AudioObject]]
+- ImageObject
+- VideoObject
+- AudioObject
+- 3DModel
 
 For other types of media, the generic class [[#MediaObject|MediaObject]] *MUST* be used.
 
-### ImageObject ### {#ImageObject}
-
-*REQUIRED* properties for an ImageObject are:
-
-- `contentUrl`: URL to the image object, *RECOMMENDED* to be in high-resolution;
-- `thumbnailUrl`: URL to a smaller version of the image object (usually for displaying in lists, search results etc.)
-
 Issue: must MediaObjects have a URI?
 
+### license (required) ### {#MediaObject-license}
+
+A *REQUIRED* property that points to the URI for a license under which the media object may be used.
+
+An open license is *RECOMMENDED*.
+
 <div class="example">
-    A full-size and thumbnail image of a painting.
+    CC0 “No Rights Reserved” license on an ImageObject:
 
     <pre highlight=json-ld>
+        {
+          "@context": "https://schema.org/",
+          "@type": "ImageObject",
+          "license": "https://creativecommons.org/public-domain/cc0/"
+        }
+    </pre>
+</div>
+
+### contentUrl (required) ### {#MediaObject-contentUrl}
+
+Points to the URL of the media object, *REQUIRED* if the MediaObject is published under an open license.
+
+For ImageObjects, this *SHOULD* be a high-resolution image to be used in full-screen viewers etc.
+
+<div class="example" >
+    Full-sized image representation of the Starry Night.
+
+    <pre highlight=json-ld line-numbers line-highlight="4">
+        {
+          "@context": "https://schema.org/",
+          "@type": "ImageObject",
+          "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg"
+        }
+    </pre>
+</div>
+
+### thumbnailUrl (required) ### {#MediaObject-thumbnailUrl}
+
+Points to a smaller version of the MediaObject, *REQUIRED* if the MediaObject is published under an open license.
+
+For ImageObjects, this *SHOULD* be a small image to be used in lists, search results etc. 
+
+<div class="example" >
+    Both full-sized image and thumbnail of the Starry Night.
+
+    <pre highlight=json-ld line-numbers line-highlight="4-5">
         {
           "@context": "https://schema.org/",
           "@type": "ImageObject",
@@ -908,15 +944,21 @@ Issue: must MediaObjects have a URI?
     </pre>
 </div>
 
-If an <a href="https://iiif.io/api/">IIIF Image API</a> and/or
-<a href="https://iiif.io/api/presentation/3.0/">IIIF Presentation API</a> manifest is available,
-these *MUST* be specified through `isBasedOn`,
-while keeping `contentUrl` and `thumbnailURL` for non-IIIF consumers:
+### IIIF ### {#IIIF}
+
+If an <a href="https://iiif.io/api/">IIIF Image API</a> for the [[#MediaObject|MediaObject]] is available, 
+this *MUST* be specified through `isBasedOn`,
+with property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
+
+If an <a href="https://iiif.io/api/">IIIF Presentation API</a> for the [[#MediaObject|MediaObject]] is available,
+this *MUST* be specified through `isBasedOn`,
+with property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
+
 
 <div class="example">
     IIIF Image API and Presentation API.
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="6-17">
         {
           "@context": "https://schema.org/",
           "@type": "ImageObject",
@@ -938,7 +980,8 @@ while keeping `contentUrl` and `thumbnailURL` for non-IIIF consumers:
     </pre>
 </div>
 
-Issue(2): See
+Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
+the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
 
 ### AudioObject ### {#AudioObject}
 
@@ -948,7 +991,7 @@ Issue: TODO
 
 Issue: TODO
 
-### 3DModel ### {#3dModel}
+### 3DModel ### {#3DModel}
 
 ## Place ## {#Place}
 
