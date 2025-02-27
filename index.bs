@@ -477,6 +477,9 @@ the `creator` property *MUST* be used for consistency.
 ### isPartOf (required) ### {#isPartOf}
 
 A *REQUIRED* property that points to the dataset(s) that the [[#CreativeWork|CreativeWork]] is part of.
+
+IF is part of datasets.
+
 This contextualizes the CreativeWork for consumers, with the [[NDE-DATASETS|dataset’s description]] providing
 information about properties that are shared between CreativeWorks in the same dataset,
 such as publisher and license.
@@ -589,10 +592,6 @@ An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork
 usually an assigned alphanumeric string.
 The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
 Note that this is different from the CreativeWork’s [[#URI|URI]].
-
-### license ### {#license}
-
-Issue: Does license make sense on the level of individual resources of should we delegate to the level of the dataset? Or perhaps only on certain types of resources, such as media?
 
 ### contentLocation ### {#contentLocation}
 
