@@ -335,7 +335,7 @@ It is then possible to request the metadata record in the generic data model usi
     <pre highlight=http>
         GET /resource/a HTTP/1.1
         Accept: application/ld+json
-        Accept-Profile: <https://netwerk-digitaal-erfgoed.github.io/schema-profile/> 
+        Accept-Profile: &lt;https://netwerk-digitaal-erfgoed.github.io/schema-profile/></code> 
         
         # Server responds with a SCHEMA-AP-NDE representation of the metadata record.
         HTTP/1.1 200 OK
@@ -947,7 +947,7 @@ For ImageObjects, this *SHOULD* be a small image to be used in lists, search res
 ### copyrightNotice ### {#copyrightNotice}
 
 An *OPTIONAL* property that indicates the copyright aspects of the [[#MediaObject|MediaObject]],
-particularly useful if the [[#license]] requires attribution.
+particularly useful if the [[#MediaObject-license]] requires attribution.
 
 <div class="example" >
     A MediaObject that may be used only with attribution.
