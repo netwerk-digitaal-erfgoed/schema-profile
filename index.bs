@@ -900,6 +900,8 @@ Issue: TODO
 
 Issue: TODO
 
+### 3DModel ### {#3dModel}
+
 ## Place ## {#Place}
 
 For properties that reference locations, if no [=term=] is available, a custom Place resource *MUST* be used instead.
