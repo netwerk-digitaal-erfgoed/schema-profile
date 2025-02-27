@@ -11,6 +11,7 @@ Abstract: This document specifies the generic data model to be used when publish
     The model enables dataset consumers, including software developers building data-consuming applications,
     to use, understand and combine datasets from multiple sources,
     thus fulfilling the promise of linked data.
+    <link rel="stylesheet" href="nde.css">
 </pre>
 
 Note: Please don’t rely on this document yet as it’s still under discussion and development.
@@ -216,6 +217,52 @@ The following formats are *RECOMMENDED*:
 
 Publication method {#publication-method}
 ---
+
+### Publication levels ### {#publication-levels}
+
+In the heritage network, SCHEMA-AP-NDE data *MUST* be available on two levels: 
+
+1. resolvable URIs for individual resources
+2. data dumps for datasets
+
+It *MAY* additionally be available through a:
+
+3. SPARQL endpoint.
+
+If the generic data model is used alongside [=domain data models=], there are two methods for doing so:
+
+- [[#combined]]
+- [[#profiles]].
+
+Publishers *MUST* support at least one of these methods.
+
+<table class="syntax">
+    <caption>
+        Matrix of publications levels and methods.
+    </caption>
+    <thead>
+        <td></td>
+        <td>Combined</td>
+        <td>Separate profiles</td>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Resolvable URI</td>
+            <td>✅</td>
+            <td>✅</td>
+        </tr>
+        <tr>
+            <td>Data dump</td>
+            <td>✅</td>
+            <td>✅</td>
+        </tr>
+        <tr>
+            <td>SPARQL endpoint</td>
+            <td>❌</td>
+            <td>✅</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Combined ### {#combined}
 
