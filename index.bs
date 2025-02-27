@@ -901,7 +901,7 @@ An open license is *RECOMMENDED*.
     <pre highlight=json-ld>
         {
           "@context": "https://schema.org/",
-          "@type": "ImageObject",
+          "@type": "MediaObject",
           "license": "https://creativecommons.org/public-domain/cc0/"
         }
     </pre>
@@ -944,6 +944,24 @@ For ImageObjects, this *SHOULD* be a small image to be used in lists, search res
     </pre>
 </div>
 
+### copyrightNotice ### {#copyrightNotice}
+
+An *OPTIONAL* property that indicates the copyright aspects of the [[#MediaObject|MediaObject]],
+particularly useful if the [[#license]] requires attribution.
+
+<div class="example" >
+    A MediaObject that may be used only with attribution.
+
+    <pre highlight=json-ld line-numbers line-highlight="4-5">
+        {
+          "@context": "https://schema.org/",
+          "@type": "MediaObject",
+          "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "copyrightNotice": "© 2025 Example Museum, with permission from Ph. Otographer" 
+        }
+    </pre>
+</div>
+
 ### IIIF ### {#IIIF}
 
 If an <a href="https://iiif.io/api/">IIIF Image API</a> for the [[#MediaObject|MediaObject]] is available, 
@@ -953,7 +971,6 @@ with property `encodingFormat` set to `application/ld+json;profile='http://iiif.
 If an <a href="https://iiif.io/api/">IIIF Presentation API</a> for the [[#MediaObject|MediaObject]] is available,
 this *MUST* be specified through `isBasedOn`,
 with property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
-
 
 <div class="example">
     IIIF Image API and Presentation API.
@@ -982,16 +999,6 @@ with property `encodingFormat` set to `application/ld+json;profile='http://iiif.
 
 Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
 the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
-
-### AudioObject ### {#AudioObject}
-
-Issue: TODO
-
-### VideoObject ### {#VideoObject}
-
-Issue: TODO
-
-### 3DModel ### {#3DModel}
 
 ## Place ## {#Place}
 
