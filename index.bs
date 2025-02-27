@@ -335,7 +335,7 @@ It is then possible to request the metadata record in the generic data model usi
     <pre highlight=http>
         GET /resource/a HTTP/1.1
         Accept: application/ld+json
-        Accept-Profile: &lt;https://netwerk-digitaal-erfgoed.github.io/schema-profile/></code> 
+        Accept-Profile: &lt;https://netwerk-digitaal-erfgoed.github.io/schema-profile/>
         
         # Server responds with a SCHEMA-AP-NDE representation of the metadata record.
         HTTP/1.1 200 OK
