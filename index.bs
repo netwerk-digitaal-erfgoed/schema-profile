@@ -419,7 +419,9 @@ Blank nodes *MUST NOT* be used for identifying CreativeWorks.
 
 ### name (required) ### {#name}
 
-A *REQUIRED* property to indicate the [[#CreativeWork|CreativeWork]]’s name, assigned either by its creator or by others.
+A *REQUIRED* property to indicate the [[#CreativeWork|CreativeWork]]’s name or title, assigned either by its creator,
+collection managers or by others.
+
 The name *MUST* be a [[#language|language-tagged]] string:
 
 <div class="example">
