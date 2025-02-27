@@ -534,6 +534,35 @@ See [[#MediaObject|MediaObject]] for this property’s allowed values.
 
 Issue: How to refer to media that is not part of the dataset, such as external images that are used not as unique representations but as illustrations of the CreativeWork?
 
+### identifier ### {#identifier}
+
+An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork|CreativeWork]],
+usually an assigned alphanumeric string.
+The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
+Note that this is different from the CreativeWork’s [[#URI|URI]].
+
+### additionalType ### {#additionalType}
+
+An *OPTIONAL* property that provides additional types for the [[#CreativeWork|CreativeWork]].
+
+The value *MUST* reference [=terms=].
+
+<div class="example">
+    The Starry Night is both a Schema.org Painting and an AAT painting: 
+
+    <pre highlight=json-ld line-numbers line-highlight="4-7">
+        {
+          "@context": "https://schema.org/",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": ["CreativeWork", "Painting"],
+          "additionalType": {
+            "@id": "https://vocab.getty.edu/aat/300033618"
+          }
+        }
+    </pre>
+</div>
+
+
 ### description ### {#description}
 
 An *OPTIONAL* property that gives a full description of the [[#CreativeWork|CreativeWork]].
@@ -585,13 +614,6 @@ The value *MUST* be a [[#language|language-tagged]] string.
         }
     </pre>
 </div>
-
-### identifier ### {#identifier}
-
-An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork|CreativeWork]],
-usually an assigned alphanumeric string.
-The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
-Note that this is different from the CreativeWork’s [[#URI|URI]].
 
 ### contentLocation ### {#contentLocation}
 
