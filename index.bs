@@ -189,7 +189,7 @@ Publishers *SHOULD* add the term’s name in any language(s) they know about for
 
     <pre highlight=json-ld line-numbers line-highlight="4-11">
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "creator": {
             "@id": "https://data.rkd.nl/artists/32439",
@@ -202,7 +202,6 @@ Publishers *SHOULD* add the term’s name in any language(s) they know about for
         }
     </pre>
 </div>
-
 
 Serialization {#serialization}
 ---
@@ -457,7 +456,7 @@ If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* b
 
     <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@type": ["CreativeWork", "Painting"],
           "@id": "http://www.wikidata.org/entity/Q45585",
           "creator": {
@@ -625,7 +624,7 @@ An *OPTIONAL* property that indicates the physical size of the [[#CreativeWork|C
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "size": "74 × 92 cm"
          }
@@ -645,7 +644,7 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "contentLocation": {
             "@id": "http://www.wikidata.org/entity/Q221507",
@@ -671,7 +670,7 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "locationCreated": {
             "@id": "http://www.wikidata.org/entity/Q221507",
@@ -696,7 +695,7 @@ The value *MUST* be in [[!ISO8601]] format. Partial dates *MAY* be used if the e
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "dateCreated": "1889-06"
        }
@@ -718,7 +717,7 @@ If the subject is a location, it *MUST* be listed under [[#contentLocation|conte
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "about": [
             {
@@ -754,7 +753,7 @@ The value *MUST* reference [=terms=].
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "material": [
             {
@@ -791,7 +790,7 @@ The value *MUST* reference a [=term=].
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "genre": {
             "@id": "http://vocab.getty.edu/aat/300021508",
@@ -831,7 +830,7 @@ such as [[#birthDate|birthDate]] or [[#deathDate|deathDate]].
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@type": "Person",
           "@id": "https://n2t.net/ark:/123456/2",
           "name": {
@@ -855,7 +854,7 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "https://n2t.net/ark:/123456/2",
           "birthPlace": {"
             "@id": "https://sws.geonames.org/2745912/",
@@ -878,7 +877,7 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "https://n2t.net/ark:/123456/2",
           "deathPlace": {
             "@id": "http://www.wikidata.org/entity/Q131153786",
@@ -898,7 +897,7 @@ The value *MUST* reference a [=term=].
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org",
+          "@context": "https://schema.org/",
           "@id": "https://n2t.net/ark:/123456/2",
           "hasOccupation": {
             "@id": "http://vocab.getty.edu/aat/300025008"
@@ -917,7 +916,31 @@ Blank nodes *MUST NOT* be used for identifying Organizations.
 
 A *REQUIRED* property that indicates the [[#Organization|Organization]]’s full name in its preferred display form.
 
-Issue: Do we need more properties for Organization?
+### address ### {#organization-address}
+
+An *OPTIONAL* property that indicates the [[#Organization|Organization]]’s address(es),
+useful for distinguishing the organization from others with similar names.
+
+<div class="example">
+    Organization with an address:
+
+    <pre highlight=json-ld line-numbers>
+        {
+          "@context": "https://schema.org/",
+          "@type": "Organization",
+          "@id": "https://n2t.net/ark:/123456/3",
+          "name": "Example Museum",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Street 123",
+            "postalCode": "1234 AB",
+            "addressLocality": "City",
+            "addressRegion": "Noord-Holland",
+            "addressCountry": "NL"
+          }
+        }
+    </pre>
+</div>
 
 ## MediaObject ## {#MediaObject}
 
