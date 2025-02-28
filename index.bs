@@ -854,7 +854,7 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
         {
           "@context": "https://schema.org/",
           "@id": "https://n2t.net/ark:/123456/2",
-          "birthPlace": {"
+          "birthPlace": {
             "@id": "https://sws.geonames.org/2745912/",
             "@type": "Place"
           }
