@@ -533,8 +533,6 @@ This property is *REQUIRED* if at least one media object is available.
 
 See [[#MediaObject|MediaObject]] for this property’s allowed values.
 
-Issue: How to refer to media that is not part of the dataset, such as external images that are used not as unique representations but as illustrations of the CreativeWork?
-
 ### identifier ### {#identifier}
 
 An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork|CreativeWork]],
