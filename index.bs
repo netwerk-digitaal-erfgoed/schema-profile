@@ -570,14 +570,18 @@ The value *MUST* be a [[#language|language-tagged]] string.
 <div class="example">
     A description of the Starry Night:
 
-    <pre highlight=json-ld line-numbers line-highlight="4-9">
+    <pre highlight=json-ld line-numbers line-highlight="4-13">
         {
           "@context": "https://schema.org/",
           "@id": "https://example.com/dataset1/resource1",
-          "abstract": [
+          "description": [
             {
               "@language": "nl",
-              "@value": "Het schilderij is een nachttafereel met gele sterren boven een kleine stad met heuvels. Het is een uitzicht vanuit een denkbeeldig punt over een dorp met kerktoren, met links een vlammende cipres en rechts olijfbomen tegen de heuvels op."
+              "@value": "Olieverfschilderij van het uitzicht uit Van Goghs ziekenhuiskamer in Saint-Rémy-de-Provence, vlak voor zonsopkomst."
+            },
+            {
+              "@language": "en",
+              "@value": "Oil-on-canvas painting depicting the view from his asylum room at Saint-Rémy-de-Provence, just before sunrise."
             }
           ]
         }
@@ -595,18 +599,14 @@ The value *MUST* be a [[#language|language-tagged]] string.
 <div class="example">
     A single-sentence abstract:
 
-    <pre highlight=json-ld line-numbers line-highlight="4-13">
+    <pre highlight=json-ld line-numbers line-highlight="4-9">
         {
           "@context": "https://schema.org/",
           "@id": "https://example.com/dataset1/resource1",
-          "description": [
+          "abstract": [
             {
               "@language": "nl",
-              "@value": "Olieverfschilderij van het uitzicht uit Van Goghs ziekenhuiskamer in Saint-Rémy-de-Provence, vlak voor zonsopkomst."
-            },
-            {
-              "@language": "en",
-              "@value": "Oil-on-canvas painting depicting the view from his asylum room at Saint-Rémy-de-Provence, just before sunrise."
+              "@value": "Het schilderij is een nachttafereel met gele sterren boven een kleine stad met heuvels. Het is een uitzicht vanuit een denkbeeldig punt over een dorp met kerktoren, met links een vlammende cipres en rechts olijfbomen tegen de heuvels op."
             }
           ]
         }
