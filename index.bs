@@ -747,8 +747,6 @@ If the subject is a location, it *MUST* be listed under [[#contentLocation|conte
     </pre>
 </div>
 
-Issue: Whereas schema:about has range schema:Thing, schema:material and other properties do not. This means we can use schema:DefinedTerm for schema:about but not for schema:material. Should we drop schema:DefinedTerm completely?
-
 ### material ### {#material}
 
 An *OPTIONAL* property that indicates the material(s) that the [[#CreativeWork|CreativeWork]] is made from, e.g. leather, wool, cotton, paper.
