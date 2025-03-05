@@ -1066,7 +1066,7 @@ the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-
 A simple formula for building image URLs from an IIIF Image API URL:
 
 - Full-size (`contentUrl`): `https://example.com/iiif/jmage-id/full/max/0/default.jpg`
-- Thumbnail (`thumbnailUrl`): `https://example.com/iiif/image-id/full/!256,256/0/default.jpg`.
+- Thumbnail (`thumbnailUrl`): `https://example.com/iiif/image-id/full/!256,256/0/default.jpg`
 
 ## Place ## {#Place}
 
