@@ -1063,6 +1063,10 @@ with property `encodingFormat` set to `application/ld+json;profile='http://iiif.
 
 Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
 the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
+A simple formula for building image URLs from an IIIF Image API URL:
+
+- Full-size (`contentUrl`): `https://example.com/iiif/jmage-id/full/max/0/default.jpg`
+- Thumbnail (`thumbnailUrl`): `https://example.com/iiif/image-id/full/!256,256/0/default.jpg`.
 
 ## Place ## {#Place}
 
