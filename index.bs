@@ -120,7 +120,7 @@ The language *MUST* be expressed as a well-formed language tag according to [[!B
 
     <pre highlight=json-ld line-numbers line-highlight="5-14">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/1",
           "@type": "CreativeWork",
           "name": [
@@ -144,7 +144,7 @@ Even if only one language is available, the language *MUST* be specified.
 
     <pre highlight=json-ld line-numbers line-highlight="3-6">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "name": {
             "@language": "nl",
             "@value": "De Sterrennacht"
@@ -160,7 +160,7 @@ Each language *MUST* occur only once, so only a single value per language is all
 
     <pre highlight=json-ld line-numbers line-highlight="5,9">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "name": [
             {
               "@language": "en",
@@ -187,10 +187,11 @@ Publishers *SHOULD* add the term’s name in any language(s) they know about for
 <div class="example">
     Use the term’s URI and add its name:
 
-    <pre highlight=json-ld line-numbers line-highlight="4-11">
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "creator": {
             "@id": "https://data.rkd.nl/artists/32439",
             "@type": ["Person", "DefinedTerm"],
@@ -388,7 +389,7 @@ Examples include:
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/1",
           "@type": ["CreativeWork", "Painting"]
         }
@@ -409,7 +410,7 @@ Blank nodes *MUST NOT* be used for identifying CreativeWorks.
 
     <pre highlight=json-ld line-numbers line-highlight="3">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://example.com/dataset1/resource1",
           "@type": "CreativeWork"
         }
@@ -428,7 +429,7 @@ The name *MUST* be a [[#language|language-tagged]] string:
 
     <pre highlight=json-ld line-numbers line-highlight="5-14">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://example.com/dataset1/resource1",
           "@type": "CreativeWork",
           "name": [
@@ -456,9 +457,9 @@ If not, a [[#Person|Person]] or [[#Organization|Organization]] resource *MUST* b
 
     <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org/",
-          "@type": ["CreativeWork", "Painting"],
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": ["CreativeWork", "Painting"],
           "creator": {
             "@id": "https://data.rkd.nl/artists/32439",
             "@type": ["Person", "DefinedTerm"],
@@ -493,7 +494,7 @@ The dataset *MUST* be typed as a `Dataset`.
 
     <pre highlight=json-ld line-numbers line-highlight="5-8">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/1",
           "@type": "CreativeWork",
           "isPartOf": {
@@ -518,9 +519,9 @@ This property is *REQUIRED* if at least one media object is available.
 <div class="example">
     An image representation of the Starry Night:
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-8">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
           "associatedMedia": {
@@ -551,7 +552,7 @@ The value *MUST* reference [=terms=].
 
     <pre highlight=json-ld line-numbers line-highlight="4-7">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": ["CreativeWork", "Painting"],
           "additionalType": {
@@ -570,10 +571,11 @@ The value *MUST* be a [[#language|language-tagged]] string.
 <div class="example">
     A description of the Starry Night:
 
-    <pre highlight=json-ld line-numbers line-highlight="4-13">
+    <pre highlight=json-ld line-numbers line-highlight="5-14">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://example.com/dataset1/resource1",
+          "@type": "CreativeWork",
           "description": [
             {
               "@language": "nl",
@@ -599,10 +601,11 @@ The value *MUST* be a [[#language|language-tagged]] string.
 <div class="example">
     A single-sentence abstract:
 
-    <pre highlight=json-ld line-numbers line-highlight="4-9">
+    <pre highlight=json-ld line-numbers line-highlight="5-10">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://example.com/dataset1/resource1",
+          "@type": "CreativeWork",
           "abstract": [
             {
               "@language": "nl",
@@ -620,10 +623,11 @@ An *OPTIONAL* property that indicates the physical size of the [[#CreativeWork|C
 <div class="example">
     The dimensions of Van Gogh’s Starry Night:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="5">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "size": "74 × 92 cm"
          }
        }
@@ -640,10 +644,11 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
 <div class="example">
     Van Gogh’s painting The Starry Night:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "contentLocation": {
             "@id": "http://www.wikidata.org/entity/Q221507",
             "@type": ["Place", "DefinedTerm"],
@@ -651,8 +656,8 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
               "@language": "fr",
               "@value": "Saint-Rémy-de-Provence"
             }
-         }
-       }
+          }
+        }
     </pre>
 </div>
 
@@ -666,10 +671,11 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
 <div class="example">
     Van Gogh’s painting The Starry Night:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "locationCreated": {
             "@id": "http://www.wikidata.org/entity/Q221507",
             "@type": ["Place", "DefinedTerm"],
@@ -677,8 +683,8 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
               "@language": "fr",
               "@value": "Saint-Rémy-de-Provence"
             }
-         }
-       }
+          }
+        }
     </pre>
 </div>
 
@@ -691,10 +697,11 @@ The value *MUST* be in [[!ISO8601]] format. Partial dates *MAY* be used if the e
 <div class="example">
     Van Gogh painted The Starry Night in June 1889:    
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="5">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "dateCreated": "1889-06"
        }
     </pre>
@@ -713,10 +720,11 @@ If the subject is a location, it *MUST* be listed under [[#contentLocation|conte
 <div class="example">
     The Starry Night depicts ‘starry sky’ and ‘Moon’.
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="5-22">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "about": [
             {
               "@id": "http://www.wikidata.org/entity/Q149908",
@@ -749,10 +757,11 @@ The value *MUST* reference [=terms=].
 <div class="example">
     The Starry Night is made from ‘oil paint’ and ‘canvas’:
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-22">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "material": [
             {
               "@id": "http://vocab.getty.edu/aat/300015050",
@@ -770,7 +779,7 @@ The value *MUST* reference [=terms=].
                 "@value": "canvas (textile material)"
               }
             }
-          }
+          ]
         }
     </pre>
 </div>
@@ -786,17 +795,18 @@ The value *MUST* reference a [=term=].
 <div class="example">
     The Starry Night belongs to the Post-Impressionist art movement:
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
           "genre": {
             "@id": "http://vocab.getty.edu/aat/300021508",
             "@type": "DefinedTerm",
-              "name": {
-                "@language": "en",
-                "@value": "Post-Impressionist"
-              }
+            "name": {
+              "@language": "en",
+              "@value": "Post-Impressionist"
+            }
           }
         }
     </pre>
@@ -828,9 +838,9 @@ such as [[#birthDate|birthDate]] or [[#deathDate|deathDate]].
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org/",
-          "@type": "Person",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
+          "@type": "Person",
           "name": {
             "@language": "nl",
             "@value": "Pluk van de Petteflat"
@@ -852,8 +862,9 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
+          "@type": "Person",  
           "birthPlace": {
             "@id": "https://sws.geonames.org/2745912/",
             "@type": "Place"
@@ -875,8 +886,9 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
+          "@type": "Person",
           "deathPlace": {
             "@id": "http://www.wikidata.org/entity/Q131153786",
             "@type": "Place"
@@ -895,8 +907,9 @@ The value *MUST* reference a [=term=].
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
+          "@type": "Person",
           "hasOccupation": {
             "@id": "http://vocab.getty.edu/aat/300025008"
           }
@@ -924,9 +937,9 @@ useful for distinguishing the organization from others with similar names.
 
     <pre highlight=json-ld line-numbers>
         {
-          "@context": "https://schema.org/",
-          "@type": "Organization",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/3",
+          "@type": "Organization",
           "name": "Example Museum",
           "address": {
             "@type": "PostalAddress",
@@ -964,7 +977,7 @@ An open license is *RECOMMENDED*.
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@type": "MediaObject",
           "license": "https://creativecommons.org/public-domain/cc0/"
         }
@@ -982,7 +995,7 @@ For ImageObjects, this *SHOULD* be a high-resolution image to be used in full-sc
 
     <pre highlight=json-ld line-numbers line-highlight="4">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@type": "ImageObject",
           "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg"
         }
@@ -1000,7 +1013,7 @@ For ImageObjects, this *SHOULD* be a small image to be used in lists, search res
 
     <pre highlight=json-ld line-numbers line-highlight="4-5">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@type": "ImageObject",
           "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg",
           "thumbnailUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/^!256,256/0/default.jpg"
@@ -1018,7 +1031,7 @@ particularly useful if the [[#MediaObject-license]] requires attribution.
 
     <pre highlight=json-ld line-numbers line-highlight="4-5">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@type": "MediaObject",
           "license": "https://creativecommons.org/licenses/by-sa/4.0/",
           "copyrightNotice": "© 2025 Example Museum, with permission from Ph. Otographer" 
@@ -1041,7 +1054,7 @@ with property `encodingFormat` set to `application/ld+json;profile='http://iiif.
 
     <pre highlight=json-ld line-numbers line-highlight="6-17">
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
           "@type": "ImageObject",
           "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg",
           "thumbnailUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/^!256,256/0/default.jpg",
@@ -1088,7 +1101,8 @@ A property that indicates the [[#Place|Place]]’s address, *REQUIRED* if known.
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
           "@id": "https://example.com/dataset/place",
           "@type": "Place",
           "address": {
@@ -1112,7 +1126,8 @@ A property that indicates the [[#Place|Place]]’s [[!WGS84]] geo coordinates, *
 
     <pre highlight=json-ld>
         {
-          "@context": "https://schema.org/",
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
           "@id": "https://example.com/dataset/place",
           "@type": "Place",
           "geo": {
