@@ -834,7 +834,7 @@ such as [[#birthDate|birthDate]] or [[#deathDate|deathDate]].
 <div class="example">
     Person with a language-tagged name:
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-8">
         {
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
@@ -858,7 +858,7 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
 
 <div class="example">
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-8">
         {
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
@@ -882,7 +882,7 @@ The value *MUST* reference a [=term=]. If no term is available, a custom [[#Plac
 
 <div class="example">
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-8">
         {
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
@@ -903,13 +903,14 @@ The value *MUST* reference a [=term=].
 <div class="example">
     A carpenter:
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="5-8">
         {
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/2",
           "@type": "Person",
           "hasOccupation": {
-            "@id": "http://vocab.getty.edu/aat/300025008"
+            "@id": "http://vocab.getty.edu/aat/300025008",
+            "@type": "Occupation"
           }
         }
     </pre>
@@ -933,7 +934,7 @@ useful for distinguishing the organization from others with similar names.
 <div class="example">
     Organization with an address:
 
-    <pre highlight=json-ld line-numbers>
+    <pre highlight=json-ld line-numbers line-highlight="6-13">
         {
           "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/3",
@@ -973,7 +974,7 @@ An open license is *RECOMMENDED*.
 <div class="example">
     CC0 “No Rights Reserved” license on an ImageObject:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="4">
         {
           "@context": "https://schema.org",
           "@type": "MediaObject",
@@ -1027,7 +1028,7 @@ particularly useful if the [[#MediaObject-license]] requires attribution.
 <div class="example" >
     A MediaObject that may be used only with attribution.
 
-    <pre highlight=json-ld line-numbers line-highlight="4-5">
+    <pre highlight=json-ld line-numbers line-highlight="5">
         {
           "@context": "https://schema.org",
           "@type": "MediaObject",
@@ -1076,7 +1077,7 @@ Even though full-sized and thumbnail images can be derived by IIIF-compatible co
 the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
 A simple formula for building image URLs from an IIIF Image API URL:
 
-- Full-size (`contentUrl`): `https://example.com/iiif/jmage-id/full/max/0/default.jpg`
+- Full-size (`contentUrl`): `https://example.com/iiif/image-id/full/max/0/default.jpg`
 - Thumbnail (`thumbnailUrl`): `https://example.com/iiif/image-id/full/!256,256/0/default.jpg`
 
 ## Place ## {#Place}
@@ -1097,11 +1098,11 @@ A property that indicates the [[#Place|Place]]’s address, *REQUIRED* if known.
 <div class="example">
     A place with an address:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="6-13">
         {
           "@context": "https://schema.org",
-          "@type": "CreativeWork",
           "@id": "https://example.com/dataset/place",
+          "@type": "CreativeWork",
           "@type": "Place",
           "address": {
             "@type": "PostalAddress",
@@ -1122,7 +1123,7 @@ A property that indicates the [[#Place|Place]]’s [[!WGS84]] geo coordinates, *
 <div class="example">
     A place with coordinates:
 
-    <pre highlight=json-ld>
+    <pre highlight=json-ld line-numbers line-highlight="6-10">
         {
           "@context": "https://schema.org",
           "@type": "CreativeWork",
