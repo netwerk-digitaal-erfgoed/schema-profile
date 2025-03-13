@@ -550,7 +550,7 @@ The value *MUST* reference [=terms=].
 <div class="example">
     The Starry Night is both a Schema.org Painting and an AAT painting: 
 
-    <pre highlight=json-ld line-numbers line-highlight="4-7">
+    <pre highlight=json-ld line-numbers line-highlight="5-7">
         {
           "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
@@ -610,6 +610,31 @@ The value *MUST* be a [[#language|language-tagged]] string.
             {
               "@language": "nl",
               "@value": "Het schilderij is een nachttafereel met gele sterren boven een kleine stad met heuvels. Het is een uitzicht vanuit een denkbeeldig punt over een dorp met kerktoren, met links een vlammende cipres en rechts olijfbomen tegen de heuvels op."
+            }
+          ]
+        }
+    </pre>
+</div>
+
+### text ### {#text}
+
+An *OPTIONAL* property that provides the full textual content of the [[#CreativeWork|CreativeWork]],
+for example the story content.
+
+The value *MUST* be a [[#language|language-tagged]] string.
+
+<div class="example">
+    A story:
+
+    <pre highlight=json-ld line-numbers line-highlight="5-10">
+        {
+          "@context": "https://schema.org",
+          "@id": "https://example.com/dataset1/resource1",
+          "@type": ["CreativeWork", "Article"],
+          "text": [
+            {
+              "@language": "nl",
+              "@value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a dignissim enim, in hendrerit ipsum. Sed accumsan purus id erat hendrerit rutrum. Nullam luctus, erat luctus fringilla semper, arcu erat gravida mi, vel molestie ex odio et orci. Phasellus vestibulum tristique pulvinar. Aliquam erat volutpat."
             }
           ]
         }
