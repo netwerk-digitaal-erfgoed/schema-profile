@@ -1,0 +1,51 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/abc123",
+  "@type": ["CreativeWork", "Article"],
+  "name": "The Adventures of a Penguin",
+  "creator": {
+    "@type": "Person",
+    "name": "Jan Jansen"
+  },
+  "isPartOf": {
+    "@id": "https://organization.com/datasets/1",
+    "@type": "Dataset"
+  },
+  "description": {
+    "@language": "en",
+    "@value": "A story about some strange events."
+  },
+  "abstract": {
+    "@language": "en",
+    "@value": "A penguin goes for a walk and is surprised."
+  },
+  "text": {
+    "@language": "en",
+    "@value": "A long, long time ago, in a place far, far away, there lived a penguin. One day, the penguin decided to go for a walk. As he waddled along, he saw a strange sight: a spaceship landing in the middle of the street. The penguin was surprised and didn't know what to do. He stood there, staring at the spaceship, wondering if he should go closer or run away."
+  },
+  "contentLocation": {
+    "@id": "http://www.wikidata.org/entity/Q51",
+    "@type": ["Place", "DefinedTerm"],
+    "name": {
+      "@language": "en",
+      "@value": "Antarctica"
+    }
+  },
+  "dateCreated": "2023-10-01",
+  "about": {
+    "@id": "http://www.wikidata.org/entity/Q9147",
+    "@type": "DefinedTerm",
+    "name": {
+      "@language": "en",
+      "@value": "penguin"
+    }
+  },
+  "genre": {
+    "@id": "https://www.wikidata.org/wiki/Q24925",
+    "@type": ["URL", "DefinedTerm"],
+    "name": {
+      "@language": "en",
+      "@value": "science fiction"
+    }
+  }
+}

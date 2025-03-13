@@ -375,7 +375,7 @@ Issue(3): CreativeWork candidate properties
 Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
 Examples include:
 
-- [Article](https://schema.org/Article) for stories;
+- [Article](https://schema.org/Article) for [[#example-story|stories]];
 - [ArchiveComponent](https://schema.org/ArchiveComponent) for archival items and collections;
 - [Book](https://schema.org/Book);
 - [Manuscript](https://schema.org/Manuscript);
@@ -1161,16 +1161,24 @@ A property that indicates the [[#Place|Place]]’s [[!WGS84]] geo coordinates, *
     </pre>
 </div>
 
-Example {#example}
+Full examples {#examples}
 ==========
 
-<div class="example">
-    A full example of a [=metadata record=]:
+Some full examples of [=metadata records=].
 
-    Issue: Add full example.
+
+Painting {#example-painting}
+-----
+
+TODO
+
+Story {#example-story}
+-----
+
+<div class="example">
 
     <pre class=include-code>
-    path: example.jsonld
+    path: examples/story.jsonld
     highlight: jsonld
     </pre>
 </div>
