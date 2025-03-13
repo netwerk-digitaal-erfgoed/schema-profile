@@ -14,8 +14,6 @@ Abstract: This document specifies the generic data model to be used when publish
     <link rel="stylesheet" href="nde.css">
 </pre>
 
-Note: Please don’t rely on this document yet as it’s still under discussion and development.
-
 Introduction {#intro}
 ===============
 
