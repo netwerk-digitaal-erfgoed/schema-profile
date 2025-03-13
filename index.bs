@@ -1127,7 +1127,6 @@ A property that indicates the [[#Place|Place]]’s address, *REQUIRED* if known.
         {
           "@context": "https://schema.org",
           "@id": "https://example.com/dataset/place",
-          "@type": "CreativeWork",
           "@type": "Place",
           "address": {
             "@type": "PostalAddress",
@@ -1151,9 +1150,8 @@ A property that indicates the [[#Place|Place]]’s [[!WGS84]] geo coordinates, *
     <pre highlight=json-ld line-numbers line-highlight="6-10">
         {
           "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          "@id": "https://example.com/dataset/place",
           "@type": "Place",
+          "@id": "https://example.com/dataset/place",
           "geo": {
             "@type": "GeoCoordinates",
             "latitude": "37.42242",
