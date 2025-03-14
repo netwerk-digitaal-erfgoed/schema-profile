@@ -1050,6 +1050,8 @@ For ImageObjects, this *SHOULD* be a small image to be used in lists, search res
 An *OPTIONAL* property that indicates the copyright aspects of the [[#MediaObject|MediaObject]],
 particularly useful if the [[#MediaObject-license]] requires attribution.
 
+The value *MUST* be a [[#language|language-tagged]] string:
+
 <div class="example" >
     A MediaObject that may be used only with attribution.
 
@@ -1058,7 +1060,10 @@ particularly useful if the [[#MediaObject-license]] requires attribution.
           "@context": "https://schema.org",
           "@type": "MediaObject",
           "license": "https://creativecommons.org/licenses/by-sa/4.0/",
-          "copyrightNotice": "© 2025 Example Museum, with permission from Ph. Otographer" 
+          "copyrightNotice": {
+            "@language": "en",
+            "@value": "© 2025 Example Museum, with permission from Ph. Otographer"
+          }
         }
     </pre>
 </div>
