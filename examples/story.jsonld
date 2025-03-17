@@ -1,51 +1,78 @@
 {
   "@context": "https://schema.org",
-  "@id": "https://n2t.net/ark:/123456/abc123",
+  "@id": "https://www.bhic.nl/ontdekken/verhalen/vincent-van-gogh-op-kostschool",
   "@type": ["CreativeWork", "Article"],
-  "name": "The Adventures of a Penguin",
+  "name": "Vincent van Gogh op kostschool",
   "creator": {
     "@type": "Person",
-    "name": "Jan Jansen"
+    "name": {
+      "@language": "nl",
+      "@value": "Cor Kerstens"
+    }
   },
   "isPartOf": {
-    "@id": "https://organization.com/datasets/1",
+    "@id": "https://www.bhic.nl/ontdekken/verhalen",
     "@type": "Dataset"
   },
+  "associatedMedia": {
+    "@id": "https://www.bhic.nl/memorix/images/search/detail/31c4cc62-45fb-11e3-8624-e7bda1721fcf/media/26097b4e-deca-d99c-4c2d-2598d67b61a0",
+    "@type": "ImageObject",
+    "contentUrl": "https://webservices.memorix.nl/mediabank/media/31c4cc62-45fb-11e3-8624-e7bda1721fcf/downloadoriginal/26097b4e-deca-d99c-4c2d-2598d67b61a0?apiKey=24c66d08-da4a-4d60-917f-5942681dcaa1",
+    "caption": {
+      "@language": "nl",
+      "@value": "De voormalige kostschool, Stationsstraat 16 in Zevenbergen"
+    },
+    "copyrightNotice": {
+      "@language": "nl",
+      "@value": "BHIC"
+    }
+  },
   "description": {
-    "@language": "en",
-    "@value": "A story about some strange events."
+    "@language": "nl",
+    "@value": "Van 1 oktober 1864 tot 31 augustus 1866 verbleef Vincent van Gogh op de kostschool van Jan Provily in Zevenbergen. Vincent zelf vertelt er in drie brieven kort iets over. Hieruit blijkt dat hij zich hier niet zo gelukkig heeft gevoeld."
   },
   "abstract": {
-    "@language": "en",
-    "@value": "A penguin goes for a walk and is surprised."
+    "@language": "nl",
+    "@value": "Van 1 oktober 1864 tot 31 augustus 1866 verbleef Vincent van Gogh op de kostschool van Jan Provily in Zevenbergen."
   },
   "text": {
-    "@language": "en",
-    "@value": "A long, long time ago, in a place far, far away, there lived a penguin. One day, the penguin decided to go for a walk. As he waddled along, he saw a strange sight: a spaceship landing in the middle of the street. The penguin was surprised and didn't know what to do. He stood there, staring at the spaceship, wondering if he should go closer or run away."
+    "@language": "nl",
+    "@value": "Domineeszoon Vincent van Gogh werd op 30 maart 1853 in het Brabantse grensdorp Zundert geboren. Tot zijn 8ste jaar kreeg hij les van zijn vader (…)"
   },
   "contentLocation": {
-    "@id": "http://www.wikidata.org/entity/Q51",
+    "@id": "https://data.rkd.nl/artists/32439",
     "@type": ["Place", "DefinedTerm"],
     "name": {
-      "@language": "en",
-      "@value": "Antarctica"
+      "@language": "nl",
+      "@value": "Zevenbergen"
     }
   },
-  "dateCreated": "2023-10-01",
-  "about": {
-    "@id": "http://www.wikidata.org/entity/Q9147",
-    "@type": "DefinedTerm",
-    "name": {
-      "@language": "en",
-      "@value": "penguin"
+  "temporalCoverage": "1864/1866",
+  "dateCreated": "2019-04-25",
+  "about": [
+    {
+      "@id": "https://data.rkd.nl/artists/32439",
+      "@type": ["Person", "DefinedTerm"],
+      "name": {
+        "@language": "nl",
+        "@value": "Vincent van Gogh"
+      }
+    },
+    {
+      "@id": "https://data.cultureelerfgoed.nl/term/id/cht/596dac9d-868f-461e-bbf9-6baae4fb5a12",
+      "@type": ["DefinedTerm"],
+      "name": {
+        "@language": "nl",
+        "@value": "kostscholen"
+      }
     }
-  },
+  ],
   "genre": {
-    "@id": "https://www.wikidata.org/wiki/Q24925",
+    "@id": "http://vocab.getty.edu/aat/300080102",
     "@type": ["URL", "DefinedTerm"],
     "name": {
-      "@language": "en",
-      "@value": "science fiction"
+      "@language": "nl",
+      "@value": "biografieën"
     }
   }
 }
