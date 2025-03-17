@@ -686,6 +686,26 @@ If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a [[
     </pre>
 </div>
 
+### temporalCoverage ### {#temporalCoverage}
+
+An *OPTIONAL* property that indicates the period that the content applies to,
+i.e. that the time period(s) that the [[#CreativeWork|CreativeWork]] describes or depicts.
+
+The value *MUST* be either a DateTime or a time period in [ISO 8601 time interval format](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
+
+<div class="example">
+    Van Gogh’s painting The Starry Night:
+
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
+          "temporalCoverage": "1889-06/07"
+        }
+    </pre>
+</div>
+
 ### locationCreated ### {#locationCreated}
 
 An *OPTIONAL* property that indicates the location(s) where the [[#CreativeWork|CreativeWork]] was created
