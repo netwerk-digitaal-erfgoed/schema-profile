@@ -4,7 +4,7 @@ Shortname: schema-ap-nde
 Level: 1
 Status: LS
 Markup Shorthands: css yes, markdown yes, biblio yes
-URL: https://netwerk-digitaal-erfgoed.github.io/schema-profile/
+URL: https://docs.nde.nl/schema-profile/
 Editor: 
     David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
 Abstract: This document specifies the generic data model to be used when publishing linked data in the heritage network. 
@@ -298,7 +298,7 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
 ### Separate profiles ### {#profiles}
 
 Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
-To do so, publish a profile with URI `https://netwerk-digitaal-erfgoed.github.io/schema-profile/`.
+To do so, publish a profile with URI `https://docs.nde.nl/schema-profile/`.
 
 Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).  
 
@@ -318,7 +318,7 @@ Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for
             "profiles": [
                 {
                     "token": "nde",
-                    "uri": "https://netwerk-digitaal-erfgoed.github.io/schema-profile/",
+                    "uri": "https://docs.nde.nl/schema-profile/",
                     "media_types": ["application/ld+json", "text/turtle"]
                 },
                 ...
@@ -335,7 +335,7 @@ It is then possible to request the metadata record in the generic data model usi
     <pre highlight=http>
         GET /resource/a HTTP/1.1
         Accept: application/ld+json
-        Accept-Profile: &lt;https://netwerk-digitaal-erfgoed.github.io/schema-profile/>
+        Accept-Profile: &lt;https://docs.nde.nl/schema-profile/>
         
         # Server responds with a SCHEMA-AP-NDE representation of the metadata record.
         HTTP/1.1 200 OK
