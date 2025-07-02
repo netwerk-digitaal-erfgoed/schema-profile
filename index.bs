@@ -93,7 +93,7 @@ Examples are:
 - [PiCo](https://personsincontext.org) for biographical data;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
 
-<pre class=include>
+<pre class=include-raw>
 path: data-models.svg
 </pre>
 
