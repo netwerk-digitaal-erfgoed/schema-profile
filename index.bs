@@ -540,6 +540,40 @@ An *OPTIONAL* property that provides a unique identifier for the [[#CreativeWork
 usually an assigned alphanumeric string.
 The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
 Note that this is different from the CreativeWork’s [[#URI|URI]].
+The value *MUST* be either a string or a [schema:PropertyValue](https://schema.org/PropertyValue).
+
+<div class="example">
+    A string as identifier: 
+
+    <pre highlight=json-ld line-numbers line-highlight="5">
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
+          "identifier": "Q45585"
+        }
+    </pre>
+</div>
+
+<div class="example">
+    A structured PropertyValue as identifier: 
+
+    <pre highlight=json-ld line-numbers line-highlight="5-11">
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
+          "identifier": {
+            "@type": "PropertyValue",
+            "propertyID": {
+              "@id": https://registry.identifiers.org/registry/viaf"
+            },
+            "value": "176354386",
+            "url": "http://identifiers.org/viaf:176354386"
+          }
+        }
+    </pre>
+</div>
 
 ### additionalType ### {#additionalType}
 
