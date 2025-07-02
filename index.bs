@@ -1184,7 +1184,7 @@ A property that indicates the [[#Place|Place]]’s [[!WGS84]] geo coordinates, *
     </pre>
 </div>
 
-Full examples {#examples}
+Full examples {#full-examples}
 ==========
 
 Some full examples of [=metadata records=].
