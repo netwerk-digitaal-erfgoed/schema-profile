@@ -757,8 +757,9 @@ The value *MUST* be in [[!ISO8601]] format. Partial dates *MAY* be used if the e
 An *OPTIONAL* property to indicate the subject-matter of the [[#CreativeWork|CreativeWork]].
 For example, which subjects are depicted in a painting or photograph?
 Or which subjects is a story about?
+And/or which CreativeWork (e.g. collection object) is this CreativeWork (story) about?
 
-The value *MUST* [[#reference-terms|reference]] [=terms=].
+The value *MUST* either [[#reference-terms|reference]] [=terms=] or other CreativeWork(s).
 
 If the subject is a location, it *MUST* be listed under [[#contentLocation|contentLocation]] instead.
 
