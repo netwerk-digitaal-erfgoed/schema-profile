@@ -578,6 +578,7 @@ The value *MUST* be either a string or a [schema:PropertyValue](https://schema.o
 ### additionalType ### {#additionalType}
 
 An *OPTIONAL* property that provides additional types for the [[#CreativeWork|CreativeWork]].
+This is useful to add more specific types to your [=metadata record=] that may not be available as a Schema.org [[#subclasses|subclass]].
 
 The value *MUST* reference [=terms=].
 
