@@ -433,7 +433,6 @@ _:OrganizationShape
         ]
     ] .
 
-
 _:MediaObjectShape
     a sh:NodeShape ;
     sh:name "MediaObject" ;
@@ -534,35 +533,6 @@ _:MediaObjectShape
             ]
         ] .
 
-
-
-
-_:GeoCoordinatesShape
-    a sh:NodeShape ;
-    sh:name "GeoCoordinates" ;
-    sh:targetClass schema:GeoCoordinates ;
-    sh:description """
-        Geographic coordinates for a Place.
-    """ ;
-    sh:property [
-        sh:path schema:latitude ;
-        sh:datatype xsd:float ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The latitude of a location. For example 37.42242 (WGS 84).
-        """ ;
-    ] ,
-    [
-        sh:path schema:longitude ;
-        sh:datatype xsd:float ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The longitude of a location. For example -122.08585 (WGS 84).
-        """ ;
-    ] .
-
 _:PlaceShape
     a sh:NodeShape ;
     sh:name "Place" ;
@@ -593,7 +563,35 @@ _:PlaceShape
     [
         sh:path schema:geo ;
         sh:or (
-            [ sh:class schema:GeoCoordinates ]
+            [
+                sh:class schema:GeoCoordinates ;
+                sh:node [
+                    a sh:NodeShape ;
+                    sh:name "GeoCoordinates" ;
+                    sh:targetClass schema:GeoCoordinates ;
+                    sh:description """
+                        Geographic coordinates for a Place.
+                    """ ;
+                    sh:property [
+                        sh:path schema:latitude ;
+                        sh:datatype xsd:float ;
+                        sh:minCount 1 ;
+                        sh:maxCount 1 ;
+                        sh:description """
+                            The latitude of a location. For example 37.42242 (WGS 84).
+                        """ ;
+                    ] ,
+                    [
+                        sh:path schema:longitude ;
+                        sh:datatype xsd:float ;
+                        sh:minCount 1 ;
+                        sh:maxCount 1 ;
+                        sh:description """
+                            The longitude of a location. For example -122.08585 (WGS 84).
+                        """ ;
+                    ]
+                ] ;
+            ]
             [ sh:class schema:GeoShape ]
         ) ;
         sh:minCount 1 ;
