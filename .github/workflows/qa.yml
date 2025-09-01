@@ -7,4 +7,4 @@ on:
 
 jobs:
   deploy:
-    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec-validate.yml@main
+    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@main

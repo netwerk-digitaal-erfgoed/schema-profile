@@ -1,0 +1,23 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "about": [
+    {
+      "@id": "http://www.wikidata.org/entity/Q149908",
+      "@type": "DefinedTerm",
+      "name": {
+        "@language": "en",
+        "@value": "starry sky"
+      }
+    },
+    {
+      "@id": "http://www.wikidata.org/entity/Q405",
+      "@type": "DefinedTerm",
+      "name": {
+        "@language": "en",
+        "@value": "Moon"
+      }
+    }
+  ]
+}

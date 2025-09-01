@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/dataset1/resource1",
+  "@type": "CreativeWork",
+  "name": [
+    {
+      "@language": "nl",
+      "@value": "De Sterrennacht"
+    },
+    {
+      "@language": "en",
+      "@value": "The Starry Night"
+    }
+  ]
+}

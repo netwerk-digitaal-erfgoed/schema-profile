@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/1",
+  "@type": "CreativeWork",
+  "isPartOf": {
+    "@id": "https://organization.com/dataset1",
+    "@type": "Dataset"
+  }
+}

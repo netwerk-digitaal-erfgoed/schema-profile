@@ -1,0 +1,10 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "@id": "https://example.com/dataset/place",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "37.42242",
+    "longitude": "-122.08585"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": {
+      "@id": "https://registry.identifiers.org/registry/viaf"
+    },
+    "value": "176354386",
+    "url": "http://identifiers.org/viaf:176354386"
+  }
+}

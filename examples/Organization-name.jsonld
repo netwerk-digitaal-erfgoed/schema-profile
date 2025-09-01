@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/3",
+  "@type": "Organization",
+  "name": {
+    "@language": "Example Museum",
+    "@value": "en"
+  }
+}

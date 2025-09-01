@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/dataset1/resource1",
+  "@type": "CreativeWork",
+  "abstract": [
+    {
+      "@language": "nl",
+      "@value": "Het schilderij is een nachttafereel met gele sterren boven een kleine stad met heuvels. Het is een uitzicht vanuit een denkbeeldig punt over een dorp met kerktoren, met links een vlammende cipres en rechts olijfbomen tegen de heuvels op."
+    }
+  ]
+}
