@@ -1,0 +1,485 @@
+<pre class='metadata'>
+Title: Schema.org Application Profile for NDE (SCHEMA-AP-NDE)
+Shortname: schema-ap-nde
+Level: 1
+Status: LS
+Markup Shorthands: css yes, markdown yes, biblio yes
+URL: https://docs.nde.nl/schema-profile/
+Editor: 
+    David de Boer, Netwerk Digitaal Erfgoed https://www.netwerkdigitaalerfgoed.nl, david@ddeboer.nl, https://github.com/ddeboer
+Abstract: This document specifies the generic data model to be used when publishing linked data in the heritage network. 
+    The model enables dataset consumers, including software developers building data-consuming applications,
+    to use, understand and combine datasets from multiple sources,
+    thus fulfilling the promise of linked data.
+    <link rel="stylesheet" href="nde.css">
+</pre>
+
+Introduction {#intro}
+===============
+
+Goal {#goal}
+---
+
+This document prescribes the SCHEMA-AP-NDE [=generic data model=] to be used when publishing linked data in the Dutch heritage network (NDE).
+The model consists of a minimal set of classes and properties.
+It is based on:
+
+- the current state of datasets in the heritage network,
+    as observed in the [Dataset Knowledge Graph](https://github.com/netwerk-digitaal-erfgoed/dataset-knowledge-graph),
+    particularly its <a href="https://triplestore.netwerkdigitaalerfgoed.nl/sparql?savedQueryName=Property%20partitions%20per%20class&owner=admin">property partitions analysis</a>;
+- the needs of service platform builders for understanding, processing and presenting data, especially across datasets and publishers.
+
+By adhering to this model, [[NDE-DATASETS#publisher|dataset publishers]] ensure that their data can be:
+
+1. discovered, understood and combined with other datasets in the network;
+2. used in service platforms to build applications and visualisations.
+
+Scope {#scope}
+-----
+
+The document is restricted in four ways:
+
+1. it applies to the Dutch heritage network (NDE), which implements the [[NDHS|National Digital Heritage Strategy]] and [[DERA|Digital Reference Heritage Architecture]];  
+2. it applies to the way published data is expressed, not how it is stored or managed internally;
+3. it prescribes a [=generic data model=] and leaves the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
+4. it bears upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
+
+Examples {#examples}
+---
+
+[[RDF-PRIMER|RDF]] examples in this document are in the *RECOMMENDED* JSON-LD [[#serialization]] format. 
+
+Definitions {#definitions}
+===
+
+: <dfn>Data model</dfn>
+:: Set of classes and their properties that defines how data is expressed. 
+
+: <dfn>Generic data model</dfn>
+:: A simple, shared [=data model=]; the scope of this document.
+    Can be used alongside [=domain data models=].
+
+: <dfn>Domain data model</dfn>
+:: A domain-specific [=data model=], such as <a href="https://cidoc-crm.org">CIDOC-CRM</a>, [Linked Art](https://linked.art/model/), [RiC-O](https://github.com/ICA-EGAD/RiC-O) or <a href="https://www.rdaregistry.info/Elements/">RDA</a>.
+    Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
+
+: <dfn>Metadata record</dfn>
+:: An [[RDF-PRIMER|RDF]] resource that expresses one of the top-level classes in the [[#data-model-section]]. Description of a heritage object.
+
+: <dfn>Term</dfn>
+:: A word, name, acronym, phrase or other symbol with a formal definition, available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl).
+
+General considerations {#general-considerations}
+==========
+
+Generic and domain data models {#generic-and-domain-data-models}
+---
+
+The purpose of generic data models is to integrate data in the heritage network and make it more visible.
+Domain models are usually more richly populated and provide consumers with more possibilities for further processing,
+for example in service platforms.
+
+This document is limited to a set of classes and properties that together form the [=generic data model=].
+For most datasets, the generic data model expresses only a subset of data properties that are available.
+This document’s purpose, therefore, is not a complete and correct expression of the source data,
+but an easily understandable and usable one.
+
+If done well, the generic data invites consumers to explore the data in more depth using the [=domain data models=].
+So to facilitate further exploration, publishers *MAY* use [=domain data models=] of their choosing alongside the generic data model.
+Examples are:
+
+- <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
+- [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
+- [PiCo](https://personsincontext.org) for biographical data;
+- <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
+
+<pre class=include-raw>
+path: data-models.svg
+</pre>
+
+Vocabulary {#vocabulary}
+---
+
+The generic data model presented in this document is designed as a [[!SCHEMA-ORG]] application profile.
+Schema.org is a widely adopted cross-domain metadata standard.
+It is, therefore, well-suited for the heritage network, which spans datasets from the library, archive, museum and other domains.
+
+While the Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”,
+mixing the namespaces makes it harder to consume datasets.
+
+Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
+
+Language {#language}
+----------
+
+For all name and description values, their language *MUST* be specified.
+The language *MUST* be expressed as a well-formed language tag according to [[!BCP47]], such as ‘nl’ (language only) or ‘nl-NL’ (including region).
+
+<div class="example">
+    Specifying the language of the `name` property:
+
+    <pre highlight=json-ld line-numbers line-highlight="5-14">
+        {
+          "@context": "https://schema.org",
+          "@id": "https://n2t.net/ark:/123456/1",
+          "@type": "CreativeWork",
+          "name": [
+            {
+              "@language": "nl",
+              "@value": "De Sterrennacht"
+            },
+            {
+              "@language": "en",
+              "@value": "The Starry Night"
+            }
+          ]
+        }
+    </pre>
+</div>
+
+Even if only one language is available, the language *MUST* be specified.
+
+<div class="example">
+    Specify the language property even for a single value:
+
+    <pre highlight=json-ld line-numbers line-highlight="3-6">
+        {
+          "@context": "https://schema.org",
+          "name": {
+            "@language": "nl",
+            "@value": "De Sterrennacht"
+          }
+        }
+    </pre>
+</div>
+
+Each language *MUST* occur only once, so only a single value per language is allowed.
+
+<div class="example">
+    ❌ Do not specify the same language twice:
+
+    <pre highlight=json-ld line-numbers line-highlight="5,9">
+        {
+          "@context": "https://schema.org",
+          "name": [
+            {
+              "@language": "en",
+              "@value": "The Starry Night"
+            },
+            {
+              "@language": "en",
+              "@value": "Repeated English name while only one is allowed"
+            }
+          ]
+        }
+    </pre>
+</div>
+
+Reference terms {#reference-terms}
+---
+
+When referencing [=terms=], publishers *MUST* use the term’s URI. 
+
+The term *MUST* be typed as `DefinedTerm` so it is clear to consumers that the term can be looked up through the Network of Terms.
+
+Publishers *SHOULD* add the term’s name in any language(s) they know about for readability:
+
+<div class="example">
+    Use the term’s URI and add its name:
+
+    <pre highlight=json-ld line-numbers line-highlight="5-12">
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
+          "creator": {
+            "@id": "https://data.rkd.nl/artists/32439",
+            "@type": ["Person", "DefinedTerm"],
+            "name": {
+              "@language": "nl",
+              "@value": "Vincent van Gogh"
+            }
+          }
+        }
+    </pre>
+</div>
+
+Serialization {#serialization}
+---
+
+Servers *MUST* provide at least one RDF serialization format. 
+Supporting multiple formats using [[RFC9110#content.negotiation|content negotiation]] is *RECOMMENDED*.
+
+The following formats are *RECOMMENDED*:
+
+- [[!JSON-LD]] when serving an individual resource at its URI, because of its accessibility to web platform builders;
+- [[!N-QUADS]] for RDF dumps containing multiple resources, because of its efficiency.
+
+Publication method {#publication-method}
+---
+
+### Publication levels ### {#publication-levels}
+
+In the heritage network, SCHEMA-AP-NDE data *MUST* be available on two levels: 
+
+1. resolvable URIs for individual resources
+2. data dumps for datasets
+
+It *MAY* additionally be available through a:
+
+3. SPARQL endpoint.
+
+If the generic data model is used alongside [=domain data models=], there are two methods for doing so:
+
+- [[#combined]]
+- [[#profiles]].
+
+Publishers *MUST* support at least one of these methods.
+
+<table class="syntax">
+    <caption>
+        Matrix of publications levels and methods.
+    </caption>
+    <thead>
+        <td></td>
+        <td>Combined</td>
+        <td>Separate profiles</td>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Resolvable URI</td>
+            <td>✅</td>
+            <td>✅</td>
+        </tr>
+        <tr>
+            <td>Data dump</td>
+            <td>✅</td>
+            <td>✅</td>
+        </tr>
+        <tr>
+            <td>SPARQL endpoint</td>
+            <td>❌</td>
+            <td>✅</td>
+        </tr>
+    </tbody>
+</table>
+
+### Combined ### {#combined}
+
+With RDF, it’s perfectly fine to express the same data in multiple ways.
+Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* coexist in the same information resource.
+
+<div class="example">
+    Combine generic (Schema.org) with domain-specific (Linked Art) modelling.    
+
+    <pre highlight=json-ld>
+        {
+          "@context": {
+            "schema": "https://schema.org/",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "dcterms": "http://purl.org/dc/terms/"
+          },
+          "@id": "https://literatuurmuseum.nl/id/123456789",
+          "@type": ["schema:CreativeWork", "schema:VisualArtwork"],
+          "schema:name": "Het fluitketeltje en andere versjes",
+          "rdfs:label": "Het fluitketeltje en andere versjes",
+          "schema:creator": {
+            "@type": "schema:Person",
+            "@id": "http://data.rkd.nl/artists/8342"
+          },
+          "dcterms:creator": {
+            "@type": "dcterms:Agent",
+            "@id": "http://data.rkd.nl/artists/8342"
+          }
+       }
+    </pre>
+</div>
+
+### Separate profiles ### {#profiles}
+
+Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
+To do so, publish a profile with URI `https://docs.nde.nl/schema-profile/`.
+
+Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).  
+
+<div class="example">
+    Expose the generic data model in its own content-negotiated profile.    
+
+    <pre highlight=http>
+        # Get the list of profiles.
+        GET /resource/a?profile=alt HTTP/1.1
+        
+        # Server responds with a list of profiles that includes the NDE generic data model.
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+        
+        {
+            "resource": "http://example.org/resource/a",
+            "profiles": [
+                {
+                    "token": "nde",
+                    "uri": "https://docs.nde.nl/schema-profile/",
+                    "media_types": ["application/ld+json", "text/turtle"]
+                },
+                ...
+            ]
+        }
+    </pre>
+</div>
+
+It is then possible to request the metadata record in the generic data model using the `Accept-Profile` HTTP header:
+
+<div class="example">
+    Request the metadata record in SCHEMA-AP-NDE:    
+
+    <pre highlight=http>
+        GET /resource/a HTTP/1.1
+        Accept: application/ld+json
+        Accept-Profile: &lt;https://docs.nde.nl/schema-profile/>
+        
+        # Server responds with a SCHEMA-AP-NDE representation of the metadata record.
+        HTTP/1.1 200 OK
+        Content-Type: application/ld+json
+
+        ...
+    </pre>
+</div>
+
+Data model {#data-model-section}
+==========
+
+This section describes the classes and properties that *MUST* be used to publish [=metadata records=] in the heritage network.
+
+Each record *MUST* be typed as one of the following classes:
+
+- [[#CreativeWork|CreativeWork]]
+- [[#Person|Person]] 
+- [[#Organization|Organization]]
+- [[#MediaObject|MediaObject]]
+- [[#Place|Place]].
+
+For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL* properties.
+
+## Class diagram ## {#class-diagram}
+
+<img width="100%" src="https://mermaid.ink/svg/pako:eNqVVVFP2zAQ_itRHvYQkYpuEg_ZhAQt2pCAIlo0aQsPF_uaekvsyHamdYj_vrMTaEwphTw5d999vvvubN_HTHGMszhN01xaYSvMovnk29nlSXpynV5Nz3LpXawCY6YCSg11LrnQyKxQMlqc5jKiz_ujiUaw4g9-V_p3dN953JcktzfnSfJBFqb5PDRLqDFJskjzZVaBLOdWC1lGP8ejUXI3BApzDdrOlg48BQsG7RZKcKQSlgJ1Fpme6HA0Gg8gHA3TonGpb296GNJBQSTA7F6gxb_7QUb8w70gDha9hsipBLbCGjKqFheixqCWh1wOdb9GbagZpHhu3yRsByuEtivHH2z2tFEH4pTOK6AXspnpEqT4B35A7t_Z7mdcl8gFzIpfNG4hVSUYSuPZbm8uiOJuUzxT0tIo3OoqcG-C7aqtCwmi2gVhqllrUa7slbK00d7GCXNKI8lnNFXBGXC4j5vKBh2rgGFYEU0boj3hXKMxSfI850YZC9WEjuu2D7qgC8WgEna9E3CDJfVkp3uiWmn12ilyPp99Gh8dpePn0BKV839FNVFKcyFpGMwGFBQ5xaWQyBeo6-Fs-rsg7Nh7BiMQOE2Pg20y134HUDpJvhT6mEoTbhChWqwbdJZ-OpxYzuFMVb_uz56PK1Rr3aImixZQuXWJUuOOLLqOZtHb6HeQ5LGrOI_DM0SkXUn7ovp74M344enKImqZYsJl6O2PevekXeBhFxhKvgIzY6xtfLYvB423gvzl40Vzevhbxv_lrzA8arwvNlDvRYbHlnT4XMYHcU15geD0GPpjmceWbjvM44yWHJfQVjaPc_lAUGitmq8lizOrWzyItWrLVZwtoTL01zbuHu8fyydrA_KHUpt_kpg6dNk9v_4VfvgPY5ZZpA">
+
+{% for nodeShape in nodeShapes %}
+    ## {{ nodeShape.name }} ## {#{{ nodeShape.name }}}
+
+    {{ nodeShape.description }}
+
+    {% if nodeShape.name == "CreativeWork" %}
+        ### Subclasses ### {#subclasses}
+        
+        Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
+        Examples include:
+        
+        - [Article](https://schema.org/Article) for [[#example-story|stories]];
+          - [ArchiveComponent](https://schema.org/ArchiveComponent) for archival items and collections;
+          - [Book](https://schema.org/Book);
+          - [Manuscript](https://schema.org/Manuscript);
+          - [Message](https://schema.org/Message) for letters;
+          - [MusicComposition](https://schema.org/MusicComposition), [MusicRecording](https://schema.org/MusicRecording) and [MusicAlbum](https://schema.org/MusicAlbum) for musical items and collections;
+          - [Painting](https://schema.org/Painting);
+          - [Photograph](https://schema.org/Photograph).
+        
+        <div class="example">
+            A painting is typed as both top-level CreativeWork and the more specific Painting:
+        
+            <pre highlight=json-ld>
+                {
+                  "@context": "https://schema.org",
+                  "@id": "https://n2t.net/ark:/123456/1",
+                  "@type": ["CreativeWork", "Painting"]
+                }
+            </pre>
+        </div>
+        
+        Even though the superclass can be derived from its subclasses using RDF inferencing
+        (in this example, CreativeWork from Painting),
+        the superclass *MUST* be provided explicitly to help users understand the data.
+    {% endif %}
+
+    {% if nodeShape.nodeKind == "IRI" %}
+        ### URI (required) ### {#{{ nodeShape.name }}-URI}
+        
+        Each [[#{{ nodeShape.name }}|{{ nodeShape.name }}]] *MUST* be identified by a [[NDE-COLLECTION-MANAGEMENT-SYSTEMS#persistent-uri|persistent URI]].
+        Blank nodes *MUST NOT* be used.
+        
+        <div class="example">
+            Specify the URI in the JSON-LD `@id` property:
+        
+            <pre highlight=json-ld line-numbers line-highlight="3">
+                {
+                  "@context": "https://schema.org",
+                  "@id": "https://example.com/resource",
+                  "@type": "{{ nodeShape.name }}"
+                }
+            </pre>
+        </div>
+    {% endif %}
+
+    {% for property in nodeShape.property -%}
+        {% assign name = property.path | replace: "schema:", "" %}
+        ### {{ name }}{% if property.minCount > 0 %} (required){% endif %} ### {#{{ nodeShape.name }}-{{ name  }}}
+    
+        {{- property.description 
+            | replace: "CreativeWork", "[[#CreativeWork|CreativeWork]]" 
+            | replace: "MediaObject", "[[#MediaObject|MediaObject]]" 
+            | replace: "Organization", "[[#Organization|Organization]]" 
+            | replace: "Person", "[[#Person|Person]]" 
+            | replace: "ISO 8601", "[[!ISO8601]]" 
+        -}}
+    
+        {%- if property.datatype == "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" -%}
+            The value *MUST* be a [[#language|language-tagged]] string: 
+        {% endif %}
+
+        {% if property['rdfs:seeAlso'] -%}
+            {% assign examples = [] | concat: property['rdfs:seeAlso'] %}
+
+            {% for example in examples %}
+                <div class="example">
+                    {{ example['rdfs:label'] }}
+
+                    <pre class=include-code>
+                        path: {{ example['rdfs:comment'] | remove: 'file://' }}
+                        highlight: json-ld
+                        line-numbers: true
+                    </pre>
+                </div>
+            {% endfor %}
+        {% endif %}
+     {% endfor %}
+{% endfor %}
+
+Full examples {#full-examples}
+==========
+
+Some full examples of [=metadata records=].
+
+
+Painting {#example-painting}
+-----
+
+TODO
+
+Story {#example-story}
+-----
+
+<div class="example">
+
+    <pre class=include-code>
+    path: examples/story.jsonld
+    highlight: jsonld
+    </pre>
+</div>
+
+Formal definition {#formal-definition}
+==========
+
+SHACL shapes for validating against SCHEMA-AP-NDE are available at 
+https://github.com/netwerk-digitaal-erfgoed/schema-profile/blob/main/data-model.ttl.
+
+To guarantee consistency, this specification document is built from those SHACL shapes.

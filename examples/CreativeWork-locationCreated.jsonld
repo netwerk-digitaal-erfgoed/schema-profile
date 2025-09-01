@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "locationCreated": {
+    "@id": "http://www.wikidata.org/entity/Q221507",
+    "@type": ["Place", "DefinedTerm"],
+    "name": {
+      "@language": "fr",
+      "@value": "Saint-Rémy-de-Provence"
+    }
+  }
+}

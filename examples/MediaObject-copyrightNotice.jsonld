@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "MediaObject",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "copyrightNotice": {
+    "@language": "en",
+    "@value": "© 2025 Example Museum, with permission from Ph. Otographer"
+  }
+}

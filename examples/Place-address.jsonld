@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/dataset/place",
+  "@type": "Place",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Street 123",
+    "postalCode": "1234 AB",
+    "addressLocality": "City",
+    "addressRegion": "Noord-Holland",
+    "addressCountry": "NL"
+  }
+}

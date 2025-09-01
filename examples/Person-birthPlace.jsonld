@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/2",
+  "@type": "Person",  
+  "birthPlace": {
+    "@id": "https://sws.geonames.org/2745912/",
+    "@type": "Place"
+  }
+}

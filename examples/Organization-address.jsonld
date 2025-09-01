@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/3",
+  "@type": "Organization",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Street 123",
+    "postalCode": "1234 AB",
+    "addressLocality": "City",
+    "addressRegion": "Noord-Holland",
+    "addressCountry": "NL"
+  }
+}

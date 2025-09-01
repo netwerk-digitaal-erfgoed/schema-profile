@@ -1,0 +1,23 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "material": [
+    {
+      "@id": "http://vocab.getty.edu/aat/300015050",
+      "@type": "DefinedTerm",
+      "name": {
+        "@language": "en",
+        "@value": "oil paint (paint)"
+      }
+    },
+    {
+      "@id": "http://vocab.getty.edu/aat/300014078",
+      "@type": "DefinedTerm",
+      "name": {
+        "@language": "en",
+        "@value": "canvas (textile material)"
+      }
+    }
+  ]
+}
