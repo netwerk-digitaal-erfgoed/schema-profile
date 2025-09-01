@@ -20,7 +20,7 @@ _:CreativeWorkShape
             sh:uniqueLang true ;
             sh:minCount 1 ;
             sh:description """
-                The CreativeWork’s name or title, assigned either by its creator, collection managers or by others."
+                The CreativeWork’s name or title, assigned either by its creator, collection managers or by others.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A language-tagged name" ;
