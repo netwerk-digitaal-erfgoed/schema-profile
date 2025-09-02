@@ -433,7 +433,7 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
         -}}
     
         {%- if property.datatype == "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" -%}
-            The value *MUST* be a [[#language|language-tagged]] string: 
+            The value *MUST* be a [[#language|language-tagged]] string. 
         {% endif %}
 
         {% if property['rdfs:seeAlso'] -%}
