@@ -159,7 +159,15 @@ _:CreativeWorkShape
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
-                Provides the full textual content of the CreativeWork, for example the story content.
+                An *OPTIONAL* property containing the complete textual content of the CreativeWork,
+                primarily used for search indexing and discovery.
+
+                This includes content such as:
+                - the full text of a written work (e.g. story)
+                - transcribed text from visual media (e.g., inscriptions in photographs).
+
+                Note that this property contains plain text only, without preserving structural elements
+                like paragraphs, headings or the relationship between text and embedded media.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A story:" ;
