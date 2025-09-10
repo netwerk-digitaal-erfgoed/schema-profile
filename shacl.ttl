@@ -12,7 +12,6 @@ _:CreativeWorkShape
     sh:description """
         The most generic kind of item created by humans, i.e. heritage objects.
     """ ;
-    rdfs:seeAlso _:resource-with-uri ;
     sh:property
         [
             sh:path schema:name ;
