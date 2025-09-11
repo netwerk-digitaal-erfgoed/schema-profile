@@ -3,7 +3,6 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "associatedMedia": {
-    "@type": "ImageObject",
-    ...
+    "@type": "ImageObject"
   }
 }
