@@ -34,12 +34,12 @@ fi
 validate_file() {
     local file="$1"
     local basename=$(basename "$file")
-    local temp_report="/tmp/shacl-report-$$.ttl"
+    local temp_report="/tmp/shacl-report-$basename.ttl"
 
     echo -n "Validating $basename... "
 
     # Run SHACL validation and save report to temp file
-    shacl validate --data "$file" --shapes ../shacl.ttl > "$temp_report" 2>/dev/null
+    shacl validate --data "$file" --shapes shacl.ttl > "$temp_report"
 
     # Check if the report indicates conformance
     if grep -q "sh:conforms.*true" "$temp_report"; then
@@ -50,7 +50,7 @@ validate_file() {
 
     # Query the validation report for non-ignored violations
     local violation_count
-    violation_count=$($SPARQL_CMD --data "$temp_report" --query $PWD/validate.rq --results CSV | tail -n +2 | cut -d, -f1 | tr -d '\r')
+    violation_count=$($SPARQL_CMD --data "$temp_report" --query validate.rq --results CSV | tail -n +2 | cut -d, -f1 | tr -d '\r')
 
     # Check if there are any non-ignored violations
     if [[ -z "$violation_count" ]] || [[ "$violation_count" == "0" ]]; then
@@ -62,10 +62,21 @@ validate_file() {
 
         # Show detailed validation report for failing files
         echo -e "${YELLOW}Validation report (non-ignored violations only):${NC}"
-        shacl validate --data "$file" --shapes ../shacl.ttl --text 2>/dev/null | \
-        grep -v -E "Path=.*schema:(name|creator|associatedMedia|isPartOf|license|contentUrl|thumbnailUrl)" | \
-        grep -E "^Node=|^[[:space:]]*Path=|^[[:space:]]*Message:" | \
-        sed 's/^/  /'
+        shacl validate --data "$file" --shapes shacl.ttl --text 2>/dev/null | \
+        awk '
+        /^Node=/ { node = $0; next }
+        /^[[:space:]]*Path=/ {
+            if (match($0, /schema:(name|creator|contentUrl|thumbnailUrl)/)) {
+                skip = 1
+            } else {
+                print "  " node
+                print "  " $0
+                skip = 0
+            }
+            next
+        }
+        /^[[:space:]]*Message:/ && !skip { print "  " $0 }
+        '
         echo
 
         rm -f "$temp_report"
