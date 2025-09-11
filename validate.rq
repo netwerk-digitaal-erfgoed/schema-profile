@@ -1,0 +1,25 @@
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX schema: <http://schema.org/>
+
+# Query to check if there are any SHACL validation violation that are not in the ignored properties list.
+SELECT (COUNT(?result) AS ?violationCount)
+WHERE {
+    ?report a sh:ValidationReport ;
+        sh:result ?result .
+    ?result sh:resultPath ?path .
+
+    # Filter out ignored properties (partial examples may not have these).
+    FILTER (?path NOT IN (
+         # CreativeWork:
+         schema:name,
+         schema:creator,
+         schema:associatedMedia,
+         schema:isPartOf,
+
+         # MediaObject:
+         schema:license,
+         schema:contentUrl,
+         schema:thumbnailUrl
+     )
+    )
+}

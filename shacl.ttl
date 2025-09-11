@@ -1,6 +1,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <https://schema.org/> .
+@prefix schema: <http://schema.org/> . # https://schema.org must be used, but that still resolves to http://schema.org.
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -243,7 +243,10 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:dateCreated ;
-            sh:datatype xsd:date ;
+            sh:or (
+               [ sh:datetype xsd:date ]
+               [ sh:datetype schema:Date ]
+            ) ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the date the CreativeWork was created.
@@ -550,8 +553,7 @@ _:PlaceShape
     sh:property [
         sh:path schema:address ;
         sh:class schema:PostalAddress ;
-        sh:minCount 1 ;
-        sh:severity sh:Warning ;
+        sh:minCount 0 ;
         sh:description """
             A property that indicates the Place's address, *REQUIRED* if known.
 
@@ -581,7 +583,7 @@ _:PlaceShape
                     """ ;
                     sh:property [
                         sh:path schema:latitude ;
-                        sh:datatype xsd:float ;
+                        sh:datatype xsd:double ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
                         sh:description """
@@ -590,7 +592,7 @@ _:PlaceShape
                     ] ,
                     [
                         sh:path schema:longitude ;
-                        sh:datatype xsd:float ;
+                        sh:datatype xsd:double ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
                         sh:description """
@@ -601,8 +603,7 @@ _:PlaceShape
             ]
             [ sh:class schema:GeoShape ]
         ) ;
-        sh:minCount 1 ;
-        sh:severity sh:Warning ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
             A property that indicates the Place's [[!WGS84]] geo coordinates, *REQUIRED* if known.

@@ -6,5 +6,16 @@ on:
       - main
 
 jobs:
-  deploy:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Validate JSON-LD examples with SHACL
+        run: |
+          docker run --rm -v $PWD:/work -w /work stain/jena:latest bash validate-examples.sh
+
+
+  build:
     uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@main
