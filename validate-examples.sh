@@ -44,54 +44,28 @@ validate_file() {
     # Check if the report indicates conformance
     if grep -q "sh:conforms.*true" "$temp_report"; then
         echo -e "${GREEN}PASS${NC}"
+        rm -f "$temp_report"
         return 0
     fi
 
-    # Query for non-ignored violations and capture the results
-    local violations
-    violations=$($SPARQL_CMD --data "$temp_report" --query <(cat <<'EOF'
-PREFIX sh: <http://www.w3.org/ns/shacl#>
-PREFIX schema: <http://schema.org/>
-
-SELECT ?node ?path ?message
-WHERE {
-    ?report a sh:ValidationReport ;
-        sh:result ?result .
-    ?result sh:focusNode ?node ;
-            sh:resultPath ?path ;
-            sh:resultMessage ?message .
-    
-    # Filter out ignored properties
-    FILTER (?path NOT IN (
-         schema:name,
-         schema:creator,
-         schema:associatedMedia,
-         schema:isPartOf,
-         schema:license,
-         schema:contentUrl,
-         schema:thumbnailUrl
-     ))
-}
-EOF
-    ) --results TSV 2>/dev/null | tail -n +2)
+    # Query the validation report for non-ignored violations
+    local violation_count
+    violation_count=$($SPARQL_CMD --data "$temp_report" --query validate.rq --results CSV | tail -n +2 | cut -d, -f1 | tr -d '\r')
 
     # Check if there are any non-ignored violations
-    if [[ -z "$violations" ]]; then
+    if [[ -z "$violation_count" ]] || [[ "$violation_count" == "0" ]]; then
         echo -e "${GREEN}PASS${NC} (ignored missing required properties)"
+        rm -f "$temp_report"
         return 0
     else
-        # Count the violations for display
-        local count=$(echo "$violations" | wc -l | tr -d ' ')
-        echo -e "${RED}FAIL${NC} ($count non-ignored violations)"
+        echo -e "${RED}FAIL${NC} ($violation_count non-ignored violations)"
         
-        # Display the violations
-        echo -e "${YELLOW}Violations:${NC}"
-        echo "$violations" | while IFS=$'\t' read -r node path message; do
-            echo "  Path: $path"
-            echo "  Message: $message"
-            echo
-        done
+        # The SPARQL query already identified the real violations
+        # For now, just indicate there are violations - detailed reporting could be added later
+        echo "  Run 'shacl validate --data $file --shapes shacl.ttl --text' for details"
+        echo
 
+        rm -f "$temp_report"
         return 1
     fi
 }
