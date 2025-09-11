@@ -8,100 +8,83 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-SPARQL_CMD="sparql"
-
-# Counters
-total_files=0
-failed_files=0
-
-echo "Validating JSON-LD examples against SHACL shapes..."
-echo "Using SPARQL query to filter ignored properties"
-echo "----------------------------------------"
+# Output helpers
+pass() { echo -e "${GREEN}PASS${NC} $1"; }
+fail() { echo -e "${RED}FAIL${NC} $1"; }
+warn() { echo -e "${YELLOW}$1${NC}"; }
 
 # Check required commands
-if ! command -v shacl &> /dev/null; then
-    echo -e "${RED}Error: shacl command not found. Please install Apache Jena.${NC}"
-    exit 1
-fi
+command -v shacl &>/dev/null || { fail "Error: shacl command not found. Please install Apache Jena."; exit 1; }
+command -v sparql &>/dev/null || { fail "Error: SPARQL command not found. Please install Apache Jena ARQ."; exit 1; }
 
-if ! command -v arq &> /dev/null && ! command -v sparql &> /dev/null; then
-    echo -e "${RED}Error: SPARQL command not found. Please install Apache Jena ARQ.${NC}"
-    exit 1
-fi
+echo "Validating JSON-LD examples against SHACL shapes..."
+echo "----------------------------------------"
 
+# Counters
+total=0
+failed=0
 
-# Function to validate a single file
-validate_file() {
-    local file="$1"
-    local basename=$(basename "$file")
-    local temp_report="/tmp/shacl-report-$basename.ttl"
+# Validate all .jsonld files
+for file in examples/*.jsonld; do
+    [[ -f "$file" ]] || continue
 
+    total=$((total + 1))
+    basename=$(basename "$file")
     echo -n "Validating $basename... "
 
-    # Run SHACL validation and save report to temp file
-    shacl validate --data "$file" --shapes shacl.ttl > "$temp_report"
+    # Create temp files (kept for debugging)
+    report="/tmp/shacl-report-$basename.ttl"
+    stderr="/tmp/shacl-stderr-$basename.txt"
 
-    # Check if the report indicates conformance
-    if grep -q "sh:conforms.*true" "$temp_report"; then
-        echo -e "${GREEN}PASS${NC}"
-        rm -f "$temp_report"
-        return 0
+    # Run SHACL validation
+    shacl validate --data "$file" --shapes shacl.ttl >"$report" 2>"$stderr"
+
+    # Check for warnings first
+    if grep -qi "warning" "$stderr"; then
+        fail "(warnings detected)"
+        warn "  Warnings:"
+        grep -i "warning" "$stderr" | sed 's/^/    /'
+        echo
+        failed=$((failed + 1))
+        continue
+    fi
+
+    # Check if validation passed completely
+    if grep -q "sh:conforms.*true" "$report"; then
+        pass
+        continue
     fi
 
     # Query for non-ignored violations
-    local violations
-    violations=$($SPARQL_CMD --data "$temp_report" --query validate.rq --results TSV 2>/dev/null | tail -n +2)
+    violations=$(sparql --data "$report" --query validate.rq --results TSV 2>/dev/null | tail -n +2)
 
-    # Check if there are any non-ignored violations
     if [[ -z "$violations" ]]; then
-        echo -e "${GREEN}PASS${NC} (ignored missing required properties)"
-        rm -f "$temp_report"
-        return 0
+        pass "(ignored missing required properties)"
     else
-        # Count violations for display
-        local count=$(echo "$violations" | wc -l | tr -d ' ')
-        echo -e "${RED}FAIL${NC} ($count non-ignored violations)"
-        
-        # Display the violations
-        echo -e "${YELLOW}Violations:${NC}"
+        count=$(echo "$violations" | wc -l | xargs)
+        fail "($count non-ignored violations)"
+        warn "  Violations:"
         echo "$violations" | while IFS=$'\t' read -r node path message; do
-            echo "  Path: $path"
-            echo "  Message: $message"
+            echo "    Node: $node"
+            echo "    Path: $path"
+            echo "    Message: $message"
             echo
         done
-
-        rm -f "$temp_report"
-        return 1
-    fi
-}
-
-# Validate all .jsonld files in examples directory
-if [[ ! -d "examples" ]]; then
-    echo -e "${RED}Error: examples directory not found.${NC}"
-    exit 1
-fi
-
-for file in examples/*.jsonld; do
-    if [[ -f "$file" ]]; then
-        total_files=$((total_files + 1))
-        if ! validate_file "$file"; then
-            failed_files=$((failed_files + 1))
-        fi
-        echo # Add blank line between files
+        failed=$((failed + 1))
     fi
 done
 
 # Summary
 echo "----------------------------------------"
 echo "Validation Summary:"
-echo "Total files: $total_files"
-echo "Passed: $((total_files - failed_files))"
-echo "Failed: $failed_files"
+echo "  Total: $total"
+echo "  Passed: $((total - failed))"
+echo "  Failed: $failed"
+echo
 
-if [[ $failed_files -gt 0 ]]; then
-    echo -e "${RED}❌ Validation failed: $failed_files file(s) have violations${NC}"
+if [[ $failed -gt 0 ]]; then
+    fail "❌ Validation failed: $failed file(s) have violations"
     exit 1
 else
-    echo -e "${GREEN}✅ All files passed validation${NC}"
-    exit 0
+    pass "✅ All files passed validation"
 fi

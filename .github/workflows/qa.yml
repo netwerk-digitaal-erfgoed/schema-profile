@@ -16,6 +16,5 @@ jobs:
         run: |
           docker run --rm -v $PWD:/work -w /work stain/jena:latest bash validate-examples.sh
 
-
   build:
     uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@main
