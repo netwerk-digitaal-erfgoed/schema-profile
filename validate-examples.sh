@@ -59,24 +59,10 @@ validate_file() {
         return 0
     else
         echo -e "${RED}FAIL${NC} ($violation_count non-ignored violations)"
-
-        # Show detailed validation report for failing files
-        echo -e "${YELLOW}Validation report (non-ignored violations only):${NC}"
-        shacl validate --data "$file" --shapes shacl.ttl --text 2>/dev/null | \
-        awk '
-        /^Node=/ { node = $0; next }
-        /^[[:space:]]*Path=/ {
-            if (match($0, /schema:(name|creator|contentUrl|thumbnailUrl)/)) {
-                skip = 1
-            } else {
-                print "  " node
-                print "  " $0
-                skip = 0
-            }
-            next
-        }
-        /^[[:space:]]*Message:/ && !skip { print "  " $0 }
-        '
+        
+        # The SPARQL query already identified the real violations
+        # For now, just indicate there are violations - detailed reporting could be added later
+        echo "  Run 'shacl validate --data $file --shapes shacl.ttl --text' for details"
         echo
 
         rm -f "$temp_report"
