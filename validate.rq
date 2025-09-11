@@ -7,8 +7,8 @@ WHERE {
     ?report a sh:ValidationReport ;
         sh:result ?result .
     ?result sh:focusNode ?node ;
-            sh:resultPath ?path ;
-            sh:resultMessage ?message .
+        sh:resultPath ?path ;
+        sh:resultMessage ?message .
 
     # Filter out ignored properties (partial examples may not have these).
     FILTER (?path NOT IN (
