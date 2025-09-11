@@ -1,12 +1,14 @@
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX schema: <http://schema.org/>
 
-# Query to check if there are any SHACL validation violation that are not in the ignored properties list.
-SELECT (COUNT(?result) AS ?violationCount)
+# Query to get SHACL validation violations that are not in the ignored properties list.
+SELECT ?node ?path ?message
 WHERE {
     ?report a sh:ValidationReport ;
         sh:result ?result .
-    ?result sh:resultPath ?path .
+    ?result sh:focusNode ?node ;
+            sh:resultPath ?path ;
+            sh:resultMessage ?message .
 
     # Filter out ignored properties (partial examples may not have these).
     FILTER (?path NOT IN (

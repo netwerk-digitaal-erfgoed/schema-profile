@@ -48,22 +48,27 @@ validate_file() {
         return 0
     fi
 
-    # Query the validation report for non-ignored violations
-    local violation_count
-    violation_count=$($SPARQL_CMD --data "$temp_report" --query validate.rq --results CSV | tail -n +2 | cut -d, -f1 | tr -d '\r')
+    # Query for non-ignored violations
+    local violations
+    violations=$($SPARQL_CMD --data "$temp_report" --query validate.rq --results TSV 2>/dev/null | tail -n +2)
 
     # Check if there are any non-ignored violations
-    if [[ -z "$violation_count" ]] || [[ "$violation_count" == "0" ]]; then
+    if [[ -z "$violations" ]]; then
         echo -e "${GREEN}PASS${NC} (ignored missing required properties)"
         rm -f "$temp_report"
         return 0
     else
-        echo -e "${RED}FAIL${NC} ($violation_count non-ignored violations)"
+        # Count violations for display
+        local count=$(echo "$violations" | wc -l | tr -d ' ')
+        echo -e "${RED}FAIL${NC} ($count non-ignored violations)"
         
-        # The SPARQL query already identified the real violations
-        # For now, just indicate there are violations - detailed reporting could be added later
-        echo "  Run 'shacl validate --data $file --shapes shacl.ttl --text' for details"
-        echo
+        # Display the violations
+        echo -e "${YELLOW}Violations:${NC}"
+        echo "$violations" | while IFS=$'\t' read -r node path message; do
+            echo "  Path: $path"
+            echo "  Message: $message"
+            echo
+        done
 
         rm -f "$temp_report"
         return 1
