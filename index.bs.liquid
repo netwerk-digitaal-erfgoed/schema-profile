@@ -204,6 +204,25 @@ Publishers *SHOULD* add the term’s name in any language(s) they know about for
     </pre>
 </div>
 
+In some cases, an additional Schema.org type *MUST* be added to produce valid Schema.org syntax. For locations this
+*MUST* be [Place](https://schema.org/Place); in other cases [URL](https://schema.org/URL) *MUST* be used.
+
+<div class="example">
+    Add type URL for valid Schema.org syntax:
+
+    <pre highlight=json-ld line-numbers line-highlight="6">
+        {
+          "@context": "https://schema.org",
+          "@id": "http://www.wikidata.org/entity/Q45585",
+          "@type": "CreativeWork",
+          "additionalType": {
+            "@type": ["DefinedTerm", "URL"],
+            "@id": "http://vocab.getty.edu/aat/300404016"
+          }
+        }
+    </pre>
+</div>
+
 Serialization {#serialization}
 ---
 

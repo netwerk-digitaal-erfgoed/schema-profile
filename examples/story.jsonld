@@ -30,6 +30,10 @@
       "@value": "BHIC"
     }
   },
+  "additionalType": {
+    "@type": ["DefinedTerm", "URL"],
+    "@id": "http://vocab.getty.edu/aat/300404016"
+  },
   "description": {
     "@language": "nl",
     "@value": "Van 1 oktober 1864 tot 31 augustus 1866 verbleef Vincent van Gogh op de kostschool van Jan Provily in Zevenbergen. Vincent zelf vertelt er in drie brieven kort iets over. Hieruit blijkt dat hij zich hier niet zo gelukkig heeft gevoeld."
@@ -43,11 +47,11 @@
     "@value": "Domineeszoon Vincent van Gogh werd op 30 maart 1853 in het Brabantse grensdorp Zundert geboren. Tot zijn 8ste jaar kreeg hij les van zijn vader (…)"
   },
   "contentLocation": {
-    "@id": "https://data.rkd.nl/artists/32439",
+    "@id": "http://www.wikidata.org/entity/Q19547129",
     "@type": ["Place", "DefinedTerm"],
     "name": {
       "@language": "nl",
-      "@value": "Zevenbergen"
+      "@value": "Stationsstraat in Zevenbergen"
     }
   },
   "temporalCoverage": "1864/1866",
@@ -63,7 +67,7 @@
     },
     {
       "@id": "https://data.cultureelerfgoed.nl/term/id/cht/596dac9d-868f-461e-bbf9-6baae4fb5a12",
-      "@type": ["DefinedTerm"],
+      "@type": "DefinedTerm",
       "name": {
         "@language": "nl",
         "@value": "kostscholen"
@@ -72,7 +76,7 @@
   ],
   "genre": {
     "@id": "http://vocab.getty.edu/aat/300080102",
-    "@type": ["URL", "DefinedTerm"],
+    "@type": ["DefinedTerm", "URL"],
     "name": {
       "@language": "nl",
       "@value": "biografieën"
