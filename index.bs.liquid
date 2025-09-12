@@ -67,7 +67,7 @@ Definitions {#definitions}
 :: An [[RDF-PRIMER|RDF]] resource that expresses one of the top-level classes in the [[#data-model-section]]. Description of a heritage object.
 
 : <dfn>Term</dfn>
-:: A word, name, acronym, phrase or other symbol with a formal definition, available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl).
+:: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
 
 General considerations {#general-considerations}
 ==========
@@ -178,9 +178,15 @@ Each language *MUST* occur only once, so only a single value per language is all
 Reference terms {#reference-terms}
 ---
 
-When referencing [=terms=], publishers *MUST* use the term’s URI. 
+When referencing [=terms=], publishers *MUST* use the term’s URI.
 
-The term *MUST* be typed as `DefinedTerm` so it is clear to consumers that the term can be looked up through the Network of Terms.
+The term *MUST* be typed as [DefinedTerm](https://schema.org/DefinedTerm)
+to indicate to consumers that a formal definition is being referenced.
+
+Terms *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either: 
+
+- through the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en/lookup);
+- by directly resolving its URI.
 
 Publishers *SHOULD* add the term’s name in any language(s) they know about for readability:
 
