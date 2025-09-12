@@ -445,13 +445,14 @@ _:MediaObjectShape
     sh:name "MediaObject" ;
     sh:targetClass schema:MediaObject ;
     sh:description """
-        In case of image, video, audio or 3d model objects, the relevant subclass *MUST* be used:
+        In case of image, video, audio or 3d model objects, in addition to the top-level `MediaObject` class,
+        the relevant subclass *MUST* be used:
         - ImageObject
         - VideoObject
         - AudioObject
         - 3DModel
 
-        For other types of media, the generic class MediaObject *MUST* be used.
+        For other types of media, the generic class MediaObject *MUST* be used by itself.
     """ ;
     sh:property
         [

@@ -1,6 +1,6 @@
 {
   "@context": "https://schema.org",
-  "@type": "ImageObject",
+  "@type": ["MediaObject", "ImageObject"],
   "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg",
   "thumbnailUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/%5E!256,256/0/default.jpg",
   "isBasedOn": [
