@@ -244,8 +244,8 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:dateCreated ;
             sh:or (
-               [ sh:datetype xsd:date ]
-               [ sh:datetype schema:Date ]
+                [ sh:datatype xsd:date ]
+                [ sh:datatype schema:Date ]
             ) ;
             sh:minCount 0 ;
             sh:description """
@@ -343,7 +343,10 @@ _:PersonShape
         ] ,
         [
             sh:path schema:birthDate ;
-            sh:datatype xsd:date ;
+            sh:or (
+                [ sh:datatype xsd:date ]
+                [ sh:datatype schema:Date ]
+            ) ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
@@ -369,7 +372,10 @@ _:PersonShape
         ] ,
         [
             sh:path schema:deathDate ;
-            sh:datatype xsd:date ;
+            sh:or (
+                [ sh:datatype xsd:date ]
+                [ sh:datatype schema:Date ]
+            ) ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
