@@ -2,7 +2,10 @@
   "@context": "https://schema.org",
   "@id": "https://www.bhic.nl/ontdekken/verhalen/vincent-van-gogh-op-kostschool",
   "@type": ["CreativeWork", "Article"],
-  "name": "Vincent van Gogh op kostschool",
+  "name": {
+    "@language": "nl",
+    "@value": "Vincent van Gogh op kostschool"
+  },
   "creator": {
     "@type": "Person",
     "name": {
