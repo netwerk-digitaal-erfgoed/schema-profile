@@ -389,7 +389,8 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 
 <img width="100%" src="https://mermaid.ink/svg/pako:eNqVVVFP2zAQ_itRHvYQkYpuEg_ZhAQt2pCAIlo0aQsPF_uaekvsyHamdYj_vrMTaEwphTw5d999vvvubN_HTHGMszhN01xaYSvMovnk29nlSXpynV5Nz3LpXawCY6YCSg11LrnQyKxQMlqc5jKiz_ujiUaw4g9-V_p3dN953JcktzfnSfJBFqb5PDRLqDFJskjzZVaBLOdWC1lGP8ejUXI3BApzDdrOlg48BQsG7RZKcKQSlgJ1Fpme6HA0Gg8gHA3TonGpb296GNJBQSTA7F6gxb_7QUb8w70gDha9hsipBLbCGjKqFheixqCWh1wOdb9GbagZpHhu3yRsByuEtivHH2z2tFEH4pTOK6AXspnpEqT4B35A7t_Z7mdcl8gFzIpfNG4hVSUYSuPZbm8uiOJuUzxT0tIo3OoqcG-C7aqtCwmi2gVhqllrUa7slbK00d7GCXNKI8lnNFXBGXC4j5vKBh2rgGFYEU0boj3hXKMxSfI850YZC9WEjuu2D7qgC8WgEna9E3CDJfVkp3uiWmn12ilyPp99Gh8dpePn0BKV839FNVFKcyFpGMwGFBQ5xaWQyBeo6-Fs-rsg7Nh7BiMQOE2Pg20y134HUDpJvhT6mEoTbhChWqwbdJZ-OpxYzuFMVb_uz56PK1Rr3aImixZQuXWJUuOOLLqOZtHb6HeQ5LGrOI_DM0SkXUn7ovp74M344enKImqZYsJl6O2PevekXeBhFxhKvgIzY6xtfLYvB423gvzl40Vzevhbxv_lrzA8arwvNlDvRYbHlnT4XMYHcU15geD0GPpjmceWbjvM44yWHJfQVjaPc_lAUGitmq8lizOrWzyItWrLVZwtoTL01zbuHu8fyydrA_KHUpt_kpg6dNk9v_4VfvgPY5ZZpA">
 
-{% for nodeShape in nodeShapes %}
+{% assign mainNodeShapes = nodeShapes | where: "name" %}
+{% for nodeShape in mainNodeShapes %}
     ## {{ nodeShape.name }} ## {#{{ nodeShape.name }}}
 
     {{ nodeShape.description }}
