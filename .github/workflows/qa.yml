@@ -16,5 +16,9 @@ jobs:
         run: |
           docker run --rm -v $PWD:/work -w /work stain/jena:latest bash validate-examples.sh
 
+      - run: |
+          npx --yes @lde/docgen@latest from-shacl shacl.ttl ./assets/class-diagram.mmd.liquid > assets/class-diagram.mmd
+          npx --yes -p @mermaid-js/mermaid-cli mmdc -i assets/class-diagram.mmd -o assets/class-diagram.svg
+
   build:
     uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@main
