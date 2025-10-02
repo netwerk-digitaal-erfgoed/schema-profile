@@ -1,0 +1,58 @@
+---
+title: SCHEMA-AP-NDE
+---
+classDiagram
+direction TB
+
+{%- assign mainNodeShapes = nodeShapes | where: "name" -%}
+{% for nodeShape in mainNodeShapes %}
+    class {{ nodeShape.name }} {
+        {% if nodeShape.nodeKind == "IRI" -%}**URI**&nbsp;{%- endif -%}
+    {%- for property in nodeShape.property -%}
+        {%- assign name = property.path | replace: "schema:", "" %}
+
+        {%- if property.or -%}
+            {%- for or in property.or -%}
+                {%- if or.node -%}
+                    {{ or.node }}
+                {%- elsif or.nodeKind -%}
+                    {{ or.nodeKind }}
+                {%- endif -%}
+            {% endfor %}
+        {%- endif %}
+        **{{ name }}**: {% if property.datatype -%}
+            {{ property.datatype }}
+        {%- elsif property.nodeKind -%}
+            {{- property.nodeKind -}}
+        {%- elsif property.node -%}
+            {{ property.node.class | default: property.node }}
+        {%- endif %} [
+        {%- if property.minCount == property.maxCount -%}
+             {{- property.minCount -}}
+        {%- else -%}
+            {{ property.minCount }}..{{ property.maxCount | default: "*" }}
+        {%- endif -%}
+        ]
+    {%- endfor %}
+    }
+{% endfor %}
+
+    class DefinedTerm {
+        **URI**&nbsp;
+    }
+
+    CreativeWork --> DefinedTerm : creator<br>additionalType<br>contentLocation<br>locationCreated<br>about<br>material<br>genre
+    CreativeWork --> Place : contentLocation<br>locationCreated<br>
+    CreativeWork --> "1..*" Organization : creator
+    CreativeWork --> "1..*" Person : creator
+    CreativeWork --> "1..*" MediaObject : associatedMedia
+
+    Person --> "0..*" DefinedTerm : hasOccupation
+    Person --> "0..1" DefinedTerm : birthPlace<br>deathPlace
+
+    Person --> "0..1" Place : birthPlace<br>deathPlace
+
+    Place --> "0..1" GeoCoordinates : geo
+
+    Organization --> "0..1" Place : location
+

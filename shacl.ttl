@@ -73,6 +73,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:associatedMedia ;
+            sh:node schema:MediaObject ;
             sh:minCount 1 ;
             sh:severity sh:Warning ;
             sh:description """
@@ -518,7 +519,16 @@ _:MediaObjectShape
         ] ,
         [
             sh:path schema:isBasedOn ;
-            sh:class schema:CreativeWork ;
+            sh:node [
+                a sh:NodeShape ;
+                    sh:class schema:CreativeWork ;
+                    sh:property [
+                        sh:path schema:encodingFormat ;
+                        sh:minCount 1 ;
+                        sh:maxCount 1 ;
+                        sh:pattern "^application/ld+json;profile='http://iiif.io/api/(image|presentation)/3/context.json'$" ;
+                    ]
+            ] ;
             sh:minCount 0 ;
             sh:description """
                 If an IIIF Image API or IIIF Presentation API for the MediaObject is available,
