@@ -6,15 +6,7 @@ on:
       - main
 
 jobs:
-  mermaid:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          npx --yes @lde/docgen@latest from-shacl shacl.ttl ./assets/class-diagram.mmd.liquid > assets/class-diagram.mmd
-          npx --yes -p @mermaid-js/mermaid-cli mmdc -i assets/class-diagram.mmd -o assets/class-diagram.svg
-
   deploy:
-    needs: mermaid
     uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@main
     with:
       publish: true
