@@ -460,6 +460,7 @@ _:MediaObjectShape
             sh:path schema:license ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
+            sh:pattern "^https?://" ;
             sh:description """
                 A REQUIRED property that points to the URI for a license under which the media object may be used.
                 The value *MUST* be the canonical URI of a license.
@@ -478,6 +479,7 @@ _:MediaObjectShape
             sh:path schema:contentUrl ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
+            sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
             sh:description """
                 Points to the URL of the media object, *REQUIRED* if the MediaObject is published under an open license.
@@ -493,6 +495,7 @@ _:MediaObjectShape
             sh:path schema:thumbnailUrl ;
             sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
+            sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
             sh:description """
                 Points to a smaller version of the MediaObject, *REQUIRED* if the MediaObject is published under an open license.
