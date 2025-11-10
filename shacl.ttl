@@ -521,12 +521,11 @@ _:MediaObjectShape
             sh:path schema:isBasedOn ;
             sh:node [
                 a sh:NodeShape ;
-                    sh:class schema:CreativeWork ;
                     sh:property [
                         sh:path schema:encodingFormat ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
-                        sh:pattern "^application/ld+json;profile='http://iiif.io/api/(image|presentation)/3/context.json'$" ;
+                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/(image|presentation)/3/context\\.json'$" ;
                     ]
             ] ;
             sh:minCount 0 ;
