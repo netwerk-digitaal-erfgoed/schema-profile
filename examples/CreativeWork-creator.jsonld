@@ -1,15 +1,13 @@
 {
   "@context": "https://schema.org",
-  "@id": "https://example.com/dataset1/resource1",
+  "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
-  "name": [
-    {
+  "creator": {
+    "@id": "https://data.rkd.nl/artists/32439",
+    "@type": ["Person", "DefinedTerm"],
+    "name": {
       "@language": "nl",
-      "@value": "De Sterrennacht"
-    },
-    {
-      "@language": "en",
-      "@value": "The Starry Night"
+      "@value": "Vincent van Gogh"
     }
-  ]
+  }
 }
