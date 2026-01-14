@@ -3,6 +3,7 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": ["CreativeWork", "Painting"],
   "additionalType": {
+    "@type": ["DefinedTerm", "URL"],
     "@id": "https://vocab.getty.edu/aat/300033618"
   }
 }

@@ -5,7 +5,7 @@
   "material": [
     {
       "@id": "http://vocab.getty.edu/aat/300015050",
-      "@type": ["URL", "DefinedTerm"],
+      "@type": ["DefinedTerm", "URL"],
       "name": {
         "@language": "en",
         "@value": "oil paint (paint)"
@@ -13,7 +13,7 @@
     },
     {
       "@id": "http://vocab.getty.edu/aat/300014078",
-      "@type": ["URL", "DefinedTerm"],
+      "@type": ["DefinedTerm", "URL"],
       "name": {
         "@language": "en",
         "@value": "canvas (textile material)"

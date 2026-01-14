@@ -4,6 +4,6 @@
   "@type": "Person",
   "deathPlace": {
     "@id": "http://www.wikidata.org/entity/Q131153786",
-    "@type": "Place"
+    "@type": ["DefinedTerm", "Place"]
   }
 }
