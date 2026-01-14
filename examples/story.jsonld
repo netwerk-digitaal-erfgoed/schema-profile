@@ -48,7 +48,7 @@
   },
   "contentLocation": {
     "@id": "http://www.wikidata.org/entity/Q19547129",
-    "@type": ["Place", "DefinedTerm"],
+    "@type": ["DefinedTerm", "Place"],
     "name": {
       "@language": "nl",
       "@value": "Stationsstraat in Zevenbergen"
@@ -59,7 +59,7 @@
   "about": [
     {
       "@id": "https://data.rkd.nl/artists/32439",
-      "@type": ["Person", "DefinedTerm"],
+      "@type": ["DefinedTerm", "Person"],
       "name": {
         "@language": "nl",
         "@value": "Vincent van Gogh"

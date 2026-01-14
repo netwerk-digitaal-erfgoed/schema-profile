@@ -4,6 +4,6 @@
   "@type": "Person",
   "hasOccupation": {
     "@id": "http://vocab.getty.edu/aat/300025008",
-    "@type": "Occupation"
+    "@type": ["DefinedTerm", "Occupation"]
   }
 }
