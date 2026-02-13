@@ -447,9 +447,8 @@ _:OrganizationShape
 _:MediaObjectShape
     a sh:NodeShape ;
     sh:name "MediaObject" ;
-    sh:targetClass schema:MediaObject ;
     sh:description """
-        In case of image, video, audio or 3d model objects, in addition to the top-level `MediaObject` class,
+        In case of image, video, audio or 3d model objects, in addition to the `MediaObject` class,
         the relevant subclass *MUST* be used:
         - ImageObject
         - VideoObject
