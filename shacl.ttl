@@ -480,7 +480,7 @@ _:MediaObjectShape
         ] ,
         [
             sh:path schema:contentUrl ;
-            sh:nodeKind sh:IRI ;
+            sh:datatype xsd:anyURI ;
             sh:minCount 1 ;
             sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
@@ -496,7 +496,7 @@ _:MediaObjectShape
         ] ,
         [
             sh:path schema:thumbnailUrl ;
-            sh:nodeKind sh:IRI ;
+            sh:datatype xsd:anyURI ;
             sh:minCount 1 ;
             sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
