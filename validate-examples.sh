@@ -24,8 +24,8 @@ echo "----------------------------------------"
 total=0
 failed=0
 
-# Validate all .jsonld files
-for file in examples/*.jsonld; do
+# Validate all .jsonld and .nt files
+for file in examples/*.jsonld examples/*.nt; do
     [[ -f "$file" ]] || continue
 
     total=$((total + 1))
@@ -37,7 +37,14 @@ for file in examples/*.jsonld; do
     stderr="/tmp/shacl-stderr-$basename.txt"
 
     # Run SHACL validation
-    shacl validate --data "$file" --shapes shacl.ttl >"$report" 2>"$stderr"
+    # Normalize HTTPS->HTTP Schema.org URIs so data matches SHACL shapes
+    normalized="/tmp/shacl-normalized-$basename.nt"
+    if [[ "$file" == *.jsonld ]]; then
+        riot --output=nt "$file" 2>/dev/null | sed 's|https://schema\.org/|http://schema.org/|g' > "$normalized"
+    else
+        sed 's|https://schema\.org/|http://schema.org/|g' "$file" > "$normalized"
+    fi
+    shacl validate --data "$normalized" --shapes shacl.ttl >"$report" 2>"$stderr"
 
     # Check for warnings first
     if grep -qi "warning" "$stderr"; then
