@@ -684,7 +684,7 @@ _:CurrentPostalAddressShape
         sh:maxCount 1 ;
         sh:pattern "^[A-Z]{2}$" ;
         sh:description """
-            A *REQUIRED* property that indicates the country in ISO 3166-1 alpha-2 format, e.g. ‘NL’.
+            A *REQUIRED* property that indicates the country in [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) alpha-2 format, e.g. ‘NL’.
         """ ;
     ] .
 
@@ -715,10 +715,10 @@ _:HistoricalPostalAddressShape
     [
         sh:path schema:addressLocality ;
         sh:datatype xsd:string ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            A *REQUIRED* property that indicates the locality (city).
+            An *OPTIONAL* property that indicates the locality (city).
         """ ;
     ] ,
     [
@@ -737,7 +737,7 @@ _:HistoricalPostalAddressShape
         sh:maxCount 1 ;
         sh:description """
             A *REQUIRED* property that indicates the country.
-            For countries that have an ISO 3166-1 alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
+            For countries that have an [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
             For historical countries, their name *MAY* be used instead (e.g. ‘Prussia’).
         """ ;
     ] .
