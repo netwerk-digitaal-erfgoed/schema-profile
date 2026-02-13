@@ -378,12 +378,13 @@ This section describes the classes and properties that *MUST* be used to publish
 Each record *MUST* be typed as one of the following classes:
 
 - [[#CreativeWork|CreativeWork]]
-- [[#Person|Person]] 
+- [[#Person|Person]]
 - [[#Organization|Organization]]
-- [[#MediaObject|MediaObject]]
 - [[#Place|Place]].
 
 For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL* properties.
+
+[[#MediaObject|MediaObject]] is documented as a supporting class, used through the `associatedMedia` property on [[#CreativeWork|CreativeWork]].
 
 {% assign mainNodeShapes = nodeShapes | where: "name" %}
 
