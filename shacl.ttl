@@ -73,7 +73,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:associatedMedia ;
-            sh:node schema:MediaObject ;
+            sh:node _:MediaObjectShape ;
             sh:minCount 1 ;
             sh:severity sh:Warning ;
             sh:description """
