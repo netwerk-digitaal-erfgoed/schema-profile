@@ -431,9 +431,12 @@ _:OrganizationShape
         sh:path schema:address ;
         sh:minCount 0 ;
         sh:class schema:PostalAddress ;
+        sh:node _:CurrentPostalAddressShape ;
         sh:description """
             An *OPTIONAL* property that indicates the Organization's address(es),
             useful for distinguishing the organization from others with similar names.
+
+            See CurrentPostalAddress for this property's allowed values.
         """ ;
         rdfs:seeAlso [
             rdfs:label "Organization with an address:" ;
@@ -561,18 +564,26 @@ _:PlaceShape
         For properties that reference locations, if no term is available, a custom Place resource *MUST* be used instead.
     """ ;
     sh:property [
+        sh:path schema:name ;
+        sh:datatype rdf:langString ;
+        sh:uniqueLang true ;
+        sh:minCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the name of the place.
+        """ ;
+    ] ,
+    [
         sh:path schema:address ;
         sh:class schema:PostalAddress ;
+        sh:or (
+            [ sh:node _:CurrentPostalAddressShape ]
+            [ sh:node _:HistoricalPostalAddressShape ]
+        ) ;
         sh:minCount 0 ;
         sh:description """
             A property that indicates the Place's address, *REQUIRED* if known.
 
-            *REQUIRED* address properties are:
-            - streetAddress
-            - postalCode
-            - addressLocality (city)
-            - addressRegion (province)
-            - addressCountry (*MUST* be in ISO3166-1 format).
+            See CurrentPostalAddress and HistoricalPostalAddress for this property's allowed values.
         """ ;
         rdfs:seeAlso [
             rdfs:label "A place with an address:" ;
@@ -622,6 +633,113 @@ _:PlaceShape
             rdfs:label "A place with coordinates:" ;
             rdfs:comment "file://examples/Place-geo.jsonld" ;
         ]
+    ] .
+
+_:CurrentPostalAddressShape
+    a sh:NodeShape ;
+    sh:name "CurrentPostalAddress" ;
+    sh:description """
+        A current mailing address for an Organization.
+    """ ;
+    sh:property [
+        sh:path schema:streetAddress ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the street address, e.g. 'Street 123'.
+        """ ;
+    ] ,
+    [
+        sh:path schema:postalCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the postal code, e.g. ‘1234 AB’.
+        """ ;
+    ] ,
+    [
+        sh:path schema:addressLocality ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the locality (city).
+        """ ;
+    ] ,
+    [
+        sh:path schema:addressRegion ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the region (province or state).
+        """ ;
+    ] ,
+    [
+        sh:path schema:addressCountry ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Z]{2}$" ;
+        sh:description """
+            A *REQUIRED* property that indicates the country in ISO 3166-1 alpha-2 format, e.g. ‘NL’.
+        """ ;
+    ] .
+
+_:HistoricalPostalAddressShape
+    a sh:NodeShape ;
+    sh:name "HistoricalPostalAddress" ;
+    sh:description """
+        A historical address for a Place, where not all address components may be known.
+    """ ;
+    sh:property [
+        sh:path schema:streetAddress ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description """
+            An *OPTIONAL* property that indicates the street address.
+        """ ;
+    ] ,
+    [
+        sh:path schema:postalCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description """
+            An *OPTIONAL* property that indicates the postal code.
+        """ ;
+    ] ,
+    [
+        sh:path schema:addressLocality ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the locality (city).
+        """ ;
+    ] ,
+    [
+        sh:path schema:addressRegion ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description """
+            An *OPTIONAL* property that indicates the region (province or state).
+        """ ;
+    ] ,
+    [
+        sh:path schema:addressCountry ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the country.
+            For countries that have an ISO 3166-1 alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
+            For historical countries, their name *MAY* be used instead (e.g. ‘Prussia’).
+        """ ;
     ] .
 
 _:DateShape
