@@ -1,5 +1,5 @@
 {
-  "@context": "https://schema.org",
+  "@context": "http://schema.org",
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "material": [

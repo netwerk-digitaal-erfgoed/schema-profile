@@ -104,10 +104,13 @@ The generic data model presented in this document is designed as a [[!SCHEMA-ORG
 Schema.org is a widely adopted cross-domain metadata standard.
 It is, therefore, well-suited for the heritage network, which spans datasets from the library, archive, museum and other domains.
 
-While the Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both 'https://schema.org' and 'http://schema.org' (...) fine”,
-mixing the namespaces makes it harder to consume datasets.
+The Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> "both 'https://schema.org' and 'http://schema.org' (…) fine".
+However, JSON-LD's `"@context": "http://schema.org"` resolves all terms to `http://schema.org/` IRIs,
+meaning tools that process JSON-LD produce `http://` namespace URIs regardless of the scheme used in the context.
 
-Therefore, [[NDE-DATASETS#publisher|Publishers]] *MUST* use the `https://schema.org/` (HTTPS) namespace for Schema.org; not `http://schema.org/` (HTTP).
+To avoid mixed namespaces and enable interoperability across serialisation formats,
+[[NDE-DATASETS#publisher|publishers]] *SHOULD* use the `http://schema.org/` namespace.
+Both `http://schema.org/` and `https://schema.org/` *MUST* be accepted by consumers.
 
 Language {#language}
 ----------
@@ -120,7 +123,7 @@ The language *MUST* be expressed as a well-formed language tag according to [[!B
 
     <pre highlight=json-ld line-numbers line-highlight="5-14">
         {
-          "@context": "https://schema.org",
+          "@context": "http://schema.org",
           "@id": "https://n2t.net/ark:/123456/1",
           "@type": "CreativeWork",
           "name": [
@@ -144,7 +147,7 @@ Even if only one language is available, the language *MUST* be specified.
 
     <pre highlight=json-ld line-numbers line-highlight="3-6">
         {
-          "@context": "https://schema.org",
+          "@context": "http://schema.org",
           "name": {
             "@language": "nl",
             "@value": "De Sterrennacht"
@@ -160,7 +163,7 @@ Each language *MUST* occur only once, so only a single value per language is all
 
     <pre highlight=json-ld line-numbers line-highlight="5,9">
         {
-          "@context": "https://schema.org",
+          "@context": "http://schema.org",
           "name": [
             {
               "@language": "en",
@@ -195,7 +198,7 @@ Publishers *SHOULD* add the term’s name in any language(s) they know about for
 
     <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "https://schema.org",
+          "@context": "http://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
           "creator": {
@@ -218,7 +221,7 @@ In some cases, an additional Schema.org type *MUST* be added to produce valid Sc
 
     <pre highlight=json-ld line-numbers line-highlight="6">
         {
-          "@context": "https://schema.org",
+          "@context": "http://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
           "additionalType": {
@@ -300,7 +303,7 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
     <pre highlight=json-ld>
         {
           "@context": {
-            "schema": "https://schema.org/",
+            "schema": "http://schema.org/",
             "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
             "dcterms": "http://purl.org/dc/terms/"
           },
@@ -419,7 +422,7 @@ path: assets/class-diagram.svg
         
             <pre highlight=json-ld>
                 {
-                  "@context": "https://schema.org",
+                  "@context": "http://schema.org",
                   "@id": "https://n2t.net/ark:/123456/1",
                   "@type": ["CreativeWork", "Painting"]
                 }
@@ -442,7 +445,7 @@ path: assets/class-diagram.svg
         
             <pre highlight=json-ld line-numbers line-highlight="3">
                 {
-                  "@context": "https://schema.org",
+                  "@context": "http://schema.org",
                   "@id": "https://example.com/resource",
                   "@type": "{{ nodeShape.name }}"
                 }
