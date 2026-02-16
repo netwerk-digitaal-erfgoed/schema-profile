@@ -104,8 +104,8 @@ The generic data model presented in this document is designed as a [[!SCHEMA-ORG
 Schema.org is a widely adopted cross-domain metadata standard.
 It is, therefore, well-suited for the heritage network, which spans datasets from the library, archive, museum and other domains.
 
-The Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> "both 'https://schema.org' and 'http://schema.org' (…) fine".
-However, JSON-LD's `"@context": "http://schema.org"` resolves all terms to `http://schema.org/` IRIs,
+The Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both ‘https://schema.org’ and 'http://schema.org' (…) fine”.
+However, JSON-LD's `"@context": "https://schema.org/"` resolves all terms to `http://schema.org/` IRIs,
 meaning tools that process JSON-LD produce `http://` namespace URIs regardless of the scheme used in the context.
 
 To avoid mixed namespaces and enable interoperability across serialisation formats,
