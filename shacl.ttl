@@ -464,7 +464,8 @@ _:MediaObjectShape
             sh:minCount 1 ;
             sh:pattern "^https?://" ;
             sh:description """
-                A REQUIRED property that points to the URI for a license under which the media object may be used.
+                A REQUIRED property that points to the URI for a license under which the digital reproduction may be used.
+                This concerns the use of the reproduction, not of the heritage object itself.
                 The value *MUST* be the canonical URI of a license.
                 For example, use https://creativecommons.org/licenses/by/4.0/ instead
                 of http://creativecommons.org/licenses/by/4.0/deed.nl.
