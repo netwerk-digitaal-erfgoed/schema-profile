@@ -66,6 +66,9 @@ Definitions {#definitions}
 : <dfn>Metadata record</dfn>
 :: An [[RDF-PRIMER|RDF]] resource that expresses one of the top-level classes in the [[#data-model-section]]. Description of a heritage object.
 
+: <dfn>Heritage object</dfn>
+:: Physical or digital object that is described by a [=metadata record=].
+
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
 
@@ -403,6 +406,9 @@ path: assets/class-diagram.svg
     {{ nodeShape.description }}
 
     {% if nodeShape.name == "CreativeWork" %}
+        Note: CreativeWork does not reference the Dutch legal concept ‘creatief werk’
+        as used in the Auteurswet (Copyright Act of 1912) in any way.
+
         ### Subclasses ### {#subclasses}
         
         Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
