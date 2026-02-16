@@ -10,7 +10,7 @@ _:CreativeWorkShape
     sh:nodeKind sh:IRI ;
     sh:name "CreativeWork" ;
     sh:description """
-        The most generic kind of item created by humans, i.e. heritage objects.
+        The most generic kind of item created by humans, i.e. [=heritage objects=].
     """ ;
     sh:property
         [
