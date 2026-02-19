@@ -318,6 +318,17 @@ _:CreativeWorkShape
                 rdfs:label "The Starry Night belongs to the Post-Impressionist art movement:" ;
                 rdfs:comment "file://examples/CreativeWork-genre.jsonld" ;
             ]
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path schema:sdDatePublished ;
+            sh:node _:DateShape ;
+            sh:minCount 0 ;
+            sh:description """
+                Indicates the date when the [=metadata record=] was last changed.
+
+                The value *MUST* be in ISO 8601 format.
+            """ ;
         ]
     .
 
