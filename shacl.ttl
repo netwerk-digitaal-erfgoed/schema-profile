@@ -10,7 +10,17 @@ _:CreativeWorkShape
     sh:nodeKind sh:IRI ;
     sh:name "CreativeWork" ;
     sh:description """
-        The most generic kind of item created by humans, i.e. [=heritage objects=].
+        The type for [=heritage objects=] in this application profile.
+
+        Some heritage objects fit CreativeWork well, such as paintings, books or musical compositions.
+        Others are a less natural fit, such as fossils, buses or bridges,
+        either because they are not ‘creative works’ in the everyday sense
+        or because they fit somewhere else in Schema.org’s type hierarchy.
+
+        Nevertheless, CreativeWork serves as the catch-all type for all heritage objects in this application profile,
+        to differentiate them from the other top-level classes (Person, Organization, Place).
+
+        For more fine-grained typing, [[#CreativeWork-additionalType]] *SHOULD* be used.
     """ ;
     sh:property
         [
