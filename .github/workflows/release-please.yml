@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release-please--branches--main
 
 permissions:
   contents: write
@@ -12,25 +13,28 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      pr: ${{ steps.release.outputs.pr }}
+      pr-number: ${{ fromJSON(steps.release.outputs.pr).number }}
+      pr-branch: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
 
+  sync-changelog:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: needs.release-please.outputs.pr
+    steps:
       - uses: actions/checkout@v6
-        if: ${{ steps.release.outputs.pr }}
         with:
-          fetch-depth: 0
+          ref: ${{ needs.release-please.outputs.pr-branch }}
 
       - name: Sync changelog to spec
-        if: ${{ steps.release.outputs.pr }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr).number }}
-          PR_BRANCH: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
         run: |
-          gh pr checkout "$PR_NUMBER"
           node scripts/sync-changelog.mjs
           if git diff --quiet index.bs.liquid; then
             echo "No changes to index.bs.liquid"
@@ -39,5 +43,24 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add index.bs.liquid
             git commit -m "chore: sync changelog to spec"
-            git push origin "$PR_BRANCH"
+            git push
+          fi
+
+  sync-changelog-on-pr-push:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release-please--branches--main'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Sync changelog to spec
+        run: |
+          node scripts/sync-changelog.mjs
+          if git diff --quiet index.bs.liquid; then
+            echo "No changes to index.bs.liquid"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.bs.liquid
+            git commit -m "chore: sync changelog to spec"
+            git push
           fi

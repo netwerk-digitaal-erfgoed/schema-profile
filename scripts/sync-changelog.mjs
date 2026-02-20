@@ -40,14 +40,8 @@ for (const line of changelog.split('\n')) {
   if (currentVersion && line.startsWith('* ')) {
     let item = line.slice(2);
 
-    // Strip all trailing commit/PR links like ([abc1234](https://…)) or ([#42](https://…)).
-    item = item.replace(/(\s*\(\[[\w#]+\]\([^)]*\)\))+$/g, '');
-
-    // Strip inline links but keep link text: [text](url) → text.
-    item = item.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
-
-    // Strip residual parenthesized issue/PR references like (#73).
-    item = item.replace(/\s*\(#\d+\)/g, '');
+    // Strip trailing PR/issue links like ([#73](https://…)), keep commit SHA links.
+    item = item.replace(/\s*\(\[#\d+\]\([^)]*\)\)/g, '');
 
     // Strip leading **scope:** bold prefix that release-please adds.
     item = item.replace(/^\*\*[^*]+:\*\*\s*/, '');
@@ -62,20 +56,10 @@ for (const line of changelog.split('\n')) {
   }
 }
 
-// Format a date as "20 February 2026".
-function formatDate(isoDate) {
-  const [year, month, day] = isoDate.split('-');
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-  return `${parseInt(day)} ${months[parseInt(month) - 1]} ${year}`;
-}
-
 // Build Bikeshed markup.
 const sections = versions.map(({ version, date, items }) => {
   const lines = [];
-  lines.push(`Version ${version} (${formatDate(date)}) {#v${version}}`);
+  lines.push(`Version ${version} (${date}) {#v${version}}`);
   lines.push('----------');
   lines.push('');
   for (const item of items) {
