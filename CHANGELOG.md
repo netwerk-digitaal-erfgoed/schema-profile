@@ -5,7 +5,7 @@
 
 ### Features
 
-* migrate term references from DefinedTerm-as-identifier to sameAs ([#74](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/74)) ([045e748](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/045e7482efc6678b8c730b83f5b25c43abe6ba22))
+* use sameAs for referencing terms ([#74](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/74)) ([045e748](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/045e7482efc6678b8c730b83f5b25c43abe6ba22))
 * show spec version in header ([#93](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/93)) ([0e8bc58](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/0e8bc58235fdfb285c6ee7a9c53840228aca036a))
 
 
