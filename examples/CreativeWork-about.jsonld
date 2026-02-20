@@ -4,20 +4,20 @@
   "@type": "CreativeWork",
   "about": [
     {
-      "@id": "http://www.wikidata.org/entity/Q149908",
       "@type": "DefinedTerm",
       "name": {
         "@language": "en",
         "@value": "starry sky"
-      }
+      },
+      "sameAs": "http://www.wikidata.org/entity/Q149908"
     },
     {
-      "@id": "http://www.wikidata.org/entity/Q405",
       "@type": "DefinedTerm",
       "name": {
         "@language": "en",
         "@value": "Moon"
-      }
+      },
+      "sameAs": "http://www.wikidata.org/entity/Q405"
     }
   ]
 }

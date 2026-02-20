@@ -3,11 +3,11 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "creator": {
-    "@id": "https://data.rkd.nl/artists/32439",
-    "@type": ["DefinedTerm", "Person"],
+    "@type": "Person",
     "name": {
       "@language": "nl",
       "@value": "Vincent van Gogh"
-    }
+    },
+    "sameAs": "https://data.rkd.nl/artists/32439"
   }
 }

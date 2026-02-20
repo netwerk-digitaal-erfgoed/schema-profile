@@ -41,7 +41,6 @@ _:CreativeWorkShape
             sh:or (
                 [ sh:class schema:Person ]
                 [ sh:class schema:Organization ]
-                [ sh:class schema:DefinedTerm ] # Not allowed in Schema.org.
                 [ sh:node _:CreatorShape ]
             ) ;
             sh:minCount 1 ;
@@ -209,7 +208,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:contentLocation ;
             sh:or (
-                [ sh:nodeKind sh:IRI ]
+                [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
             ) ;
             sh:minCount 0 ;
@@ -244,7 +243,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:locationCreated ;
             sh:or (
-                [ sh:nodeKind sh:IRI ]
+                [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
             ) ;
             sh:minCount 0 ;
@@ -278,7 +277,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:about ;
             sh:or (
-                [ sh:nodeKind sh:IRI ]
+                [ sh:node _:DefinedTermShape ]
                 [ sh:class schema:CreativeWork ]
             ) ;
             sh:minCount 0 ;
@@ -300,7 +299,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:material ;
-            sh:nodeKind sh:IRI ;
+            sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the material(s) that the CreativeWork is made from, e.g. leather, wool, cotton, paper.
@@ -314,7 +313,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:genre ;
-            sh:nodeKind sh:IRI ;
+            sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the genre(s) of the CreativeWork,
@@ -360,6 +359,23 @@ _:CreatorShape
         """ ;
     ] .
 
+_:DefinedTermShape
+    a sh:NodeShape ;
+    sh:class schema:DefinedTerm ;
+    sh:description """
+        A vocabulary term referenced by sameAs.
+        A name is *REQUIRED*; sameAs *SHOULD* be provided when a term is known.
+    """ ;
+    sh:property [
+        sh:path schema:name ;
+        sh:datatype rdf:langString ;
+        sh:uniqueLang true ;
+        sh:minCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the term's preferred label.
+        """ ;
+    ] .
+
 _:PersonShape
     a sh:NodeShape ;
     sh:name "Person" ;
@@ -400,7 +416,7 @@ _:PersonShape
         [
             sh:path schema:birthPlace ;
             sh:or (
-                [ sh:nodeKind sh:IRI ]
+                [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
             ) ;
             sh:minCount 0 ;
@@ -426,7 +442,7 @@ _:PersonShape
         [
             sh:path schema:deathPlace ;
             sh:or (
-                [ sh:nodeKind sh:IRI ]
+                [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
             ) ;
             sh:minCount 0 ;
@@ -442,7 +458,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:hasOccupation ;
-            sh:nodeKind sh:IRI ;
+            sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person's occupation(s).

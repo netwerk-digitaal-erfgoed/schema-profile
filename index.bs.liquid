@@ -184,52 +184,53 @@ Each language *MUST* occur only once, so only a single value per language is all
 Reference terms {#reference-terms}
 ---
 
-When referencing [=terms=], publishers *MUST* use the term’s URI.
-
-The term *MUST* be typed as [DefinedTerm](https://schema.org/DefinedTerm)
+When referencing [=terms=], the node *MUST* be typed as [DefinedTerm](https://schema.org/DefinedTerm)
 to indicate to consumers that a formal definition is being referenced.
 
-Terms *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either: 
+A [schema:name](https://schema.org/name) is *REQUIRED* to identify the term in a human-readable form.
+
+The term’s URI *SHOULD* be provided via [schema:sameAs](https://schema.org/sameAs).
+Terms *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either:
 
 - through the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en/lookup);
 - by directly resolving its URI.
 
-Publishers *SHOULD* add the term’s name in any language(s) they know about for readability:
-
 <div class="example">
-    Use the term’s URI and add its name:
+    Reference a term using sameAs:
 
     <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
           "@context": "http://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
-          "creator": {
-            "@id": "https://data.rkd.nl/artists/32439",
-            "@type": ["DefinedTerm", "Person"],
+          "genre": {
+            "@type": "DefinedTerm",
             "name": {
-              "@language": "nl",
-              "@value": "Vincent van Gogh"
-            }
+              "@language": "en",
+              "@value": "Post-Impressionist"
+            },
+            "sameAs": "http://vocab.getty.edu/aat/300021508"
           }
         }
     </pre>
 </div>
 
-In some cases, an additional Schema.org type *MUST* be added to produce valid Schema.org syntax. For locations this
-*MUST* be [Place](https://schema.org/Place); in other cases [URL](https://schema.org/URL) *MUST* be used.
+When no term is known, `sameAs` *MAY* be omitted:
 
 <div class="example">
-    Add type URL for valid Schema.org syntax:
+    Reference a term without a known URI:
 
-    <pre highlight=json-ld line-numbers line-highlight="6">
+    <pre highlight=json-ld line-numbers line-highlight="5-10">
         {
           "@context": "http://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
-          "additionalType": {
-            "@type": ["DefinedTerm", "URL"],
-            "@id": "http://vocab.getty.edu/aat/300404016"
+          "genre": {
+            "@type": "DefinedTerm",
+            "name": {
+              "@language": "en",
+              "@value": "Post-Impressionist"
+            }
           }
         }
     </pre>
