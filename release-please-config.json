@@ -2,6 +2,7 @@
   "bootstrap-sha": "ecaddce64053911be7a4bb6f734f0090e7230066",
   "include-component-in-tag": false,
   "include-v-in-tag": false,
+  "bump-minor-pre-major": true,
   "packages": {
     ".": {
       "release-type": "simple",
