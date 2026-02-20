@@ -10,12 +10,14 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const changelogPath = 'CHANGELOG.md';
 const specPath = 'index.bs.liquid';
+const versionPath = 'version.txt';
 
 const START_MARKER = '<!-- CHANGELOG-START -->';
 const END_MARKER = '<!-- CHANGELOG-END -->';
 
 const changelog = readFileSync(changelogPath, 'utf-8');
-const spec = readFileSync(specPath, 'utf-8');
+const version = readFileSync(versionPath, 'utf-8').trim();
+let spec = readFileSync(specPath, 'utf-8');
 
 // Parse version sections from CHANGELOG.md.
 // Format: ## [1.1.0](https://github.com/…/compare/v1.0.0...v1.1.0) (2026-02-20)
@@ -84,5 +86,8 @@ const after = spec.slice(endIdx);
 
 const updated = before + '\n' + changelogMarkup + '\n' + after;
 
-writeFileSync(specPath, updated);
-console.log(`Synced ${versions.length} version(s) to ${specPath}.`);
+// Update !Version: in the Bikeshed metadata block, linking to the version's Changes entry.
+const withVersion = updated.replace(/^(!Version: ).*$/m, `$1<a href="#v${version}">${version}</a>`);
+
+writeFileSync(specPath, withVersion);
+console.log(`Synced ${versions.length} version(s) and version ${version} to ${specPath}.`);
