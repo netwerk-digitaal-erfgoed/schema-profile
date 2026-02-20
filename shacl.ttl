@@ -42,11 +42,16 @@ _:CreativeWorkShape
                 [ sh:class schema:Person ]
                 [ sh:class schema:Organization ]
                 [ sh:class schema:DefinedTerm ] # Not allowed in Schema.org.
+                [ sh:node _:CreatorShape ]
             ) ;
             sh:minCount 1 ;
             sh:description """
-                A *REQUIRED* property that identifies the person(s) or organization(s) that created the CreativeWork.
+                A *REQUIRED* property that identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
+
                 If a [=term=] is available, that MUST be referenced. If not, a Person or Organization resource *MUST* be used instead.
+
+                The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
+
                 Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
                 such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
                 the creator property *MUST* be used for consistency.
@@ -54,6 +59,9 @@ _:CreativeWorkShape
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s panting The Starry Night" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
+            ] , [
+                rdfs:label "A creator with unknown type:" ;
+                rdfs:comment "file://examples/CreativeWork-creator-untyped.jsonld" ;
             ]
         ] ,
         [
@@ -331,6 +339,26 @@ _:CreativeWorkShape
             """ ;
         ]
     .
+
+_:CreatorShape
+    a sh:NodeShape ;
+    sh:description """
+        If the type of a creator is not known, the type *MAY* be omitted.
+        A name is still *REQUIRED* to identify the creator.
+    """ ;
+    sh:not [
+        sh:path rdf:type ;
+        sh:minCount 1
+    ] ;
+    sh:property [
+        sh:path schema:name ;
+        sh:datatype rdf:langString ;
+        sh:uniqueLang true ;
+        sh:minCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the creator’s name in its preferred display form.
+        """ ;
+    ] .
 
 _:PersonShape
     a sh:NodeShape ;
