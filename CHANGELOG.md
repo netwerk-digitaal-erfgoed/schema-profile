@@ -5,4 +5,4 @@
 
 ### Features
 
-* allow untyped creator nodes in SHACL ([#73](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/73)) ([95ffa50](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/95ffa50a18c2a110c54284a75cfddf35fece555f))
+* allow untyped creator nodes ([#73](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/73)) ([95ffa50](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/95ffa50a18c2a110c54284a75cfddf35fece555f))
