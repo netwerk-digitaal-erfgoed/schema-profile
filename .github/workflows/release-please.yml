@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - release-please--branches--main
+      - release-please--branches--main**
 
 permissions:
   contents: write
@@ -48,7 +48,7 @@ jobs:
 
   sync-changelog-on-pr-push:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/release-please--branches--main'
+    if: startsWith(github.ref, 'refs/heads/release-please--branches--main')
     steps:
       - uses: actions/checkout@v6
 

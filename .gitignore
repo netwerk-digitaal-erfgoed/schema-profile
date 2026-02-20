@@ -2,3 +2,6 @@ index.bs
 index.html
 assets/class-diagram.mmd
 assets/class-diagram.svg
+node_modules/
+package.json
+package-lock.json
