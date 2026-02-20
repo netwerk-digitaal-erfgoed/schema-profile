@@ -458,15 +458,23 @@ _:PersonShape
         ] ,
         [
             sh:path schema:hasOccupation ;
-            sh:node _:DefinedTermShape ;
+            sh:or (
+                [ sh:node _:DefinedTermShape ]
+                [ sh:datatype rdf:langString ]
+            ) ;
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person's occupation(s).
-                The value *MUST* reference a term.
+                The value *SHOULD* reference a [=term=].
+                If no term is available, a language-tagged string literal *MAY* be used.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "A carpenter:" ;
+                rdfs:label "A carpenter (as a term):" ;
                 rdfs:comment "file://examples/Person-hasOccupation.jsonld" ;
+            ] ;
+            rdfs:seeAlso [
+                rdfs:label "A carpenter (as a literal):" ;
+                rdfs:comment "file://examples/Person-hasOccupation-literal.jsonld" ;
             ]
         ] .
 
