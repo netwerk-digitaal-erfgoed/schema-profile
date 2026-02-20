@@ -3,11 +3,11 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "contentLocation": {
-    "@id": "http://www.wikidata.org/entity/Q221507",
-    "@type": ["DefinedTerm", "Place"],
+    "@type": "DefinedTerm",
     "name": {
       "@language": "fr",
       "@value": "Saint-Rémy-de-Provence"
-    }
+    },
+    "sameAs": "http://www.wikidata.org/entity/Q221507"
   }
 }

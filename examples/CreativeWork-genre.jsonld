@@ -3,11 +3,11 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "genre": {
-    "@id": "http://vocab.getty.edu/aat/300021508",
     "@type": "DefinedTerm",
     "name": {
       "@language": "en",
       "@value": "Post-Impressionist"
-    }
+    },
+    "sameAs": "http://vocab.getty.edu/aat/300021508"
   }
 }
