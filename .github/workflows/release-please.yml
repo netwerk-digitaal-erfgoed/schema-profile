@@ -1,0 +1,66 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+      - release-please--branches--main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      pr: ${{ steps.release.outputs.pr }}
+      pr-number: ${{ fromJSON(steps.release.outputs.pr).number }}
+      pr-branch: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+
+  sync-changelog:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: needs.release-please.outputs.pr
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.release-please.outputs.pr-branch }}
+
+      - name: Sync changelog to spec
+        run: |
+          node scripts/sync-changelog.mjs
+          if git diff --quiet index.bs.liquid; then
+            echo "No changes to index.bs.liquid"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.bs.liquid
+            git commit -m "chore: sync changelog to spec"
+            git push
+          fi
+
+  sync-changelog-on-pr-push:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release-please--branches--main'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Sync changelog to spec
+        run: |
+          node scripts/sync-changelog.mjs
+          if git diff --quiet index.bs.liquid; then
+            echo "No changes to index.bs.liquid"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.bs.liquid
+            git commit -m "chore: sync changelog to spec"
+            git push
+          fi

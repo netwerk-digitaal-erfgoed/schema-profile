@@ -1,0 +1,12 @@
+{
+  "name": "schema-ap-nde",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "sync-changelog": "node scripts/sync-changelog.mjs"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.0"
+  }
+}
