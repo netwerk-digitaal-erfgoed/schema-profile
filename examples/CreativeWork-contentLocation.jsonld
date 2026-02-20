@@ -3,7 +3,7 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "contentLocation": {
-    "@type": "DefinedTerm",
+    "@type": ["DefinedTerm", "Place"],
     "name": {
       "@language": "fr",
       "@value": "Saint-Rémy-de-Provence"
