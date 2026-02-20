@@ -3,7 +3,7 @@
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "creator": {
-    "@type": "Person",
+    "@type": ["DefinedTerm", "Person"],
     "name": {
       "@language": "nl",
       "@value": "Vincent van Gogh"

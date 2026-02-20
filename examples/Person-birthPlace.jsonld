@@ -3,7 +3,7 @@
   "@id": "https://n2t.net/ark:/123456/2",
   "@type": "Person",
   "birthPlace": {
-    "@type": "DefinedTerm",
+    "@type": ["DefinedTerm", "Place"],
     "name": {
       "@language": "nl",
       "@value": "Utrecht"
