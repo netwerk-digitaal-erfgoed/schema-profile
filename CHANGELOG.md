@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.3.0...0.4.0) (2026-02-23)
+
+
+### Features
+
+* clarify allowed date formats in SHACL descriptions ([#101](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/101)) ([7ac5f18](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/7ac5f18f4faadb413f7011c1f15dad130b7dc4af))
+* require sameAs on DefinedTerm, use Occupation as hasOccupation fallback ([#96](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/96)) ([bdddd80](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/bdddd80d7c126fcee3382464bdf48d576a158946))
+
+
+### Bug Fixes
+
+* merge CurrentPostalAddress and HistoricalPostalAddress ([#97](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/97)) ([c20ee9b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/c20ee9b7e4257d69bd23a65f8d42bd92ff46ecb0))
+
 ## [0.3.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/v0.2.0...0.3.0) (2026-02-20)
 
 
