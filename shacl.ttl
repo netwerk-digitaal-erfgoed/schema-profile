@@ -266,7 +266,7 @@ _:CreativeWorkShape
             sh:description """
                 Indicates the date the CreativeWork was created.
 
-                The value *MUST* be in ISO 8601 format. Partial dates *MAY* be used if the exact date is unknown.
+                The value *MUST* be in ISO 8601 format: YYYY, YYYY-MM, or YYYY-MM-DD. Partial dates *MAY* be used if the exact date is unknown.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh painted The Starry Night in June 1889:" ;
@@ -329,12 +329,21 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:sdDatePublished ;
-            sh:node _:DateShape ;
+            sh:or (
+                [
+                    sh:datatype xsd:date ;
+                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" ;
+                ]
+                [
+                    sh:datatype xsd:dateTime ;
+                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?$" ;
+                ]
+            ) ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the date when the [=metadata record=] was last changed.
 
-                The value *MUST* be in ISO 8601 format.
+                The value *MUST* be in ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`.
             """ ;
         ]
     .
@@ -418,7 +427,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person's date of birth in ISO 8601 format.
+                An *OPTIONAL* property that indicates the person’s date of birth in ISO 8601 format: `YYYY-MM-DD`. Partial dates *MAY* be used if the exact date is unknown: `YYYY` or `YYYY-MM`.
             """ ;
         ] ,
         [
@@ -444,7 +453,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person's date of death in ISO 8601 format.
+                An *OPTIONAL* property that indicates the person’s date of death in ISO 8601 format: `YYYY-MM-DD`. Partial dates *MAY* be used if the exact date is unknown: `YYYY` or `YYYY-MM`.
             """ ;
         ] ,
         [
