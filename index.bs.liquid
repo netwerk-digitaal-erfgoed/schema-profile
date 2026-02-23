@@ -394,7 +394,8 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 
 [[#MediaObject|MediaObject]] is documented as a supporting class, used through the `associatedMedia` property on [[#CreativeWork|CreativeWork]].
 
-{% assign mainNodeShapes = nodeShapes | where: "name" %}
+{% assign allNamedShapes = nodeShapes | where: "name" %}
+{% assign topLevelShapes = allNamedShapes | where: "targetClass" | sort: "name" %}
 
 ## Class diagram ## {#class-diagram}
 
@@ -402,97 +403,12 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 path: assets/class-diagram.svg
 </pre>
 
-{% for nodeShape in mainNodeShapes %}
-    ## {{ nodeShape.name }} ## {#{{ nodeShape.name }}}
+{% render 'node-shape.liquid' for topLevelShapes as nodeShape %}
 
-    {{ nodeShape.description }}
-
-    {% if nodeShape.name == "CreativeWork" %}
-        Note: CreativeWork does not reference the Dutch legal concept ‘creatief werk’
-        as used in the Auteurswet (Copyright Act of 1912) in any way.
-
-        ### Subclasses ### {#subclasses}
-        
-        Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
-        Examples include, but are not limited to:
-        
-        - [Article](https://schema.org/Article) for [[#example-story|stories]];
-        - [ArchiveComponent](https://schema.org/ArchiveComponent) for archival items and collections;
-        - [Book](https://schema.org/Book);
-        - [Manuscript](https://schema.org/Manuscript);
-        - [Message](https://schema.org/Message) for letters;
-        - [MusicComposition](https://schema.org/MusicComposition), [MusicRecording](https://schema.org/MusicRecording) and [MusicAlbum](https://schema.org/MusicAlbum) for musical items and collections;
-        - [Painting](https://schema.org/Painting);
-        - [Photograph](https://schema.org/Photograph).
-        
-        <div class="example">
-            A painting is typed as both top-level CreativeWork and the more specific Painting:
-        
-            <pre highlight=json-ld>
-                {
-                  "@context": "http://schema.org",
-                  "@id": "https://n2t.net/ark:/123456/1",
-                  "@type": ["CreativeWork", "Painting"]
-                }
-            </pre>
-        </div>
-        
-        Even though the superclass can be derived from its subclasses using RDF inferencing
-        (in this example, CreativeWork from Painting),
-        the superclass *MUST* be provided explicitly to help users understand the data.
-    {% endif %}
-
-    {% if nodeShape.nodeKind == "IRI" %}
-        ### URI (required) ### {#{{ nodeShape.name }}-URI}
-        
-        Each [[#{{ nodeShape.name }}|{{ nodeShape.name }}]] *MUST* be identified by a [[NDE-COLLECTION-MANAGEMENT-SYSTEMS#persistent-uri|persistent URI]].
-        Blank nodes *MUST NOT* be used.
-        
-        <div class="example">
-            Specify the URI in the JSON-LD `@id` property:
-        
-            <pre highlight=json-ld line-numbers line-highlight="3">
-                {
-                  "@context": "http://schema.org",
-                  "@id": "https://example.com/resource",
-                  "@type": "{{ nodeShape.name }}"
-                }
-            </pre>
-        </div>
-    {% endif %}
-
-    {% for property in nodeShape.property -%}
-        {% assign name = property.path | replace: "schema:", "" %}
-        ### {{ name }}{% if property.minCount > 0 %} (required){% endif %} ### {#{{ nodeShape.name }}-{{ name  }}}
-    
-        {{- property.description 
-            | replace: "CreativeWork", "[[#CreativeWork|CreativeWork]]" 
-            | replace: "MediaObject", "[[#MediaObject|MediaObject]]" 
-            | replace: "Organization", "[[#Organization|Organization]]" 
-            | replace: "Person", "[[#Person|Person]]" 
-            | replace: "ISO 8601", "[[!ISO8601]]" 
-        -}}
-    
-        {%- if property.datatype == "rdf:langString" -%}
-            The value *MUST* be a [[#language|language-tagged]] string. 
-        {% endif %}
-
-        {% if property['rdfs:seeAlso'] -%}
-            {% assign examples = [] | concat: property['rdfs:seeAlso'] %}
-
-            {% for example in examples %}
-                <div class="example">
-                    {{ example['rdfs:label'] }}
-
-                    <pre class=include-code>
-                        path: {{ example['rdfs:comment'] | remove: 'file://' }}
-                        highlight: json-ld
-                        line-numbers: true
-                    </pre>
-                </div>
-            {% endfor %}
-        {% endif %}
-     {% endfor %}
+{% for nodeShape in allNamedShapes %}
+    {% unless nodeShape.targetClass %}
+        {% render 'node-shape.liquid', nodeShape: nodeShape %}
+    {% endunless %}
 {% endfor %}
 
 Full examples {#full-examples}
