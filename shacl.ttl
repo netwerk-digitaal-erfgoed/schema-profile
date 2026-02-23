@@ -364,7 +364,7 @@ _:DefinedTermShape
     sh:class schema:DefinedTerm ;
     sh:description """
         A vocabulary term referenced by sameAs.
-        A name is *REQUIRED*; sameAs *SHOULD* be provided when a term is known.
+        A name and sameAs are *REQUIRED*.
     """ ;
     sh:property [
         sh:path schema:name ;
@@ -373,6 +373,14 @@ _:DefinedTermShape
         sh:minCount 1 ;
         sh:description """
             A *REQUIRED* property that indicates the term's preferred label.
+        """ ;
+    ] ,
+    [
+        sh:path schema:sameAs ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:description """
+            A *REQUIRED* property that references the term in a controlled vocabulary.
         """ ;
     ] .
 
@@ -460,21 +468,20 @@ _:PersonShape
             sh:path schema:hasOccupation ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
-                [ sh:datatype rdf:langString ]
+                [ sh:node _:OccupationShape ]
             ) ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person's occupation(s).
-                The value *SHOULD* reference a [=term=].
-                If no term is available, a language-tagged string literal *MAY* be used.
+                An *OPTIONAL* property that indicates the person’s occupation(s).
+                If available, a [=term reference=] *MUST* be included in `sameAs`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
-                rdfs:comment "file://examples/Person-hasOccupation.jsonld" ;
+                rdfs:comment "file://examples/Person-hasOccupation-term.jsonld" ;
             ] ;
             rdfs:seeAlso [
-                rdfs:label "A carpenter (as a literal):" ;
-                rdfs:comment "file://examples/Person-hasOccupation-literal.jsonld" ;
+                rdfs:label "A sekreetruimer (for which no term is known):" ;
+                rdfs:comment "file://examples/Person-hasOccupation.jsonld" ;
             ]
         ] .
 
@@ -702,6 +709,22 @@ _:PlaceShape
             rdfs:label "A place with coordinates:" ;
             rdfs:comment "file://examples/Place-geo.jsonld" ;
         ]
+    ] .
+
+_:OccupationShape
+    a sh:NodeShape ;
+    sh:class schema:Occupation ;
+    sh:description """
+        A Person’s occupation.
+    """ ;
+    sh:property [
+        sh:path schema:name ;
+        sh:datatype rdf:langString ;
+        sh:uniqueLang true ;
+        sh:minCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the occupation’s name.
+        """ ;
     ] .
 
 _:PostalAddressShape

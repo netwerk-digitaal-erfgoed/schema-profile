@@ -1,9 +1,0 @@
-{
-  "@context": "http://schema.org",
-  "@id": "https://n2t.net/ark:/123456/2",
-  "@type": "Person",
-  "hasOccupation": {
-    "@language": "nl",
-    "@value": "timmerman"
-  }
-}
