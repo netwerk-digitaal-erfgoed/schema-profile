@@ -394,7 +394,8 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 
 [[#MediaObject|MediaObject]] is documented as a supporting class, used through the `associatedMedia` property on [[#CreativeWork|CreativeWork]].
 
-{% assign mainNodeShapes = nodeShapes | where: "name" %}
+{% assign allNamedShapes = nodeShapes | where: "name" %}
+{% assign topLevelShapes = allNamedShapes | where: "targetClass" | sort: "name" %}
 
 ## Class diagram ## {#class-diagram}
 
@@ -402,7 +403,7 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 path: assets/class-diagram.svg
 </pre>
 
-{% for nodeShape in mainNodeShapes %}
+{% for nodeShape in topLevelShapes %}
     ## {{ nodeShape.name }} ## {#{{ nodeShape.name }}}
 
     {{ nodeShape.description }}
@@ -493,6 +494,54 @@ path: assets/class-diagram.svg
             {% endfor %}
         {% endif %}
      {% endfor %}
+{% endfor %}
+
+{% for nodeShape in allNamedShapes %}
+    {% unless nodeShape.targetClass %}
+        ## {{ nodeShape.name }} ## {#{{ nodeShape.name }}}
+
+        {{ nodeShape.description }}
+
+        {% if nodeShape.nodeKind == "IRI" %}
+            ### URI (required) ### {#{{ nodeShape.name }}-URI}
+
+            Each [[#{{ nodeShape.name }}|{{ nodeShape.name }}]] *MUST* be identified by a [[NDE-COLLECTION-MANAGEMENT-SYSTEMS#persistent-uri|persistent URI]].
+            Blank nodes *MUST NOT* be used.
+        {% endif %}
+
+        {% for property in nodeShape.property -%}
+            {% assign name = property.path | replace: "schema:", "" %}
+            ### {{ name }}{% if property.minCount > 0 %} (required){% endif %} ### {#{{ nodeShape.name }}-{{ name  }}}
+
+            {{- property.description
+                | replace: "CreativeWork", "[[#CreativeWork|CreativeWork]]"
+                | replace: "MediaObject", "[[#MediaObject|MediaObject]]"
+                | replace: "Organization", "[[#Organization|Organization]]"
+                | replace: "Person", "[[#Person|Person]]"
+                | replace: "ISO 8601", "[[!ISO8601]]"
+            -}}
+
+            {%- if property.datatype == "rdf:langString" -%}
+                The value *MUST* be a [[#language|language-tagged]] string.
+            {% endif %}
+
+            {% if property['rdfs:seeAlso'] -%}
+                {% assign examples = [] | concat: property['rdfs:seeAlso'] %}
+
+                {% for example in examples %}
+                    <div class="example">
+                        {{ example['rdfs:label'] }}
+
+                        <pre class=include-code>
+                            path: {{ example['rdfs:comment'] | remove: 'file://' }}
+                            highlight: json-ld
+                            line-numbers: true
+                        </pre>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endunless %}
 {% endfor %}
 
 Full examples {#full-examples}

@@ -668,7 +668,6 @@ _:PlaceShape
                 sh:node [
                     a sh:NodeShape ;
                     sh:name "GeoCoordinates" ;
-                    sh:targetClass schema:GeoCoordinates ;
                     sh:description """
                         Geographic coordinates for a Place.
                     """ ;
