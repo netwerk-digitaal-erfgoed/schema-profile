@@ -92,7 +92,7 @@ If done well, the generic data invites consumers to explore the data in more dep
 So to facilitate further exploration, publishers *MAY* use [=domain data models=] of their choosing alongside the generic data model.
 Examples are:
 
-- <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogues;
+- <a href="https://cidoc-crm.org">CIDOC-CRM</a> and its derivative [Linked Art](https://linked.art/model/) for museum collections and catalogs;
 - [RiC-O](https://github.com/ICA-EGAD/RiC-O) for archives;
 - [PiCo](https://personsincontext.org) for biographical data;
 - <a href="https://www.rdaregistry.info/Elements/">RDA</a> for libraries.
@@ -112,7 +112,7 @@ The Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</
 However, JSON-LD's `"@context": "https://schema.org/"` resolves all terms to `http://schema.org/` IRIs,
 meaning tools that process JSON-LD produce `http://` namespace URIs regardless of the scheme used in the context.
 
-To avoid mixed namespaces and enable interoperability across serialisation formats,
+To avoid mixed namespaces and enable interoperability across serialization formats,
 [[NDE-DATASETS#publisher|publishers]] *SHOULD* use the `http://schema.org/` namespace.
 Both `http://schema.org/` and `https://schema.org/` *MUST* be accepted by consumers.
 
@@ -197,7 +197,7 @@ Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the
 - by directly resolving its URI.
 
 <div class="example">
-    Reference a term using sameAs:
+    Reference a term using `sameAs`:
 
     <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
