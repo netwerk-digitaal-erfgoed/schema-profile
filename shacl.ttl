@@ -306,7 +306,7 @@ _:CreativeWorkShape
                 The value *MUST* reference terms.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "The Starry Night is made from 'oil paint' and 'canvas':" ;
+                rdfs:label "The Starry Night is made from ‘oil paint’ and ‘canvas’:" ;
                 rdfs:comment "file://examples/CreativeWork-material.jsonld" ;
             ]
         ] ,
@@ -482,7 +482,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person’s occupation(s).
-                If available, a [=term reference=] *MUST* be included in `sameAs`.
+                If available, a [[#reference-terms|term reference]] *MUST* be included in `sameAs`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
