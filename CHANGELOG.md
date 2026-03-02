@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.5.0...0.5.1) (2026-03-02)
+
+
+### Bug Fixes
+
+* use IIIF Image API base URI without /info.json ([#107](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/107)) ([6a3f05c](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6a3f05ce3c068695b8891cbe917e10d00a833e85))
+
 ## [0.5.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.4.1...0.5.0) (2026-03-02)
 
 
