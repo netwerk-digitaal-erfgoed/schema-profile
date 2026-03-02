@@ -10,7 +10,7 @@ _:CreativeWorkShape
     sh:nodeKind sh:IRI ;
     sh:name "CreativeWork" ;
     sh:description """
-        The type for [=heritage objects=] in this application profile.
+        The type for [=heritage objects=] ([[DERA]]’s *cultuurhistorisch object*) in this application profile.
 
         Some heritage objects fit CreativeWork well, such as paintings, books or musical compositions.
         Others are a less natural fit, such as fossils, buses or bridges,
@@ -219,7 +219,7 @@ _:CreativeWorkShape
                 If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "Van Gogh's painting The Starry Night:" ;
+                rdfs:label "Van Gogh’s painting The Starry Night:" ;
                 rdfs:comment "file://examples/CreativeWork-contentLocation.jsonld" ;
             ] ;
         ] ,
@@ -235,7 +235,7 @@ _:CreativeWorkShape
                 The value *MUST* be either a DateTime or a time period in ISO 8601 time interval format.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "Van Gogh's painting The Starry Night:" ;
+                rdfs:label "Van Gogh’s painting The Starry Night:" ;
                 rdfs:comment "file://examples/CreativeWork-temporalCoverage.jsonld" ;
             ] ;
         ] ,
@@ -254,7 +254,7 @@ _:CreativeWorkShape
                 If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "Van Gogh's painting The Starry Night:" ;
+                rdfs:label "Van Gogh’s painting The Starry Night:" ;
                 rdfs:comment "file://examples/CreativeWork-locationCreated.jsonld" ;
             ]
         ] ,
@@ -292,7 +292,7 @@ _:CreativeWorkShape
                 If the subject is a location, it *MUST* be listed under contentLocation instead.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "The Starry Night depicts 'starry sky' and 'Moon'." ;
+                rdfs:label "The Starry Night depicts ‘starry sky’ and ‘Moon’." ;
                 rdfs:comment "file://examples/CreativeWork-about.jsonld" ;
             ]
         ] ,
@@ -381,7 +381,7 @@ _:DefinedTermShape
         sh:uniqueLang true ;
         sh:minCount 1 ;
         sh:description """
-            A *REQUIRED* property that indicates the term's preferred label.
+            A *REQUIRED* property that indicates the term’s preferred label.
         """ ;
     ] ,
     [
@@ -412,7 +412,7 @@ _:PersonShape
             sh:uniqueLang true ;
             sh:minCount 1 ;
             sh:description """
-                A *REQUIRED* property that indicates the Person's full name in its preferred display form.
+                A *REQUIRED* property that indicates the Person’s full name in its preferred display form.
 
                 The name *MUST NOT* contain information that belongs to other properties, such as birthDate or deathDate.
             """ ;
@@ -439,7 +439,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that references the person's place of birth.
+                An *OPTIONAL* property that references the person’s place of birth.
                 The value *MUST* reference a [=term=]. If no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
@@ -465,7 +465,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that references the person's place of death.
+                An *OPTIONAL* property that references the person’s place of death.
                 The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
@@ -509,7 +509,7 @@ _:OrganizationShape
         sh:uniqueLang true ;
         sh:minCount 1 ;
         sh:description """
-            A *REQUIRED* property that indicates the Organization's full name in its preferred display form.
+            A *REQUIRED* property that indicates the Organization’s full name in its preferred display form.
         """ ;
         rdfs:seeAlso [
             rdfs:label "Organization name:" ;
@@ -522,10 +522,10 @@ _:OrganizationShape
         sh:class schema:PostalAddress ;
         sh:node _:PostalAddressShape ;
         sh:description """
-            An *OPTIONAL* property that indicates the Organization's address(es),
+            An *OPTIONAL* property that indicates the Organization’s address(es),
             useful for distinguishing the organization from others with similar names.
 
-            See PostalAddress for this property's allowed values.
+            See PostalAddress for this property’s allowed values.
         """ ;
         rdfs:seeAlso [
             rdfs:label "Organization with an address:" ;
@@ -667,9 +667,9 @@ _:PlaceShape
         sh:node _:PostalAddressShape ;
         sh:minCount 0 ;
         sh:description """
-            A property that indicates the Place's address, *REQUIRED* if known.
+            A property that indicates the Place’s address, *REQUIRED* if known.
 
-            See PostalAddress for this property's allowed values.
+            See PostalAddress for this property’s allowed values.
         """ ;
         rdfs:seeAlso [
             rdfs:label "A place with an address:" ;
@@ -712,7 +712,7 @@ _:PlaceShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            A property that indicates the Place's [[!WGS84]] geo coordinates, *REQUIRED* if known.
+            A property that indicates the Place’s [[!WGS84]] geo coordinates, *REQUIRED* if known.
         """ ;
         rdfs:seeAlso [
             rdfs:label "A place with coordinates:" ;

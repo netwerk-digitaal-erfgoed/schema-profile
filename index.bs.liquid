@@ -71,9 +71,11 @@ Definitions {#definitions}
 
 : <dfn>Heritage object</dfn>
 :: Physical or digital object that is described by a [=metadata record=].
+    Corresponds to [[DERA]]’s *cultuurhistorisch object*.
 
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
+    Corresponds to [[DERA]]’s *term*; expressed in this application profile as a `DefinedTerm`.
 
 General considerations {#general-considerations}
 ==========
@@ -111,7 +113,7 @@ Schema.org is a widely adopted cross-domain metadata standard.
 It is, therefore, well-suited for the heritage network, which spans datasets from the library, archive, museum and other domains.
 
 The Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both ‘https://schema.org’ and 'http://schema.org' (…) fine”.
-However, JSON-LD's `"@context": "https://schema.org/"` resolves all terms to `http://schema.org/` IRIs,
+However, JSON-LD’s `"@context": "https://schema.org/"` resolves all terms to `http://schema.org/` IRIs,
 meaning tools that process JSON-LD produce `http://` namespace URIs regardless of the scheme used in the context.
 
 To avoid mixed namespaces and enable interoperability across serialization formats,
