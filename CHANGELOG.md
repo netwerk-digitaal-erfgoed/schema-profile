@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.4.1...0.5.0) (2026-03-02)
+
+
+### Features
+
+* Add DERA cross-references ([#105](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/105)) ([6334d9e](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6334d9e5a5deb85d80b9904fc848b812e2d43ad4))
+
 ## [0.4.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.4.0...0.4.1) (2026-03-02)
 
 
