@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.4.0...0.4.1) (2026-03-02)
+
+
+### Bug Fixes
+
+* metadata record definition ([97791a2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/97791a27c64ad527a0956f30deb192acd5f429c9))
+* remove incomplete example ([0b968e4](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/0b968e4d48b8d8a9432f7819480b1f9fafcdfcf4))
+
 ## [0.4.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.3.0...0.4.0) (2026-02-23)
 
 
