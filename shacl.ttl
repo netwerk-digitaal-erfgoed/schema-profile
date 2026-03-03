@@ -616,17 +616,19 @@ _:MediaObjectShape
             sh:path schema:isBasedOn ;
             sh:node [
                 a sh:NodeShape ;
+                    sh:not [ sh:pattern "info\\.json$" ] ;
                     sh:property [
                         sh:path schema:encodingFormat ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
-                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/(image|presentation)/3/context\\.json'$" ;
+                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/(image|presentation)/\\d+/context\\.json'$" ;
                     ]
             ] ;
             sh:minCount 0 ;
             sh:description """
                 If an IIIF Image API or IIIF Presentation API for the MediaObject is available,
                 this *MUST* be specified through isBasedOn with appropriate encodingFormat.
+                The `@id` *MUST* be the IIIF base URI, without the `/info.json` suffix.
 
                 - If an <a href="https://iiif.io/api/">IIIF Image API</a> for the MediaObject is available, this API *MUST* be specified, with property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
 
