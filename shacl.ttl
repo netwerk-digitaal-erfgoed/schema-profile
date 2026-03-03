@@ -97,11 +97,19 @@ _:CreativeWorkShape
                 One or more media objects that represent the CreativeWork.
                 This property is *REQUIRED* if at least one media object is available.
 
+                If a <a href="https://iiif.io/api/presentation/">IIIF Presentation API</a> manifest is available
+                for the CreativeWork, it *MUST* be included as an additional `associatedMedia` entry of type
+                `MediaObject` with `contentUrl` pointing to the manifest URL and `encodingFormat` set to
+                `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
+
                 See MediaObject for this property’s allowed values.
             """;
             rdfs:seeAlso [
                 rdfs:label "An image representation of the Starry Night:" ;
                 rdfs:comment "file://examples/CreativeWork-associatedMedia.jsonld" ;
+            ] , [
+                rdfs:label "IIIF Image API and Presentation manifest as associatedMedia:" ;
+                rdfs:comment "file://examples/MediaObject-IIIF.jsonld" ;
             ]
         ] ,
         [
@@ -620,17 +628,14 @@ _:MediaObjectShape
                         sh:path schema:encodingFormat ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
-                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/(image|presentation)/3/context\\.json'$" ;
+                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/image/3/context\\.json'$" ;
                     ]
             ] ;
             sh:minCount 0 ;
             sh:description """
-                If an IIIF Image API or IIIF Presentation API for the MediaObject is available,
-                this *MUST* be specified through isBasedOn with appropriate encodingFormat.
-
-                - If an <a href="https://iiif.io/api/">IIIF Image API</a> for the MediaObject is available, this API *MUST* be specified, with property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
-
-                - If a <a href="https://iiif.io/api/">IIIF Presentation API</a> for the MediaObject is available, this *MUST* be specified, with property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
+                If an <a href="https://iiif.io/api/image/">IIIF Image API</a> for the MediaObject is available,
+                this *MUST* be specified through `isBasedOn` with property `encodingFormat` set to
+                `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
 
                 Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
                 the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
@@ -640,7 +645,7 @@ _:MediaObjectShape
                 - Thumbnail (`thumbnailUrl`): `https://example.com/iiif/image-id/full/!256,256/0/default.jpg`
             """ ;
             rdfs:seeAlso [
-                rdfs:label "IIIF Image API and Presentation API:" ;
+                rdfs:label "IIIF Image API:" ;
                 rdfs:comment "file://examples/MediaObject-IIIF.jsonld" ;
             ]
         ] .
