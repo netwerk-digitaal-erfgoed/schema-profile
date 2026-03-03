@@ -624,11 +624,12 @@ _:MediaObjectShape
             sh:path schema:isBasedOn ;
             sh:node [
                 a sh:NodeShape ;
+                    sh:not [ sh:pattern "info\\.json$" ] ;
                     sh:property [
                         sh:path schema:encodingFormat ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
-                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/image/3/context\\.json'$" ;
+                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/image/\\d+/context\\.json'$" ;
                     ]
             ] ;
             sh:minCount 0 ;
@@ -636,6 +637,7 @@ _:MediaObjectShape
                 If an <a href="https://iiif.io/api/image/">IIIF Image API</a> for the MediaObject is available,
                 this *MUST* be specified through `isBasedOn` with property `encodingFormat` set to
                 `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
+                The `@id` *MUST* be the IIIF base URI, without the `/info.json` suffix.
 
                 Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
                 the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
