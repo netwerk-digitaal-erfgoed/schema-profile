@@ -109,7 +109,7 @@ _:CreativeWorkShape
                 rdfs:comment "file://examples/CreativeWork-associatedMedia.jsonld" ;
             ] , [
                 rdfs:label "IIIF Image API and Presentation manifest as associatedMedia:" ;
-                rdfs:comment "file://examples/MediaObject-IIIF.jsonld" ;
+                rdfs:comment "file://examples/CreativeWork-IIIF-Presentation.jsonld" ;
             ]
         ] ,
         [
@@ -648,7 +648,7 @@ _:MediaObjectShape
             """ ;
             rdfs:seeAlso [
                 rdfs:label "IIIF Image API:" ;
-                rdfs:comment "file://examples/MediaObject-IIIF.jsonld" ;
+                rdfs:comment "file://examples/MediaObject-IIIF-Image.jsonld" ;
             ]
         ] .
 
