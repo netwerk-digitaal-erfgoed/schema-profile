@@ -526,19 +526,20 @@ _:OrganizationShape
         ]
     ] ,
     [
-        sh:path schema:address ;
+        sh:path schema:location ;
         sh:minCount 0 ;
-        sh:class schema:PostalAddress ;
-        sh:node _:PostalAddressShape ;
+        sh:maxCount 1 ;
+        sh:class schema:Place ;
+        sh:node _:PlaceShape ;
         sh:description """
-            An *OPTIONAL* property that indicates the Organization’s address(es),
+            An *OPTIONAL* property that indicates the Organization’s location,
             useful for distinguishing the organization from others with similar names.
 
-            See PostalAddress for this property’s allowed values.
+            See Place for this property’s allowed values.
         """ ;
         rdfs:seeAlso [
-            rdfs:label "Organization with an address:" ;
-            rdfs:comment "file://examples/Organization-address.jsonld" ;
+            rdfs:label "Organization with a location:" ;
+            rdfs:comment "file://examples/Organization-location.jsonld" ;
         ]
     ] .
 
