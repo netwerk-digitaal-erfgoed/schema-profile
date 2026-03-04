@@ -13,7 +13,7 @@
     },
     {
       "@type": "MediaObject",
-      "contentUrl": "https://demo.limb-gallery.com/iiif/25290/manifest",
+      "@id": "https://demo.limb-gallery.com/iiif/25290/manifest",
       "encodingFormat": "application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'"
     }
   ]

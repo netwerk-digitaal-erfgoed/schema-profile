@@ -97,10 +97,11 @@ _:CreativeWorkShape
                 One or more media objects that represent the CreativeWork.
                 This property is *REQUIRED* if at least one media object is available.
 
-                If a <a href="https://iiif.io/api/presentation/">IIIF Presentation API</a> manifest is available
+                If an <a href="https://iiif.io/api/presentation/">IIIF Presentation API</a> manifest is available
                 for the CreativeWork, it *MUST* be included as an additional `associatedMedia` entry of type
-                `MediaObject` with `contentUrl` pointing to the manifest URL and `encodingFormat` set to
-                `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
+                MediaObject with:
+                - `@id` set to the manifest URI
+                - `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
 
                 See MediaObject for this property’s allowed values.
             """;
@@ -108,7 +109,7 @@ _:CreativeWorkShape
                 rdfs:label "An image representation of the Starry Night:" ;
                 rdfs:comment "file://examples/CreativeWork-associatedMedia.jsonld" ;
             ] , [
-                rdfs:label "IIIF Image API and Presentation manifest as associatedMedia:" ;
+                rdfs:label "IIIF Image API and Presentation manifest as `associatedMedia`:" ;
                 rdfs:comment "file://examples/CreativeWork-IIIF-Presentation.jsonld" ;
             ]
         ] ,
@@ -635,8 +636,8 @@ _:MediaObjectShape
             sh:minCount 0 ;
             sh:description """
                 If an <a href="https://iiif.io/api/image/">IIIF Image API</a> for the MediaObject is available,
-                this *MUST* be specified through `isBasedOn` with property `encodingFormat` set to
-                `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
+                this *MUST* be specified through `isBasedOn` with:
+                - property `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
                 The `@id` *MUST* be the IIIF base URI, without the `/info.json` suffix.
 
                 Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
