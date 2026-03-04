@@ -4,7 +4,10 @@
   "@type": "Organization",
   "location": {
     "@type": "Place",
-    "name": "Office",
+    "name": {
+      "@language": "en",
+      "@value": "Office"
+    },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Street 123",
