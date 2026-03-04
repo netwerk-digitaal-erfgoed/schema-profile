@@ -12,31 +12,6 @@ permissions:
 
 jobs:
   release-please:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-
-  sync-changelog-on-pr-push:
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/release-please--branches--main')
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-
-      - name: Sync changelog to spec
-        run: |
-          node scripts/sync-changelog.mjs
-          if git diff --quiet index.bs.liquid; then
-            echo "No changes to index.bs.liquid"
-          else
-            git config user.name "nde-bot"
-            git config user.email "239601817+nde-bot@users.noreply.github.com"
-            git add index.bs.liquid
-            git commit -m "chore: sync changelog to spec"
-            git push
-          fi
+    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/release-please.yml@main
+    secrets:
+      token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
