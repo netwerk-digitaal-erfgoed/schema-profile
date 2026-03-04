@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.6.0...0.7.0) (2026-03-04)
+
+
+### Features
+
+* use schema:location instead of schema:address on Organization ([#115](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/115)) ([21b1fbe](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/21b1fbe5c51b269827ac1da70d06f104fd80edee))
+
 ## [0.6.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.5.0...0.6.0) (2026-03-04)
 
 
