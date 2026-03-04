@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.5.0...0.6.0) (2026-03-04)
+
+
+### Features
+
+* move IIIF Presentation manifest from MediaObject to CreativeWork ([#111](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/111)) ([d0a2dae](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/d0a2daed460caf95cb5eb56d4df3e4c66c6d61d7))
+
+
+### Bug Fixes
+
+* add SHACL validation to reject info.json suffix in isBasedOn URI ([#109](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/109)) ([aa55f21](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/aa55f21b4ac5afbe018fd6ceca626bcc5d31af49))
+* use IIIF Image API base URI without /info.json ([#107](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/107)) ([6a3f05c](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6a3f05ce3c068695b8891cbe917e10d00a833e85))
+
 ## [0.5.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.4.1...0.5.0) (2026-03-02)
 
 
