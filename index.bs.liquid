@@ -273,36 +273,6 @@ If the generic data model is used alongside [=domain data models=], there are tw
 
 Publishers *MUST* support at least one of these methods.
 
-<table class="syntax">
-    <caption>
-        Matrix of publications levels and methods.
-    </caption>
-    <thead>
-        <tr>
-            <th></th>
-            <th>Combined</th>
-            <th>Separate profiles</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Resolvable URI</td>
-            <td>✅</td>
-            <td>✅</td>
-        </tr>
-        <tr>
-            <td>Data dump</td>
-            <td>✅</td>
-            <td>✅</td>
-        </tr>
-        <tr>
-            <td>SPARQL endpoint</td>
-            <td>❌</td>
-            <td>✅</td>
-        </tr>
-    </tbody>
-</table>
-
 ### Combined ### {#combined}
 
 With RDF, it’s perfectly fine to express the same data in multiple ways.
@@ -339,7 +309,9 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
 Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
 To do so, publish a profile with URI `https://docs.nde.nl/schema-profile/`.
 
-Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).  
+Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).
+
+Note: This method does not apply to SPARQL endpoints, which use the SPARQL protocol and do not support profile-based content negotiation.
 
 <div class="example">
     Expose the generic data model in its own content-negotiated profile.    
