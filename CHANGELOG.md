@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.7.0...0.7.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* remove misleading publication method matrix ([#118](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/118)) ([a24613d](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a24613d70084f431c9e38650fa8d593a326b14c7))
+
 ## [0.7.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.6.0...0.7.0) (2026-03-04)
 
 
