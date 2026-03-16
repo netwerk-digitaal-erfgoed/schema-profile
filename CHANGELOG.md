@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.7.1...0.7.2) (2026-03-16)
+
+
+### Bug Fixes
+
+* add URL co-type to material DefinedTerm for Schema.org validation ([#121](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/121)) ([6fa9fe0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6fa9fe06aa5e40b5c56b7f7c2ca32c7358c70057))
+* show multiple data platforms in overview diagram ([#123](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/123)) ([ada95c8](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/ada95c88a5c753be438a8c180dc2bcfb2cd60947))
+
 ## [0.7.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.7.0...0.7.1) (2026-03-10)
 
 
