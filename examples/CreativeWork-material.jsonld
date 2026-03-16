@@ -4,7 +4,7 @@
   "@type": "CreativeWork",
   "material": [
     {
-      "@type": "DefinedTerm",
+      "@type": ["DefinedTerm", "URL"],
       "name": {
         "@language": "en",
         "@value": "oil paint (paint)"
@@ -12,7 +12,7 @@
       "sameAs": "http://vocab.getty.edu/aat/300015050"
     },
     {
-      "@type": "DefinedTerm",
+      "@type": ["DefinedTerm", "URL"],
       "name": {
         "@language": "en",
         "@value": "canvas (textile material)"
