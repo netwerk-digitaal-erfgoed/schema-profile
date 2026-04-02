@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.7.2...0.8.0) (2026-04-02)
+
+
+### Features
+
+* switch to https://schema.org/ namespace ([#127](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/127)) ([22ff59a](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/22ff59a6689a2d97256bbd1d4882c195270e78b1))
+
 ## [0.7.2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.7.1...0.7.2) (2026-03-16)
 
 
