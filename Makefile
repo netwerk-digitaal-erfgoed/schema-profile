@@ -5,7 +5,7 @@ help:
 	@echo "  make watch    Generate HTML each time the source changes"
 
 spec:
-	npx --yes @lde/docgen@latest from-shacl shacl.ttl index.bs.liquid > index.bs
+	npx --yes @lde/docgen@latest from-shacl -f shacl.frame.jsonld shacl.ttl index.bs.liquid > index.bs
 	npx --yes @lde/docgen@latest from-shacl shacl.ttl ./assets/class-diagram.mmd.liquid > assets/class-diagram.mmd
 	npx --yes -p @mermaid-js/mermaid-cli mmdc -i assets/class-diagram.mmd -o assets/class-diagram.svg --backgroundColor transparent --theme neutral
 	@# Strip draw.io SVG fallback that Bikeshed mistakes for a dfn link.

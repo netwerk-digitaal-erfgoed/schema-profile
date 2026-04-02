@@ -1,5 +1,5 @@
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "MediaObject",
   "license": "https://creativecommons.org/public-domain/cc0/"
 }

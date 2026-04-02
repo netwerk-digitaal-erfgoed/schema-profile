@@ -1,5 +1,5 @@
 PREFIX sh: <http://www.w3.org/ns/shacl#>
-PREFIX schema: <http://schema.org/>
+PREFIX schema: <https://schema.org/>
 
 # Query to get SHACL validation violations that are not in the ignored properties list.
 SELECT ?node ?path ?message
