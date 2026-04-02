@@ -1,5 +1,5 @@
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": ["MediaObject", "ImageObject"],
   "license": "https://creativecommons.org/licenses/by-sa/4.0/",
   "copyrightNotice": {

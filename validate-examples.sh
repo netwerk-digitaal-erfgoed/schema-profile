@@ -33,11 +33,19 @@ for file in examples/*.jsonld; do
     echo -n "Validating $basename... "
 
     # Create temp files (kept for debugging)
+    data="/tmp/shacl-data-$basename.jsonld"
     report="/tmp/shacl-report-$basename.ttl"
     stderr="/tmp/shacl-stderr-$basename.txt"
 
+    # Replace the JSON-LD context with one that produces https://schema.org/ IRIs
+    # to match the SHACL shapes. Schema.org’s default context resolves terms to
+    # http://schema.org/, but the AP standardises on https://. The custom context
+    # uses @import to inherit Schema.org's type coercions (e.g. url, sameAs as
+    # IRIs) while overriding the namespace.
+    sed 's|"@context": "https://schema.org"|"@context": {"@version": 1.1, "@import": "https://schema.org/docs/jsonldcontext.jsonld", "@vocab": "https://schema.org/", "schema": "https://schema.org/"}|' "$file" > "$data"
+
     # Run SHACL validation
-    shacl validate --data "$file" --shapes shacl.ttl >"$report" 2>"$stderr"
+    shacl validate --data "$data" --shapes shacl.ttl >"$report" 2>"$stderr"
 
     # Check for warnings first
     if grep -qi "warning" "$stderr"; then

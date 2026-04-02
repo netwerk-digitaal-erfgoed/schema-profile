@@ -1,5 +1,5 @@
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@id": "http://www.wikidata.org/entity/Q45585",
   "@type": "CreativeWork",
   "size": "74 × 92 cm"

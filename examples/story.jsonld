@@ -1,5 +1,5 @@
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@id": "https://www.bhic.nl/ontdekken/verhalen/vincent-van-gogh-op-kostschool",
   "@type": ["CreativeWork", "Article"],
   "name": {

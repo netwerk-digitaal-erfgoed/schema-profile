@@ -1,5 +1,5 @@
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@id": "https://example.com/dataset1/resource1",
   "@type": "CreativeWork",
   "description": [

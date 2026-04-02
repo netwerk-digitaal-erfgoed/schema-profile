@@ -113,12 +113,18 @@ Schema.org is a widely adopted cross-domain metadata standard.
 It is, therefore, well-suited for the heritage network, which spans datasets from the library, archive, museum and other domains.
 
 The Schema.org website <a href="https://schema.org/docs/faq.html#19">considers</a> “both ‘https://schema.org’ and 'http://schema.org' (…) fine”.
-However, JSON-LD’s `"@context": "https://schema.org/"` resolves all terms to `http://schema.org/` IRIs,
-meaning tools that process JSON-LD produce `http://` namespace URIs regardless of the scheme used in the context.
 
-To avoid mixed namespaces and enable interoperability across serialization formats,
-[[NDE-DATASETS#publisher|publishers]] *SHOULD* use the `http://schema.org/` namespace.
-Both `http://schema.org/` and `https://schema.org/` *MUST* be accepted by consumers.
+However, to avoid mixed namespaces and enable future-proof interoperability across serialization formats,
+[[NDE-DATASETS#publisher|publishers]]:
+
+- *MUST* use the `https://schema.org/` (HTTPS) namespace for newly published datasets;
+- *SHOULD* use the `http://schema.org/` (HTTP) namespace for existing datasets.
+
+Both `https://schema.org/` and `http://schema.org/` *MUST* be accepted by consumers.
+
+Note: Schema.org's default JSON-LD context resolves terms to `http://schema.org/` IRIs,
+even when using `"@context": "https://schema.org"`.
+See [[#formal-definition]] for how to override this when processing JSON-LD.
 
 Language {#language}
 ----------
@@ -131,7 +137,7 @@ The language *MUST* be expressed as a well-formed language tag according to [[!B
 
     <pre highlight=json-ld line-numbers line-highlight="5-14">
         {
-          "@context": "http://schema.org",
+          "@context": "https://schema.org",
           "@id": "https://n2t.net/ark:/123456/1",
           "@type": "CreativeWork",
           "name": [
@@ -155,7 +161,7 @@ Even if only one language is available, the language *MUST* be specified.
 
     <pre highlight=json-ld line-numbers line-highlight="3-6">
         {
-          "@context": "http://schema.org",
+          "@context": "https://schema.org",
           "name": {
             "@language": "nl",
             "@value": "De Sterrennacht"
@@ -171,7 +177,7 @@ Each language *MUST* occur only once, so only a single value per language is all
 
     <pre highlight=json-ld line-numbers line-highlight="5,9">
         {
-          "@context": "http://schema.org",
+          "@context": "https://schema.org",
           "name": [
             {
               "@language": "en",
@@ -205,7 +211,7 @@ Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the
 
     <pre highlight=json-ld line-numbers line-highlight="5-12">
         {
-          "@context": "http://schema.org",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
           "genre": {
@@ -227,7 +233,7 @@ When no public term is known, `sameAs` *MAY* be omitted:
 
     <pre highlight=json-ld line-numbers line-highlight="5-10">
         {
-          "@context": "http://schema.org",
+          "@context": "https://schema.org",
           "@id": "http://www.wikidata.org/entity/Q45585",
           "@type": "CreativeWork",
           "genre": {
@@ -284,7 +290,7 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
     <pre highlight=json-ld>
         {
           "@context": {
-            "schema": "http://schema.org/",
+            "schema": "https://schema.org/",
             "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
             "dcterms": "http://purl.org/dc/terms/"
           },
@@ -408,10 +414,52 @@ Story {#example-story}
 Formal definition {#formal-definition}
 ==========
 
-SHACL shapes for validating against SCHEMA-AP-NDE are 
+SHACL shapes for validating against SCHEMA-AP-NDE are
 [available at GitHub](https://github.com/netwerk-digitaal-erfgoed/schema-profile/blob/main/shacl.ttl).
 
 To guarantee consistency, this specification document is built from those SHACL shapes.
+
+The SHACL shapes use the `https://schema.org/` namespace.
+However, Schema.org’s default JSON-LD context at `https://schema.org/docs/jsonldcontext.jsonld`
+resolves all terms to `http://schema.org/` IRIs.
+Consumers that process JSON-LD data need to override the context
+so that the resulting RDF triples use the `https://schema.org/` namespace.
+
+A ready-to-use context is available at `https://docs.nde.nl/schema.org/context.jsonld`.
+It uses [[JSON-LD11]]’s `@import` to inherit Schema.org’s type coercions
+(e.g. `url` and `sameAs` remain IRIs) while overriding the namespace to `https://`.
+Consumers can apply this context when expanding JSON-LD data before validation or querying:
+
+<div class="example">
+    Override the context to produce `https://schema.org/` IRIs:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://docs.nde.nl/schema.org/context.jsonld",
+          "@type": "CreativeWork",
+          "name": "Example"
+        }
+    </pre>
+</div>
+
+Alternatively, consumers can inline the context to avoid a dependency on the hosted version:
+
+<div class="example">
+    Inline the context override:
+
+    <pre highlight=json-ld>
+        {
+          "@context": {
+            "@version": 1.1,
+            "@import": "https://schema.org/docs/jsonldcontext.jsonld",
+            "@vocab": "https://schema.org/",
+            "schema": "https://schema.org/"
+          },
+          "@type": "CreativeWork",
+          "name": "Example"
+        }
+    </pre>
+</div>
 
 Changes {#changes}
 ==========
