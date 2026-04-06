@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.8.0...0.8.1) (2026-04-06)
+
+
+### Bug Fixes
+
+* clarify HTTPS namespace recommendation for existing datasets ([#129](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/129)) ([08c7c3d](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/08c7c3db4ca4839f077a54ed16961484460eeeb2))
+
 ## [0.8.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.7.2...0.8.0) (2026-04-02)
 
 
