@@ -235,13 +235,19 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:temporalCoverage ;
-            sh:datatype xsd:string ;
+            sh:or (
+                [ sh:nodeKind sh:IRI ; sh:pattern "^https?://" ]
+                [ sh:pattern "^(-?\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\.\\.)(/(-?\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\d{2}(-\\d{2})?|\\.\\.))?$" ]
+            ) ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the period that the content applies to,
-                i.e. that the time period(s) that the CreativeWork describes or depicts.
+                i.e. the time period(s) that the CreativeWork describes or depicts.
 
-                The value *MUST* be either a DateTime or a time period in ISO 8601 time interval format.
+                The value *MUST* be either an ISO 8601 date or time interval
+                (such as ‘2011’, ‘2011/2012’, ‘1889-06/07’ for shortened notation,
+                ‘-0431/-0404’ for BCE dates, or ‘1440/..’ for an open-ended range),
+                or an HTTP(S) URI.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
