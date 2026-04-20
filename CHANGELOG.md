@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.8.1...0.9.0) (2026-04-20)
+
+
+### Features
+
+* **shacl:** tighten schema:temporalCoverage to ISO 8601 or HTTP(S) URI ([#131](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/131)) ([cfb13ca](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/cfb13ca7f2d5d0a44637bf36e52b416378148dad))
+
 ## [0.8.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.8.0...0.8.1) (2026-04-06)
 
 
