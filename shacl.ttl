@@ -54,6 +54,14 @@ _:CreativeWorkShape
                 Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
                 such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
                 the creator property *MUST* be used for consistency.
+                Although Schema.org defines [author](https://schema.org/author) as equivalent to creator for CreativeWorks,
+                this profile picks creator so that consumers can rely on a single property.
+
+                Multiple creators (for example an author and a photographer) *MUST* each be expressed as separate, flat creator values.
+                The creator property *MUST NOT* wrap its values in a [Role](https://schema.org/Role) node,
+                since this would force consumers to handle two value shapes.
+                Publishers who wish to express qualified contributor roles *MAY* do so on a separate property such as [contributor](https://schema.org/contributor),
+                which is outside this profile and does not affect profile validity.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s panting The Starry Night" ;
