@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.9.0...0.9.1) (2026-04-29)
+
+
+### Documentation
+
+* **shacl:** clarify creator vs author and Role usage ([#133](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/133)) ([541e0e2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/541e0e20c0b21a079b56d40eeff5d6720124b926))
+
 ## [0.9.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.8.1...0.9.0) (2026-04-20)
 
 
