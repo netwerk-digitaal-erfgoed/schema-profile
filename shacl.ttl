@@ -413,8 +413,7 @@ _:DefinedTermShape
         sh:minCount 0 ;
         sh:description """
             A *RECOMMENDED* property that references the term in a controlled vocabulary.
-            Publishers *SHOULD* provide a dereferenceable URI when one is available;
-            it *MAY* only be omitted when no public term is known.
+            If a public term URI is known, it *MUST* be provided.
         """ ;
     ] .
 
