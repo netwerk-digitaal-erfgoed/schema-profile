@@ -395,8 +395,8 @@ _:DefinedTermShape
     a sh:NodeShape ;
     sh:class schema:DefinedTerm ;
     sh:description """
-        A vocabulary term referenced by sameAs.
-        A name and sameAs are *REQUIRED*.
+        A vocabulary term identified by a human-readable name and, when available, a URI.
+        A name is *REQUIRED* and sameAs is *RECOMMENDED*.
     """ ;
     sh:property [
         sh:path schema:name ;
@@ -410,9 +410,11 @@ _:DefinedTermShape
     [
         sh:path schema:sameAs ;
         sh:nodeKind sh:IRI ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:description """
-            A *REQUIRED* property that references the term in a controlled vocabulary.
+            A *RECOMMENDED* property that references the term in a controlled vocabulary.
+            Publishers *SHOULD* provide a dereferenceable URI when one is available;
+            it *MAY* be omitted when no public term is known.
         """ ;
     ] .
 
