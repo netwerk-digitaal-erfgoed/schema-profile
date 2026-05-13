@@ -200,7 +200,7 @@ to indicate to consumers that a formal definition is being referenced.
 
 A [schema:name](https://schema.org/name) [[#language|language-tagged]] string is *REQUIRED* to identify the term in a human-readable form.
 
-The term URI *MUST* be provided via [schema:sameAs](https://schema.org/sameAs).
+If a public term URI is known, it *MUST* be provided via [schema:sameAs](https://schema.org/sameAs).
 Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either:
 
 - through the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en/lookup);
@@ -209,20 +209,11 @@ Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the
 <div class="example">
     Reference a term using `sameAs`:
 
-    <pre highlight=json-ld line-numbers line-highlight="5-12">
-        {
-          "@context": "https://schema.org",
-          "@id": "http://www.wikidata.org/entity/Q45585",
-          "@type": "CreativeWork",
-          "genre": {
-            "@type": "DefinedTerm",
-            "name": {
-              "@language": "en",
-              "@value": "Post-Impressionist"
-            },
-            "sameAs": "http://vocab.getty.edu/aat/300021508"
-          }
-        }
+    <pre class=include-code>
+    path: examples/CreativeWork-genre.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-12
     </pre>
 </div>
 
@@ -231,19 +222,11 @@ When no public term is known, `sameAs` *MAY* be omitted:
 <div class="example">
     Reference a term without a known URI:
 
-    <pre highlight=json-ld line-numbers line-highlight="5-10">
-        {
-          "@context": "https://schema.org",
-          "@id": "http://www.wikidata.org/entity/Q45585",
-          "@type": "CreativeWork",
-          "genre": {
-            "@type": "DefinedTerm",
-            "name": {
-              "@language": "en",
-              "@value": "Post-Impressionist"
-            }
-          }
-        }
+    <pre class=include-code>
+    path: examples/CreativeWork-genre-no-sameAs.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-10
     </pre>
 </div>
 
