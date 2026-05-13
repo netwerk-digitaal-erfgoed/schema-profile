@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.10.0...0.10.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* **examples:** use canonical CC0 1.0 URI ([#140](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/140)) ([9505184](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/9505184beee6712a88f6a7cc4c805e1dc1eca2df))
+
 ## [0.10.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.9.1...0.10.0) (2026-05-13)
 
 
