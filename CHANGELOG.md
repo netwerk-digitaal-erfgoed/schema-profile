@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.9.1...0.10.0) (2026-05-13)
+
+
+### Features
+
+* **shacl:** allow DefinedTerm without sameAs ([#138](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/138)) ([870f034](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/870f034fd23d382482f38579dad79e8f20eec58f))
+
 ## [0.9.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.9.0...0.9.1) (2026-04-29)
 
 
