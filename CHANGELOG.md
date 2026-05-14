@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.11.0...0.11.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* clarify associatedMedia IIIF wording ([#144](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/144)) ([4e9d2ec](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/4e9d2ecf4c9d9540c8cb0b487c4d9b4a5989fe14))
+
 ## [0.11.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.10.1...0.11.0) (2026-05-14)
 
 
