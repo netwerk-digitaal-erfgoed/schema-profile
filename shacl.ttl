@@ -636,37 +636,6 @@ _:MediaObjectShape
                 rdfs:label "A MediaObject that may be used only with attribution." ;
                 rdfs:comment "file://examples/MediaObject-copyrightNotice.jsonld" ;
             ]
-        ] ,
-        [
-            sh:path schema:isBasedOn ;
-            sh:node [
-                a sh:NodeShape ;
-                    sh:not [ sh:pattern "info\\.json$" ] ;
-                    sh:property [
-                        sh:path schema:encodingFormat ;
-                        sh:minCount 1 ;
-                        sh:maxCount 1 ;
-                        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/image/\\d+/context\\.json'$" ;
-                    ]
-            ] ;
-            sh:minCount 0 ;
-            sh:description """
-                If an <a href="https://iiif.io/api/image/">IIIF Image API</a> for the MediaObject is available,
-                this *MUST* be specified through `isBasedOn` with:
-                - `@id` set to the IIIF base URI, without the `/info.json` suffix
-                - `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/image/3/context.json'`.
-
-                Even though full-sized and thumbnail images can be derived by IIIF-compatible consumers,
-                the `contentUrl` and `thumbnailUrl` properties *MUST* still be provided for non-IIIF consumers.
-                A simple formula for building image URLs from an IIIF Image API URL:
-
-                - Full-size (`contentUrl`): `https://example.com/iiif/image-id/full/max/0/default.jpg`
-                - Thumbnail (`thumbnailUrl`): `https://example.com/iiif/image-id/full/!256,256/0/default.jpg`
-            """ ;
-            rdfs:seeAlso [
-                rdfs:label "IIIF Image API:" ;
-                rdfs:comment "file://examples/MediaObject-IIIF-Image.jsonld" ;
-            ]
         ] .
 
 _:PlaceShape
