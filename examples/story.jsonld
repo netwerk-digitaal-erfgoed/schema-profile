@@ -19,8 +19,10 @@
   },
   "associatedMedia": {
     "@id": "https://www.bhic.nl/memorix/images/search/detail/31c4cc62-45fb-11e3-8624-e7bda1721fcf/media/26097b4e-deca-d99c-4c2d-2598d67b61a0",
-    "@type": "ImageObject",
+    "@type": ["MediaObject", "ImageObject"],
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
     "contentUrl": "https://webservices.memorix.nl/mediabank/media/31c4cc62-45fb-11e3-8624-e7bda1721fcf/downloadoriginal/26097b4e-deca-d99c-4c2d-2598d67b61a0?apiKey=24c66d08-da4a-4d60-917f-5942681dcaa1",
+    "thumbnailUrl": "https://webservices.memorix.nl/mediabank/media/31c4cc62-45fb-11e3-8624-e7bda1721fcf/download512/26097b4e-deca-d99c-4c2d-2598d67b61a0?apiKey=24c66d08-da4a-4d60-917f-5942681dcaa1",
     "caption": {
       "@language": "nl",
       "@value": "De voormalige kostschool, Stationsstraat 16 in Zevenbergen"
