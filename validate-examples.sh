@@ -16,6 +16,13 @@ warn() { echo -e "${YELLOW}$1${NC}"; }
 # Check required commands
 command -v shacl &>/dev/null || { fail "Error: shacl command not found. Please install Apache Jena."; exit 1; }
 command -v sparql &>/dev/null || { fail "Error: SPARQL command not found. Please install Apache Jena ARQ."; exit 1; }
+command -v riot &>/dev/null || { fail "Error: riot command not found. Please install Apache Jena."; exit 1; }
+
+# Sanity-check the shapes file itself before validating any data against it.
+# `set -e` aborts with the parser's stderr if either check fails.
+echo "Parsing shacl.ttl..."
+riot --validate shacl.ttl >/dev/null
+shacl parse shacl.ttl >/dev/null
 
 echo "Validating JSON-LD examples against SHACL shapes..."
 echo "----------------------------------------"
@@ -44,8 +51,21 @@ for file in examples/*.jsonld; do
     # IRIs) while overriding the namespace.
     sed 's|"@context": "https://schema.org"|"@context": {"@version": 1.1, "@import": "https://schema.org/docs/jsonldcontext.jsonld", "@vocab": "https://schema.org/", "schema": "https://schema.org/"}|' "$file" > "$data"
 
-    # Run SHACL validation
+    # Run SHACL validation (don't let set -e abort the loop on shacl failure —
+    # we want to surface its stderr and move on).
+    set +e
     shacl validate --data "$data" --shapes shacl.ttl >"$report" 2>"$stderr"
+    shacl_exit=$?
+    set -e
+
+    if [[ $shacl_exit -ne 0 ]]; then
+        fail "(shacl exited $shacl_exit — could not validate)"
+        warn "  shacl output:"
+        sed 's/^/    /' "$stderr"
+        echo
+        failed=$((failed + 1))
+        continue
+    fi
 
     # Check for warnings first
     if grep -qi "warning" "$stderr"; then
@@ -63,11 +83,22 @@ for file in examples/*.jsonld; do
         continue
     fi
 
+    # Pick the validation query: full real-world examples (story.jsonld) must
+    # validate strictly, while pedagogical single-property examples are allowed
+    # to omit unrelated required properties via the validate.rq path filter.
+    if [[ "$basename" == "story.jsonld" ]]; then
+        query=validate-strict.rq
+        pass_suffix=""
+    else
+        query=validate.rq
+        pass_suffix="(ignored missing required properties)"
+    fi
+
     # Query for non-ignored violations
-    violations=$(sparql --data "$report" --query validate.rq --results TSV 2>/dev/null | tail -n +2)
+    violations=$(sparql --data "$report" --query "$query" --results TSV 2>/dev/null | tail -n +2)
 
     if [[ -z "$violations" ]]; then
-        pass "(ignored missing required properties)"
+        pass "$pass_suffix"
     else
         count=$(echo "$violations" | wc -l | xargs)
         fail "($count non-ignored violations)"
