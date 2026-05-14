@@ -98,7 +98,10 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:associatedMedia ;
-            sh:node _:MediaObjectShape ;
+            sh:or (
+                [ sh:node _:MediaObjectShape ]
+                [ sh:node _:IIIFPresentationManifestShape ]
+            ) ;
             sh:minCount 1 ;
             sh:severity sh:Warning ;
             sh:description """
@@ -106,10 +109,17 @@ _:CreativeWorkShape
                 This property is *REQUIRED* if at least one media object is available.
 
                 If an <a href="https://iiif.io/api/presentation/">IIIF Presentation API</a> manifest is available
-                for the CreativeWork, it *MUST* be included as an additional `associatedMedia` entry of type
-                MediaObject with:
+                for the CreativeWork, it *MUST* be included as an additional `associatedMedia` entry with:
                 - `@id` set to the manifest URI
                 - `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
+                - `license` matching the `rights` property specified in the presentation manifest
+
+                IIIF-aware consumers *SHOULD* render the work via the Presentation manifest entry.
+
+                Non-IIIF consumers *SHOULD* render the per-image entries via `contentUrl` and `thumbnailUrl`,
+                and can ignore the manifest entry (it has no `contentUrl`).
+
+                Note: schema.org lists `MediaObject` as the only range of `associatedMedia`. This profile additionally permits a single IIIF Presentation manifest entry, which is not itself a `MediaObject` – it is identified by its `encodingFormat` rather than by `@type`.
 
                 See MediaObject for this property’s allowed values.
             """;
@@ -594,7 +604,7 @@ _:MediaObjectShape
         ] ,
         [
             sh:path schema:contentUrl ;
-            sh:datatype xsd:anyURI ;
+            sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
@@ -610,7 +620,7 @@ _:MediaObjectShape
         ] ,
         [
             sh:path schema:thumbnailUrl ;
-            sh:datatype xsd:anyURI ;
+            sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
             sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
@@ -637,6 +647,39 @@ _:MediaObjectShape
                 rdfs:comment "file://examples/MediaObject-copyrightNotice.jsonld" ;
             ]
         ] .
+
+_:IIIFPresentationManifestShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:property [
+        sh:path schema:license ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:pattern "^https?://" ;
+    ] ,
+    [
+        sh:path schema:encodingFormat ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/presentation/\\d+/context\\.json'$" ;
+    ] .
+
+_:CreativeWorkAssociatedMediaCardinalityShape
+    a sh:NodeShape ;
+    sh:targetClass schema:CreativeWork ;
+    sh:property [
+        sh:path schema:associatedMedia ;
+        sh:qualifiedValueShape _:MediaObjectShape ;
+        sh:qualifiedMinCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "At least one renderable MediaObject is required when media is available." ;
+    ] ,
+    [
+        sh:path schema:associatedMedia ;
+        sh:qualifiedValueShape _:IIIFPresentationManifestShape ;
+        sh:qualifiedMaxCount 1 ;
+        sh:message "At most one IIIF Presentation manifest may be exposed per CreativeWork." ;
+    ] .
 
 _:PlaceShape
     a sh:NodeShape ;
