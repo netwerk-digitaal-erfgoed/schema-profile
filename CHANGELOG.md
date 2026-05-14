@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.11.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.10.1...0.11.0) (2026-05-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop isBasedOn requirement for IIIF Image API ([#142](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/142))
+
+### Features
+
+* drop isBasedOn requirement for IIIF Image API ([#142](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/142)) ([081f7a3](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/081f7a3ae970fb6f3f978f5937e750458ed383f1))
+* **shacl:** split IIIF Presentation manifest into dedicated SHACL shape ([8d5d5b7](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/8d5d5b7c0fe5cf0c75eac0e04be34dac53b7adb6))
+
+
+### Bug Fixes
+
+* **examples:** comply with tightened SHACL constraints ([1e7718b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/1e7718b104539dd1e436a362448128e586573db3))
+
 ## [0.10.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.10.0...0.10.1) (2026-05-13)
 
 
