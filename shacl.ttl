@@ -114,12 +114,14 @@ _:CreativeWorkShape
                 - `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
                 - `license` matching the `rights` property specified in the presentation manifest
 
-                IIIF-aware consumers *SHOULD* render the work via the Presentation manifest entry.
+                The IIIF Presentation manifest *MUST* describe all media for the CreativeWork.
 
-                Non-IIIF consumers *SHOULD* render the per-image entries via `contentUrl` and `thumbnailUrl`,
+                IIIF-aware consumers *SHOULD* access media via the IIIF Presentation manifest.
+
+                Non-IIIF consumers *SHOULD* access media via the per-image entries’ `contentUrl` and `thumbnailUrl`,
                 and can ignore the manifest entry (it has no `contentUrl`).
 
-                Note: schema.org lists `MediaObject` as the only range of `associatedMedia`. This profile additionally permits a single IIIF Presentation manifest entry, which is not itself a `MediaObject` – it is identified by its `encodingFormat` rather than by `@type`.
+                Note: Schema.org lists MediaObject as the only range of `associatedMedia`. This profile additionally permits a single IIIF Presentation manifest entry, which is not itself a MediaObject but is identified by its `encodingFormat` rather than by its class.
 
                 See MediaObject for this property’s allowed values.
             """;
@@ -127,7 +129,7 @@ _:CreativeWorkShape
                 rdfs:label "An image representation of the Starry Night:" ;
                 rdfs:comment "file://examples/CreativeWork-associatedMedia.jsonld" ;
             ] , [
-                rdfs:label "IIIF Image API and Presentation manifest as `associatedMedia`:" ;
+                rdfs:label "IIIF Presentation manifest as `associatedMedia`:" ;
                 rdfs:comment "file://examples/CreativeWork-IIIF-Presentation.jsonld" ;
             ]
         ] ,
@@ -572,7 +574,7 @@ _:MediaObjectShape
     a sh:NodeShape ;
     sh:name "MediaObject" ;
     sh:description """
-        In case of image, video, audio or 3d model objects, in addition to the `MediaObject` class,
+        In case of image, video, audio or 3d model objects, in addition to the MediaObject class,
         the relevant subclass *MUST* be used:
         - ImageObject
         - VideoObject
