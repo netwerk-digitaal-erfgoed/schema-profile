@@ -1,0 +1,14 @@
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX schema: <https://schema.org/>
+
+# Query to get every SHACL validation violation, without the path-name filter
+# applied by validate.rq. Used for full real-world examples (e.g. story.jsonld)
+# that must validate strictly, as opposed to pedagogical single-property examples.
+SELECT ?node ?path ?message
+WHERE {
+    ?report a sh:ValidationReport ;
+        sh:result ?result .
+    ?result sh:focusNode ?node ;
+        sh:resultPath ?path ;
+        sh:resultMessage ?message .
+}
