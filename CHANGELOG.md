@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.11.1...0.12.0) (2026-05-18)
+
+
+### Features
+
+* accept xsd:gYear and xsd:gYearMonth in DateShape ([#148](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/148)) ([ceb0589](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/ceb05899d61703b938e288a2aa0a97f03adee096))
+
 ## [0.11.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.11.0...0.11.1) (2026-05-14)
 
 
