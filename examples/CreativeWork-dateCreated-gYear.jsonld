@@ -1,0 +1,14 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "xsd": "http://www.w3.org/2001/XMLSchema#"
+    }
+  ],
+  "@id": "https://www.vondel.humanities.uva.nl/onstage/plays/1043",
+  "@type": "CreativeWork",
+  "dateCreated": {
+    "@value": "1699",
+    "@type": "xsd:gYear"
+  }
+}

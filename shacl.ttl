@@ -300,12 +300,14 @@ _:CreativeWorkShape
             sh:minCount 0 ;
             sh:description """
                 Indicates the date the CreativeWork was created.
-
-                The value *MUST* be in ISO 8601 format: YYYY, YYYY-MM, or YYYY-MM-DD. Partial dates *MAY* be used if the exact date is unknown.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh painted The Starry Night in June 1889:" ;
                 rdfs:comment "file://examples/CreativeWork-dateCreated.jsonld" ;
+            ] ,
+            [
+                rdfs:label "A 17th-century play with year-only precision typed as xsd:gYear:" ;
+                rdfs:comment "file://examples/CreativeWork-dateCreated-gYear.jsonld" ;
             ]
         ] ,
         [
@@ -407,8 +409,7 @@ _:DefinedTermShape
     a sh:NodeShape ;
     sh:class schema:DefinedTerm ;
     sh:description """
-        A vocabulary term identified by a human-readable name and, when available, a URI.
-        A name is *REQUIRED* and sameAs is *RECOMMENDED*.
+        Each referenced term *MUST* be typed as `DefinedTerm` and is identified by its human-readable name (*REQUIRED*) and, where known, a public URI in a controlled vocabulary via `sameAs` (*RECOMMENDED*).
     """ ;
     sh:property [
         sh:path schema:name ;
@@ -463,7 +464,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person’s date of birth in ISO 8601 format: `YYYY-MM-DD`. Partial dates *MAY* be used if the exact date is unknown: `YYYY` or `YYYY-MM`.
+                An *OPTIONAL* property that indicates the person’s date of birth.
             """ ;
         ] ,
         [
@@ -489,7 +490,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person’s date of death in ISO 8601 format: `YYYY-MM-DD`. Partial dates *MAY* be used if the exact date is unknown: `YYYY` or `YYYY-MM`.
+                An *OPTIONAL* property that indicates the person’s date of death.
             """ ;
         ] ,
         [
@@ -831,9 +832,21 @@ _:PostalAddressShape
 
 _:DateShape
     a sh:NodeShape ;
+    sh:description """
+        The value *MUST* be in ISO 8601 format: YYYY-MM-DD, YYYY-MM, or YYYY. Provide the date at the highest precision known. If the exact date is unknown, a partial ISO 8601 date *MAY* be used:
+
+        - `"1889-06-15"` if the full date is known;
+        - `"1889-06"` if only the year and month are known;
+        - `"1889"` if only the year is known.
+
+        In JSON-LD, a plain string is enough, because it is automatically typed as `schema:Date`, which accepts all three forms.
+        When typing literals explicitly (Turtle, N-Triples, or any other RDF serialization), match the datatype to the precision: `xsd:date` for full dates only, `xsd:gYearMonth` for `YYYY-MM`, and `xsd:gYear` for `YYYY`.
+        A partial date *MUST NOT* be typed as `xsd:date` (e.g. `"1699"^^xsd:date`), since that is malformed XSD; use `xsd:gYear`, `xsd:gYearMonth`, or `schema:Date` instead.
+    """ ;
     sh:or (
-        [ sh:datatype schema:Date ]
-        [ sh:datatype xsd:date ]
+        [ sh:datatype schema:Date ;     sh:pattern "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" ]
+        [ sh:datatype xsd:date ;        sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" ]
+        [ sh:datatype xsd:gYearMonth ]
+        [ sh:datatype xsd:gYear ]
     ) ;
-    sh:pattern "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" ;
 .

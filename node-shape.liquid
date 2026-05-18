@@ -72,6 +72,10 @@
         The value *MUST* be a [[#language|language-tagged]] string.
     {% endif %}
 
+    {%- if property.node.description and property.node.name == null -%}
+        {{- property.node.description | replace: "ISO 8601", "[[!ISO8601]]" -}}
+    {% endif %}
+
     {% if property['rdfs:seeAlso'] -%}
         {% assign examples = [] | concat: property['rdfs:seeAlso'] %}
 
