@@ -38,7 +38,6 @@ _:CreativeWorkShape
         ] ,
         [
             sh:path schema:isPartOf ;
-            sh:severity sh:Warning ;
             sh:description """
                 Points to the dataset(s) that the CreativeWork is part of, *REQUIRED* if the CreativeWork is part of one or more datasets.
 
@@ -66,7 +65,6 @@ _:CreativeWorkShape
                 [ sh:node _:MediaObjectShape ]
                 [ sh:node _:IIIFPresentationManifestShape ]
             ) ;
-            sh:severity sh:Warning ;
             sh:description """
                 One or more media objects that represent the CreativeWork.
                 This property is *REQUIRED* if at least one media object is available.
