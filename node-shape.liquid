@@ -1,6 +1,9 @@
 ## {{ nodeShape.name }} ## {#{{ nodeShape.name }}}
 
-{{ nodeShape.description }}
+{{ nodeShape.description
+    | replace: "reference a term", "[[#reference-terms|reference a term]]"
+    | replace: "reference terms", "[[#reference-terms|reference terms]]"
+}}
 
 {% if nodeShape.name == "CreativeWork" %}
     Note: CreativeWork does not reference the Dutch legal concept 'creatief werk'
@@ -66,6 +69,9 @@
         | replace: "Organization", "[[#Organization|Organization]]"
         | replace: "Person", "[[#Person|Person]]"
         | replace: "ISO 8601", "[[!ISO8601]]"
+        | replace: "language-tagged", "[[#language|language-tagged]]"
+        | replace: "reference a term", "[[#reference-terms|reference a term]]"
+        | replace: "reference terms", "[[#reference-terms|reference terms]]"
     -}}
 
     {%- if property.datatype == "rdf:langString" -%}
