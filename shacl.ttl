@@ -129,7 +129,7 @@ _:CreativeWorkShape
                 Identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
                 This property is *REQUIRED* if the creator is known.
 
-                If a term is available, that *MUST* be referenced. If not, a Person or Organization resource *MUST* be used instead.
+                The value *MUST* reference a term, or, if no term is available, a Person or Organization resource *MUST* be used.
 
                 The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
 
@@ -265,7 +265,7 @@ _:CreativeWorkShape
                 Indicates the location(s) depicted or described in the CreativeWork.
                 For example, the location in a photograph or painting.
 
-                If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
+                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -306,7 +306,7 @@ _:CreativeWorkShape
                 Indicates the location(s) where the CreativeWork was created
                 (which may be different from its contentLocation).
 
-                If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
+                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -445,8 +445,8 @@ _:PersonShape
     sh:targetClass schema:Person ;
     sh:description """
         If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-        If a term is available for the person, that *MUST* be referenced.
-        If not, the person *MUST* be defined by the required properties listed below.
+        The value *MUST* reference a term if one is available for the person; otherwise,
+        the person *MUST* be defined by the required properties listed below.
 
         The objective for the Person model is not to fully describe all aspects of a person,
         but to easily identify and distinguish between similar persons.
