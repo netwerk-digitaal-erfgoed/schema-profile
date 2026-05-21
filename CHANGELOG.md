@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.12.0...0.13.0) (2026-05-21)
+
+
+### Features
+
+* make creator optional ([#152](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/152)) ([a216f98](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a216f9849a5367105afe9e8d752d529673eb917a))
+* require sdDatePublished on CreativeWork ([#150](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/150)) ([0e8480e](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/0e8480e271d08fa9ef68f6a61110d160ea56d7dd))
+
 ## [0.12.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.11.1...0.12.0) (2026-05-18)
 
 
