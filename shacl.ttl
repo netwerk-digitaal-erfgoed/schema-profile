@@ -129,7 +129,7 @@ _:CreativeWorkShape
                 Identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
                 This property is *REQUIRED* if the creator is known.
 
-                If a [=term=] is available, that *MUST* be [[#reference-terms|referenced]]. If not, a Person or Organization resource *MUST* be used instead.
+                If a term is available, that *MUST* be referenced. If not, a Person or Organization resource *MUST* be used instead.
 
                 The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
 
@@ -185,7 +185,7 @@ _:CreativeWorkShape
                 An *OPTIONAL* property that provides additional types for the CreativeWork.
                 This is useful to add more specific types to your [=metadata record=] that may not be available as a Schema.org [[#subclasses|subclass]].
 
-                The value *MUST* reference [=terms=].
+                The value *MUST* reference terms.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "The Starry Night is both a Schema.org Painting and an AAT painting:" ;
@@ -265,7 +265,7 @@ _:CreativeWorkShape
                 Indicates the location(s) depicted or described in the CreativeWork.
                 For example, the location in a photograph or painting.
 
-                If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a Place resource *MUST* be used instead.
+                If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -306,7 +306,7 @@ _:CreativeWorkShape
                 Indicates the location(s) where the CreativeWork was created
                 (which may be different from its contentLocation).
 
-                If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a Place resource *MUST* be used instead.
+                If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -376,7 +376,7 @@ _:CreativeWorkShape
                 Indicates the genre(s) of the CreativeWork,
                 for example art movements or periods.
 
-                The value *MUST* [[#reference-terms|reference a term]].
+                The value *MUST* reference a term.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "The Starry Night belongs to the Post-Impressionist art movement:" ;
@@ -410,7 +410,7 @@ _:DefinedTermShape
     sh:name "DefinedTerm" ;
     sh:class schema:DefinedTerm ;
     sh:description """
-        When referencing [=terms=], each term *MUST* be typed as a `DefinedTerm` to indicate to consumers that a formal definition is being referenced.
+        When referencing terms, each term *MUST* be typed as a `DefinedTerm` to indicate to consumers that a formal definition is being referenced.
         Each `DefinedTerm` *MUST* have a language-tagged human-readable `name` property.
         If known, the term’s public URI from a controlled vocabulary *MUST* be provided via `sameAs`.
 
@@ -445,7 +445,7 @@ _:PersonShape
     sh:targetClass schema:Person ;
     sh:description """
         If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-        If a [=term=] is available for the person, that *MUST* be [[#reference-terms|referenced]].
+        If a term is available for the person, that *MUST* be referenced.
         If not, the person *MUST* be defined by the required properties listed below.
 
         The objective for the Person model is not to fully describe all aspects of a person,
@@ -486,7 +486,7 @@ _:PersonShape
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of birth.
-                The value *MUST* [[#reference-terms|reference a term]], or, if no term is available, a custom Place resource *MUST* be used.
+                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with birthPlace:" ;
@@ -512,7 +512,7 @@ _:PersonShape
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of death.
-                The value *MUST* [[#reference-terms|reference a term]], or, if no term is available, a custom Place resource *MUST* be used.
+                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with deathPlace:" ;
@@ -528,7 +528,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person’s occupation(s).
-                The value *MUST* [[#reference-terms|reference a term]], or, if no term is available, a custom Occupation resource *MUST* be used.
+                The value *MUST* reference a term, or, if no term is available, a custom Occupation resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
