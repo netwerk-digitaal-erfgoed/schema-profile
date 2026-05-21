@@ -75,7 +75,7 @@ Definitions {#definitions}
 
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
-    Corresponds to [[DERA]]’s *term*; expressed in this application profile as a `DefinedTerm`.
+    Corresponds to [[DERA]]’s *term*; expressed in this application profile as a [[#reference-terms|`DefinedTerm`]].
 
 General considerations {#general-considerations}
 ==========
@@ -196,7 +196,7 @@ Reference terms {#reference-terms}
 ---
 
 {% assign definedTermShape = nodeShapes | where: "name", "DefinedTerm" | first %}
-{{ definedTermShape.description }}
+{{ definedTermShape.description | replace: "language-tagged", "[[#language|language-tagged]]" }}
 
 Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either:
 

@@ -62,6 +62,26 @@ _:CreativeWorkShape
         ] ,
         [
             a sh:PropertyShape ;
+            sh:path schema:sdDatePublished ;
+            sh:or (
+                [
+                    sh:datatype xsd:date ;
+                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" ;
+                ]
+                [
+                    sh:datatype xsd:dateTime ;
+                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?$" ;
+                ]
+            ) ;
+            sh:minCount 1 ;
+            sh:description """
+                A *REQUIRED* property that indicates the date when the [=metadata record=] was last changed.
+
+                The value *MUST* be in ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`.
+            """ ;
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:path schema:associatedMedia ;
             sh:or (
                 [ sh:node _:MediaObjectShape ]
@@ -109,7 +129,7 @@ _:CreativeWorkShape
                 Identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
                 This property is *REQUIRED* if the creator is known.
 
-                If a [=term=] is available, that MUST be referenced. If not, a Person or Organization resource *MUST* be used instead.
+                If a [=term=] is available, that *MUST* be [[#reference-terms|referenced]]. If not, a Person or Organization resource *MUST* be used instead.
 
                 The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
 
@@ -245,7 +265,7 @@ _:CreativeWorkShape
                 Indicates the location(s) depicted or described in the CreativeWork.
                 For example, the location in a photograph or painting.
 
-                If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
+                If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a Place resource *MUST* be used instead.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -286,7 +306,7 @@ _:CreativeWorkShape
                 Indicates the location(s) where the CreativeWork was created
                 (which may be different from its contentLocation).
 
-                If available, a term *MUST* be referenced. If not, a Place resource *MUST* be used instead.
+                If available, a [=term=] *MUST* be [[#reference-terms|referenced]]. If not, a Place resource *MUST* be used instead.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -356,32 +376,12 @@ _:CreativeWorkShape
                 Indicates the genre(s) of the CreativeWork,
                 for example art movements or periods.
 
-                The value *MUST* reference a term.
+                The value *MUST* [[#reference-terms|reference a term]].
             """ ;
             rdfs:seeAlso [
                 rdfs:label "The Starry Night belongs to the Post-Impressionist art movement:" ;
                 rdfs:comment "file://examples/CreativeWork-genre.jsonld" ;
             ]
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:path schema:sdDatePublished ;
-            sh:or (
-                [
-                    sh:datatype xsd:date ;
-                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" ;
-                ]
-                [
-                    sh:datatype xsd:dateTime ;
-                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?$" ;
-                ]
-            ) ;
-            sh:minCount 1 ;
-            sh:description """
-                A *REQUIRED* property that indicates the date when the [=metadata record=] was last changed.
-
-                The value *MUST* be in ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`.
-            """ ;
         ]
     .
 
@@ -410,7 +410,15 @@ _:DefinedTermShape
     sh:name "DefinedTerm" ;
     sh:class schema:DefinedTerm ;
     sh:description """
-        Each referenced term *MUST* be typed as `DefinedTerm` and is identified by its human-readable name (*REQUIRED*) and, where known, a public URI in a controlled vocabulary via `sameAs` (*RECOMMENDED*).
+        When referencing [=terms=], each term *MUST* be typed as a `DefinedTerm` to indicate to consumers that a formal definition is being referenced.
+        Each `DefinedTerm` *MUST* have a language-tagged human-readable `name` property.
+        If known, the term’s public URI from a controlled vocabulary *MUST* be provided via `sameAs`.
+
+        The `DefinedTerm` is a *local* node, scoped to the publishing dataset:
+        it carries the dataset’s own `name` for the term (which *MAY* differ from the label used by the external source)
+        and makes no claims about the resource it points at.
+        The `sameAs` URI is the *canonical* identifier and keeps its own typing in its source vocabulary
+        (e.g. `skos:Concept` in a thesaurus).
     """ ;
     sh:property [
         sh:path schema:name ;
@@ -478,7 +486,7 @@ _:PersonShape
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of birth.
-                The value *MUST* reference a [=term=]. If no term is available, a custom Place resource *MUST* be used.
+                The value *MUST* [[#reference-terms|reference a term]], or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with birthPlace:" ;
@@ -504,7 +512,7 @@ _:PersonShape
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of death.
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
+                The value *MUST* [[#reference-terms|reference a term]], or, if no term is available, a custom Place resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with deathPlace:" ;
@@ -520,7 +528,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person’s occupation(s).
-                If available, a [[#reference-terms|term reference]] *MUST* be included in `sameAs`.
+                The value *MUST* [[#reference-terms|reference a term]], or, if no term is available, a custom Occupation resource *MUST* be used.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
