@@ -37,41 +37,6 @@ _:CreativeWorkShape
             ]
         ] ,
         [
-            sh:path schema:creator ;
-            sh:or (
-                [ sh:class schema:Person ]
-                [ sh:class schema:Organization ]
-                [ sh:node _:CreatorShape ]
-            ) ;
-            sh:minCount 1 ;
-            sh:description """
-                A *REQUIRED* property that identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
-
-                If a [=term=] is available, that MUST be referenced. If not, a Person or Organization resource *MUST* be used instead.
-
-                The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
-
-                Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
-                such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
-                the creator property *MUST* be used for consistency.
-                Although Schema.org defines [author](https://schema.org/author) as equivalent to creator for CreativeWorks,
-                this profile picks creator so that consumers can rely on a single property.
-
-                Multiple creators (for example an author and a photographer) *MUST* each be expressed as separate, flat creator values.
-                The creator property *MUST NOT* wrap its values in a [Role](https://schema.org/Role) node,
-                since this would force consumers to handle two value shapes.
-                Publishers who wish to express qualified contributor roles *MAY* do so on a separate property such as [contributor](https://schema.org/contributor),
-                which is outside this profile and does not affect profile validity.
-            """ ;
-            rdfs:seeAlso [
-                rdfs:label "Van Gogh’s panting The Starry Night" ;
-                rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
-            ] , [
-                rdfs:label "A creator with unknown type:" ;
-                rdfs:comment "file://examples/CreativeWork-creator-untyped.jsonld" ;
-            ]
-        ] ,
-        [
             sh:path schema:isPartOf ;
             sh:minCount 1 ;
             sh:severity sh:Warning ;
@@ -131,6 +96,41 @@ _:CreativeWorkShape
             ] , [
                 rdfs:label "IIIF Presentation manifest as `associatedMedia`:" ;
                 rdfs:comment "file://examples/CreativeWork-IIIF-Presentation.jsonld" ;
+            ]
+        ] ,
+        [
+            sh:path schema:creator ;
+            sh:or (
+                [ sh:class schema:Person ]
+                [ sh:class schema:Organization ]
+                [ sh:node _:CreatorShape ]
+            ) ;
+            sh:description """
+                Identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
+                This property is *REQUIRED* if the creator is known.
+
+                If a [=term=] is available, that MUST be referenced. If not, a Person or Organization resource *MUST* be used instead.
+
+                The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
+
+                Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
+                such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
+                the creator property *MUST* be used for consistency.
+                Although Schema.org defines [author](https://schema.org/author) as equivalent to creator for CreativeWorks,
+                this profile picks creator so that consumers can rely on a single property.
+
+                Multiple creators (for example an author and a photographer) *MUST* each be expressed as separate, flat creator values.
+                The creator property *MUST NOT* wrap its values in a [Role](https://schema.org/Role) node,
+                since this would force consumers to handle two value shapes.
+                Publishers who wish to express qualified contributor roles *MAY* do so on a separate property such as [contributor](https://schema.org/contributor),
+                which is outside this profile and does not affect profile validity.
+            """ ;
+            rdfs:seeAlso [
+                rdfs:label "Van Gogh’s panting The Starry Night" ;
+                rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
+            ] , [
+                rdfs:label "A creator with unknown type:" ;
+                rdfs:comment "file://examples/CreativeWork-creator-untyped.jsonld" ;
             ]
         ] ,
         [
