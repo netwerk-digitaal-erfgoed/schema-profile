@@ -17,6 +17,7 @@ WHERE {
          schema:creator,
          schema:associatedMedia,
          schema:isPartOf,
+         schema:sdDatePublished,
 
          # MediaObject:
          schema:license,
