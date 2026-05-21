@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.13.0...0.14.0) (2026-05-21)
+
+
+### Features
+
+* make isPartOf and associatedMedia optional ([#153](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/153)) ([4926a21](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/4926a21739710e6b35e18a6b230d9d427eb3d76d))
+
 ## [0.13.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.12.0...0.13.0) (2026-05-21)
 
 
