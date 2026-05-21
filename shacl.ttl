@@ -407,6 +407,7 @@ _:CreatorShape
 
 _:DefinedTermShape
     a sh:NodeShape ;
+    sh:name "DefinedTerm" ;
     sh:class schema:DefinedTerm ;
     sh:description """
         Each referenced term *MUST* be typed as `DefinedTerm` and is identified by its human-readable name (*REQUIRED*) and, where known, a public URI in a controlled vocabulary via `sameAs` (*RECOMMENDED*).

@@ -195,12 +195,9 @@ Each language *MUST* occur only once, so only a single value per language is all
 Reference terms {#reference-terms}
 ---
 
-When referencing [=terms=], the node *MUST* be typed as [DefinedTerm](https://schema.org/DefinedTerm)
-to indicate to consumers that a formal definition is being referenced.
+{% assign definedTermShape = nodeShapes | where: "name", "DefinedTerm" | first %}
+{{ definedTermShape.description }}
 
-A [schema:name](https://schema.org/name) [[#language|language-tagged]] string is *REQUIRED* to identify the term in a human-readable form.
-
-If a public term URI is known, it *MUST* be provided via [schema:sameAs](https://schema.org/sameAs).
 Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either:
 
 - through the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en/lookup);
@@ -373,7 +370,7 @@ path: assets/class-diagram.svg
 {% render 'node-shape.liquid' for topLevelShapes as nodeShape %}
 
 {% for nodeShape in allNamedShapes %}
-    {% unless nodeShape.targetClass %}
+    {% unless nodeShape.targetClass or nodeShape.name == "DefinedTerm" %}
         {% render 'node-shape.liquid', nodeShape: nodeShape %}
     {% endunless %}
 {% endfor %}
