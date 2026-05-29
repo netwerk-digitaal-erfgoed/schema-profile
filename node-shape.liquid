@@ -86,6 +86,8 @@
         {% assign examples = [] | concat: property['rdfs:seeAlso'] %}
 
         {% for example in examples %}
+            {% if example['schema:description'] %}{{ example['schema:description'] }}{% endif %}
+
             <div class="example">
                 {{ example['rdfs:label'] }}
 
