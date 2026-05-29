@@ -415,6 +415,10 @@ _:DefinedTermShape
         and makes no claims about the resource it points at.
         The `sameAs` URI is the *canonical* identifier and keeps its own typing in its source vocabulary
         (e.g. `skos:Concept` in a thesaurus).
+
+        To recognise that two `DefinedTerm`s denote the same concept, consumers *MUST* compare their `sameAs` URIs
+        rather than the nodes’ own blank-node or URI identities,
+        which are local to each publishing dataset and therefore not shared across datasets.
     """ ;
     sh:property [
         sh:path schema:name ;
