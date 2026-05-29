@@ -198,7 +198,7 @@ Reference terms {#reference-terms}
 {% assign definedTermShape = nodeShapes | where: "name", "DefinedTerm" | first %}
 {{ definedTermShape.description | replace: "language-tagged", "[[#language|language-tagged]]" }}
 
-Term URIs *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either:
+[=Term=] URIs *MUST* be dereferenceable, which means that consumers can retrieve the term’s definition either:
 
 - through the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en/lookup);
 - by directly resolving its URI.
@@ -224,6 +224,26 @@ When no public term is known, `sameAs` *MAY* be omitted:
     highlight: json-ld
     line-numbers: true
     line-highlight: 5-10
+    </pre>
+</div>
+
+A `DefinedTerm` value *MUST* additionally be typed with a type from the property’s Schema.org range
+whenever that range does not already include `DefinedTerm`,
+so that the data also validates against Schema.org’s own type expectations.
+For example, [genre](https://schema.org/genre) and [about](https://schema.org/about) accept a `DefinedTerm` directly,
+so no co-type is needed.
+Properties such as [material](https://schema.org/material) (`Product`, `Text`, `URL`),
+[creator](https://schema.org/creator) (`Person`, `Organization`) and [contentLocation](https://schema.org/contentLocation) (`Place`) do not,
+so the `DefinedTerm` is co-typed with a type that is in range: `URL`, `Person` or `Place` respectively.
+
+<div class="example">
+    Co-type the `DefinedTerm` with `URL`, because `material` does not accept a `DefinedTerm` directly:
+
+    <pre class=include-code>
+    path: examples/CreativeWork-material.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 7,15
     </pre>
 </div>
 

@@ -262,6 +262,7 @@ _:CreativeWorkShape
                 For example, the location in a photograph or painting.
 
                 The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
+                Because `schema:contentLocation` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -303,6 +304,7 @@ _:CreativeWorkShape
                 (which may be different from its contentLocation).
 
                 The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
+                Because `schema:locationCreated` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -357,6 +359,7 @@ _:CreativeWorkShape
             sh:description """
                 Indicates the material(s) that the CreativeWork is made from, e.g. leather, wool, cotton, paper.
                 The value *MUST* reference terms.
+                Because `schema:material` takes `URL`, not `DefinedTerm`, `URL` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "The Starry Night is made from ‘oil paint’ and ‘canvas’:" ;
@@ -487,6 +490,7 @@ _:PersonShape
             sh:description """
                 An *OPTIONAL* property that references the person’s place of birth.
                 The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
+                Because `schema:birthPlace` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with birthPlace:" ;
@@ -513,6 +517,7 @@ _:PersonShape
             sh:description """
                 An *OPTIONAL* property that references the person’s place of death.
                 The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
+                Because `schema:deathPlace` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with deathPlace:" ;
@@ -529,6 +534,7 @@ _:PersonShape
             sh:description """
                 An *OPTIONAL* property that indicates the person’s occupation(s).
                 The value *MUST* reference a term, or, if no term is available, a custom Occupation resource *MUST* be used.
+                Because `schema:hasOccupation` takes `Occupation`, not `DefinedTerm`, `Occupation` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
