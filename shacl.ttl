@@ -555,11 +555,12 @@ _:PersonShape
 _:OrganizationShape
     a sh:NodeShape ;
     sh:targetClass schema:Organization ;
-    sh:nodeKind sh:IRI ;
     sh:name "Organization" ;
     sh:description """
-        Each Organization *MUST* be identified by a persistent URI.
-        Blank nodes *MUST NOT* be used for identifying Organizations.
+        An Organization *SHOULD* be identified by a persistent URI – self-minted or from an organization directory –
+        and, where the organization is known in a public source, linked to it via `sameAs`,
+        so that consumers can deduplicate it within and across datasets.
+        Where no URI is known, it *MAY* be defined inline by its properties, like a Person.
     """ ;
     sh:property [
         sh:path schema:name ;
