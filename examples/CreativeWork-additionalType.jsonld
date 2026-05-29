@@ -4,6 +4,10 @@
   "@type": ["CreativeWork", "Painting"],
   "additionalType": {
     "@type": ["DefinedTerm", "URL"],
-    "@id": "https://vocab.getty.edu/aat/300033618"
+    "name": {
+      "@language": "en",
+      "@value": "paintings (visual works)"
+    },
+    "sameAs": "https://vocab.getty.edu/aat/300033618"
   }
 }

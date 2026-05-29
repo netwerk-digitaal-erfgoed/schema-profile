@@ -175,13 +175,15 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:additionalType ;
-            sh:nodeKind sh:IRI ;
+            sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that provides additional types for the CreativeWork.
                 This is useful to add more specific types to your [=metadata record=] that may not be available as a Schema.org [[#subclasses|subclass]].
 
-                The value *MUST* reference terms.
+                The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]).
+                For typing, using a publicly available term is strongly preferred, so that consumers can link records by type.
+                Because `schema:additionalType` takes `URL`, not `DefinedTerm`, `URL` must be added to `@type`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "The Starry Night is both a Schema.org Painting and an AAT painting:" ;

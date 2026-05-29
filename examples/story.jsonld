@@ -33,7 +33,12 @@
     }
   },
   "additionalType": {
-    "@id": "http://vocab.getty.edu/aat/300404016"
+    "@type": ["DefinedTerm", "URL"],
+    "name": {
+      "@language": "nl",
+      "@value": "biografische schets"
+    },
+    "sameAs": "http://vocab.getty.edu/aat/300404016"
   },
   "description": {
     "@language": "nl",
