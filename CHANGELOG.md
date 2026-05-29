@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.15.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.14.0...0.15.0) (2026-05-29)
+
+
+### Features
+
+* explain term co-typing ([0208413](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/0208413f42b3dcb139c30609da847bbf20e674a0))
+* explain term equivalence ([9478442](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/9478442036827e09fa3f4d0511be1d8aa517d1bb))
+* make Organization URI optional ([d09dc0f](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/d09dc0f8ba4a2a6d5940efb72bf63b05eae1e495))
+* model additionalType as a DefinedTerm with sameAs ([ef49953](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/ef49953dd420929499c9872e098fa558f525a770))
+
+
+### Documentation
+
+* cross-reference DefinedTerm from the data-model section ([a92a27b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a92a27bc11b1e0c19202947b61d13bdffc987fa6))
+
 ## [0.14.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.13.0...0.14.0) (2026-05-21)
 
 
