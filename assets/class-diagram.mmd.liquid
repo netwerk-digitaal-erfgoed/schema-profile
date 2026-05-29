@@ -51,6 +51,7 @@ direction TB
     Person --> "0..1" Place : birthPlace<br>deathPlace
 
     Place --> "0..1" GeoCoordinates : geo
+    Place --> "0..*" PostalAddress : address
 
     Organization --> "0..1" Place : location
 
