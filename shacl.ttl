@@ -37,6 +37,26 @@ _:CreativeWorkShape
             ]
         ] ,
         [
+            a sh:PropertyShape ;
+            sh:path schema:sdDatePublished ;
+            sh:or (
+                [
+                    sh:datatype xsd:date ;
+                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" ;
+                ]
+                [
+                    sh:datatype xsd:dateTime ;
+                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?$" ;
+                ]
+            ) ;
+            sh:minCount 1 ;
+            sh:description """
+                A *REQUIRED* property that indicates the date when the [=metadata record=] was last changed.
+
+                The value *MUST* be in ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`.
+            """ ;
+        ] ,
+        [
             sh:path schema:isPartOf ;
             sh:description """
                 Points to the dataset(s) that the CreativeWork is part of, *REQUIRED* if the CreativeWork is part of one or more datasets.
@@ -57,26 +77,6 @@ _:CreativeWorkShape
                 rdfs:label "Indicating the dataset that the CreativeWork is part of:" ;
                 rdfs:comment "file://examples/CreativeWork-isPartOf.jsonld" ;
             ]
-        ] ,
-        [
-            a sh:PropertyShape ;
-            sh:path schema:sdDatePublished ;
-            sh:or (
-                [
-                    sh:datatype xsd:date ;
-                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" ;
-                ]
-                [
-                    sh:datatype xsd:dateTime ;
-                    sh:pattern "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})?$" ;
-                ]
-            ) ;
-            sh:minCount 1 ;
-            sh:description """
-                A *REQUIRED* property that indicates the date when the [=metadata record=] was last changed.
-
-                The value *MUST* be in ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`.
-            """ ;
         ] ,
         [
             a sh:PropertyShape ;
