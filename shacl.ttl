@@ -125,10 +125,6 @@ _:CreativeWorkShape
                 Identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
                 This property is *REQUIRED* if the creator is known.
 
-                The value *MUST* reference a term, or, if no term is available, a Person or Organization resource *MUST* be used.
-
-                The type *MAY* be omitted if the dataset publisher does not know whether the creator is a Person or Organization.
-
                 Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
                 such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
                 the creator property *MUST* be used for consistency.
@@ -140,12 +136,20 @@ _:CreativeWorkShape
                 since this would force consumers to handle two value shapes.
                 Publishers who wish to express qualified contributor roles *MAY* do so on a separate property such as [contributor](https://schema.org/contributor),
                 which is outside this profile and does not affect profile validity.
+
+                The creator *MUST* be a Person or Organization, in one of the following forms (most to least preferred):
             """ ;
             rdfs:seeAlso [
-                rdfs:label "Van Gogh’s panting The Starry Night" ;
+                schema:description "Preferably, [[#reference-terms|reference a public term]] (an authority record) by co-typing the creator as a `DefinedTerm` and adding its URI via `sameAs`." ;
+                rdfs:label "A creator referenced by an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
             ] , [
-                rdfs:label "A creator with unknown type:" ;
+                schema:description "When no public term is available, give a plain Person or Organization with a `name`." ;
+                rdfs:label "A creator without a public term:" ;
+                rdfs:comment "file://examples/CreativeWork-creator-person.jsonld" ;
+            ] , [
+                schema:description "When it is unknown whether the creator is a person or organization, the type *MAY* be omitted; a `name` is still required." ;
+                rdfs:label "A creator of unknown type:" ;
                 rdfs:comment "file://examples/CreativeWork-creator-untyped.jsonld" ;
             ]
         ] ,
