@@ -285,28 +285,34 @@ With RDF, it’s perfectly fine to express the same data in multiple ways.
 Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* coexist in the same information resource.
 
 <div class="example">
-    Combine generic (Schema.org) with domain-specific (Linked Art) modelling.    
+    Combine generic (Schema.org) with domain-specific (Linked Art) modelling.
 
     <pre highlight=json-ld>
         {
-          "@context": {
-            "schema": "https://schema.org/",
-            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-            "dcterms": "http://purl.org/dc/terms/"
+          "@context": [
+            "https://linked.art/ns/v1/linked-art.json",
+            {
+              "schema": "https://schema.org/"
+            }
+          ],
+          "id": "https://literatuurmuseum.nl/id/123456789",
+          "type": ["HumanMadeObject", "schema:CreativeWork", "schema:VisualArtwork"],
+          "_label": "Het fluitketeltje en andere versjes",
+          "produced_by": {
+            "type": "Production",
+            "carried_out_by": [
+              {
+                "id": "http://data.rkd.nl/artists/8342",
+                "type": "Person"
+              }
+            ]
           },
-          "@id": "https://literatuurmuseum.nl/id/123456789",
-          "@type": ["schema:CreativeWork", "schema:VisualArtwork"],
           "schema:name": "Het fluitketeltje en andere versjes",
-          "rdfs:label": "Het fluitketeltje en andere versjes",
           "schema:creator": {
-            "@type": "schema:Person",
-            "@id": "http://data.rkd.nl/artists/8342"
-          },
-          "dcterms:creator": {
-            "@type": "dcterms:Agent",
-            "@id": "http://data.rkd.nl/artists/8342"
+            "@id": "http://data.rkd.nl/artists/8342",
+            "@type": "schema:Person"
           }
-       }
+        }
     </pre>
 </div>
 
