@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.15.0...0.15.1) (2026-05-30)
+
+
+### Bug Fixes
+
+* use Linked Art in combined modelling example ([#161](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/161)) ([c0af88c](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/c0af88c6e8c8d3efc3a9ed9eafa9b85c83b2dc7e))
+
 ## [0.15.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.14.0...0.15.0) (2026-05-29)
 
 
