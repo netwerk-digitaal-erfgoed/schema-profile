@@ -478,7 +478,9 @@ This section lists notable changes to this specification.
 Version 1.0.0 (2026-06-01) {#v1.0.0}
 ----------
 
-- Release 1.0.0 ([f1ce7d0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/f1ce7d0eaf64bf613f3c0269bc778f3f4aa7e59d)).
+First stable release. From 1.0.0 the profile carries a backward compatibility promise: within 1.x, data that conforms today keeps conforming, and consumers that honour the must-ignore rule keep working. Changes within a major version are additive, relaxing or clarifying; anything that would invalidate conforming data waits for a 2.0.
+
+The constraint tightenings that set the stable baseline shipped in 0.16.0: `isPartOf` must reference a dataset by IRI, and `sdDatePublished` and `dateCreated` are single-valued.
 
 Version 0.16.0 (2026-06-01) {#v0.16.0}
 ----------
