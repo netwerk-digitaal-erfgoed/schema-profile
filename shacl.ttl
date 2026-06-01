@@ -58,6 +58,7 @@ _:CreativeWorkShape
         ] ,
         [
             sh:path schema:isPartOf ;
+            sh:nodeKind sh:IRI ;
             sh:description """
                 Points to the dataset(s) that the CreativeWork is part of, *REQUIRED* if the CreativeWork is part of one or more datasets.
 
