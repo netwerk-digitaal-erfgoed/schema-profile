@@ -324,8 +324,11 @@ _:CreativeWorkShape
             sh:path schema:dateCreated ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
+            sh:maxCount 1 ;
             sh:description """
                 Indicates the date the CreativeWork was created.
+
+                A single date *MUST* be given, at the highest precision known (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`).
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh painted The Starry Night in June 1889:" ;
