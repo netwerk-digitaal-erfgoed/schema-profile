@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.16.0...1.0.0) (2026-06-01)
+
+
+### chore
+
+* release 1.0.0 ([#165](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/165)) ([f1ce7d0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/f1ce7d0eaf64bf613f3c0269bc778f3f4aa7e59d))
+
 ## [0.16.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.15.1...0.16.0) (2026-06-01)
 
 
