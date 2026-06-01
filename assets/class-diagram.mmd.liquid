@@ -14,7 +14,7 @@ direction TB
         {%- if property.or -%}
             {%- for or in property.or -%}
                 {%- if or.node -%}
-                    {{ or.node }}
+                    {{ or.node.name | default: or.node.class }}
                 {%- elsif or.nodeKind -%}
                     {{ or.nodeKind }}
                 {%- endif -%}
@@ -27,12 +27,14 @@ direction TB
         {%- elsif property.node.or -%}
             {{ property.node.or | map: "datatype" | join: " | " }}
         {%- elsif property.node -%}
-            {{ property.node.class | default: property.node }}
+            {{ property.node.name | default: property.node.class }}
         {%- endif %} [
-        {%- if property.minCount == property.maxCount -%}
-             {{- property.minCount -}}
+        {%- assign minCount = property.minCount | default: 0 -%}
+        {%- assign maxCount = property.maxCount | default: "*" -%}
+        {%- if minCount == maxCount -%}
+             {{- minCount -}}
         {%- else -%}
-            {{ property.minCount }}..{{ property.maxCount | default: "*" }}
+            {{ minCount }}..{{ maxCount }}
         {%- endif -%}
         ]
     {%- endfor %}
