@@ -50,6 +50,7 @@ _:CreativeWorkShape
                 ]
             ) ;
             sh:minCount 1 ;
+            sh:maxCount 1 ;
             sh:description """
                 A *REQUIRED* property that indicates the date when the [=metadata record=] was last changed.
 
