@@ -2,7 +2,7 @@
 
 ## [1.0.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.16.0...1.0.0) (2026-06-01)
 
-* First stable release, carrying a backward compatibility promise: within 1.x, data that conforms today keeps conforming, and consumers that ignore properties and values they do not recognise keep working – changes are additive, relaxing or clarifying, and anything that would invalidate conforming data waits for a 2.0.
+* First stable release, carrying a backward compatibility promise: within 1.x, data that conforms today keeps conforming, and consumers that ignore properties and values they do not recognise keep working. Changes are additive, relaxing or clarifying, and any breaking changes that would invalidate conforming data wait for a 2.0.
 
 ## [0.16.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.15.1...0.16.0) (2026-06-01)
 
