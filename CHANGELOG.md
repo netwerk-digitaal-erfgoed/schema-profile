@@ -2,8 +2,7 @@
 
 ## [1.0.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.16.0...1.0.0) (2026-06-01)
 
-* First stable release, carrying a backward compatibility promise: within 1.x, data that conforms today keeps conforming and consumers that honour the must-ignore rule keep working – changes are additive, relaxing or clarifying, and anything that would invalidate conforming data waits for a 2.0.
-* The constraint tightenings that set the stable baseline shipped in 0.16.0: `isPartOf` must reference a dataset by IRI, and `sdDatePublished` and `dateCreated` are single-valued.
+* First stable release, carrying a backward compatibility promise: within 1.x, data that conforms today keeps conforming, and consumers that ignore properties and values they do not recognise keep working – changes are additive, relaxing or clarifying, and anything that would invalidate conforming data waits for a 2.0.
 
 ## [0.16.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.15.1...0.16.0) (2026-06-01)
 
