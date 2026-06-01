@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.16.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.15.1...0.16.0) (2026-06-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* limit dateCreated to a single value
+* limit sdDatePublished to a single value
+* require isPartOf to reference a dataset by IRI
+
+### Features
+
+* limit dateCreated to a single value ([43665b6](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/43665b691d63dde2f786630609ba62ddbba83cf7))
+* limit sdDatePublished to a single value ([eb619c1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/eb619c13e8a4b9a1d41fe36a691e77db7d39ce41))
+* require isPartOf to reference a dataset by IRI ([8dac795](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/8dac795e4681741b514cf7fdb00b8199d4320854))
+
 ## [0.15.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.15.0...0.15.1) (2026-05-30)
 
 
