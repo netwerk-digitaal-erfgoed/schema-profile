@@ -46,6 +46,7 @@ direction TB
     CreativeWork --> "1..*" Organization : creator
     CreativeWork --> "1..*" Person : creator
     CreativeWork --> "1..*" MediaObject : associatedMedia
+    CreativeWork --> "0..1" QuantitativeValue : width<br>height<br>depth<br>weight
 
     Person --> "0..*" DefinedTerm : hasOccupation
     Person --> "0..1" DefinedTerm : birthPlace<br>deathPlace

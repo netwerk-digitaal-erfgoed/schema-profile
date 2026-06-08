@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "height": {
+    "@type": "QuantitativeValue",
+    "value": 73.7,
+    "unitText": "cm",
+    "unitCode": "CMT"
+  }
+}

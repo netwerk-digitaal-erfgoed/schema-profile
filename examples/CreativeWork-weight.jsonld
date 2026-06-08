@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.org/id/sculpture",
+  "@type": "CreativeWork",
+  "weight": {
+    "@type": "QuantitativeValue",
+    "value": 12.5,
+    "unitText": "kg",
+    "unitCode": "KGM"
+  }
+}

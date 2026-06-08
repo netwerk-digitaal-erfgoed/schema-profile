@@ -251,10 +251,72 @@ _:CreativeWorkShape
             sh:minCount 0 ;
             sh:description """
                 Indicates the physical size of the CreativeWork in its preferred display form.
+
+                For a single, machine-readable measurement per dimension, use `width`, `height`, `depth` or `weight` instead.
             """;
             rdfs:seeAlso [
                 rdfs:label "The dimensions of Van Gogh’s Starry Night" ;
                 rdfs:comment "file://examples/CreativeWork-size.jsonld" ;
+            ] ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path schema:width ;
+            sh:node _:QuantitativeValueShape ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:description """
+                An *OPTIONAL* property that indicates the width of the CreativeWork as a single, machine-readable measurement, expressed as a QuantitativeValue with a length unit.
+
+                For a free-text rendering of all dimensions together, use `size` instead.
+            """ ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path schema:height ;
+            sh:node _:QuantitativeValueShape ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:description """
+                An *OPTIONAL* property that indicates the height of the CreativeWork as a single, machine-readable measurement, expressed as a QuantitativeValue with a length unit.
+
+                This property is most natural on a more specific subtype (such as `VisualArtwork`),
+                but is applied here directly on CreativeWork for simplicity, just like `size`.
+
+                For a free-text rendering of all dimensions together, use `size` instead.
+            """ ;
+            rdfs:seeAlso [
+                rdfs:label "The height of Van Gogh’s Starry Night:" ;
+                rdfs:comment "file://examples/CreativeWork-height.jsonld" ;
+            ] ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path schema:depth ;
+            sh:node _:QuantitativeValueShape ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:description """
+                An *OPTIONAL* property that indicates the depth of the CreativeWork as a single, machine-readable measurement, expressed as a QuantitativeValue with a length unit.
+
+                For a free-text rendering of all dimensions together, use `size` instead.
+            """ ;
+        ] ,
+        [
+            a sh:PropertyShape ;
+            sh:path schema:weight ;
+            sh:node _:QuantitativeValueShape ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:description """
+                An *OPTIONAL* property that indicates the weight of the CreativeWork as a single, machine-readable measurement, expressed as a QuantitativeValue with a mass unit.
+
+                Like `height`, this property is most natural on a more specific subtype,
+                but is applied here directly on CreativeWork for simplicity.
+            """ ;
+            rdfs:seeAlso [
+                rdfs:label "The weight of a sculpture:" ;
+                rdfs:comment "file://examples/CreativeWork-weight.jsonld" ;
             ] ;
         ] ,
         [
@@ -854,6 +916,53 @@ _:PostalAddressShape
             An *OPTIONAL* property that indicates the country.
             For countries that have an [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
             For historical countries, their name *MAY* be used instead (e.g. ‘Prussia’).
+        """ ;
+    ] .
+
+_:QuantitativeValueShape
+    a sh:NodeShape ;
+    sh:name "QuantitativeValue" ;
+    sh:class schema:QuantitativeValue ;
+    sh:description """
+        A single, machine-readable measurement, used by the `width`, `height`, `depth` and `weight` properties of CreativeWork.
+        Each value *MUST* be typed as a `QuantitativeValue` and carry a numeric `value` and a `unitText`.
+
+        This profile models a single measurement per property: exactly one `value` with one unit.
+        Qualified measurements (for example a height measured with and without its frame) are out of scope for this generic model;
+        publishers who need them *MAY* express them in a domain data model.
+    """ ;
+    sh:property [
+        sh:path schema:value ;
+        sh:or (
+            [ sh:datatype xsd:decimal ]
+            [ sh:datatype xsd:double ]
+            [ sh:datatype xsd:integer ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the numeric measurement, for example 27.5.
+            The value *MUST* be a number, so that consumers can sort and filter on it.
+            In JSON-LD, write it as a bare number (`27.5`), not a quoted string.
+        """ ;
+    ] ,
+    [
+        sh:path schema:unitText ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates the unit of measurement in human-readable form, for example ‘cm’ or ‘kg’.
+        """ ;
+    ] ,
+    [
+        sh:path schema:unitCode ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *RECOMMENDED* property that indicates the unit of measurement as a machine-readable code,
+            using the [UN/CEFACT Common Code](https://unece.org/trade/uncefact/cl-recommendations) (3 characters, e.g. ‘CMT’ for centimetre or ‘KGM’ for kilogram) or a URL.
+            Providing it lets consumers compare measurements across datasets regardless of the `unitText` spelling.
         """ ;
     ] .
 
