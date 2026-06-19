@@ -433,7 +433,7 @@ resolves all terms to `http://schema.org/` IRIs.
 Consumers that process JSON-LD data need to override the context
 so that the resulting RDF triples use the `https://schema.org/` namespace.
 
-A ready-to-use context is available at `https://docs.nde.nl/schema.org/context.jsonld`.
+A ready-to-use context is available at `https://docs.nde.nl/schema-profile/context.jsonld`.
 It uses [[JSON-LD11]]’s `@import` to inherit Schema.org’s type coercions
 (e.g. `url` and `sameAs` remain IRIs) while overriding the namespace to `https://`.
 Consumers can apply this context when expanding JSON-LD data before validation or querying:
@@ -443,7 +443,7 @@ Consumers can apply this context when expanding JSON-LD data before validation o
 
     <pre highlight=json-ld>
         {
-          "@context": "https://docs.nde.nl/schema.org/context.jsonld",
+          "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
           "@type": "CreativeWork",
           "name": "Example"
         }
