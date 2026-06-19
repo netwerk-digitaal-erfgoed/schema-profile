@@ -3,6 +3,23 @@
     "@version": 1.1,
     "@import": "https://schema.org/docs/jsonldcontext.jsonld",
     "@vocab": "https://schema.org/",
-    "schema": "https://schema.org/"
+    "schema": "https://schema.org/",
+
+    "name":        { "@container": "@language" },
+    "description": { "@container": "@language" },
+    "abstract":    { "@container": "@language" },
+    "text":        { "@container": "@language" },
+
+    "creator":         { "@container": "@set" },
+    "material":        { "@container": "@set" },
+    "additionalType":  { "@container": "@set" },
+    "genre":           { "@container": "@set" },
+    "about":           { "@container": "@set" },
+    "identifier":      { "@container": "@set" },
+    "contentLocation": { "@container": "@set" },
+    "locationCreated": { "@container": "@set" },
+    "hasOccupation":   { "@container": "@set" },
+    "associatedMedia": { "@container": "@set" },
+    "sameAs":          { "@container": "@set" }
   }
 }
