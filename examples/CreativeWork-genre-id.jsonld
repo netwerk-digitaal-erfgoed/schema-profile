@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/dataset1/resource1",
+  "@type": "CreativeWork",
+  "genre": {
+    "@id": "https://example.com/dataset1/terms/post-impressionism",
+    "@type": "DefinedTerm",
+    "name": {
+      "@language": "en",
+      "@value": "Post-Impressionist"
+    },
+    "sameAs": "http://vocab.getty.edu/aat/300021508"
+  }
+}

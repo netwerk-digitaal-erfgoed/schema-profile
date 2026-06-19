@@ -227,6 +227,21 @@ When no public term is known, `sameAs` *MAY* be omitted:
     </pre>
 </div>
 
+A `DefinedTerm` *MAY* also carry its own `@id`, making the local term node dereferenceable within the dataset.
+The `@id` identifies *this dataset’s* term node, while `sameAs` is the canonical external identifier that consumers compare on;
+the two can coexist.
+
+<div class="example">
+    Give the `DefinedTerm` a local `@id` alongside the canonical `sameAs`:
+
+    <pre class=include-code>
+    path: examples/CreativeWork-genre-id.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 6,12
+    </pre>
+</div>
+
 A `DefinedTerm` value *MUST* additionally be typed with a type from the property’s Schema.org range
 whenever that range does not already include `DefinedTerm`,
 so that the data also validates against Schema.org’s own type expectations.
