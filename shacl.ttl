@@ -329,6 +329,12 @@ _:CreativeWorkShape
                 Indicates the date the CreativeWork was created.
 
                 A single date *MUST* be given, at the highest precision known (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`).
+
+                An interval (such as `1980/1985`) *MUST NOT* be used, even when the exact creation date is uncertain.
+                Unlike `schema:temporalCoverage`, `schema:dateCreated` ranges over `schema:Date` and `schema:DateTime` only,
+                neither of which permits an ISO 8601 interval; intervals belong to `schema:temporalCoverage`, which describes the
+                content’s subject period rather than its creation. For an uncertain creation date, drop to the lowest common
+                precision instead (for example `1980` when creation is known only to fall within 1980–1985).
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh painted The Starry Night in June 1889:" ;
