@@ -267,10 +267,9 @@ A `DefinedTerm` value *MUST* additionally be typed with a type from the property
 whenever that range does not already include `DefinedTerm`,
 so that the data also validates against Schema.org’s own type expectations.
 For example, [genre](https://schema.org/genre) and [about](https://schema.org/about) accept a `DefinedTerm` directly,
-so no co-type is needed.
-Properties such as [material](https://schema.org/material) (`Product`, `Text`, `URL`),
-[creator](https://schema.org/creator) (`Person`, `Organization`) and [contentLocation](https://schema.org/contentLocation) (`Place`) do not,
-so the `DefinedTerm` is co-typed with a type that is in range: `URL`, `Person` or `Place` respectively.
+so no co-type is needed, whereas [material](https://schema.org/material), [creator](https://schema.org/creator) and [contentLocation](https://schema.org/contentLocation) do not,
+so the `DefinedTerm` is co-typed with a type that is in range.
+Each property’s required co-type is shown in its example throughout the document.
 
 <div class="example">
     Co-type the `DefinedTerm` with `URL`, because `material` does not accept a `DefinedTerm` directly:
@@ -313,7 +312,7 @@ If the generic data model is used alongside [=domain data models=], there are tw
 - [[#combined]]
 - [[#profiles]].
 
-Publishers *MUST* support at least one of these methods.
+In this case, publishers *MUST* support at least one of these methods.
 
 ### Combined ### {#combined}
 
