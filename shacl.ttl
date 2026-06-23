@@ -247,10 +247,18 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:size ;
-            sh:datatype xsd:string ;
+            sh:or (
+                [ sh:datatype rdf:langString ]
+                [ sh:datatype xsd:string ]
+            ) ;
+            sh:uniqueLang true ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the physical size of the CreativeWork in its preferred display form.
+
+                Because this is a display string, it *SHOULD* be a language-tagged string (`rdf:langString`),
+                for example “24 inches high by 18 inches wide”@en and “61 cm hoog bij 46 cm breed”@nl.
+                A plain string (`xsd:string`) is only allowed for backwards compatibility.
             """;
             rdfs:seeAlso [
                 rdfs:label "The dimensions of Van Gogh’s Starry Night" ;
