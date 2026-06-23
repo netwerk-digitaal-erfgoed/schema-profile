@@ -170,6 +170,27 @@ Even if only one language is available, the language *MUST* be specified.
     </pre>
 </div>
 
+If the language of value is unknown, for example because it’s not recorded in the source data, 
+the most likely language *SHOULD* be assigned: 
+if a dataset is known to be predominantly Dutch, its labels are most likely in Dutch and *SHOULD* be tagged `nl`.
+
+Only when the language genuinely cannot be determined, the [[!BCP47]] ‘undetermined’ subtag `und` *MUST* be used.
+Because `und` is itself a well-formed language tag, the value stays a language-tagged string and remains valid, so a record whose only `name` has an unknown language can still be published.
+
+<div class="example">
+    Use `und` when the language cannot be determined – here a Han-script title that could be Chinese or Japanese:
+
+    <pre highlight=json-ld line-numbers line-highlight="3-6">
+        {
+          "@context": "https://schema.org",
+          "name": {
+            "@language": "und",
+            "@value": "山水"
+          }
+        }
+    </pre>
+</div>
+
 Each language *MUST* occur only once, so only a single value per language is allowed.
 
 <div class="example">
