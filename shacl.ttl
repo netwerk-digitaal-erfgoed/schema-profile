@@ -168,7 +168,7 @@ _:CreativeWorkShape
                 usually an assigned alphanumeric string.
                 The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
                 Note that this is different from the CreativeWork’s URI.
-                The value *MUST* be either a string or a [schema:PropertyValue](https://schema.org/PropertyValue).
+                A CreativeWork *MAY* have more than one identifier; each value *MUST* be either a string or a [schema:PropertyValue](https://schema.org/PropertyValue).
             """;
             rdfs:seeAlso [
                 rdfs:label "A string as identifier:" ;
