@@ -5,26 +5,26 @@
 
 ### Features
 
-* add [@set](https://github.com/set) and [@language](https://github.com/language) containers to the JSON-LD context ([#179](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/179)) ([d379caf](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/d379cafbebb5be4754c65733d9e791e5b1d4ee34))
-* allow temporalCoverage to reference a period as a DefinedTerm ([#180](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/180)) ([e2f698f](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/e2f698f234a6203a388eb5c37d97c7e7898b1c92))
+* add `@set` and `@language` containers to the JSON-LD context ([#179](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/179)) ([d379caf](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/d379cafbebb5be4754c65733d9e791e5b1d4ee34))
+* allow `temporalCoverage` to reference a period as a `DefinedTerm` ([#180](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/180)) ([e2f698f](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/e2f698f234a6203a388eb5c37d97c7e7898b1c92))
 * host the JSON-LD context in this repo at /schema-profile/context.jsonld ([#178](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/178)) ([c7e160d](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/c7e160da2dbec74320c9cb5af7b876a4193c9755))
-* show a local [@id](https://github.com/id) on DefinedTerm alongside the canonical sameAs ([#173](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/173)) ([8ff61e2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/8ff61e26a7a5d5f01dd9179e94c35646200ebe1e))
+* show a local `@id` on `DefinedTerm` alongside the canonical `sameAs` ([#173](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/173)) ([8ff61e2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/8ff61e26a7a5d5f01dd9179e94c35646200ebe1e))
 
 
 ### Bug Fixes
 
-* accept xsd:decimal for geo coordinates ([#182](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/182)) ([23556e4](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/23556e4b16418969ee1512da44d08265cfc6d383))
-* clarify identifier is per-value, matching its 0..* cardinality ([#185](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/185)) ([75b5c4b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/75b5c4bb8e415dc5ae12d6d643c6ee66cc3d24c8))
+* accept `xsd:decimal` for geo coordinates ([#182](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/182)) ([23556e4](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/23556e4b16418969ee1512da44d08265cfc6d383))
+* clarify `identifier` is per-value, matching its 0..* cardinality ([#185](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/185)) ([75b5c4b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/75b5c4bb8e415dc5ae12d6d643c6ee66cc3d24c8))
 * clarify that the support-method requirement is conditional ([#174](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/174)) ([c57e896](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/c57e896a823a9bac7df05913f09505267afa6524))
-* clarify when to use additionalType vs [@type](https://github.com/type) ([#183](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/183)) ([7528a88](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/7528a889315e63ad63d169e6b23b407c6686176a))
+* clarify when to use `additionalType` vs `@type` ([#183](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/183)) ([7528a88](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/7528a889315e63ad63d169e6b23b407c6686176a))
 * recommend language-tagged size for display strings ([#176](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/176)) ([b47073a](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/b47073af54975e0c500c0104711bc8225391552a))
-* recommend the und language tag for unknown-language values ([#172](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/172)) ([b0ba872](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/b0ba87229d18c7e4a9265c6f823f73d65579efa9))
+* recommend the `und` language tag for unknown-language values ([#172](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/172)) ([b0ba872](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/b0ba87229d18c7e4a9265c6f823f73d65579efa9))
 
 
 ### Documentation
 
 * add CONTRIBUTING with proposal-evaluation criteria ([#169](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/169)) ([53a91bd](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/53a91bd5cf97ca62b159eec3ac36f6c5b583a117))
-* explain why dateCreated rejects intervals ([#177](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/177)) ([fcee0e9](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/fcee0e9215398f767ce2975a538e88517037a24b))
+* explain why `dateCreated` rejects intervals ([#177](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/177)) ([fcee0e9](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/fcee0e9215398f767ce2975a538e88517037a24b))
 
 ## [1.0.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/0.16.0...1.0.0) (2026-06-01)
 
