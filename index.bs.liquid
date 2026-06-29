@@ -504,6 +504,39 @@ Alternatively, consumers can inline the context to avoid a dependency on the hos
     </pre>
 </div>
 
+Beyond the namespace override, the hosted context declares [[JSON-LD11]] containers
+that make the data easier to consume. When a consumer *compacts* JSON-LD data with it:
+
+- multi-valued properties (such as `creator`, `material` and `identifier`) are always
+    returned as arrays (`@container: @set`), so a consumer never has to test whether a
+    value is a single object or a list; and
+- language-tagged text properties (`name`, `description`, `abstract` and `text`) are
+    returned as language maps (`@container: @language`), keyed by language tag, so a value
+    can be read directly as `name.nl` or `name.en`.
+
+These containers take effect only on compaction with this context; they do not change the
+underlying RDF triples, so data stays conformant whether or not a consumer applies them.
+The minimal inline override shown above covers only the namespace override — consumers that
+want always-arrays and language maps should use the hosted context, which declares the containers.
+
+<div class="example">
+    Compacting with the context yields always-arrays and language maps:
+
+    <pre highlight=json-ld>
+        {
+          "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
+          "@type": "CreativeWork",
+          "name": {
+            "nl": "De Nachtwacht",
+            "en": "The Night Watch"
+          },
+          "creator": [
+            { "@type": "Person", "name": { "nl": "Rembrandt van Rijn" } }
+          ]
+        }
+    </pre>
+</div>
+
 Changes {#changes}
 ==========
 
