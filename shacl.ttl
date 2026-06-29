@@ -291,6 +291,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:temporalCoverage ;
             sh:or (
+                [ sh:node _:DefinedTermShape ]
                 [ sh:nodeKind sh:IRI ; sh:pattern "^https?://" ]
                 [ sh:pattern "^(-?\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\.\\.)(/(-?\\d{4}(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\d{2}(-\\d{2})?|\\.\\.))?$" ]
             ) ;
@@ -302,11 +303,19 @@ _:CreativeWorkShape
                 The value *MUST* be either an ISO 8601 date or time interval
                 (such as ‘2011’, ‘2011/2012’, ‘1889-06/07’ for shortened notation,
                 ‘-0431/-0404’ for BCE dates, or ‘1440/..’ for an open-ended range),
-                or an HTTP(S) URI.
+                or a reference to a period.
+                If the period is a structured entity from a controlled vocabulary
+                (such as AAT), it *MUST* be referenced as a `DefinedTerm`
+                so that consumers receive structured typing.
+                A bare HTTP(S) URI is allowed only for backward compatibility
+                and *SHOULD NOT* be used in new data.
             """ ;
             rdfs:seeAlso [
-                rdfs:label "Van Gogh’s painting The Starry Night:" ;
+                rdfs:label "An ISO 8601 interval:" ;
                 rdfs:comment "file://examples/CreativeWork-temporalCoverage.jsonld" ;
+            ] , [
+                rdfs:label "A period referenced as a DefinedTerm:" ;
+                rdfs:comment "file://examples/CreativeWork-temporalCoverage-term.jsonld" ;
             ] ;
         ] ,
         [

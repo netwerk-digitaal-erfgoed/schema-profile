@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "temporalCoverage": {
+    "@type": "DefinedTerm",
+    "name": {
+      "@language": "en",
+      "@value": "Dutch Golden Age"
+    },
+    "sameAs": "http://www.wikidata.org/entity/Q661566"
+  }
+}
