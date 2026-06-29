@@ -38,6 +38,17 @@
     Even though the superclass can be derived from its subclasses using RDF inferencing
     (in this example, CreativeWork from Painting),
     the superclass *MUST* be provided explicitly to help users understand the data.
+
+    Use `@type` only for Schema.org classes:
+    the top-level `CreativeWork` together with any Schema.org subclass that applies.
+    Types drawn from other vocabularies, such as a [Getty AAT](https://vocab.getty.edu/aat/) concept,
+    are [=terms=] rather than Schema.org classes and *MUST NOT* appear in `@type`;
+    reference them through [[#CreativeWork-additionalType|`additionalType`]] as a [[#reference-terms|`DefinedTerm`]] instead.
+
+    When a Schema.org subclass and an external term describe the same concept
+    (for example `Painting` and the AAT term “paintings”),
+    asserting both is expected and complementary, not redundant:
+    the `@type` records the Schema.org class, while `additionalType` adds the precise, linkable vocabulary term.
 {% endif %}
 
 {% if nodeShape.nodeKind == "IRI" %}
