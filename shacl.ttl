@@ -769,20 +769,28 @@ _:PlaceShape
                     """ ;
                     sh:property [
                         sh:path schema:latitude ;
-                        sh:datatype xsd:double ;
+                        sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
                         sh:description """
                             The latitude of a location. For example 37.42242 (WGS 84).
+
+                            The value *MUST* be an `xsd:double` or an `xsd:decimal`.
+                            Both are accepted because a plain decimal literal in Turtle (for example `52.379189`)
+                            is typed `xsd:decimal`, while the same value in JSON-LD becomes `xsd:double`.
                         """ ;
                     ] ,
                     [
                         sh:path schema:longitude ;
-                        sh:datatype xsd:double ;
+                        sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
                         sh:description """
                             The longitude of a location. For example -122.08585 (WGS 84).
+
+                            The value *MUST* be an `xsd:double` or an `xsd:decimal`.
+                            Both are accepted because a plain decimal literal in Turtle (for example `4.899431`)
+                            is typed `xsd:decimal`, while the same value in JSON-LD becomes `xsd:double`.
                         """ ;
                     ]
                 ] ;
