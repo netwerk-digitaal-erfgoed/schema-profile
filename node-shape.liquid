@@ -95,17 +95,31 @@
 
     {%- if property['nde:futureChange'] -%}
         {%- assign change = property['nde:futureChange'] -%}
-        {%- assign future_text = "" -%}
-        {%- if change.minCount and change.minCount != 0 and property.minCount == 0 -%}
-            {%- assign future_text = "this property will become required" -%}
-        {%- elsif change.nodeKind == "IRI" -%}
-            {%- assign future_text = "values will have to be identified by a URI" -%}
-        {%- elsif change.maxCount -%}
-            {%- capture future_text %}at most {{ change.maxCount }} value will be allowed{% endcapture -%}
-        {%- elsif change.datatype -%}
-            {%- assign future_datatype = change.datatype | replace: "http://www.w3.org/2001/XMLSchema#", "xsd:" | replace: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:" -%}
-            {%- capture future_text %}values will have to be of type `{{ future_datatype }}`{% endcapture -%}
+        {%- comment %} Collect every applicable change into a pipe-delimited list, then join with "; ". {% endcomment -%}
+        {%- assign future_clauses = "" -%}
+        {%- assign live_min_count = property.minCount | default: 0 -%}
+        {%- if change.minCount and change.minCount != 0 and live_min_count == 0 -%}
+            {%- assign future_clauses = future_clauses | append: "|this property will become required" -%}
         {%- endif -%}
+        {%- if change.nodeKind == "IRI" -%}
+            {%- assign future_clauses = future_clauses | append: "|values will have to be identified by a URI" -%}
+        {%- endif -%}
+        {%- if change.maxCount -%}
+            {%- if change.maxCount == 0 -%}
+                {%- assign future_clauses = future_clauses | append: "|the property will no longer be allowed" -%}
+            {%- elsif change.maxCount == 1 -%}
+                {%- assign future_clauses = future_clauses | append: "|at most 1 value will be allowed" -%}
+            {%- else -%}
+                {%- capture max_clause %}|at most {{ change.maxCount }} values will be allowed{% endcapture -%}
+                {%- assign future_clauses = future_clauses | append: max_clause -%}
+            {%- endif -%}
+        {%- endif -%}
+        {%- if change.datatype -%}
+            {%- assign future_datatype = change.datatype | replace: "http://www.w3.org/2001/XMLSchema#", "xsd:" | replace: "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:" -%}
+            {%- capture datatype_clause %}|values will have to be of type `{{ future_datatype }}`{% endcapture -%}
+            {%- assign future_clauses = future_clauses | append: datatype_clause -%}
+        {%- endif -%}
+        {%- assign future_text = future_clauses | remove_first: "|" | replace: "|", "; " -%}
         {%- if future_text != "" %}
 
 Advisement: Planned for version {{ change['nde:version'] }}: {{ future_text }}. This is not yet enforced; it is announced here so publishers can prepare.
