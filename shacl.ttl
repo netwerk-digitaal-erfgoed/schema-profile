@@ -649,7 +649,7 @@ _:MediaObjectShape
                 For example, use https://creativecommons.org/licenses/by/4.0/ instead
                 of http://creativecommons.org/licenses/by/4.0/deed.nl.
 
-                The value *SHOULD* be an open license that allows the media to consumed,
+                The value *SHOULD* be an open license that allows the media to be consumed,
                 for example one of the [Creative Commons](https://creativecommons.org/choose/) licenses.
             """ ;
             rdfs:seeAlso [
