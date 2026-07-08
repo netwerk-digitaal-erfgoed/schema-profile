@@ -370,6 +370,8 @@ _:CreativeWorkShape
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:class schema:CreativeWork ]
+                [ sh:class schema:Person ]
+                [ sh:class schema:Organization ]
             ) ;
             sh:minCount 0 ;
             sh:description """
@@ -378,7 +380,10 @@ _:CreativeWorkShape
                 Or which subjects is a story about?
                 And/or which CreativeWork (e.g. collection object) is this CreativeWork (story) about?
 
-                The value *MUST* either reference terms or other CreativeWork(s).
+                The value *MUST* reference a term, another `CreativeWork`,
+                or the `Person` or `Organization` that is the subject.
+                A subject that is also described as an entity in the dataset *MAY* be referenced directly,
+                without co-typing it as a `DefinedTerm`.
 
                 If the subject is a location, it *MUST* be listed under contentLocation instead.
             """ ;
