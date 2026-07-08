@@ -1,0 +1,6 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.org/object/cave-painting",
+  "@type": "CreativeWork",
+  "temporalCoverage": "-38000/-33000"
+}
