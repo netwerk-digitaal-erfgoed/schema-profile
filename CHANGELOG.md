@@ -5,7 +5,7 @@
 
 ### Features
 
-* accept BCE and beyond-four-digit years in dates ([#193](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/193)) ([a05f097](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a05f097ed48a793d8f84e2b8e7f5834bf99da28f))
+* accept BCE and beyond-four-digit years in dates: `dateCreated`, `birthDate`, and `deathDate` now validate a leading minus (BCE) and years of four or more digits directly as plain JSON-LD strings, where previously that was reachable only by explicitly typing `xsd:gYear`; and `temporalCoverage` no longer caps years at four digits, so deep-time ranges such as `-38000/-33000` validate ([#193](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/193)) ([a05f097](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a05f097ed48a793d8f84e2b8e7f5834bf99da28f))
 * allow Person and Organization as schema:about subject ([#191](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/191)) ([f051117](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/f0511179e67ed52f069effdc074aa4fb72a36c31))
 
 
