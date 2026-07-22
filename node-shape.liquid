@@ -74,6 +74,11 @@
     {% assign name = property.path | replace: "schema:", "" %}
     ### {{ name }}{% if property.minCount > 0 %} (required){% endif %} ### {#{{ nodeShape.name }}-{{ name  }}}
 
+    {%- comment -%}
+        Autolink class and property names mentioned in prose. Bikeshed does not resolve autolinks inside
+        code spans, so the leading space keeps backticked and qualified mentions (`schema:contentLocation`)
+        out of the substitution.
+    {%- endcomment -%}
     {{- property.description
         | replace: "CreativeWork", "[[#CreativeWork|CreativeWork]]"
         | replace: "MediaObject", "[[#MediaObject|MediaObject]]"
@@ -83,6 +88,7 @@
         | replace: "language-tagged", "[[#language|language-tagged]]"
         | replace: "reference a term", "[[#reference-terms|reference a term]]"
         | replace: "reference terms", "[[#reference-terms|reference terms]]"
+        | replace: " contentLocation", " [[#CreativeWork-contentLocation|contentLocation]]"
     -}}
 
     {%- if property.datatype == "rdf:langString" -%}

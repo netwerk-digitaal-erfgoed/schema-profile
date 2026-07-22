@@ -387,8 +387,8 @@ _:CreativeWorkShape
                 Or which subjects is a story about?
                 And/or which CreativeWork (e.g. collection object) is this CreativeWork (story) about?
 
-                The value *MUST* reference a term, another `CreativeWork`,
-                or the `Person` or `Organization` that is the subject.
+                The value *MUST* reference a term, another CreativeWork,
+                or the Person or Organization that is the subject.
                 A subject that is also described as an entity in the dataset *MAY* be referenced directly,
                 without co-typing it as a `DefinedTerm`.
 
