@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.2.0...1.2.1) (2026-07-22)
+
+
+### Bug Fixes
+
+* render section links in the about description ([#197](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/197)) ([5e639ab](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/5e639ab5d09f87d92f5316d40aa0ec0e1af31e0b))
+
 ## [1.2.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.1.0...1.2.0) (2026-07-09)
 
 
