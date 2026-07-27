@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.2.1...1.3.0) (2026-07-27)
+
+
+### Features
+
+* allow license URI from rightsstatements.org ([#196](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/196)) ([4219c7e](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/4219c7eb22c5d936dc0e769e87c8cfc85086edbb))
+
 ## [1.2.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.2.0...1.2.1) (2026-07-22)
 
 
