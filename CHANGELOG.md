@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.3.0...1.4.0) (2026-08-13)
+
+
+### Features
+
+* allow QuantitativeValue on size ([#202](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/202)) ([6413351](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/64133519299a80fa4e9b1bcbe9b636519009a4b3))
+
 ## [1.3.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.2.1...1.3.0) (2026-07-27)
 
 
