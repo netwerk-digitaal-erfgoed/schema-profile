@@ -252,19 +252,32 @@ _:CreativeWorkShape
             sh:or (
                 [ sh:datatype rdf:langString ]
                 [ sh:datatype xsd:string ]
+                [ sh:node _:QuantitativeValueShape ]
             ) ;
             sh:uniqueLang true ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the physical size of the CreativeWork in its preferred display form.
+                Indicates the physical size of the CreativeWork.
 
-                Because this is a display string, it *SHOULD* be a language-tagged string (`rdf:langString`),
+                The CreativeWork *SHOULD* have a display statement:
+                a single human-readable rendering of its dimensions in the form the publisher prefers,
                 for example “24 inches high by 18 inches wide”@en and “61 cm hoog bij 46 cm breed”@nl.
+                Because this is a display string, it *SHOULD* be a language-tagged string (`rdf:langString`),
+                one per language.
                 A plain string (`xsd:string`) is only allowed for backwards compatibility.
+
+                The CreativeWork *MAY* additionally have one `QuantitativeValue` (see [[#QuantitativeValue]]) per measured dimension,
+                which makes the individual measurements machine-readable.
+                Because the two value shapes serve different purposes,
+                consumers looking for a display statement *MUST* ignore the node values,
+                and consumers looking for measurements *MUST* ignore the literal values.
             """;
             rdfs:seeAlso [
-                rdfs:label "The dimensions of Van Gogh’s Starry Night" ;
+                rdfs:label "The dimensions of Van Gogh’s Starry Night as a display statement:" ;
                 rdfs:comment "file://examples/CreativeWork-size.jsonld" ;
+            ] , [
+                rdfs:label "The same dimensions, additionally as machine-readable measurements:" ;
+                rdfs:comment "file://examples/CreativeWork-size-structured.jsonld" ;
             ] ;
         ] ,
         [
@@ -487,6 +500,57 @@ _:DefinedTermShape
         sh:description """
             A *RECOMMENDED* property that references the term in a controlled vocabulary.
             If a public term URI is known, it *MUST* be provided.
+        """ ;
+    ] .
+
+_:QuantitativeValueShape
+    a sh:NodeShape ;
+    sh:name "QuantitativeValue" ;
+    sh:class schema:QuantitativeValue ;
+    sh:description """
+        A single measurement: a number, the unit it is expressed in, and the dimension it measures.
+
+        Each measured dimension *MUST* be a separate `QuantitativeValue`;
+        a single node *MUST NOT* combine several dimensions.
+    """ ;
+    sh:property [
+        sh:path schema:value ;
+        sh:or (
+            [ sh:datatype xsd:decimal ]
+            [ sh:datatype xsd:double ]
+            [ sh:datatype xsd:integer ]
+        ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that gives the measured number.
+            The number *MUST NOT* carry the unit, which belongs in `unitCode`.
+        """ ;
+    ] ,
+    [
+        sh:path schema:valueReference ;
+        sh:node _:DefinedTermShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that indicates which dimension is measured, such as height, width, depth or diameter.
+            Without it, the measurement cannot be interpreted.
+
+            The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]),
+            for example http://vocab.getty.edu/aat/300055644 for height.
+        """ ;
+    ] ,
+    [
+        sh:path schema:unitCode ;
+        sh:node _:DefinedTermShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:description """
+            A *REQUIRED* property that identifies the unit of measurement,
+            for example http://vocab.getty.edu/aat/300379098 for centimetres.
+
+            The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]).
+            Because `schema:unitCode` expects `Text` or `URL`, the `DefinedTerm` node *MUST* also be co-typed as `URL` (`"@type": ["DefinedTerm", "URL"]`).
         """ ;
     ] .
 
