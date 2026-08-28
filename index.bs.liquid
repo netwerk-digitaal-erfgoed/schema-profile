@@ -516,7 +516,7 @@ that make the data easier to consume. When a consumer *compacts* JSON-LD data wi
 
 These containers take effect only on compaction with this context; they do not change the
 underlying RDF triples, so data stays conformant whether or not a consumer applies them.
-The minimal inline override shown above covers only the namespace override — consumers that
+The minimal inline override shown above covers only the namespace override – consumers that
 want always-arrays and language maps should use the hosted context, which declares the containers.
 
 <div class="example">
@@ -536,6 +536,129 @@ want always-arrays and language maps should use the hosted context, which declar
         }
     </pre>
 </div>
+
+Addendum {#addendum}
+==========
+
+*This section is non-normative.*
+
+Mapping from Linked Art {#mapping-linked-art}
+-----
+
+[Linked Art](https://linked.art/model/) is a [=domain data model=] for museum collections and catalogs,
+built on <a href="https://cidoc-crm.org">CIDOC-CRM</a>.
+Publishers who already hold their data as Linked Art can derive a SCHEMA-AP-NDE representation from it,
+and so satisfy the [=generic data model=] without maintaining a second source of truth.
+
+The mapping below takes [Linked Art’s own Schema.org mapping](https://linked.art/cookbook/mappings/schema/) as its starting point
+and narrows it to the classes and properties of this profile.
+It produces only properties that this profile defines;
+everything Linked Art expresses beyond them stays in the Linked Art representation,
+which publishers *MAY* keep alongside the generic one (see [[#publication-method]]).
+
+Note: Linked Art property names below are the terms from the
+[Linked Art JSON-LD context](https://linked.art/ns/v1/linked-art.json), which resolve to CIDOC-CRM properties;
+the query uses those CRM properties directly.
+
+### Classes ### {#mapping-linked-art-classes}
+
+<table class="data">
+    <thead>
+        <tr><th>Linked Art<th>SCHEMA-AP-NDE
+    <tbody>
+        <tr><td>`HumanMadeObject`<td>[[#CreativeWork|CreativeWork]]
+        <tr><td>`Person`<td>[[#Person|Person]]
+        <tr><td>`Group`<td>[[#Organization|Organization]]
+        <tr><td>`Place`<td>[[#Place|Place]]
+        <tr><td>`DigitalObject`<td>[[#MediaObject|MediaObject]]
+        <tr><td>`Type` and `Material`<td>[[#reference-terms|DefinedTerm]]
+</table>
+
+Where an object’s `classified_as` term has a Schema.org counterpart,
+such as [AAT 300033618](http://vocab.getty.edu/aat/300033618) for a painting,
+the mapping adds that counterpart as a [[#subclasses|subclass]] alongside `CreativeWork`.
+
+### Properties ### {#mapping-linked-art-properties}
+
+<table class="data">
+    <thead>
+        <tr><th>Linked Art<th>SCHEMA-AP-NDE
+    <tbody>
+        <tr><td colspan=2><strong>On `HumanMadeObject`</strong>
+        <tr><td>`identified_by[Name][classified_as=Primary Name]/content`<td>`name`
+        <tr><td>`identified_by[Identifier]/content`<td>`identifier`
+        <tr><td>`referred_to_by[classified_as=Description]/content`<td>`description`
+        <tr><td>`referred_to_by[classified_as=Summary]/content`<td>`abstract`
+        <tr><td>`referred_to_by[classified_as=Dimensions Statement]/content`<td>`size`
+        <tr><td>`carries/content`<td>`text`
+        <tr><td>`classified_as` (a style)<td>`genre`
+        <tr><td>`classified_as` (anything else)<td>`additionalType`
+        <tr><td>`made_of`<td>`material`
+        <tr><td>`produced_by/part*/carried_out_by`<td>`creator`
+        <tr><td>`produced_by/timespan`<td>`dateCreated`
+        <tr><td>`produced_by/part*/took_place_at`<td>`locationCreated`
+        <tr><td>`shows|carries → about`<td>`about`
+        <tr><td>`shows|carries → represents` (a `Place`)<td>`contentLocation`
+        <tr><td>`representation/digitally_shown_by`<td>`associatedMedia`
+        <tr><td colspan=2><strong>On `Person`</strong>
+        <tr><td>`born/timespan`<td>`birthDate`
+        <tr><td>`born/took_place_at`<td>`birthPlace`
+        <tr><td>`died/timespan`<td>`deathDate`
+        <tr><td>`died/took_place_at`<td>`deathPlace`
+        <tr><td>`classified_as` (an occupation)<td>`hasOccupation`
+        <tr><td colspan=2><strong>On `Group`</strong>
+        <tr><td>`residence`<td>`location`
+        <tr><td colspan=2><strong>On `Place`</strong>
+        <tr><td>`defined_by` (a WKT point)<td>`geo`
+        <tr><td colspan=2><strong>On `DigitalObject`</strong>
+        <tr><td>`digitally_available_via` (IIIF Image API)`/access_point`<td>`contentUrl` and `thumbnailUrl`
+        <tr><td>`access_point`<td>`contentUrl`
+        <tr><td>`subject_to/classified_as`<td>`license`
+        <tr><td>`referred_to_by[classified_as=Rights Statement]/content`<td>`copyrightNotice`
+        <tr><td colspan=2><strong>On any referenced term or creator</strong>
+        <tr><td>`identified_by[Name][classified_as=Primary Name]/content`, or `_label`<td>`name`
+        <tr><td>`equivalent`<td>`sameAs`
+</table>
+
+Note: Linked Art maps an object’s Description statement to `abstract`.
+This profile distinguishes the two, so the mapping sends the Description statement to `description`
+and the Summary statement to `abstract`, matching their definitions in [[#CreativeWork]].
+
+### What the mapping cannot derive ### {#mapping-linked-art-gaps}
+
+Some of this profile’s requirements have no counterpart in Linked Art
+and have to be filled in by the pipeline that runs the mapping:
+
+- [[#CreativeWork-sdDatePublished|sdDatePublished]] and [[#CreativeWork-isPartOf|isPartOf]] describe the [=metadata record=]
+    and the dataset it belongs to, neither of which Linked Art expresses.
+    The query carries them in a marked `VALUES` block for publishers to fill in.
+- Language. Linked Art records the language of a text by pointing at an AAT concept,
+    while this profile requires a language-tagged string.
+    The query translates the most common concepts and falls back on the `und` tag
+    for text whose language is unlisted or absent; publishers *SHOULD* extend that table to cover their data.
+- Thumbnails. Linked Art has no dedicated thumbnail.
+    Where the image is served through a <a href="https://iiif.io/api/image/">IIIF Image API</a> service,
+    the query derives both [[#MediaObject-contentUrl|contentUrl]] and [[#MediaObject-thumbnailUrl|thumbnailUrl]] from the service base URI;
+    otherwise it emits the access point as the `contentUrl` only,
+    and the publisher has to supply a thumbnail.
+- Dates. Linked Art expresses an uncertain date as a time span,
+    which [[#CreativeWork-dateCreated|dateCreated]] does not allow.
+    The query reduces a span to its lowest common precision and drops it when it straddles more than one year,
+    as the profile prescribes.
+- Term labels. A term that is referenced by its vocabulary URI alone carries no name,
+    and a [[#reference-terms|DefinedTerm]] without a name is not conformant.
+    The query falls back on the term’s `_label`, and drops the reference when there is neither.
+- [[#CreativeWork-temporalCoverage|temporalCoverage]] and the IIIF Presentation manifest entry on
+    [[#CreativeWork-associatedMedia|associatedMedia]] are not mapped;
+    publishers who model these in Linked Art can extend the query along the same lines.
+
+### Query ### {#mapping-linked-art-query}
+
+<pre class=include-code>
+path: mappings/linked-art.rq
+highlight: sparql
+line-numbers: true
+</pre>
 
 Changes {#changes}
 ==========
