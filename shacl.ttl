@@ -386,6 +386,20 @@ _:CreativeWorkShape
         ] ,
         [
             a sh:PropertyShape ;
+			sh:path schema:temporal ;
+			sh:datatype rdf:langString ;
+            sh:uniqueLang true ;
+            sh:minCount 0 ;
+            sh:description """
+				The temporal description of the creation of the CreativeWork, whenever it is not possible to capture this value in dateCreated. For instance, due to uncertainty about the exact moment of creation of a CreativeWork.
+            """ ;
+            rdfs:seeAlso [
+                rdfs:label "The exact year that Girl with a Pearl Earring was completed is uncertain." ;
+                rdfs:comment "file://examples/CreativeWork-temporal.jsonld" ;
+            ]
+        ] ,
+        [
+            a sh:PropertyShape ;
             sh:path schema:about ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
