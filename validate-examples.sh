@@ -44,14 +44,16 @@ for file in examples/*.jsonld; do
     report="/tmp/shacl-report-$basename.ttl"
     stderr="/tmp/shacl-stderr-$basename.txt"
 
-    # Replace the JSON-LD context with one that produces https://schema.org/ IRIs
-    # to match the SHACL shapes. Schema.org’s default context resolves terms to
-    # http://schema.org/, but the AP standardises on https://. The custom context
-    # uses @import to inherit Schema.org's type coercions (e.g. url, sameAs as
-    # IRIs) while overriding the namespace.
-    sed 's|"@context": "https://schema.org"|"@context": {"@version": 1.1, "@import": "https://schema.org/docs/jsonldcontext.jsonld", "@vocab": "https://schema.org/", "schema": "https://schema.org/"}|' "$file" > "$data"
+    # Replace the JSON-LD context with NDE’s own context for Schema.org, which
+    # produces https://schema.org/ IRIs to match the SHACL shapes. Schema.org’s
+    # default context resolves terms to http://schema.org/ and, since release
+    # 30.1, no longer types any property, so values such as sameAs and
+    # dateCreated would come out as plain strings. The NDE context restores those
+    # typings; it is extended through @import with thumbnailUrl, which the dataset
+    # requirements that the context was written for do not use.
+    sed 's|"@context": "https://schema.org"|"@context": {"@version": 1.1, "@import": "https://def.nde.nl/context.jsonld", "thumbnailUrl": {"@id": "schema:thumbnailUrl", "@type": "@id"}}|' "$file" > "$data"
 
-    # Run SHACL validation (don't let set -e abort the loop on shacl failure —
+    # Run SHACL validation (don't let set -e abort the loop on shacl failure –
     # we want to surface its stderr and move on).
     set +e
     shacl validate --data "$data" --shapes shacl.ttl >"$report" 2>"$stderr"
@@ -59,7 +61,7 @@ for file in examples/*.jsonld; do
     set -e
 
     if [[ $shacl_exit -ne 0 ]]; then
-        fail "(shacl exited $shacl_exit — could not validate)"
+        fail "(shacl exited $shacl_exit – could not validate)"
         warn "  shacl output:"
         sed 's/^/    /' "$stderr"
         echo
