@@ -1,3 +1,4 @@
+@prefix nde: <https://def.nde.nl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
@@ -94,7 +95,7 @@ _:CreativeWorkShape
                 If an <a href="https://iiif.io/api/presentation/">IIIF Presentation API</a> manifest is available
                 for the CreativeWork, it *MUST* be included as an additional `associatedMedia` entry with:
                 - `@id` set to the manifest URI
-                - `encodingFormat` set to `application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'`.
+                - `encodingFormat` set to `application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"`, the media type that the IIIF Presentation API specifies; single quotes around the profile URI are deprecated and will be rejected from version 2.0
                 - `license` matching the `rights` property specified in the presentation manifest
 
                 The IIIF Presentation manifest *MUST* describe all media for the CreativeWork.
@@ -803,7 +804,23 @@ _:IIIFPresentationManifestShape
         sh:path schema:encodingFormat ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/presentation/\\d+/context\\.json'$" ;
+        sh:pattern "^application/ld\\+json;profile=(['\"])http://iiif\\.io/api/presentation/\\d+/context\\.json\\1$" ;
+    ] .
+
+# Kept apart from the manifest shape above: a warning inside that shape would make the node
+# fail sh:node, and so turn the associatedMedia entry into a violation.
+_:IIIFPresentationManifestProfileQuotesShape
+    a sh:NodeShape ;
+    sh:targetObjectsOf schema:associatedMedia ;
+    sh:property [
+        sh:path schema:encodingFormat ;
+        sh:not [ sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/presentation/" ] ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Use double quotes around the profile URI of an IIIF Presentation manifest; single quotes are deprecated." ;
     ] .
 
 _:CreativeWorkAssociatedMediaCardinalityShape
