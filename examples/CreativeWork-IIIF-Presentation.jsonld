@@ -11,7 +11,7 @@
     {
       "@id": "https://demo.limb-gallery.com/iiif/25290/manifest",
       "license": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "encodingFormat": "application/ld+json;profile='http://iiif.io/api/presentation/3/context.json'"
+      "encodingFormat": "application/ld+json;profile=\"http://iiif.io/api/presentation/3/context.json\""
     }
   ]
 }
