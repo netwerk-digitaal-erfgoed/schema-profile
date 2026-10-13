@@ -288,11 +288,9 @@ Reference people, organizations and places {#reference-entities}
 
 Some [=terms=] denote a person, an organization or a place,
 for example an artist in [RKDartists](https://rkd.nl/en/collections/explore/artists) or a city in [GeoNames](https://www.geonames.org).
-The node that references such a term describes the person, organization or place itself,
-so it is typed with that class (`Person`, `Organization` or `Place`) rather than as a `DefinedTerm`,
-and it references the term via `sameAs`.
-The class already tells consumers what is being referenced
-and is in the Schema.org range of properties such as `creator` and `contentLocation`, so no co-type is needed.
+A node that references such a term is typed with the matching class (`Person`, `Organization` or `Place`)
+rather than as a `DefinedTerm`, and it references the term via `sameAs`.
+That class is in the Schema.org range of properties such as `creator` and `contentLocation`, so no co-type is needed.
 
 As with a `DefinedTerm`, the node is local to the publishing dataset and the `sameAs` URI is the canonical identifier:
 consumers compare `sameAs` URIs to recognise the same person, organization or place within and across datasets.
