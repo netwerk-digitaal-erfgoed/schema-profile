@@ -572,7 +572,7 @@ _:SameAsShape
         nde:version "2.0" ;
         sh:severity sh:Violation ;
     ] ;
-    sh:message "The value of sameAs must be a URI." ;
+    sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
     sh:description """
         A *RECOMMENDED* property that [[#reference-entities|references the term]] for the person, organization or place
         in a public source, such as RKDartists, GeoNames or Wikidata.
