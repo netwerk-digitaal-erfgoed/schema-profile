@@ -96,8 +96,24 @@ for file in examples/*.jsonld; do
         pass_suffix="(ignored missing required properties)"
     fi
 
-    # Query for non-ignored violations
-    violations=$(sparql --data "$report" --query "$query" --results TSV 2>/dev/null | tail -n +2)
+    # Query for non-ignored violations. A query that fails to run returns no
+    # rows, which must not be mistaken for an example without violations.
+    query_stderr="/tmp/shacl-query-stderr-$basename.txt"
+    set +e
+    query_results=$(sparql --data "$report" --query "$query" --results TSV 2>"$query_stderr")
+    sparql_exit=$?
+    set -e
+
+    if [[ $sparql_exit -ne 0 ]]; then
+        fail "(sparql exited $sparql_exit – could not query the validation report)"
+        warn "  sparql output:"
+        sed 's/^/    /' "$query_stderr"
+        echo
+        failed=$((failed + 1))
+        continue
+    fi
+
+    violations=$(echo "$query_results" | tail -n +2)
 
     if [[ -z "$violations" ]]; then
         pass "$pass_suffix"
