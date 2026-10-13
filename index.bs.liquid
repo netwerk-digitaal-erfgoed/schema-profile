@@ -235,7 +235,7 @@ Reference terms {#reference-terms}
     </pre>
 </div>
 
-When no public term is known, `sameAs` *MAY* be omitted:
+If a public term is known, `sameAs` *MUST* be present and reference it. Otherwise, `sameAs` *MAY* be omitted:
 
 <div class="example">
     Reference a term without a known URI:
@@ -516,7 +516,7 @@ that make the data easier to consume. When a consumer *compacts* JSON-LD data wi
 
 These containers take effect only on compaction with this context; they do not change the
 underlying RDF triples, so data stays conformant whether or not a consumer applies them.
-The minimal inline override shown above covers only the namespace override — consumers that
+The minimal inline override shown above covers only the namespace override – consumers that
 want always-arrays and language maps should use the hosted context, which declares the containers.
 
 <div class="example">
