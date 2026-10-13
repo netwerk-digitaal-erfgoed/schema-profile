@@ -146,12 +146,12 @@ _:CreativeWorkShape
                 The creator *MUST* be a Person or Organization, in one of the following forms (most to least preferred):
             """ ;
             rdfs:seeAlso [
-                schema:description "Preferably, [[#reference-terms|reference a public term]] (an authority record) by co-typing the creator as a `DefinedTerm` and adding its URI via `sameAs`." ;
+                schema:description "Preferably, [[#reference-entities|reference the creator’s authority record]] by adding its URI via `sameAs`." ;
                 rdfs:label "A creator referenced by an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
             ] , [
-                schema:description "When no public term is available, give a plain Person or Organization with a `name`." ;
-                rdfs:label "A creator without a public term:" ;
+                schema:description "When no authority record is available, give a plain Person or Organization with a `name`." ;
+                rdfs:label "A creator without an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator-person.jsonld" ;
             ] , [
                 schema:description "When it is unknown whether the creator is a person or organization, the type *MAY* be omitted; a `name` is still required." ;
@@ -290,18 +290,14 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:contentLocation ;
-            sh:message "Gebruik een DefinedTerm of een Place, elk met een naam met taalcode, als afgebeelde locatie"@nl, "Use a DefinedTerm or a Place, each with a language-tagged name, as content location"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Gebruik een Place met een naam met taalcode als afgebeelde locatie"@nl, "Use a Place with a language-tagged name as content location"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the location(s) depicted or described in the CreativeWork.
                 For example, the location in a photograph or painting.
 
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:contentLocation` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -350,18 +346,14 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:locationCreated ;
-            sh:message "Gebruik een DefinedTerm of een Place, elk met een naam met taalcode, als plaats van vervaardiging"@nl, "Use a DefinedTerm or a Place, each with a language-tagged name, as location of creation"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Gebruik een Place met een naam met taalcode als plaats van vervaardiging"@nl, "Use a Place with a language-tagged name as location of creation"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the location(s) where the CreativeWork was created
                 (which may be different from its contentLocation).
 
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:locationCreated` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -414,8 +406,8 @@ _:CreativeWorkShape
 
                 The value *MUST* reference a term, another CreativeWork,
                 or the Person or Organization that is the subject.
-                A subject that is also described as an entity in the dataset *MAY* be referenced directly,
-                without co-typing it as a `DefinedTerm`.
+                A subject that is a person or organization is typed as such rather than as a `DefinedTerm`,
+                with its authority record, if one is available, referenced via `sameAs`.
 
                 If the subject is a location, it *MUST* be listed under contentLocation instead.
             """ ;
@@ -568,13 +560,32 @@ _:QuantitativeValueShape
         """ ;
     ] .
 
+# Shared by Person, Organization and Place. A Warning for now, because sameAs was not constrained on these
+# classes before; a literal value must not turn previously conforming data into a violation.
+_:AuthorityRecordShape
+    a sh:PropertyShape ;
+    sh:path schema:sameAs ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 0 ;
+    sh:severity sh:Warning ;
+    nde:futureChange [
+        nde:version "2.0" ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:message "The value of sameAs must be the URI of an authority record." ;
+    sh:description """
+        A *RECOMMENDED* property that [[#reference-entities|references the authority record]] for the person, organization or place
+        in a public source, such as RKDartists, GeoNames or Wikidata.
+        The value *MUST* be the record’s URI.
+    """ .
+
 _:PersonShape
     a sh:NodeShape ;
     sh:name "Person" ;
     sh:targetClass schema:Person ;
     sh:description """
         If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-        The value *MUST* reference a term if one is available for the person; otherwise,
+        If an authority record is available for the person, it *MUST* be referenced via [[#Person-sameAs|`sameAs`]]; otherwise,
         the person *MUST* be defined by the required properties listed below.
 
         The objective for the Person model is not to fully describe all aspects of a person,
@@ -596,6 +607,7 @@ _:PersonShape
                 rdfs:comment "file://examples/Person-name.jsonld" ;
             ]
         ] ,
+        _:AuthorityRecordShape ,
         [
             sh:path schema:birthDate ;
             sh:message "Geef maximaal één geboortedatum in ISO 8601-formaat: YYYY, YYYY-MM of YYYY-MM-DD"@nl, "Give at most one date of birth in ISO 8601 format: YYYY, YYYY-MM or YYYY-MM-DD"@en ;
@@ -608,17 +620,13 @@ _:PersonShape
         ] ,
         [
             sh:path schema:birthPlace ;
-            sh:message "Geef maximaal één geboorteplaats, als DefinedTerm of als Place, elk met een naam met taalcode"@nl, "Give at most one place of birth, as a DefinedTerm or as a Place, each with a language-tagged name"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Geef maximaal één Place met een naam met taalcode als geboorteplaats"@nl, "Give at most one Place with a language-tagged name as place of birth"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of birth.
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:birthPlace` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with birthPlace:" ;
@@ -637,17 +645,13 @@ _:PersonShape
         ] ,
         [
             sh:path schema:deathPlace ;
-            sh:message "Geef maximaal één plaats van overlijden, als DefinedTerm of als Place, elk met een naam met taalcode"@nl, "Give at most one place of death, as a DefinedTerm or as a Place, each with a language-tagged name"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Geef maximaal één Place met een naam met taalcode als plaats van overlijden"@nl, "Give at most one Place with a language-tagged name as place of death"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of death.
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:deathPlace` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with deathPlace:" ;
@@ -700,6 +704,7 @@ _:OrganizationShape
             rdfs:comment "file://examples/Organization-name.jsonld" ;
         ]
     ] ,
+    _:AuthorityRecordShape ,
     [
         sh:path schema:location ;
         sh:message "Geef maximaal één Place met een naam met taalcode als locatie"@nl, "Give at most one Place with a language-tagged name as location"@en ;
@@ -864,7 +869,8 @@ _:PlaceShape
     sh:name "Place" ;
     sh:targetClass schema:Place ;
     sh:description """
-        For properties that reference locations, if no term is available, a custom Place resource *MUST* be used instead.
+        If an authority record is available for the place, for example in GeoNames or Wikidata,
+        it *MUST* be referenced via [[#Place-sameAs|`sameAs`]]; otherwise, the place *MUST* be defined by the properties listed below.
     """ ;
     sh:property [
         sh:path schema:name ;
@@ -875,6 +881,7 @@ _:PlaceShape
             A *REQUIRED* property that indicates the name of the place.
         """ ;
     ] ,
+    _:AuthorityRecordShape ,
     [
         sh:path schema:address ;
         sh:message "Gebruik een PostalAddress als adres"@nl, "Use a PostalAddress as address"@en ;

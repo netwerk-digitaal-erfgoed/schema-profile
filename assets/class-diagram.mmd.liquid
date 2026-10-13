@@ -41,14 +41,13 @@ direction TB
     }
 {% endfor %}
 
-    CreativeWork --> DefinedTerm : creator<br>additionalType<br>contentLocation<br>locationCreated<br>about<br>material<br>genre
+    CreativeWork --> DefinedTerm : additionalType<br>about<br>material<br>genre
     CreativeWork --> Place : contentLocation<br>locationCreated<br>
     CreativeWork --> "1..*" Organization : creator
     CreativeWork --> "1..*" Person : creator
     CreativeWork --> "1..*" MediaObject : associatedMedia
 
     Person --> "0..*" DefinedTerm : hasOccupation
-    Person --> "0..1" DefinedTerm : birthPlace<br>deathPlace
 
     Person --> "0..1" Place : birthPlace<br>deathPlace
 
