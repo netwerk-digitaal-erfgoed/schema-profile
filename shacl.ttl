@@ -40,7 +40,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:sdDatePublished ;
-            sh:message "Geef precies één wijzigingsdatum in ISO 8601-formaat: YYYY-MM-DD of YYYY-MM-DDThh:mm:ssZ"@nl, "Give exactly one date of last change in ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDThh:mm:ssZ"@en ;
+            sh:message "Geef precies één datum waarop het record voor het laatst is gewijzigd, in ISO 8601-formaat: YYYY-MM-DD of YYYY-MM-DDThh:mm:ssZ"@nl, "Give exactly one date on which the record was last changed, in ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDThh:mm:ssZ"@en ;
             sh:or (
                 [
                     sh:datatype xsd:date ;
