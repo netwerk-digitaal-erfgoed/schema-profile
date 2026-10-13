@@ -4,11 +4,12 @@ PREFIX schema: <https://schema.org/>
 # Query to get every SHACL validation violation, without the path-name filter
 # applied by validate.rq. Used for full real-world examples (e.g. story.jsonld)
 # that must validate strictly, as opposed to pedagogical single-property examples.
-SELECT ?node ?path ?message
+SELECT ?node (COALESCE(?path, "(none)") AS ?resultPath) ?message
 WHERE {
     ?report a sh:ValidationReport ;
         sh:result ?result .
     ?result sh:focusNode ?node ;
-        sh:resultPath ?path ;
         sh:resultMessage ?message .
+    # Node-level results, such as a missing URI, have no path.
+    OPTIONAL { ?result sh:resultPath ?path }
 }

@@ -2,16 +2,17 @@ PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX schema: <https://schema.org/>
 
 # Query to get SHACL validation violations that are not in the ignored properties list.
-SELECT ?node ?path ?message
+SELECT ?node (COALESCE(?path, "(none)") AS ?resultPath) ?message
 WHERE {
     ?report a sh:ValidationReport ;
         sh:result ?result .
     ?result sh:focusNode ?node ;
-        sh:resultPath ?path ;
         sh:resultMessage ?message .
+    # Node-level results, such as a missing URI, have no path.
+    OPTIONAL { ?result sh:resultPath ?path }
 
     # Filter out ignored properties (partial examples may not have these).
-    FILTER (?path NOT IN (
+    FILTER (!BOUND(?path) || ?path NOT IN (
          # CreativeWork:
          schema:name,
          schema:creator,
