@@ -40,6 +40,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:sdDatePublished ;
+            sh:message "Geef precies één datum waarop het record voor het laatst is gewijzigd, in ISO 8601-formaat: YYYY-MM-DD of YYYY-MM-DDThh:mm:ssZ"@nl, "Give exactly one date on which the record was last changed, in ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDThh:mm:ssZ"@en ;
             sh:or (
                 [
                     sh:datatype xsd:date ;
@@ -84,6 +85,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:associatedMedia ;
+            sh:message "Gebruik een MediaObject met license, contentUrl en thumbnailUrl, of een IIIF Presentation-manifest met license en encodingFormat"@nl, "Use a MediaObject with license, contentUrl and thumbnailUrl, or an IIIF Presentation manifest with license and encodingFormat"@en ;
             sh:or (
                 [ sh:node _:MediaObjectShape ]
                 [ sh:node _:IIIFPresentationManifestShape ]
@@ -119,6 +121,7 @@ _:CreativeWorkShape
         ] ,
         [
             sh:path schema:creator ;
+            sh:message "Gebruik een Person of Organization als maker, of een maker zonder type met een naam met taalcode"@nl, "Use a Person or Organization as creator, or an untyped creator with a language-tagged name"@en ;
             sh:or (
                 [ sh:class schema:Person ]
                 [ sh:class schema:Organization ]
@@ -159,6 +162,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:identifier ;
+            sh:message "Gebruik een tekst of een PropertyValue als identifier"@nl, "Use a string or a PropertyValue as identifier"@en ;
             sh:or (
               [ sh:datatype xsd:string ]
               [ sh:class schema:PropertyValue ]
@@ -182,6 +186,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:additionalType ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als aanvullend type"@nl, "Use a DefinedTerm with a language-tagged name as additional type"@en ;
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
@@ -250,6 +255,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:size ;
+            sh:message "Gebruik een tekst (maximaal één per taal) of een QuantitativeValue met value, valueReference en unitCode als afmeting"@nl, "Use a text (at most one per language) or a QuantitativeValue with value, valueReference and unitCode as size"@en ;
             sh:or (
                 [ sh:datatype rdf:langString ]
                 [ sh:datatype xsd:string ]
@@ -284,6 +290,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:contentLocation ;
+            sh:message "Gebruik een DefinedTerm of een Place, elk met een naam met taalcode, als afgebeelde locatie"@nl, "Use a DefinedTerm or a Place, each with a language-tagged name, as content location"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
@@ -304,6 +311,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:temporalCoverage ;
+            sh:message "Gebruik een ISO 8601-datum of -interval (zoals 2011 of 2011/2012) of een DefinedTerm met een naam met taalcode als periode"@nl, "Use an ISO 8601 date or interval (such as 2011 or 2011/2012) or a DefinedTerm with a language-tagged name as temporal coverage"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:nodeKind sh:IRI ; sh:pattern "^https?://" ]
@@ -342,6 +350,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:locationCreated ;
+            sh:message "Gebruik een DefinedTerm of een Place, elk met een naam met taalcode, als plaats van vervaardiging"@nl, "Use a DefinedTerm or a Place, each with a language-tagged name, as location of creation"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
@@ -362,6 +371,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:dateCreated ;
+            sh:message "Geef maximaal één vervaardigingsdatum in ISO 8601-formaat: YYYY, YYYY-MM of YYYY-MM-DD"@nl, "Give at most one creation date in ISO 8601 format: YYYY, YYYY-MM or YYYY-MM-DD"@en ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -388,6 +398,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:about ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode, een CreativeWork, een Person of een Organization als onderwerp"@nl, "Use a DefinedTerm with a language-tagged name, a CreativeWork, a Person or an Organization as subject"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:class schema:CreativeWork ]
@@ -416,6 +427,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:material ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als materiaal"@nl, "Use a DefinedTerm with a language-tagged name as material"@en ;
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
@@ -431,6 +443,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:genre ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als genre"@nl, "Use a DefinedTerm with a language-tagged name as genre"@en ;
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
@@ -585,6 +598,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:birthDate ;
+            sh:message "Geef maximaal één geboortedatum in ISO 8601-formaat: YYYY, YYYY-MM of YYYY-MM-DD"@nl, "Give at most one date of birth in ISO 8601 format: YYYY, YYYY-MM or YYYY-MM-DD"@en ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -594,6 +608,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:birthPlace ;
+            sh:message "Geef maximaal één geboorteplaats, als DefinedTerm of als Place, elk met een naam met taalcode"@nl, "Give at most one place of birth, as a DefinedTerm or as a Place, each with a language-tagged name"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
@@ -612,6 +627,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:deathDate ;
+            sh:message "Geef maximaal één overlijdensdatum in ISO 8601-formaat: YYYY, YYYY-MM of YYYY-MM-DD"@nl, "Give at most one date of death in ISO 8601 format: YYYY, YYYY-MM or YYYY-MM-DD"@en ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -621,6 +637,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:deathPlace ;
+            sh:message "Geef maximaal één plaats van overlijden, als DefinedTerm of als Place, elk met een naam met taalcode"@nl, "Give at most one place of death, as a DefinedTerm or as a Place, each with a language-tagged name"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:PlaceShape ]
@@ -639,6 +656,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:hasOccupation ;
+            sh:message "Gebruik een DefinedTerm of een Occupation, elk met een naam met taalcode, als beroep"@nl, "Use a DefinedTerm or an Occupation, each with a language-tagged name, as occupation"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:OccupationShape ]
@@ -684,6 +702,7 @@ _:OrganizationShape
     ] ,
     [
         sh:path schema:location ;
+        sh:message "Geef maximaal één Place met een naam met taalcode als locatie"@nl, "Give at most one Place with a language-tagged name as location"@en ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:class schema:Place ;
@@ -820,7 +839,7 @@ _:IIIFPresentationManifestProfileQuotesShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Use double quotes around the profile URI of an IIIF Presentation manifest; single quotes are deprecated." ;
+        sh:message "Gebruik dubbele aanhalingstekens om de profiel-URI van een IIIF Presentation-manifest; enkele aanhalingstekens zijn verouderd."@nl, "Use double quotes around the profile URI of an IIIF Presentation manifest; single quotes are deprecated."@en ;
     ] .
 
 _:CreativeWorkAssociatedMediaCardinalityShape
@@ -831,13 +850,13 @@ _:CreativeWorkAssociatedMediaCardinalityShape
         sh:qualifiedValueShape _:MediaObjectShape ;
         sh:qualifiedMinCount 1 ;
         sh:severity sh:Warning ;
-        sh:message "At least one renderable MediaObject is required when media is available." ;
+        sh:message "Voeg minimaal één weergeefbaar MediaObject toe als er media beschikbaar is."@nl, "At least one renderable MediaObject is required when media is available."@en ;
     ] ,
     [
         sh:path schema:associatedMedia ;
         sh:qualifiedValueShape _:IIIFPresentationManifestShape ;
         sh:qualifiedMaxCount 1 ;
-        sh:message "At most one IIIF Presentation manifest may be exposed per CreativeWork." ;
+        sh:message "Gebruik maximaal één IIIF Presentation-manifest per CreativeWork."@nl, "At most one IIIF Presentation manifest may be exposed per CreativeWork."@en ;
     ] .
 
 _:PlaceShape
@@ -858,6 +877,7 @@ _:PlaceShape
     ] ,
     [
         sh:path schema:address ;
+        sh:message "Gebruik een PostalAddress als adres"@nl, "Use a PostalAddress as address"@en ;
         sh:class schema:PostalAddress ;
         sh:node _:PostalAddressShape ;
         sh:minCount 0 ;
@@ -873,6 +893,7 @@ _:PlaceShape
     ] ,
     [
         sh:path schema:geo ;
+        sh:message "Geef maximaal één GeoCoordinates met latitude en longitude, of een GeoShape"@nl, "Give at most one GeoCoordinates with latitude and longitude, or a GeoShape"@en ;
         sh:or (
             [
                 sh:class schema:GeoCoordinates ;
