@@ -75,8 +75,10 @@ Definitions {#definitions}
 
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
-    Corresponds to [[DERA]]’s *term*; expressed in this application profile as a [[#reference-terms|`DefinedTerm`]].
-    A term that denotes a person, organization or place is referenced from a `Person`, `Organization` or `Place` instead: see [[#reference-entities]].
+    Corresponds to [[DERA]]’s *term*.
+    A term can denote a person, an organization or a place, or a concept such as a genre or a material.
+    The node that references a term is typed after what the term denotes:
+    as a [[#reference-entities|`Person`, `Organization` or `Place`]] if it denotes one of those, and as a [[#reference-terms|`DefinedTerm`]] otherwise.
 
 General considerations {#general-considerations}
 ==========
