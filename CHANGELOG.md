@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.4.0...1.4.1) (2026-10-13)
+
+
+### Bug Fixes
+
+* accept double-quoted profile in IIIF encodingFormat ([#214](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/214)) ([e3fdc28](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/e3fdc28c2f77b875231eaa286cfdc6cf56070532))
+
+
+### Documentation
+
+* state that sameAs is required when a public term is known ([#216](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/216)) ([c192506](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/c192506568fd03e87b03e409a727ac37139af777))
+
 ## [1.4.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.3.0...1.4.0) (2026-08-13)
 
 
