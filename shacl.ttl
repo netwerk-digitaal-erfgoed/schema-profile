@@ -146,12 +146,12 @@ _:CreativeWorkShape
                 The creator *MUST* be a Person or Organization, in one of the following forms (most to least preferred):
             """ ;
             rdfs:seeAlso [
-                schema:description "Preferably, [[#reference-entities|reference the creator’s authority record]] by adding its URI via `sameAs`." ;
+                schema:description "Preferably, [[#reference-entities|reference a public term]] (an authority record) for the creator by adding its URI via `sameAs`." ;
                 rdfs:label "A creator referenced by an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
             ] , [
-                schema:description "When no authority record is available, give a plain Person or Organization with a `name`." ;
-                rdfs:label "A creator without an authority record:" ;
+                schema:description "When no public term is available, give a plain Person or Organization with a `name`." ;
+                rdfs:label "A creator without a public term:" ;
                 rdfs:comment "file://examples/CreativeWork-creator-person.jsonld" ;
             ] , [
                 schema:description "When it is unknown whether the creator is a person or organization, the type *MAY* be omitted; a `name` is still required." ;
@@ -407,7 +407,7 @@ _:CreativeWorkShape
                 The value *MUST* reference a term, another CreativeWork,
                 or the Person or Organization that is the subject.
                 A subject that is a person or organization is typed as such rather than as a `DefinedTerm`,
-                with its authority record, if one is available, referenced via `sameAs`.
+                with its term, if one is available, referenced via `sameAs`.
 
                 If the subject is a location, it *MUST* be listed under contentLocation instead.
             """ ;
@@ -562,7 +562,7 @@ _:QuantitativeValueShape
 
 # Shared by Person, Organization and Place. A Warning for now, because sameAs was not constrained on these
 # classes before; a literal value must not turn previously conforming data into a violation.
-_:AuthorityRecordShape
+_:SameAsShape
     a sh:PropertyShape ;
     sh:path schema:sameAs ;
     sh:nodeKind sh:IRI ;
@@ -572,11 +572,11 @@ _:AuthorityRecordShape
         nde:version "2.0" ;
         sh:severity sh:Violation ;
     ] ;
-    sh:message "The value of sameAs must be the URI of an authority record." ;
+    sh:message "The value of sameAs must be a URI." ;
     sh:description """
-        A *RECOMMENDED* property that [[#reference-entities|references the authority record]] for the person, organization or place
+        A *RECOMMENDED* property that [[#reference-entities|references the term]] for the person, organization or place
         in a public source, such as RKDartists, GeoNames or Wikidata.
-        The value *MUST* be the record’s URI.
+        The value *MUST* be the term’s URI.
     """ .
 
 _:PersonShape
@@ -585,7 +585,7 @@ _:PersonShape
     sh:targetClass schema:Person ;
     sh:description """
         If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-        If an authority record is available for the person, it *MUST* be referenced via [[#Person-sameAs|`sameAs`]]; otherwise,
+        If a term is available for the person, it *MUST* be referenced via [[#Person-sameAs|`sameAs`]]; otherwise,
         the person *MUST* be defined by the required properties listed below.
 
         The objective for the Person model is not to fully describe all aspects of a person,
@@ -607,7 +607,7 @@ _:PersonShape
                 rdfs:comment "file://examples/Person-name.jsonld" ;
             ]
         ] ,
-        _:AuthorityRecordShape ,
+        _:SameAsShape ,
         [
             sh:path schema:birthDate ;
             sh:message "Geef maximaal één geboortedatum in ISO 8601-formaat: YYYY, YYYY-MM of YYYY-MM-DD"@nl, "Give at most one date of birth in ISO 8601 format: YYYY, YYYY-MM or YYYY-MM-DD"@en ;
@@ -704,7 +704,7 @@ _:OrganizationShape
             rdfs:comment "file://examples/Organization-name.jsonld" ;
         ]
     ] ,
-    _:AuthorityRecordShape ,
+    _:SameAsShape ,
     [
         sh:path schema:location ;
         sh:message "Geef maximaal één Place met een naam met taalcode als locatie"@nl, "Give at most one Place with a language-tagged name as location"@en ;
@@ -869,7 +869,7 @@ _:PlaceShape
     sh:name "Place" ;
     sh:targetClass schema:Place ;
     sh:description """
-        If an authority record is available for the place, for example in GeoNames or Wikidata,
+        If a term is available for the place, for example in GeoNames or Wikidata,
         it *MUST* be referenced via [[#Place-sameAs|`sameAs`]]; otherwise, the place *MUST* be defined by the properties listed below.
     """ ;
     sh:property [
@@ -881,7 +881,7 @@ _:PlaceShape
             A *REQUIRED* property that indicates the name of the place.
         """ ;
     ] ,
-    _:AuthorityRecordShape ,
+    _:SameAsShape ,
     [
         sh:path schema:address ;
         sh:message "Gebruik een PostalAddress als adres"@nl, "Use a PostalAddress as address"@en ;

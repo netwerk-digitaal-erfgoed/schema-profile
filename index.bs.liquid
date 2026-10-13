@@ -76,7 +76,7 @@ Definitions {#definitions}
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
     Corresponds to [[DERA]]’s *term*; expressed in this application profile as a [[#reference-terms|`DefinedTerm`]].
-    People, organizations and places are not terms: see [[#reference-entities]].
+    A term that denotes a person, organization or place is referenced from a `Person`, `Organization` or `Place` instead: see [[#reference-entities]].
 
 General considerations {#general-considerations}
 ==========
@@ -286,16 +286,20 @@ Each property’s required co-type is shown in its example throughout the docume
 Reference people, organizations and places {#reference-entities}
 ---
 
-People, organizations and places are not [=terms=], even when they are described in an authority file
-such as [RKDartists](https://rkd.nl/en/collections/explore/artists) or [GeoNames](https://www.geonames.org).
-They are typed with their own class (`Person`, `Organization` or `Place`)
-and reference their authority record via `sameAs`, without the `DefinedTerm` type.
+Some [=terms=] denote a person, an organization or a place,
+for example an artist in [RKDartists](https://rkd.nl/en/collections/explore/artists) or a city in [GeoNames](https://www.geonames.org).
+The node that references such a term describes the person, organization or place itself,
+so it is typed with that class (`Person`, `Organization` or `Place`) rather than as a `DefinedTerm`,
+and it references the term via `sameAs`.
+The class already tells consumers what is being referenced
+and is in the Schema.org range of properties such as `creator` and `contentLocation`, so no co-type is needed.
 
 As with a `DefinedTerm`, the node is local to the publishing dataset and the `sameAs` URI is the canonical identifier:
 consumers compare `sameAs` URIs to recognise the same person, organization or place within and across datasets.
+The requirements on [[#reference-terms|term URIs]] apply to these `sameAs` URIs as well.
 
 <div class="example">
-    Reference a person’s authority record using `sameAs`:
+    Reference the term for a person using `sameAs`:
 
     <pre class=include-code>
     path: examples/CreativeWork-creator.jsonld
