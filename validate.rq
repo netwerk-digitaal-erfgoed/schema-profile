@@ -7,12 +7,17 @@ WHERE {
     ?report a sh:ValidationReport ;
         sh:result ?result .
     ?result sh:focusNode ?node ;
+        sh:sourceConstraintComponent ?constraintComponent ;
         sh:resultMessage ?message .
     # Node-level results, such as a missing URI, have no path.
     OPTIONAL { ?result sh:resultPath ?path }
 
     # Filter out ignored properties (partial examples may not have these).
-    FILTER (!BOUND(?path) || ?path NOT IN (
+    # Only a missing value is ignored: a wrong value is still reported.
+    FILTER (!BOUND(?path) || ?constraintComponent NOT IN (
+         sh:MinCountConstraintComponent,
+         sh:QualifiedMinCountConstraintComponent
+     ) || ?path NOT IN (
          # CreativeWork:
          schema:name,
          schema:creator,
