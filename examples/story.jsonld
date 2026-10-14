@@ -53,7 +53,7 @@
     "@value": "Domineeszoon Vincent van Gogh werd op 30 maart 1853 in het Brabantse grensdorp Zundert geboren. Tot zijn 8ste jaar kreeg hij les van zijn vader (…)"
   },
   "contentLocation": {
-    "@type": ["DefinedTerm", "Place"],
+    "@type": "Place",
     "name": {
       "@language": "nl",
       "@value": "Stationsstraat in Zevenbergen"
@@ -68,7 +68,7 @@
   },
   "about": [
     {
-      "@type": "DefinedTerm",
+      "@type": "Person",
       "name": {
         "@language": "nl",
         "@value": "Vincent van Gogh"

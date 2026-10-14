@@ -75,7 +75,10 @@ Definitions {#definitions}
 
 : <dfn>Term</dfn>
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
-    Corresponds to [[DERA]]’s *term*; expressed in this application profile as a [[#reference-terms|`DefinedTerm`]].
+    Corresponds to [[DERA]]’s *term*.
+    A term can denote a person, an organization or a place, or a concept such as a genre or a material.
+    The node that [[#reference-terms|references a term]] is typed after what the term denotes:
+    as a `Person`, `Organization`, `Place` or `Occupation` if it denotes one of those, and as a `DefinedTerm` only when no more specific class applies.
 
 General considerations {#general-considerations}
 ==========
@@ -235,6 +238,17 @@ Reference terms {#reference-terms}
     </pre>
 </div>
 
+<div class="example">
+    Reference a term for a person from a `Person`, for example an artist in [RKDartists](https://rkd.nl/en/collections/explore/artists):
+
+    <pre class=include-code>
+    path: examples/CreativeWork-creator.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-12
+    </pre>
+</div>
+
 If a public term is known, `sameAs` *MUST* be present and reference it. Otherwise, `sameAs` *MAY* be omitted:
 
 <div class="example">
@@ -267,9 +281,11 @@ A `DefinedTerm` value *MUST* additionally be typed with a type from the property
 whenever that range does not already include `DefinedTerm`,
 so that the data also validates against Schema.org’s own type expectations.
 For example, [genre](https://schema.org/genre) and [about](https://schema.org/about) accept a `DefinedTerm` directly,
-so no co-type is needed, whereas [material](https://schema.org/material), [creator](https://schema.org/creator) and [contentLocation](https://schema.org/contentLocation) do not,
+so no co-type is needed, whereas [material](https://schema.org/material) and [additionalType](https://schema.org/additionalType) do not,
 so the `DefinedTerm` is co-typed with a type that is in range.
 Each property’s required co-type is shown in its example throughout the document.
+A `Person`, `Organization`, `Place` or `Occupation` is in the range of the properties that take one,
+such as `creator`, `contentLocation` and `hasOccupation`, so it needs no co-type.
 
 <div class="example">
     Co-type the `DefinedTerm` with `URL`, because `material` does not accept a `DefinedTerm` directly:
@@ -281,6 +297,9 @@ Each property’s required co-type is shown in its example throughout the docume
     line-highlight: 7,15
     </pre>
 </div>
+
+Note: Earlier versions of this application profile co-typed people, organizations, places and occupations as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
+Data that carries the co-type remains valid, and consumers can ignore it.
 
 Serialization {#serialization}
 ---

@@ -146,7 +146,7 @@ _:CreativeWorkShape
                 The creator *MUST* be a Person or Organization, in one of the following forms (most to least preferred):
             """ ;
             rdfs:seeAlso [
-                schema:description "Preferably, [[#reference-terms|reference a public term]] (an authority record) by co-typing the creator as a `DefinedTerm` and adding its URI via `sameAs`." ;
+                schema:description "If a public term (an authority record) is available for the creator, it *MUST* be [[#reference-terms|referenced]] via `sameAs`." ;
                 rdfs:label "A creator referenced by an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
             ] , [
@@ -290,18 +290,14 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:contentLocation ;
-            sh:message "Gebruik een DefinedTerm of een Place, elk met een naam met taalcode, als afgebeelde locatie"@nl, "Use a DefinedTerm or a Place, each with a language-tagged name, as content location"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Gebruik een Place met een naam met taalcode als afgebeelde locatie"@nl, "Use a Place with a language-tagged name as content location"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the location(s) depicted or described in the CreativeWork.
                 For example, the location in a photograph or painting.
 
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:contentLocation` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -350,18 +346,14 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:locationCreated ;
-            sh:message "Gebruik een DefinedTerm of een Place, elk met een naam met taalcode, als plaats van vervaardiging"@nl, "Use a DefinedTerm or a Place, each with a language-tagged name, as location of creation"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Gebruik een Place met een naam met taalcode als plaats van vervaardiging"@nl, "Use a Place with a language-tagged name as location of creation"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
                 Indicates the location(s) where the CreativeWork was created
                 (which may be different from its contentLocation).
 
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:locationCreated` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Van Gogh’s painting The Starry Night:" ;
@@ -414,8 +406,8 @@ _:CreativeWorkShape
 
                 The value *MUST* reference a term, another CreativeWork,
                 or the Person or Organization that is the subject.
-                A subject that is also described as an entity in the dataset *MAY* be referenced directly,
-                without co-typing it as a `DefinedTerm`.
+                A subject that is a person or organization is typed as such rather than as a `DefinedTerm`,
+                with its term, if one is available, referenced via `sameAs`.
 
                 If the subject is a location, it *MUST* be listed under contentLocation instead.
             """ ;
@@ -484,17 +476,19 @@ _:DefinedTermShape
     sh:name "DefinedTerm" ;
     sh:class schema:DefinedTerm ;
     sh:description """
-        When referencing terms, each term *MUST* be typed as a `DefinedTerm` to indicate to consumers that a formal definition is being referenced.
+        A node that references a term is typed with the most specific Schema.org class for what the term denotes:
+        `Person`, `Organization`, `Place` or `Occupation` if the term denotes a person, organization, place or occupation,
+        and `DefinedTerm` only when no more specific class applies, for example for a genre or a material.
         Each `DefinedTerm` *MUST* have a language-tagged human-readable `name` property.
         If known, the term’s public URI from a controlled vocabulary *MUST* be provided via `sameAs`.
 
-        The `DefinedTerm` is a *local* node, scoped to the publishing dataset:
+        The referencing node is a *local* node, scoped to the publishing dataset:
         it carries the dataset’s own `name` for the term (which *MAY* differ from the label used by the external source)
         and makes no claims about the resource it points at.
         The `sameAs` URI is the *canonical* identifier and keeps its own typing in its source vocabulary
         (e.g. `skos:Concept` in a thesaurus).
 
-        To recognise that two `DefinedTerm`s denote the same concept, consumers *MUST* compare their `sameAs` URIs
+        To recognise that two nodes reference the same term, consumers *MUST* compare their `sameAs` URIs
         rather than the nodes’ own blank-node or URI identities,
         which are local to each publishing dataset and therefore not shared across datasets.
     """ ;
@@ -512,8 +506,8 @@ _:DefinedTermShape
         sh:nodeKind sh:IRI ;
         sh:minCount 0 ;
         sh:description """
-            A *RECOMMENDED* property that references the term in a controlled vocabulary.
-            If a public term URI is known, it *MUST* be provided.
+            This property is *REQUIRED* if a public URI for the term is known.
+            It references the term in a controlled vocabulary.
         """ ;
     ] .
 
@@ -568,13 +562,40 @@ _:QuantitativeValueShape
         """ ;
     ] .
 
+# Documents sameAs on Person, Organization and Place; the constraint lives in _:SameAsUriShape.
+_:SameAsShape
+    a sh:PropertyShape ;
+    sh:path schema:sameAs ;
+    sh:minCount 0 ;
+    sh:description """
+        This property is *REQUIRED* if a term is available in a public source, such as RKDartists, GeoNames, the AAT or Wikidata.
+        It [[#reference-terms|references that term]]; the value *MUST* be the term’s URI.
+    """ .
+
+# A Warning for now, because sameAs was not constrained on these classes before; a literal value must not
+# turn previously conforming data into a violation. Kept apart from the class shapes: a warning inside
+# PlaceShape or OccupationShape would make the node fail sh:node, and so turn the value into a violation.
+_:SameAsUriShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Person, schema:Organization, schema:Place, schema:Occupation ;
+    sh:property [
+        sh:path schema:sameAs ;
+        sh:nodeKind sh:IRI ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
+    ] .
+
 _:PersonShape
     a sh:NodeShape ;
     sh:name "Person" ;
     sh:targetClass schema:Person ;
     sh:description """
         If a [=metadata record=] is a person, it *MUST* be typed as `Person`.
-        The value *MUST* reference a term if one is available for the person; otherwise,
+        If a term is available for the person, it *MUST* be referenced via [[#Person-sameAs|`sameAs`]]; otherwise,
         the person *MUST* be defined by the required properties listed below.
 
         The objective for the Person model is not to fully describe all aspects of a person,
@@ -596,6 +617,7 @@ _:PersonShape
                 rdfs:comment "file://examples/Person-name.jsonld" ;
             ]
         ] ,
+        _:SameAsShape ,
         [
             sh:path schema:birthDate ;
             sh:message "Geef maximaal één geboortedatum in ISO 8601-formaat: YYYY, YYYY-MM of YYYY-MM-DD"@nl, "Give at most one date of birth in ISO 8601 format: YYYY, YYYY-MM or YYYY-MM-DD"@en ;
@@ -608,17 +630,13 @@ _:PersonShape
         ] ,
         [
             sh:path schema:birthPlace ;
-            sh:message "Geef maximaal één geboorteplaats, als DefinedTerm of als Place, elk met een naam met taalcode"@nl, "Give at most one place of birth, as a DefinedTerm or as a Place, each with a language-tagged name"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Geef maximaal één Place met een naam met taalcode als geboorteplaats"@nl, "Give at most one Place with a language-tagged name as place of birth"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of birth.
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:birthPlace` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with birthPlace:" ;
@@ -637,17 +655,13 @@ _:PersonShape
         ] ,
         [
             sh:path schema:deathPlace ;
-            sh:message "Geef maximaal één plaats van overlijden, als DefinedTerm of als Place, elk met een naam met taalcode"@nl, "Give at most one place of death, as a DefinedTerm or as a Place, each with a language-tagged name"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:PlaceShape ]
-            ) ;
+            sh:message "Geef maximaal één Place met een naam met taalcode als plaats van overlijden"@nl, "Give at most one Place with a language-tagged name as place of death"@en ;
+            sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
                 An *OPTIONAL* property that references the person’s place of death.
-                The value *MUST* reference a term, or, if no term is available, a custom Place resource *MUST* be used.
-                Because `schema:deathPlace` takes `Place`, not `DefinedTerm`, `Place` must be added to `@type`.
+                The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "Person with deathPlace:" ;
@@ -656,7 +670,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:hasOccupation ;
-            sh:message "Gebruik een DefinedTerm of een Occupation, elk met een naam met taalcode, als beroep"@nl, "Use a DefinedTerm or an Occupation, each with a language-tagged name, as occupation"@en ;
+            sh:message "Gebruik een Occupation met een naam met taalcode als beroep"@nl, "Use an Occupation with a language-tagged name as occupation"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:OccupationShape ]
@@ -664,8 +678,8 @@ _:PersonShape
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person’s occupation(s).
-                The value *MUST* reference a term, or, if no term is available, a custom Occupation resource *MUST* be used.
-                Because `schema:hasOccupation` takes `Occupation`, not `DefinedTerm`, `Occupation` must be added to `@type`.
+                The value *MUST* be an `Occupation`.
+                If a term is available for the occupation, it *MUST* be [[#reference-terms|referenced]] via `sameAs`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
@@ -682,8 +696,8 @@ _:OrganizationShape
     sh:targetClass schema:Organization ;
     sh:name "Organization" ;
     sh:description """
-        An Organization *SHOULD* be identified by a persistent URI – self-minted or from an organization directory –
-        and, where the organization is known in a public source, linked to it via `sameAs`,
+        An Organization *SHOULD* be identified by a persistent URI, self-minted or from an organization directory.
+        If a term is available for the organization, it *MUST* be referenced via [[#Organization-sameAs|`sameAs`]],
         so that consumers can deduplicate it within and across datasets.
         Where no URI is known, it *MAY* be defined inline by its properties, like a Person.
     """ ;
@@ -700,6 +714,7 @@ _:OrganizationShape
             rdfs:comment "file://examples/Organization-name.jsonld" ;
         ]
     ] ,
+    _:SameAsShape ,
     [
         sh:path schema:location ;
         sh:message "Geef maximaal één Place met een naam met taalcode als locatie"@nl, "Give at most one Place with a language-tagged name as location"@en ;
@@ -864,7 +879,8 @@ _:PlaceShape
     sh:name "Place" ;
     sh:targetClass schema:Place ;
     sh:description """
-        For properties that reference locations, if no term is available, a custom Place resource *MUST* be used instead.
+        If a term is available for the place, for example in GeoNames or Wikidata,
+        it *MUST* be referenced via [[#Place-sameAs|`sameAs`]]; otherwise, the place *MUST* be defined by the properties listed below.
     """ ;
     sh:property [
         sh:path schema:name ;
@@ -875,6 +891,7 @@ _:PlaceShape
             A *REQUIRED* property that indicates the name of the place.
         """ ;
     ] ,
+    _:SameAsShape ,
     [
         sh:path schema:address ;
         sh:message "Gebruik een PostalAddress als adres"@nl, "Use a PostalAddress as address"@en ;
