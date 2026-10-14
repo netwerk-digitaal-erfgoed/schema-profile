@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://www.wikidata.org/wiki/Q185372",
+  "@type": "CreativeWork",
+  "temporal": {
+    "@language": "en",
+    "@value": "circa 1665"
+  }
+}
