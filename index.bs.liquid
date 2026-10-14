@@ -77,8 +77,8 @@ Definitions {#definitions}
 :: A word, name, acronym, phrase or other symbol with a formal definition, preferably available in the [Network of Terms](https://termennetwerk.netwerkdigitaalerfgoed.nl/en).
     Corresponds to [[DERA]]’s *term*.
     A term can denote a person, an organization or a place, or a concept such as a genre or a material.
-    The node that references a term is typed after what the term denotes:
-    as a [[#reference-entities|`Person`, `Organization` or `Place`]] if it denotes one of those, and as a [[#reference-terms|`DefinedTerm`]] otherwise.
+    The node that [[#reference-terms|references a term]] is typed after what the term denotes:
+    as a `Person`, `Organization` or `Place` if it denotes one of those, and as a `DefinedTerm` only when no more specific class applies.
 
 General considerations {#general-considerations}
 ==========
@@ -238,6 +238,17 @@ Reference terms {#reference-terms}
     </pre>
 </div>
 
+<div class="example">
+    Reference a term for a person from a `Person`, for example an artist in [RKDartists](https://rkd.nl/en/collections/explore/artists):
+
+    <pre class=include-code>
+    path: examples/CreativeWork-creator.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-12
+    </pre>
+</div>
+
 If a public term is known, `sameAs` *MUST* be present and reference it. Otherwise, `sameAs` *MAY* be omitted:
 
 <div class="example">
@@ -273,6 +284,8 @@ For example, [genre](https://schema.org/genre) and [about](https://schema.org/ab
 so no co-type is needed, whereas [material](https://schema.org/material), [additionalType](https://schema.org/additionalType) and [hasOccupation](https://schema.org/hasOccupation) do not,
 so the `DefinedTerm` is co-typed with a type that is in range.
 Each property’s required co-type is shown in its example throughout the document.
+A `Person`, `Organization` or `Place` is in the range of the properties that take one, such as `creator` and `contentLocation`,
+so it needs no co-type.
 
 <div class="example">
     Co-type the `DefinedTerm` with `URL`, because `material` does not accept a `DefinedTerm` directly:
@@ -285,31 +298,7 @@ Each property’s required co-type is shown in its example throughout the docume
     </pre>
 </div>
 
-Reference people, organizations and places {#reference-entities}
----
-
-Some [=terms=] denote a person, an organization or a place,
-for example an artist in [RKDartists](https://rkd.nl/en/collections/explore/artists) or a city in [GeoNames](https://www.geonames.org).
-A node that references such a term is typed with the matching class (`Person`, `Organization` or `Place`)
-rather than as a `DefinedTerm`, and it references the term via `sameAs`.
-That class is in the Schema.org range of properties such as `creator` and `contentLocation`, so no co-type is needed.
-
-As with a `DefinedTerm`, the node is local to the publishing dataset and the `sameAs` URI is the canonical identifier:
-consumers compare `sameAs` URIs to recognise the same person, organization or place within and across datasets.
-The requirements on [[#reference-terms|term URIs]] apply to these `sameAs` URIs as well.
-
-<div class="example">
-    Reference the term for a person using `sameAs`:
-
-    <pre class=include-code>
-    path: examples/CreativeWork-creator.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-12
-    </pre>
-</div>
-
-Note: Earlier versions of this application profile co-typed these values as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
+Note: Earlier versions of this application profile co-typed people, organizations and places as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
 Data that carries the co-type remains valid, and consumers can ignore it.
 
 Serialization {#serialization}

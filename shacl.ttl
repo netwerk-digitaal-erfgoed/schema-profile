@@ -146,7 +146,7 @@ _:CreativeWorkShape
                 The creator *MUST* be a Person or Organization, in one of the following forms (most to least preferred):
             """ ;
             rdfs:seeAlso [
-                schema:description "Preferably, [[#reference-entities|reference a public term]] (an authority record) for the creator by adding its URI via `sameAs`." ;
+                schema:description "Preferably, [[#reference-terms|reference a public term]] (an authority record) for the creator by adding its URI via `sameAs`." ;
                 rdfs:label "A creator referenced by an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
             ] , [
@@ -476,17 +476,19 @@ _:DefinedTermShape
     sh:name "DefinedTerm" ;
     sh:class schema:DefinedTerm ;
     sh:description """
-        When referencing terms, each term *MUST* be typed as a `DefinedTerm` to indicate to consumers that a formal definition is being referenced.
+        A node that references a term is typed with the most specific Schema.org class for what the term denotes:
+        `Person`, `Organization` or `Place` if the term denotes a person, organization or place,
+        and `DefinedTerm` only when no more specific class applies, for example for a genre or a material.
         Each `DefinedTerm` *MUST* have a language-tagged human-readable `name` property.
         If known, the term’s public URI from a controlled vocabulary *MUST* be provided via `sameAs`.
 
-        The `DefinedTerm` is a *local* node, scoped to the publishing dataset:
+        The referencing node is a *local* node, scoped to the publishing dataset:
         it carries the dataset’s own `name` for the term (which *MAY* differ from the label used by the external source)
         and makes no claims about the resource it points at.
         The `sameAs` URI is the *canonical* identifier and keeps its own typing in its source vocabulary
         (e.g. `skos:Concept` in a thesaurus).
 
-        To recognise that two `DefinedTerm`s denote the same concept, consumers *MUST* compare their `sameAs` URIs
+        To recognise that two nodes reference the same term, consumers *MUST* compare their `sameAs` URIs
         rather than the nodes’ own blank-node or URI identities,
         which are local to each publishing dataset and therefore not shared across datasets.
     """ ;
@@ -574,7 +576,7 @@ _:SameAsShape
     ] ;
     sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
     sh:description """
-        A *RECOMMENDED* property that [[#reference-entities|references the term]] for the person, organization or place
+        A *RECOMMENDED* property that [[#reference-terms|references the term]] for the person, organization or place
         in a public source, such as RKDartists, GeoNames or Wikidata.
         The value *MUST* be the term’s URI.
     """ .
