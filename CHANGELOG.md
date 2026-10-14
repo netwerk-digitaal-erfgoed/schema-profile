@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.4.1...1.5.0) (2026-10-14)
+
+
+### Features
+
+* add validation messages to the sh:or and sh:node property shapes ([#219](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/219)) ([ad76bd3](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/ad76bd36d9cf0f379b37b874320e49207653ccca))
+* type term references with the most specific class ([#217](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/217)) ([308486b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/308486be410df2566c5fdef2041cacda2aab329f))
+
 ## [1.4.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.4.0...1.4.1) (2026-10-13)
 
 
