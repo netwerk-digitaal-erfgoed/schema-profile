@@ -146,7 +146,7 @@ _:CreativeWorkShape
                 The creator *MUST* be a Person or Organization, in one of the following forms (most to least preferred):
             """ ;
             rdfs:seeAlso [
-                schema:description "Preferably, [[#reference-terms|reference a public term]] (an authority record) for the creator by adding its URI via `sameAs`." ;
+                schema:description "If a public term (an authority record) is available for the creator, it *MUST* be [[#reference-terms|referenced]] via `sameAs`." ;
                 rdfs:label "A creator referenced by an authority record:" ;
                 rdfs:comment "file://examples/CreativeWork-creator.jsonld" ;
             ] , [
@@ -477,7 +477,7 @@ _:DefinedTermShape
     sh:class schema:DefinedTerm ;
     sh:description """
         A node that references a term is typed with the most specific Schema.org class for what the term denotes:
-        `Person`, `Organization` or `Place` if the term denotes a person, organization or place,
+        `Person`, `Organization`, `Place` or `Occupation` if the term denotes a person, organization, place or occupation,
         and `DefinedTerm` only when no more specific class applies, for example for a genre or a material.
         Each `DefinedTerm` *MUST* have a language-tagged human-readable `name` property.
         If known, the term’s public URI from a controlled vocabulary *MUST* be provided via `sameAs`.
@@ -506,8 +506,8 @@ _:DefinedTermShape
         sh:nodeKind sh:IRI ;
         sh:minCount 0 ;
         sh:description """
-            A *RECOMMENDED* property that references the term in a controlled vocabulary.
-            If a public term URI is known, it *MUST* be provided.
+            This property is *REQUIRED* if a public URI for the term is known.
+            It references the term in a controlled vocabulary.
         """ ;
     ] .
 
@@ -562,24 +562,32 @@ _:QuantitativeValueShape
         """ ;
     ] .
 
-# Shared by Person, Organization and Place. A Warning for now, because sameAs was not constrained on these
-# classes before; a literal value must not turn previously conforming data into a violation.
+# Documents sameAs on Person, Organization and Place; the constraint lives in _:SameAsUriShape.
 _:SameAsShape
     a sh:PropertyShape ;
     sh:path schema:sameAs ;
-    sh:nodeKind sh:IRI ;
     sh:minCount 0 ;
-    sh:severity sh:Warning ;
-    nde:futureChange [
-        nde:version "2.0" ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
     sh:description """
-        A *RECOMMENDED* property that [[#reference-terms|references the term]] for the person, organization or place
-        in a public source, such as RKDartists, GeoNames or Wikidata.
-        The value *MUST* be the term’s URI.
+        This property is *REQUIRED* if a term is available in a public source, such as RKDartists, GeoNames, the AAT or Wikidata.
+        It [[#reference-terms|references that term]]; the value *MUST* be the term’s URI.
     """ .
+
+# A Warning for now, because sameAs was not constrained on these classes before; a literal value must not
+# turn previously conforming data into a violation. Kept apart from the class shapes: a warning inside
+# PlaceShape or OccupationShape would make the node fail sh:node, and so turn the value into a violation.
+_:SameAsUriShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Person, schema:Organization, schema:Place, schema:Occupation ;
+    sh:property [
+        sh:path schema:sameAs ;
+        sh:nodeKind sh:IRI ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
+    ] .
 
 _:PersonShape
     a sh:NodeShape ;
@@ -662,7 +670,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:hasOccupation ;
-            sh:message "Gebruik een DefinedTerm of een Occupation, elk met een naam met taalcode, als beroep"@nl, "Use a DefinedTerm or an Occupation, each with a language-tagged name, as occupation"@en ;
+            sh:message "Gebruik een Occupation met een naam met taalcode als beroep"@nl, "Use an Occupation with a language-tagged name as occupation"@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:node _:OccupationShape ]
@@ -670,8 +678,8 @@ _:PersonShape
             sh:minCount 0 ;
             sh:description """
                 An *OPTIONAL* property that indicates the person’s occupation(s).
-                The value *MUST* reference a term, or, if no term is available, a custom Occupation resource *MUST* be used.
-                Because `schema:hasOccupation` takes `Occupation`, not `DefinedTerm`, `Occupation` must be added to `@type`.
+                The value *MUST* be an `Occupation`.
+                If a term is available for the occupation, it *MUST* be [[#reference-terms|referenced]] via `sameAs`.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A carpenter (as a term):" ;
@@ -688,8 +696,8 @@ _:OrganizationShape
     sh:targetClass schema:Organization ;
     sh:name "Organization" ;
     sh:description """
-        An Organization *SHOULD* be identified by a persistent URI – self-minted or from an organization directory –
-        and, where the organization is known in a public source, linked to it via `sameAs`,
+        An Organization *SHOULD* be identified by a persistent URI, self-minted or from an organization directory.
+        If a term is available for the organization, it *MUST* be referenced via [[#Organization-sameAs|`sameAs`]],
         so that consumers can deduplicate it within and across datasets.
         Where no URI is known, it *MAY* be defined inline by its properties, like a Person.
     """ ;

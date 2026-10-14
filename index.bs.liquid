@@ -78,7 +78,7 @@ Definitions {#definitions}
     Corresponds to [[DERA]]’s *term*.
     A term can denote a person, an organization or a place, or a concept such as a genre or a material.
     The node that [[#reference-terms|references a term]] is typed after what the term denotes:
-    as a `Person`, `Organization` or `Place` if it denotes one of those, and as a `DefinedTerm` only when no more specific class applies.
+    as a `Person`, `Organization`, `Place` or `Occupation` if it denotes one of those, and as a `DefinedTerm` only when no more specific class applies.
 
 General considerations {#general-considerations}
 ==========
@@ -281,11 +281,11 @@ A `DefinedTerm` value *MUST* additionally be typed with a type from the property
 whenever that range does not already include `DefinedTerm`,
 so that the data also validates against Schema.org’s own type expectations.
 For example, [genre](https://schema.org/genre) and [about](https://schema.org/about) accept a `DefinedTerm` directly,
-so no co-type is needed, whereas [material](https://schema.org/material), [additionalType](https://schema.org/additionalType) and [hasOccupation](https://schema.org/hasOccupation) do not,
+so no co-type is needed, whereas [material](https://schema.org/material) and [additionalType](https://schema.org/additionalType) do not,
 so the `DefinedTerm` is co-typed with a type that is in range.
 Each property’s required co-type is shown in its example throughout the document.
-A `Person`, `Organization` or `Place` is in the range of the properties that take one, such as `creator` and `contentLocation`,
-so it needs no co-type.
+A `Person`, `Organization`, `Place` or `Occupation` is in the range of the properties that take one,
+such as `creator`, `contentLocation` and `hasOccupation`, so it needs no co-type.
 
 <div class="example">
     Co-type the `DefinedTerm` with `URL`, because `material` does not accept a `DefinedTerm` directly:
@@ -298,7 +298,7 @@ so it needs no co-type.
     </pre>
 </div>
 
-Note: Earlier versions of this application profile co-typed people, organizations and places as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
+Note: Earlier versions of this application profile co-typed people, organizations, places and occupations as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
 Data that carries the co-type remains valid, and consumers can ignore it.
 
 Serialization {#serialization}
