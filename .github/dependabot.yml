@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Also updates the version of the shared spec workflow, which brings the NDE
+  # logo, house style and build with it.
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
