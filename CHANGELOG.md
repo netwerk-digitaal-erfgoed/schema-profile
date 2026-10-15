@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.5.0...1.5.1) (2026-10-15)
+
+
+### Documentation
+
+* clarify that a local term node is about provenance ([#224](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/224)) ([a7d6f68](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a7d6f68118dbc59e856f613d4930c53b611726d8))
+
 ## [1.5.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.4.1...1.5.0) (2026-10-14)
 
 
