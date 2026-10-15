@@ -17,11 +17,11 @@ jobs:
           docker run --rm -v $PWD:/work -w /work stain/jena:latest bash validate-examples.sh
 
   build:
-    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@v1.1.1
+    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@213c70cf517bf6d017da680d2c187e0c5e035732
 
   # Merges Dependabot’s updates, such as a new release of the shared workflow, once
   # the spec builds with them. An update that breaks the build stays open.
   auto-merge:
     needs: [validate, build]
-    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/dependabot-auto-merge.yml@v1.1.1
+    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/dependabot-auto-merge.yml@213c70cf517bf6d017da680d2c187e0c5e035732
     secrets: inherit
