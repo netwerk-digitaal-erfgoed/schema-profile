@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.5.1...1.5.2) (2026-10-16)
+
+
+### Documentation
+
+* explain why a term carries its own name ([#228](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/228)) ([b83cca9](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/b83cca90159f62e213978854952c78646503b8b1))
+
 ## [1.5.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.5.0...1.5.1) (2026-10-15)
 
 
