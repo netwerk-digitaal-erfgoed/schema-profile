@@ -1,0 +1,448 @@
+# Mapping from Linked Art to SCHEMA-AP-NDE.
+#
+# Run this CONSTRUCT query over a Linked Art dataset to obtain a SCHEMA-AP-NDE
+# representation of its records. It is based on the Linked Art / Schema.org
+# mapping at https://linked.art/cookbook/mappings/schema/, narrowed to the
+# classes and properties of this application profile.
+#
+# Two values cannot be derived from Linked Art and are supplied by the
+# publishing pipeline in the marked VALUES block: the dataset that a record
+# belongs to (schema:isPartOf) and the date the record last changed
+# (schema:sdDatePublished).
+#
+# Linked Art is written here as the CIDOC-CRM properties that its JSON-LD
+# context resolves to, rather than as the JSON-LD terms:
+#
+#   about                    crm:P129_is_about
+#   access_point             la:access_point
+#   begin_of_the_begin       crm:P82a_begin_of_the_begin
+#   born                     crm:P98i_was_born
+#   carried_out_by           crm:P14_carried_out_by
+#   carries                  crm:P128_carries
+#   classified_as            crm:P2_has_type
+#   conforms_to              dcterms:conformsTo
+#   content                  crm:P190_has_symbolic_content
+#   defined_by               crm:P168_place_is_defined_by
+#   died                     crm:P100i_died_in
+#   digitally_available_via  la:digitally_available_via
+#   digitally_shown_by       la:digitally_shown_by
+#   end_of_the_end           crm:P82b_end_of_the_end
+#   equivalent               la:equivalent
+#   identified_by            crm:P1_is_identified_by
+#   _label                   rdfs:label
+#   language                 crm:P72_has_language
+#   made_of                  crm:P45_consists_of
+#   part                     crm:P9_consists_of
+#   produced_by              crm:P108i_was_produced_by
+#   referred_to_by           crm:P67i_is_referred_to_by
+#   representation           crm:P138i_has_representation
+#   represents               crm:P138_represents
+#   residence                crm:P74_has_current_or_former_residence
+#   shows                    crm:P65_shows_visual_item
+#   subject_to               crm:P104_is_subject_to
+#   timespan                 crm:P4_has_time-span
+#   took_place_at            crm:P7_took_place_at
+
+PREFIX aat: <http://vocab.getty.edu/aat/>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dig: <http://www.ics.forth.gr/isl/CRMdig/>
+PREFIX la: <https://linked.art/ns/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+    ?record a ?recordType, ?workSubtype ;
+        ?textProperty ?taggedContent ;
+        ?dateProperty ?date ;
+        ?termProperty ?term ;
+        schema:identifier ?identifier ;
+        schema:isPartOf ?dataset ;
+        schema:sdDatePublished ?recordDate ;
+        schema:creator ?actor ;
+        schema:location ?residence ;
+        schema:associatedMedia ?digitalObject ;
+        schema:geo ?coordinates .
+
+    ?dataset a schema:Dataset .
+
+    ?term a schema:DefinedTerm, ?termCoType ;
+        schema:name ?taggedContent ;
+        schema:sameAs ?termSameAs .
+
+    ?actor a ?actorType ;
+        schema:name ?taggedContent ;
+        schema:sameAs ?actorSameAs .
+
+    ?digitalObject a schema:MediaObject, ?mediaType ;
+        schema:contentUrl ?contentUrl ;
+        schema:thumbnailUrl ?thumbnailUrl ;
+        schema:license ?license .
+
+    ?coordinates a schema:GeoCoordinates ;
+        schema:latitude ?latitude ;
+        schema:longitude ?longitude .
+}
+WHERE {
+    {
+        ###################################################################
+        # Language-tagged text.
+        #
+        # Linked Art carries text as a plain literal on a node that points
+        # at an AAT language concept, while this profile requires an
+        # rdf:langString. Every branch below therefore binds ?contentNode
+        # (the node that may carry the language) and ?rawContent (the text
+        # itself); the shared tail turns the pair into a tagged literal.
+        ###################################################################
+        {
+            # Names and statements on the record itself, each recognised by
+            # the term it is classified_as.
+            VALUES (?recordClass ?statementType ?textProperty) {
+                (crm:E22_Human-Made_Object aat:300404670 schema:name) # primary name
+                (crm:E22_Human-Made_Object aat:300435416 schema:description) # description
+                (crm:E22_Human-Made_Object aat:300026032 schema:abstract) # summary
+                (crm:E22_Human-Made_Object aat:300435430 schema:size) # dimensions statement
+                (crm:E21_Person aat:300404670 schema:name) # primary name
+                (crm:E74_Group aat:300404670 schema:name) # primary name
+                (crm:E53_Place aat:300404670 schema:name) # primary name
+                (dig:D1_Digital_Object aat:300435434 schema:copyrightNotice) # rights statement
+            }
+            ?record a ?recordClass ;
+                (crm:P1_is_identified_by|crm:P67i_is_referred_to_by) ?contentNode .
+            ?contentNode crm:P2_has_type ?statementType ;
+                crm:P190_has_symbolic_content ?rawContent .
+        }
+        UNION
+        {
+            # A Name that carries no classifier. Linked Art asks for the
+            # Primary Name term only to pick between several names, so where
+            # an entity has just one Name it is conformant without it.
+            VALUES ?recordClass {
+                crm:E22_Human-Made_Object
+                crm:E21_Person
+                crm:E74_Group
+                crm:E53_Place
+            }
+            ?record a ?recordClass ;
+                crm:P1_is_identified_by ?contentNode .
+            ?contentNode a crm:E33_E41_Linguistic_Appellation ;
+                crm:P190_has_symbolic_content ?rawContent .
+            FILTER NOT EXISTS { ?contentNode crm:P2_has_type ?anyClassifier }
+            FILTER NOT EXISTS {
+                ?record crm:P1_is_identified_by/crm:P2_has_type aat:300404670
+            }
+            BIND(schema:name AS ?textProperty)
+        }
+        UNION
+        {
+            # Records that carry no Name at all, only a label.
+            #
+            # This is a tolerant read, not a conformant one. Linked Art reserves
+            # _label for developers reading the data, gives it no language and
+            # allows only one, and it does not define skos:prefLabel at all.
+            # Without this branch such records carry no name and cannot conform,
+            # so the label is taken as a last resort.
+            VALUES ?recordClass {
+                crm:E22_Human-Made_Object
+                crm:E21_Person
+                crm:E74_Group
+                crm:E53_Place
+            }
+            ?record a ?recordClass .
+            FILTER NOT EXISTS {
+                ?record crm:P1_is_identified_by/crm:P2_has_type aat:300404670
+            }
+            OPTIONAL { ?record skos:prefLabel ?prefLabel }
+            OPTIONAL { ?record rdfs:label ?fallbackLabel }
+            BIND(COALESCE(?prefLabel, ?fallbackLabel) AS ?rawContent)
+            BIND(?record AS ?contentNode)
+            FILTER(BOUND(?rawContent))
+            BIND(schema:name AS ?textProperty)
+        }
+        UNION
+        {
+            # The full text that the object carries.
+            ?record a crm:E22_Human-Made_Object ;
+                crm:P128_carries ?contentNode .
+            ?contentNode a crm:E33_Linguistic_Object ;
+                crm:P190_has_symbolic_content ?rawContent .
+            BIND(schema:text AS ?textProperty)
+        }
+        UNION
+        {
+            # Terms referenced from a record, each becoming a DefinedTerm.
+            {
+                ?record a crm:E22_Human-Made_Object ;
+                    crm:P2_has_type ?term .
+                ?term crm:P2_has_type aat:300015646 . # a style
+                BIND(schema:genre AS ?termProperty)
+            }
+            UNION
+            {
+                ?record a crm:E22_Human-Made_Object ;
+                    crm:P2_has_type ?term .
+                # Styles map to genre; the classifiers that merely mark an
+                # object as collection item or artwork carry no meaning here.
+                FILTER NOT EXISTS { ?term crm:P2_has_type aat:300015646 }
+                FILTER(?term NOT IN (aat:300404024, aat:300133025)) # collection item, artwork
+                BIND(schema:additionalType AS ?termProperty)
+                BIND(schema:URL AS ?termCoType)
+            }
+            UNION
+            {
+                ?record a crm:E22_Human-Made_Object ;
+                    crm:P45_consists_of ?term .
+                BIND(schema:material AS ?termProperty)
+                BIND(schema:URL AS ?termCoType)
+            }
+            UNION
+            {
+                ?record a crm:E22_Human-Made_Object ;
+                    crm:P108i_was_produced_by/crm:P9_consists_of*/crm:P7_took_place_at ?term .
+                BIND(schema:locationCreated AS ?termProperty)
+                BIND(schema:Place AS ?termCoType)
+            }
+            UNION
+            {
+                ?record a crm:E22_Human-Made_Object ;
+                    (crm:P65_shows_visual_item|crm:P128_carries)/crm:P129_is_about ?term .
+                BIND(schema:about AS ?termProperty)
+            }
+            UNION
+            {
+                ?record a crm:E22_Human-Made_Object ;
+                    (crm:P65_shows_visual_item|crm:P128_carries)/crm:P138_represents ?term .
+                ?term a crm:E53_Place .
+                BIND(schema:contentLocation AS ?termProperty)
+                BIND(schema:Place AS ?termCoType)
+            }
+            UNION
+            {
+                ?record a crm:E21_Person ;
+                    crm:P98i_was_born/crm:P7_took_place_at ?term .
+                BIND(schema:birthPlace AS ?termProperty)
+                BIND(schema:Place AS ?termCoType)
+            }
+            UNION
+            {
+                ?record a crm:E21_Person ;
+                    crm:P100i_died_in/crm:P7_took_place_at ?term .
+                BIND(schema:deathPlace AS ?termProperty)
+                BIND(schema:Place AS ?termCoType)
+            }
+            UNION
+            {
+                ?record a crm:E21_Person ;
+                    crm:P2_has_type ?term .
+                ?term crm:P2_has_type aat:300263369 . # an occupation
+                BIND(schema:hasOccupation AS ?termProperty)
+                BIND(schema:Occupation AS ?termCoType)
+            }
+
+            # A term that is referenced by its vocabulary URI alone has no
+            # primary name of its own, so fall back on the SKOS label a
+            # thesaurus-backed term usually carries, and then on its _label.
+            OPTIONAL {
+                ?term crm:P1_is_identified_by ?primaryName .
+                ?primaryName crm:P2_has_type aat:300404670 ; # primary name
+                    crm:P190_has_symbolic_content ?primaryNameContent .
+            }
+            OPTIONAL { ?term skos:prefLabel ?prefLabel }
+            OPTIONAL { ?term rdfs:label ?fallbackLabel }
+            BIND(COALESCE(?primaryNameContent, ?prefLabel, ?fallbackLabel) AS ?rawContent)
+            BIND(COALESCE(?primaryName, ?term) AS ?contentNode)
+            FILTER(BOUND(?rawContent)) # an unnamed DefinedTerm is not conformant
+
+            # skos:exactMatch is Linked Art vocabulary too: la:equivalent was
+            # minted to avoid its inference that everything linked becomes an
+            # E55_Type, which is not a concern for a term in the first place.
+            OPTIONAL { ?term la:equivalent|skos:exactMatch ?termSameAs }
+        }
+        UNION
+        {
+            # The actors that carried out the production of the object.
+            ?record a crm:E22_Human-Made_Object ;
+                crm:P108i_was_produced_by/crm:P9_consists_of*/crm:P14_carried_out_by ?actor .
+
+            # Linked Art recommends Person or Group, but a dataset may type an
+            # actor only as the E39_Actor superclass, or leave the distinction
+            # to a vocabulary. The profile then allows an untyped creator,
+            # provided it carries a name.
+            OPTIONAL { ?actor a crm:E21_Person . BIND(schema:Person AS ?personType) }
+            OPTIONAL { ?actor a crm:E74_Group . BIND(schema:Organization AS ?groupType) }
+            BIND(COALESCE(?personType, ?groupType) AS ?actorType)
+
+            # The name, in decreasing order of Linked Art fidelity.
+            OPTIONAL {
+                ?actor crm:P1_is_identified_by ?primaryName .
+                ?primaryName crm:P2_has_type aat:300404670 ; # primary name
+                    crm:P190_has_symbolic_content ?primaryNameContent .
+            }
+            OPTIONAL { ?actor skos:prefLabel ?prefLabel }
+            OPTIONAL { ?actor rdfs:label ?fallbackLabel }
+            BIND(COALESCE(?primaryNameContent, ?prefLabel, ?fallbackLabel) AS ?rawContent)
+            BIND(COALESCE(?primaryName, ?actor) AS ?contentNode)
+            FILTER(BOUND(?rawContent)) # a creator without a name is not conformant
+
+            OPTIONAL { ?actor la:equivalent|skos:exactMatch ?actorSameAs }
+        }
+
+        # Shared tail: tag the text with a language.
+        # Extend the table with the AAT language concepts that occur in
+        # your data; text in an unlisted or absent language becomes “und”.
+        OPTIONAL {
+            ?contentNode crm:P72_has_language ?languageConcept .
+            VALUES (?languageConcept ?languageTag) {
+                (aat:300388256 "nl")
+                (aat:300388277 "en")
+                (aat:300388344 "de")
+                (aat:300388306 "fr")
+                (aat:300389311 "es")
+                (aat:300388474 "it")
+                (aat:300388693 "la")
+                (aat:300387843 "ar")
+                (aat:300388113 "zh")
+                (aat:300388486 "ja")
+            }
+        }
+        # A label that is already language-tagged keeps its own tag.
+        BIND(
+            IF(LANG(?rawContent) != "",
+                ?rawContent,
+                STRLANG(STR(?rawContent), COALESCE(?languageTag, "und")))
+            AS ?taggedContent)
+    }
+    UNION
+    {
+        ###################################################################
+        # IRIs, dates and untagged literals.
+        ###################################################################
+        {
+            # The four top-level classes of this profile.
+            VALUES (?recordClass ?recordType) {
+                (crm:E22_Human-Made_Object schema:CreativeWork)
+                (crm:E21_Person schema:Person)
+                (crm:E74_Group schema:Organization)
+                (crm:E53_Place schema:Place)
+            }
+            ?record a ?recordClass .
+        }
+        UNION
+        {
+            # Where an AAT type of work has a Schema.org counterpart, add it
+            # as a subclass; the term itself is mapped to additionalType above.
+            VALUES (?workType ?workSubtype) {
+                (aat:300033618 schema:Painting) # painting
+                (aat:300047090 schema:Sculpture) # sculpture
+                (aat:300046300 schema:Photograph) # photograph
+                (aat:300033973 schema:Drawing) # drawing
+                (aat:300028051 schema:Book) # book
+                (aat:300028094 schema:Map) # map
+                (aat:300265483 schema:Manuscript) # manuscript
+            }
+            ?record a crm:E22_Human-Made_Object ;
+                crm:P2_has_type ?workType .
+        }
+        UNION
+        {
+            ?record a crm:E22_Human-Made_Object ;
+                crm:P1_is_identified_by ?identifierNode .
+            ?identifierNode a crm:E42_Identifier ;
+                crm:P190_has_symbolic_content ?identifierContent .
+            BIND(STR(?identifierContent) AS ?identifier)
+        }
+        UNION
+        {
+            # Dates of production, birth and death.
+            #
+            # Linked Art expresses an uncertain date as a time span, which
+            # this profile does not allow. The span is therefore reduced to
+            # its lowest common precision, and dropped when it straddles
+            # more than one year.
+            VALUES (?recordClass ?eventProperty ?dateProperty) {
+                (crm:E22_Human-Made_Object crm:P108i_was_produced_by schema:dateCreated)
+                (crm:E21_Person crm:P98i_was_born schema:birthDate)
+                (crm:E21_Person crm:P100i_died_in schema:deathDate)
+            }
+            ?record a ?recordClass ;
+                ?eventProperty ?event .
+            ?event crm:P4_has_time-span ?timeSpan .
+            ?timeSpan crm:P82a_begin_of_the_begin ?beginOfTheBegin .
+            OPTIONAL { ?timeSpan crm:P82b_end_of_the_end ?endOfTheEnd }
+            BIND(SUBSTR(STR(?beginOfTheBegin), 1, 10) AS ?beginDate)
+            BIND(SUBSTR(STR(COALESCE(?endOfTheEnd, ?beginOfTheBegin)), 1, 10) AS ?endDate)
+            FILTER(SUBSTR(?beginDate, 1, 4) = SUBSTR(?endDate, 1, 4))
+            BIND(
+                IF(?beginDate = ?endDate,
+                    STRDT(?beginDate, xsd:date),
+                    IF(SUBSTR(?beginDate, 1, 7) = SUBSTR(?endDate, 1, 7),
+                        STRDT(SUBSTR(?beginDate, 1, 7), xsd:gYearMonth),
+                        STRDT(SUBSTR(?beginDate, 1, 4), xsd:gYear)))
+                AS ?date)
+        }
+        UNION
+        {
+            ?record a crm:E74_Group ;
+                crm:P74_has_current_or_former_residence ?residence .
+            ?residence a crm:E53_Place .
+        }
+        UNION
+        {
+            # The digital objects that show the object, with the licence
+            # under which they may be reused.
+            ?record a crm:E22_Human-Made_Object ;
+                crm:P138i_has_representation/la:digitally_shown_by ?digitalObject .
+            ?digitalObject crm:P104_is_subject_to/crm:P2_has_type ?license .
+            FILTER(isIRI(?license) && REGEX(STR(?license), "^https?://"))
+            BIND(
+                IF(EXISTS { ?digitalObject crm:P2_has_type aat:300215302 }, # digital image
+                    schema:ImageObject,
+                    schema:MediaObject)
+                AS ?mediaType)
+
+            # Linked Art knows no dedicated thumbnail. Where the image is
+            # served through a IIIF Image API service, both sizes follow from
+            # the service base URI; otherwise only the access point is
+            # available and the thumbnail has to be supplied by the publisher.
+            OPTIONAL {
+                ?digitalObject la:digitally_available_via ?imageService .
+                ?imageService dcterms:conformsTo ?imageApi ;
+                    la:access_point ?imageServiceBase .
+                # linked.art writes the Image API URI both with and without
+                # the trailing slash; accept either.
+                FILTER(?imageApi IN (<http://iiif.io/api/image>, <http://iiif.io/api/image/>))
+            }
+            OPTIONAL { ?digitalObject la:access_point ?accessPoint }
+            BIND(
+                IF(BOUND(?imageServiceBase),
+                    IRI(CONCAT(STR(?imageServiceBase), "/full/max/0/default.jpg")),
+                    ?accessPoint)
+                AS ?contentUrl)
+            BIND(IRI(CONCAT(STR(?imageServiceBase), "/full/!400,400/0/default.jpg")) AS ?thumbnailUrl)
+        }
+        UNION
+        {
+            # Coordinates, where the place is defined by a WKT point.
+            ?record a crm:E53_Place ;
+                crm:P168_place_is_defined_by ?wellKnownText .
+            FILTER(REGEX(STR(?wellKnownText), "^(?:<[^>]*>\\s*)?POINT", "i"))
+            BIND("^(?:<[^>]*>\\s*)?POINT\\s*\\(\\s*(-?[0-9.]+)\\s+(-?[0-9.]+)\\s*\\)\\s*$" AS ?point)
+            BIND(REPLACE(STR(?wellKnownText), ?point, "$2", "i") AS ?latitudeText)
+            BIND(REPLACE(STR(?wellKnownText), ?point, "$1", "i") AS ?longitudeText)
+            BIND(STRDT(?latitudeText, xsd:double) AS ?latitude)
+            BIND(STRDT(?longitudeText, xsd:double) AS ?longitude)
+            BIND(BNODE(STR(?record)) AS ?coordinates)
+        }
+        UNION
+        {
+            # Not expressed in Linked Art: fill in the dataset that the
+            # records belong to and the date they last changed.
+            VALUES (?dataset ?recordDate) {
+                (<https://example.org/dataset> "2026-07-27"^^xsd:date)
+            }
+            ?record a crm:E22_Human-Made_Object .
+        }
+    }
+}
