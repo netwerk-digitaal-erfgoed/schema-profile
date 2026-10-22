@@ -24,10 +24,12 @@ direction TB
             {{ property.datatype }}
         {%- elsif property.nodeKind -%}
             {{- property.nodeKind -}}
+        {%- elsif property.node.name -%}
+            {{ property.node.name }}
         {%- elsif property.node.or -%}
             {{ property.node.or | map: "datatype" | join: " | " }}
         {%- elsif property.node -%}
-            {{ property.node.name | default: property.node.class }}
+            {{ property.node.class }}
         {%- endif %} [
         {%- assign minCount = property.minCount | default: 0 -%}
         {%- assign maxCount = property.maxCount | default: "*" -%}
@@ -46,6 +48,8 @@ direction TB
     CreativeWork --> "1..*" Organization : creator
     CreativeWork --> "1..*" Person : creator
     CreativeWork --> "1..*" MediaObject : associatedMedia
+    CreativeWork --> "0..*" SizeSpecification : size
+    SizeSpecification --> "1..*" QuantitativeValue : hasMeasurement
 
     Person --> "0..*" Occupation : hasOccupation
 
