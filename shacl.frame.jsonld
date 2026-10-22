@@ -21,6 +21,9 @@
     "or": {
       "@container": "@list"
     },
+    "property": {
+      "@container": "@set"
+    },
     "node": {
       "@type": "@id"
     },

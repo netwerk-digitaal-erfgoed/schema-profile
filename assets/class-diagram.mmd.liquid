@@ -24,10 +24,12 @@ direction TB
             {{ property.datatype }}
         {%- elsif property.nodeKind -%}
             {{- property.nodeKind -}}
+        {%- elsif property.node.name -%}
+            {{ property.node.name }}
         {%- elsif property.node.or -%}
             {{ property.node.or | map: "datatype" | join: " | " }}
         {%- elsif property.node -%}
-            {{ property.node.name | default: property.node.class }}
+            {{ property.node.class }}
         {%- endif %} [
         {%- assign minCount = property.minCount | default: 0 -%}
         {%- assign maxCount = property.maxCount | default: "*" -%}
