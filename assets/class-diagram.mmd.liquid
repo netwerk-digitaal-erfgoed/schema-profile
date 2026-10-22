@@ -48,6 +48,8 @@ direction TB
     CreativeWork --> "1..*" Organization : creator
     CreativeWork --> "1..*" Person : creator
     CreativeWork --> "1..*" MediaObject : associatedMedia
+    CreativeWork --> "0..*" SizeSpecification : size
+    SizeSpecification --> "1..*" QuantitativeValue : hasMeasurement
 
     Person --> "0..*" Occupation : hasOccupation
 

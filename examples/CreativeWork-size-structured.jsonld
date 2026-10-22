@@ -6,32 +6,25 @@
     { "@value": "29 inches high by 36 inches wide", "@language": "en" },
     { "@value": "74 cm hoog bij 92 cm breed", "@language": "nl" },
     {
-      "@type": "QuantitativeValue",
-      "valueReference": {
-        "@type": "DefinedTerm",
-        "name": { "@value": "hoogte", "@language": "nl" },
-        "sameAs": "http://vocab.getty.edu/aat/300055644"
-      },
-      "value": 74,
-      "unitCode": {
-        "@type": ["DefinedTerm", "URL"],
-        "name": { "@value": "centimeter", "@language": "nl" },
-        "sameAs": "http://vocab.getty.edu/aat/300379098"
-      }
-    },
-    {
-      "@type": "QuantitativeValue",
-      "valueReference": {
-        "@type": "DefinedTerm",
-        "name": { "@value": "breedte", "@language": "nl" },
-        "sameAs": "http://vocab.getty.edu/aat/300055647"
-      },
-      "value": 92,
-      "unitCode": {
-        "@type": ["DefinedTerm", "URL"],
-        "name": { "@value": "centimeter", "@language": "nl" },
-        "sameAs": "http://vocab.getty.edu/aat/300379098"
-      }
+      "@type": "SizeSpecification",
+      "hasMeasurement": [
+        {
+          "@type": "QuantitativeValue",
+          "name": { "@value": "hoogte", "@language": "nl" },
+          "valueReference": { "@id": "http://vocab.getty.edu/aat/300055644" },
+          "value": 74,
+          "unitCode": "CMT",
+          "unitText": "cm"
+        },
+        {
+          "@type": "QuantitativeValue",
+          "name": { "@value": "breedte", "@language": "nl" },
+          "valueReference": { "@id": "http://vocab.getty.edu/aat/300055647" },
+          "value": 92,
+          "unitCode": "CMT",
+          "unitText": "cm"
+        }
+      ]
     }
   ]
 }
