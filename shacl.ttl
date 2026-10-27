@@ -705,10 +705,7 @@ _:PersonShape
         [
             sh:path schema:hasOccupation ;
             sh:message "Gebruik een Occupation met een naam met taalcode als beroep"@nl, "Use an Occupation with a language-tagged name as occupation"@en ;
-            sh:or (
-                [ sh:node _:DefinedTermShape ]
-                [ sh:node _:OccupationShape ]
-            ) ;
+            sh:node _:OccupationShape ;
             sh:minCount 0 ;
             sh:description """
                 The person’s occupation(s).
