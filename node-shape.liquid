@@ -74,9 +74,14 @@
     </div>
 {% endif %}
 
-{% for property in nodeShape.property -%}
+{% comment %}
+    A path can have several shapes, each with its own message; the first one,
+    which carries the description, sets the heading and the requirement.
+{% endcomment -%}
+{% assign merged_properties = nodeShape.property | mergePropertiesByPath -%}
+{% for property in merged_properties -%}
     {% assign name = property.path | replace: "schema:", "" %}
-    ### {{ name }}{% if property.minCount > 0 %} (required){% endif %} ### {#{{ nodeShape.name }}-{{ name  }}}
+    ### {{ name }}{% if property.minCount > 0 and property.severity != "Warning" %} (required){% endif %} ### {#{{ nodeShape.name }}-{{ name  }}}
 
     {%- comment -%}
         Autolink class and property names mentioned in prose. Bikeshed does not resolve autolinks inside
