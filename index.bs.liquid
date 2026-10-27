@@ -558,11 +558,9 @@ The inline override shown above leaves them out.
     </pre>
 </div>
 
-The context deliberately declares no `@container: @language` on text properties.
-A JSON-LD processor reads any object under such a term as a language map,
-so a single value object such as `{"@language": "nl", "@value": "De Nachtwacht"}`, which publishers may write,
-would be dropped when expanding.
 Consumers that want language maps (`name.nl`) can compact with their own context after expanding with this one.
+Such a context should not be used for expanding: a `@language` container drops single value objects
+such as `{"@language": "nl", "@value": "De Nachtwacht"}`.
 
 Changes {#changes}
 ==========
