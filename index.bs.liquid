@@ -495,10 +495,14 @@ resolves all terms to `http://schema.org/` IRIs.
 Consumers that process JSON-LD data need to override the context
 so that the resulting RDF triples use the `https://schema.org/` namespace.
 
+Since release 30.1, Schema.org’s context also no longer declares type coercions,
+so values such as `sameAs`, `license` and `dateCreated` come out as plain strings instead of IRIs and dates.
+
 A ready-to-use context is available at `https://docs.nde.nl/schema-profile/context.jsonld`.
-It uses [[JSON-LD11]]’s `@import` to inherit Schema.org’s type coercions
-(e.g. `url` and `sameAs` remain IRIs) while overriding the namespace to `https://`.
-Consumers can apply this context when expanding JSON-LD data before validation or querying:
+It overrides the namespace to `https://` and restores the type coercions this profile relies on.
+It uses [[JSON-LD11]]’s `@import` to take most of them from NDE’s context for Schema.org at `https://def.nde.nl/context.jsonld`,
+and declares `isPartOf`, `thumbnailUrl` and `url` as IRIs itself.
+Consumers can apply this context in place of Schema.org’s when expanding JSON-LD data before validation or querying:
 
 <div class="example">
     Override the context to produce `https://schema.org/` IRIs:
@@ -521,9 +525,10 @@ Alternatively, consumers can inline the context to avoid a dependency on the hos
         {
           "@context": {
             "@version": 1.1,
-            "@import": "https://schema.org/docs/jsonldcontext.jsonld",
-            "@vocab": "https://schema.org/",
-            "schema": "https://schema.org/"
+            "@import": "https://def.nde.nl/context.jsonld",
+            "isPartOf": { "@type": "@id" },
+            "thumbnailUrl": { "@type": "@id" },
+            "url": { "@type": "@id" }
           },
           "@type": "CreativeWork",
           "name": "Example"
@@ -531,38 +536,33 @@ Alternatively, consumers can inline the context to avoid a dependency on the hos
     </pre>
 </div>
 
-Beyond the namespace override, the hosted context declares [[JSON-LD11]] containers
-that make the data easier to consume. When a consumer *compacts* JSON-LD data with it:
-
-- multi-valued properties (such as `creator`, `material` and `identifier`) are always
-    returned as arrays (`@container: @set`), so a consumer never has to test whether a
-    value is a single object or a list; and
-- language-tagged text properties (`name`, `description`, `abstract` and `text`) are
-    returned as language maps (`@container: @language`), keyed by language tag, so a value
-    can be read directly as `name.nl` or `name.en`.
-
-These containers take effect only on compaction with this context; they do not change the
-underlying RDF triples, so data stays conformant whether or not a consumer applies them.
-The minimal inline override shown above covers only the namespace override – consumers that
-want always-arrays and language maps should use the hosted context, which declares the containers.
+The hosted context also declares `@container: @set` on multi-valued properties
+(such as `creator`, `material` and `identifier`).
+When a consumer *compacts* JSON-LD data with it, these properties are always returned as arrays,
+so a consumer never has to test whether a value is a single object or a list.
+The containers do not change the underlying RDF triples, so data stays conformant whether or not a consumer applies them.
+The inline override shown above leaves them out.
 
 <div class="example">
-    Compacting with the context yields always-arrays and language maps:
+    Compacting with the context yields always-arrays:
 
     <pre highlight=json-ld>
         {
           "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
           "@type": "CreativeWork",
-          "name": {
-            "nl": "De Nachtwacht",
-            "en": "The Night Watch"
-          },
+          "name": { "@language": "nl", "@value": "De Nachtwacht" },
           "creator": [
-            { "@type": "Person", "name": { "nl": "Rembrandt van Rijn" } }
+            { "@type": "Person", "name": { "@language": "nl", "@value": "Rembrandt van Rijn" } }
           ]
         }
     </pre>
 </div>
+
+The context deliberately declares no `@container: @language` on text properties.
+A JSON-LD processor reads any object under such a term as a language map,
+so a single value object such as `{"@language": "nl", "@value": "De Nachtwacht"}`, which publishers may write,
+would be dropped when expanding.
+Consumers that want language maps (`name.nl`) can compact with their own context after expanding with this one.
 
 Changes {#changes}
 ==========
