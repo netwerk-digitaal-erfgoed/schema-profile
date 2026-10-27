@@ -1,0 +1,12 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@import": "https://def.nde.nl/context.jsonld",
+    "isPartOf": { "@type": "@id" },
+    "thumbnailUrl": { "@type": "@id" },
+    "url": { "@type": "@id" }
+  },
+  "@id": "https://n2t.net/ark:/123456/1",
+  "@type": "CreativeWork",
+  "name": { "@language": "en", "@value": "Example" }
+}

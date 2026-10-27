@@ -1,0 +1,9 @@
+{
+  "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
+  "@id": "https://n2t.net/ark:/123456/1",
+  "@type": "CreativeWork",
+  "name": { "@language": "nl", "@value": "De Nachtwacht" },
+  "creator": [
+    { "@type": "Person", "name": { "@language": "nl", "@value": "Rembrandt van Rijn" } }
+  ]
+}
