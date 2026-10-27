@@ -3,7 +3,7 @@ Title: Schema.org Application Profile for NDE (SCHEMA-AP-NDE)
 Shortname: schema-ap-nde
 Level: 1
 Status: LS
-!Version: <a href="#v1.5.2">1.5.2</a>
+!Version: <a href="#v1.6.0">1.6.0</a>
 Markup Shorthands: css yes, markdown yes, biblio yes
 URL: https://docs.nde.nl/schema-profile/
 Editor: 
@@ -531,6 +531,20 @@ The property tables mark such a rule with ‘v2.0’.
 Until then, data that breaks one of these rules still conforms, so publishers can prepare.
 
 <!-- CHANGELOG-START -->
+Version 1.6.0 (2026-10-27) {#v1.6.0}
+----------
+
+- Add a property table to each class section ([d5e010d](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/d5e010d412b38bd028f1734d08b37a768b840edc)).
+- Warn about sameAs values that are not http or https URIs ([bc8e296](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/bc8e2969ee555c90400684dcbed177f1c55d07a2)).
+- Warn about temporalCoverage dates with a language tag or other datatype ([4c96283](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/4c962834c6cd113d10c6adc5913313dcf21559fb)).
+- Require an Occupation as hasOccupation ([818e252](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/818e2527b72c15a61c0c6c3905a5118ea633e61c)).
+- Restore type coercions in the JSON-LD context ([98d891a](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/98d891ae32345bb3fd4d48b2fbc87dc893263a18)).
+- Split the contentUrl and thumbnailUrl checks ([714af41](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/714af416b241ada0992372cdca5accd2d2221079)).
+- Add reading guide and link domain data models to publication method ([38d4197](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/38d41976cb3751bf0aaa82a5440cb227a8856914)).
+- Allow several sameAs values and state the matching rule ([01949fe](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/01949fed220aa581963743f88ed3127dda31c741)).
+- Put publication method right after generic and domain data models ([6720601](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6720601ef5497d43eaebb85ef676608d639a4146)).
+- Validate the inline JSON-LD examples ([508b9d5](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/508b9d59a3d9885d67e7d849b13ddd8ff7fc78ee)).
+
 Version 1.5.2 (2026-10-16) {#v1.5.2}
 ----------
 
