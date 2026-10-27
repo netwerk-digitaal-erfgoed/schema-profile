@@ -794,12 +794,14 @@ _:MediaObjectShape
                 rdfs:comment "file://examples/MediaObject-license-rights-statement.jsonld" ;
             ]
         ] ,
+        # The minimum count is a warning because only openly licensed media need these URLs; the URI checks
+        # are not. This shape is reached only through sh:or and sh:qualifiedValueShape on associatedMedia,
+        # which fail on a result of any severity, so even the missing URL makes associatedMedia a violation.
         [
             sh:path schema:contentUrl ;
-            sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
-            sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
+            sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
             sh:description """
                 The URL of the media object.
                 *REQUIRED* if the MediaObject is published under an open license.
@@ -814,11 +816,20 @@ _:MediaObjectShape
             ]
         ] ,
         [
-            sh:path schema:thumbnailUrl ;
+            sh:path schema:contentUrl ;
             sh:nodeKind sh:IRI ;
-            sh:minCount 1 ;
+            sh:message "Gebruik een URI als waarde van contentUrl"@nl, "Use a URI as the value of contentUrl"@en ;
+        ] ,
+        [
+            sh:path schema:contentUrl ;
             sh:pattern "^https?://" ;
+            sh:message "Gebruik een http- of https-URL als contentUrl"@nl, "Use an http or https URL as contentUrl"@en ;
+        ] ,
+        [
+            sh:path schema:thumbnailUrl ;
+            sh:minCount 1 ;
             sh:severity sh:Warning ;
+            sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
             sh:description """
                 A smaller version of the MediaObject.
                 *REQUIRED* if the MediaObject is published under an open license.
@@ -831,6 +842,16 @@ _:MediaObjectShape
                 rdfs:label "Both full-sized image and thumbnail of the Starry Night." ;
                 rdfs:comment "file://examples/MediaObject-thumbnailUrl.jsonld" ;
             ]
+        ] ,
+        [
+            sh:path schema:thumbnailUrl ;
+            sh:nodeKind sh:IRI ;
+            sh:message "Gebruik een URI als waarde van thumbnailUrl"@nl, "Use a URI as the value of thumbnailUrl"@en ;
+        ] ,
+        [
+            sh:path schema:thumbnailUrl ;
+            sh:pattern "^https?://" ;
+            sh:message "Gebruik een http- of https-URL als thumbnailUrl"@nl, "Use an http or https URL as thumbnailUrl"@en ;
         ] ,
         [
             sh:path schema:copyrightNotice ;
