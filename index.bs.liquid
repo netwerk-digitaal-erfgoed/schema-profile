@@ -110,6 +110,127 @@ Examples are:
 path: assets/data-models.svg
 </pre>
 
+Publication method {#publication-method}
+---
+
+### Publication levels ### {#publication-levels}
+
+In the heritage network, SCHEMA-AP-NDE data *MUST* be available on two levels: 
+
+1. resolvable URIs for individual resources
+2. data dumps for datasets
+
+It *MAY* additionally be available through a:
+
+3. SPARQL endpoint.
+
+If the generic data model is used alongside [=domain data models=], there are two methods for doing so:
+
+- [[#combined]]
+- [[#profiles]].
+
+In this case, publishers *MUST* support at least one of these methods.
+
+### Combined ### {#combined}
+
+With RDF, it’s perfectly fine to express the same data in multiple ways.
+Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* coexist in the same information resource.
+
+<div class="example">
+    Combine generic (Schema.org) with domain-specific (Linked Art) modelling.
+
+    <pre highlight=json-ld>
+        {
+          "@context": [
+            "https://linked.art/ns/v1/linked-art.json",
+            {
+              "schema": "https://schema.org/"
+            }
+          ],
+          "id": "https://literatuurmuseum.nl/id/123456789",
+          "type": ["HumanMadeObject", "schema:CreativeWork", "schema:VisualArtwork"],
+          "_label": "Het fluitketeltje en andere versjes",
+          "produced_by": {
+            "type": "Production",
+            "carried_out_by": [
+              {
+                "id": "http://data.rkd.nl/artists/8342",
+                "type": "Person"
+              }
+            ]
+          },
+          "schema:name": "Het fluitketeltje en andere versjes",
+          "schema:creator": {
+            "@id": "http://data.rkd.nl/artists/8342",
+            "@type": "schema:Person"
+          }
+        }
+    </pre>
+</div>
+
+### Separate profiles ### {#profiles}
+
+Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
+To do so, publish a profile with URI `https://docs.nde.nl/schema-profile/`.
+
+Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).
+
+Note: This method does not apply to SPARQL endpoints, which use the SPARQL protocol and do not support profile-based content negotiation.
+
+<div class="example">
+    Expose the generic data model in its own content-negotiated profile.    
+
+    <pre highlight=http>
+        # Get the list of profiles.
+        GET /resource/a?profile=alt HTTP/1.1
+        
+        # Server responds with a list of profiles that includes the NDE generic data model.
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+        
+        {
+            "resource": "http://example.org/resource/a",
+            "profiles": [
+                {
+                    "token": "nde",
+                    "uri": "https://docs.nde.nl/schema-profile/",
+                    "media_types": ["application/ld+json", "text/turtle"]
+                },
+                ...
+            ]
+        }
+    </pre>
+</div>
+
+It is then possible to request the metadata record in the generic data model using the `Accept-Profile` HTTP header:
+
+<div class="example">
+    Request the metadata record in SCHEMA-AP-NDE:    
+
+    <pre highlight=http>
+        GET /resource/a HTTP/1.1
+        Accept: application/ld+json
+        Accept-Profile: &lt;https://docs.nde.nl/schema-profile/>
+        
+        # Server responds with a SCHEMA-AP-NDE representation of the metadata record.
+        HTTP/1.1 200 OK
+        Content-Type: application/ld+json
+
+        ...
+    </pre>
+</div>
+
+Serialization {#serialization}
+---
+
+Servers *MUST* provide at least one RDF serialization format. 
+Supporting multiple formats using [[RFC9110#content.negotiation|content negotiation]] is *RECOMMENDED*.
+
+The following formats are *RECOMMENDED*:
+
+- [[!JSON-LD]] when serving an individual resource at its URI, because of its accessibility to web platform builders;
+- [[!N-QUADS]] for RDF dumps containing multiple resources, because of its efficiency.
+
 Vocabulary {#vocabulary}
 ---
 
@@ -302,127 +423,6 @@ such as `creator`, `contentLocation` and `hasOccupation`, so it needs no co-type
 
 Note: Earlier versions of this application profile co-typed people, organizations, places and occupations as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
 Data that carries the co-type remains valid, and consumers can ignore it.
-
-Serialization {#serialization}
----
-
-Servers *MUST* provide at least one RDF serialization format. 
-Supporting multiple formats using [[RFC9110#content.negotiation|content negotiation]] is *RECOMMENDED*.
-
-The following formats are *RECOMMENDED*:
-
-- [[!JSON-LD]] when serving an individual resource at its URI, because of its accessibility to web platform builders;
-- [[!N-QUADS]] for RDF dumps containing multiple resources, because of its efficiency.
-
-Publication method {#publication-method}
----
-
-### Publication levels ### {#publication-levels}
-
-In the heritage network, SCHEMA-AP-NDE data *MUST* be available on two levels: 
-
-1. resolvable URIs for individual resources
-2. data dumps for datasets
-
-It *MAY* additionally be available through a:
-
-3. SPARQL endpoint.
-
-If the generic data model is used alongside [=domain data models=], there are two methods for doing so:
-
-- [[#combined]]
-- [[#profiles]].
-
-In this case, publishers *MUST* support at least one of these methods.
-
-### Combined ### {#combined}
-
-With RDF, it’s perfectly fine to express the same data in multiple ways.
-Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* coexist in the same information resource.
-
-<div class="example">
-    Combine generic (Schema.org) with domain-specific (Linked Art) modelling.
-
-    <pre highlight=json-ld>
-        {
-          "@context": [
-            "https://linked.art/ns/v1/linked-art.json",
-            {
-              "schema": "https://schema.org/"
-            }
-          ],
-          "id": "https://literatuurmuseum.nl/id/123456789",
-          "type": ["HumanMadeObject", "schema:CreativeWork", "schema:VisualArtwork"],
-          "_label": "Het fluitketeltje en andere versjes",
-          "produced_by": {
-            "type": "Production",
-            "carried_out_by": [
-              {
-                "id": "http://data.rkd.nl/artists/8342",
-                "type": "Person"
-              }
-            ]
-          },
-          "schema:name": "Het fluitketeltje en andere versjes",
-          "schema:creator": {
-            "@id": "http://data.rkd.nl/artists/8342",
-            "@type": "schema:Person"
-          }
-        }
-    </pre>
-</div>
-
-### Separate profiles ### {#profiles}
-
-Alternatively, publishers *MAY* separate the generic data model by using profile-based content negotiation (see [[!DX-PROF-CONNEG]]).
-To do so, publish a profile with URI `https://docs.nde.nl/schema-profile/`.
-
-Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).
-
-Note: This method does not apply to SPARQL endpoints, which use the SPARQL protocol and do not support profile-based content negotiation.
-
-<div class="example">
-    Expose the generic data model in its own content-negotiated profile.    
-
-    <pre highlight=http>
-        # Get the list of profiles.
-        GET /resource/a?profile=alt HTTP/1.1
-        
-        # Server responds with a list of profiles that includes the NDE generic data model.
-        HTTP/1.1 200 OK
-        Content-Type: application/json
-        
-        {
-            "resource": "http://example.org/resource/a",
-            "profiles": [
-                {
-                    "token": "nde",
-                    "uri": "https://docs.nde.nl/schema-profile/",
-                    "media_types": ["application/ld+json", "text/turtle"]
-                },
-                ...
-            ]
-        }
-    </pre>
-</div>
-
-It is then possible to request the metadata record in the generic data model using the `Accept-Profile` HTTP header:
-
-<div class="example">
-    Request the metadata record in SCHEMA-AP-NDE:    
-
-    <pre highlight=http>
-        GET /resource/a HTTP/1.1
-        Accept: application/ld+json
-        Accept-Profile: &lt;https://docs.nde.nl/schema-profile/>
-        
-        # Server responds with a SCHEMA-AP-NDE representation of the metadata record.
-        HTTP/1.1 200 OK
-        Content-Type: application/ld+json
-
-        ...
-    </pre>
-</div>
 
 Data model {#data-model-section}
 ==========
