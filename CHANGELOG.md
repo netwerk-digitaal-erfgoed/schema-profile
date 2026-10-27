@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.6.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.5.2...1.6.0) (2026-10-27)
+
+
+### Features
+
+* add a property table to each class section ([#239](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/239)) ([d5e010d](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/d5e010d412b38bd028f1734d08b37a768b840edc))
+* warn about sameAs values that are not http or https URIs ([#241](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/241)) ([bc8e296](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/bc8e2969ee555c90400684dcbed177f1c55d07a2))
+* warn about temporalCoverage dates with a language tag or other datatype ([#245](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/245)) ([4c96283](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/4c962834c6cd113d10c6adc5913313dcf21559fb))
+
+
+### Bug Fixes
+
+* require an Occupation as hasOccupation ([#243](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/243)) ([818e252](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/818e2527b72c15a61c0c6c3905a5118ea633e61c))
+* restore type coercions in the JSON-LD context ([#238](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/238)) ([98d891a](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/98d891ae32345bb3fd4d48b2fbc87dc893263a18))
+* split the contentUrl and thumbnailUrl checks ([#242](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/242)) ([714af41](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/714af416b241ada0992372cdca5accd2d2221079))
+
+
+### Documentation
+
+* add reading guide and link domain data models to publication method ([#237](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/237)) ([38d4197](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/38d41976cb3751bf0aaa82a5440cb227a8856914))
+* allow several sameAs values and state the matching rule ([#244](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/244)) ([01949fe](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/01949fed220aa581963743f88ed3127dda31c741))
+* put publication method right after generic and domain data models ([#235](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/235)) ([6720601](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6720601ef5497d43eaebb85ef676608d639a4146))
+* validate the inline JSON-LD examples ([#240](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/240)) ([508b9d5](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/508b9d59a3d9885d67e7d849b13ddd8ff7fc78ee))
+
 ## [1.5.2](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.5.1...1.5.2) (2026-10-16)
 
 
