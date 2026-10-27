@@ -8,3 +8,4 @@ package-lock.json
 .nde/
 logo.include
 nde.include
+nde-*.liquid

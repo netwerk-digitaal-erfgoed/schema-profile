@@ -58,8 +58,8 @@
             <th scope="row">[[#{{ nodeShape.name }}-{{ name }}|{{ name }}]]</th>
             <td>{{ property.description | strip | split: newline_paragraph | first | strip_newlines }}</td>
             <td>{% if warned and enforced == false %}preferably {% endif %}{% render 'expected-value', constraint: property, sections: sections %}
-                {%- render 'cardinality-and-usage', property: property, nodeShape: nodeShape, iri: 'URI', combined: true, part: 'value-note' %}</td>
-            {% render 'cardinality-and-usage', property: property, nodeShape: nodeShape, iri: 'URI', combined: true -%}
+                {%- render 'nde-cardinality-and-usage', property: property, nodeShape: nodeShape, iri: 'URI', combined: true, part: 'value-note' %}</td>
+            {% render 'nde-cardinality-and-usage', property: property, nodeShape: nodeShape, iri: 'URI', combined: true -%}
         </tr>
         {% endfor -%}
     </tbody>
