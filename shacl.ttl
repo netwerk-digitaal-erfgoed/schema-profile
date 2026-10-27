@@ -289,6 +289,9 @@ _:CreativeWorkShape
             ] , [
                 rdfs:label "The same dimensions, additionally as machine-readable measurements:" ;
                 rdfs:comment "file://examples/CreativeWork-size-structured.jsonld" ;
+            ] , [
+                rdfs:label "A measurement whose dimension and unit have no public term yet:" ;
+                rdfs:comment "file://examples/CreativeWork-size-labels.jsonld" ;
             ] ;
         ] ,
         [
@@ -535,6 +538,14 @@ _:QuantitativeValueShape
 
         Each measured dimension *MUST* be a separate `QuantitativeValue`;
         a single node *MUST NOT* combine several dimensions.
+
+        The dimension and the unit are terms, so like any [[#reference-terms|term]] they need only a `name`
+        when no public term is known, such as a dimension “hoogte”@nl or a unit “mm”@nl.
+        Adding `sameAs` later, once the term’s URI is known, changes nothing else in the measurement.
+
+        The dimension *MUST NOT* be given only as the `name` of the `QuantitativeValue`:
+        Schema.org leaves underspecified what that `name` denotes,
+        so consumers cannot tell a dimension from, say, the measured part.
     """ ;
     sh:property [
         sh:path schema:value ;
