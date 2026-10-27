@@ -54,7 +54,7 @@ _:CreativeWorkShape
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:description """
-                A *REQUIRED* property that indicates the date when the [=metadata record=] was last changed.
+                The date when the [=metadata record=] was last changed.
 
                 The value *MUST* be in ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`.
             """ ;
@@ -63,7 +63,8 @@ _:CreativeWorkShape
             sh:path schema:isPartOf ;
             sh:nodeKind sh:IRI ;
             sh:description """
-                Points to the dataset(s) that the CreativeWork is part of, *REQUIRED* if the CreativeWork is part of one or more datasets.
+                The dataset(s) that the CreativeWork is part of.
+                *REQUIRED* if the CreativeWork is part of one or more datasets.
 
                 This contextualizes the CreativeWork for consumers, with the [[NDE-DATASETS|dataset’s description]] providing
                 information about properties that are shared between CreativeWorks in the same dataset,
@@ -88,11 +89,11 @@ _:CreativeWorkShape
             sh:message "Gebruik een MediaObject met license, contentUrl en thumbnailUrl, of een IIIF Presentation-manifest met license en encodingFormat"@nl, "Use a MediaObject with license, contentUrl and thumbnailUrl, or an IIIF Presentation manifest with license and encodingFormat"@en ;
             sh:or (
                 [ sh:node _:MediaObjectShape ]
-                [ sh:node _:IIIFPresentationManifestShape ]
+                [ sh:node _:IIIFPresentationManifestShape ; rdfs:label "IIIF Presentation manifest" ]
             ) ;
             sh:description """
                 One or more media objects that represent the CreativeWork.
-                This property is *REQUIRED* if at least one media object is available.
+                *REQUIRED* if at least one media object is available.
 
                 If an <a href="https://iiif.io/api/presentation/">IIIF Presentation API</a> manifest is available
                 for the CreativeWork, it *MUST* be included as an additional `associatedMedia` entry with:
@@ -128,8 +129,8 @@ _:CreativeWorkShape
                 [ sh:node _:CreatorShape ]
             ) ;
             sh:description """
-                Identifies the person(s) or organization(s) that had a role in the production of the CreativeWork.
-                This property is *REQUIRED* if the creator is known.
+                The person(s) or organization(s) that had a role in the production of the CreativeWork.
+                *REQUIRED* if the creator is known.
 
                 Even where more specific properties, applicable to CreativeWork’s subtypes, are available in Schema.org,
                 such as [artist](https://schema.org/artist), [composer](https://schema.org/composer) and [director](https://schema.org/director),
@@ -169,8 +170,9 @@ _:CreativeWorkShape
           ) ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property that provides a unique identifier for the CreativeWork,
+                A unique identifier for the CreativeWork,
                 usually an assigned alphanumeric string.
+
                 The identifier may be useful for referencing the CreativeWork in non-RDF contexts, such as exhibitions.
                 Note that this is different from the CreativeWork’s URI.
                 A CreativeWork *MAY* have more than one identifier; each value *MUST* be either a string or a [schema:PropertyValue](https://schema.org/PropertyValue).
@@ -190,8 +192,9 @@ _:CreativeWorkShape
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property that provides additional types for the CreativeWork
+                Additional types for the CreativeWork
                 from vocabularies other than Schema.org, such as Getty AAT.
+
                 Schema.org classes belong in `@type` as a [[#subclasses|subclass]];
                 use `additionalType` for vocabulary terms that have no suitable Schema.org subclass,
                 or to add a more specific term alongside a Schema.org subclass.
@@ -210,7 +213,7 @@ _:CreativeWorkShape
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property that gives a full description of the CreativeWork.
+                A full description of the CreativeWork.
             """ ;
             rdfs:seeAlso [
                 rdfs:label "A description of the Starry Night:" ;
@@ -223,7 +226,8 @@ _:CreativeWorkShape
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
-                Summarizes the CreativeWork in one sentence.
+                A one-sentence summary of the CreativeWork.
+
                 The abstract *SHOULD* be free of jargon and abbreviations so it can be understood by others.
             """ ;
             rdfs:seeAlso [
@@ -237,7 +241,7 @@ _:CreativeWorkShape
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property containing the complete textual content of the CreativeWork,
+                The complete textual content of the CreativeWork,
                 primarily used for search indexing and discovery.
 
                 This includes content such as:
@@ -264,7 +268,7 @@ _:CreativeWorkShape
             sh:uniqueLang true ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the physical size of the CreativeWork.
+                The physical size of the CreativeWork.
 
                 The CreativeWork *SHOULD* have a display statement:
                 a single human-readable rendering of its dimensions in the form the publisher prefers,
@@ -294,7 +298,8 @@ _:CreativeWorkShape
             sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the location(s) depicted or described in the CreativeWork.
+                The location(s) depicted or described in the CreativeWork.
+
                 For example, the location in a photograph or painting.
 
                 The value *MUST* be a Place. See Place for this property’s allowed values.
@@ -311,11 +316,12 @@ _:CreativeWorkShape
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:nodeKind sh:IRI ; sh:pattern "^https?://" ]
-                [ sh:pattern "^(-?([1-9]\\d{3,}|0\\d{3})(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\.\\.)(/(-?([1-9]\\d{3,}|0\\d{3})(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\d{2}(-\\d{2})?|\\.\\.))?$" ]
+                [ sh:pattern "^(-?([1-9]\\d{3,}|0\\d{3})(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\.\\.)(/(-?([1-9]\\d{3,}|0\\d{3})(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\d{2}(-\\d{2})?|\\.\\.))?$" ;
+                  rdfs:label "ISO 8601 date or interval" ]
             ) ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the period that the content applies to,
+                The period that the content applies to,
                 i.e. the time period(s) that the CreativeWork describes or depicts.
 
                 The value *MUST* be either an ISO 8601 date or time interval
@@ -350,7 +356,7 @@ _:CreativeWorkShape
             sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the location(s) where the CreativeWork was created
+                The location(s) where the CreativeWork was created
                 (which may be different from its contentLocation).
 
                 The value *MUST* be a Place. See Place for this property’s allowed values.
@@ -368,7 +374,7 @@ _:CreativeWorkShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                Indicates the date the CreativeWork was created.
+                The date the CreativeWork was created.
 
                 A single date *MUST* be given, at the highest precision known (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`).
 
@@ -399,7 +405,8 @@ _:CreativeWorkShape
             ) ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the subject-matter of the CreativeWork.
+                The subject-matter of the CreativeWork.
+
                 For example, which subjects are depicted in a painting or photograph?
                 Or which subjects is a story about?
                 And/or which CreativeWork (e.g. collection object) is this CreativeWork (story) about?
@@ -423,7 +430,8 @@ _:CreativeWorkShape
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the material(s) that the CreativeWork is made from, e.g. leather, wool, cotton, paper.
+                The material(s) that the CreativeWork is made from, e.g. leather, wool, cotton, paper.
+
                 The value *MUST* reference terms.
                 Because `schema:material` takes `URL`, not `DefinedTerm`, `URL` must be added to `@type`.
             """ ;
@@ -439,7 +447,7 @@ _:CreativeWorkShape
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
-                Indicates the genre(s) of the CreativeWork,
+                The genre(s) of the CreativeWork,
                 for example art movements or periods.
 
                 The value *MUST* reference a term.
@@ -534,7 +542,8 @@ _:QuantitativeValueShape
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:description """
-            A *REQUIRED* property that gives the measured number.
+            The measured number.
+
             The number *MUST NOT* carry the unit, which belongs in `unitCode`.
         """ ;
     ] ,
@@ -544,7 +553,8 @@ _:QuantitativeValueShape
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:description """
-            A *REQUIRED* property that indicates which dimension is measured, such as height, width, depth or diameter.
+            The dimension that is measured, such as height, width, depth or diameter.
+
             Without it, the measurement cannot be interpreted.
 
             The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]),
@@ -557,7 +567,7 @@ _:QuantitativeValueShape
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:description """
-            A *REQUIRED* property that identifies the unit of measurement,
+            The unit of measurement,
             for example http://vocab.getty.edu/aat/300379098 for centimetres.
 
             The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]).
@@ -571,8 +581,8 @@ _:SameAsShape
     sh:path schema:sameAs ;
     sh:minCount 0 ;
     sh:description """
-        This property is *REQUIRED* if a term is available in a public source, such as RKDartists, GeoNames, the AAT or Wikidata.
-        It [[#reference-terms|references that term]]; the value *MUST* be the term’s URI.
+        The [[#reference-terms|term(s)]] for this entity in public sources, such as RKDartists, GeoNames, the AAT or Wikidata.
+        *REQUIRED* if such a term is available; each value *MUST* be a term’s URI.
     """ .
 
 # A Warning for now, because sameAs was not constrained on these classes before; a literal value must not
@@ -611,7 +621,7 @@ _:PersonShape
             sh:uniqueLang true ;
             sh:minCount 1 ;
             sh:description """
-                A *REQUIRED* property that indicates the Person’s full name in its preferred display form.
+                The Person’s full name in its preferred display form.
 
                 The name *MUST NOT* contain information that belongs to other properties, such as birthDate or deathDate.
             """ ;
@@ -628,7 +638,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person’s date of birth.
+                The person’s date of birth.
             """ ;
         ] ,
         [
@@ -638,7 +648,8 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that references the person’s place of birth.
+                The person’s place of birth.
+
                 The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
@@ -653,7 +664,7 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person’s date of death.
+                The person’s date of death.
             """ ;
         ] ,
         [
@@ -663,7 +674,8 @@ _:PersonShape
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:description """
-                An *OPTIONAL* property that references the person’s place of death.
+                The person’s place of death.
+
                 The value *MUST* be a Place. See Place for this property’s allowed values.
             """ ;
             rdfs:seeAlso [
@@ -680,7 +692,8 @@ _:PersonShape
             ) ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property that indicates the person’s occupation(s).
+                The person’s occupation(s).
+
                 The value *MUST* be an `Occupation`.
                 If a term is available for the occupation, it *MUST* be [[#reference-terms|referenced]] via `sameAs`.
             """ ;
@@ -710,7 +723,7 @@ _:OrganizationShape
         sh:uniqueLang true ;
         sh:minCount 1 ;
         sh:description """
-            A *REQUIRED* property that indicates the Organization’s full name in its preferred display form.
+            The Organization’s full name in its preferred display form.
         """ ;
         rdfs:seeAlso [
             rdfs:label "Organization name:" ;
@@ -726,7 +739,7 @@ _:OrganizationShape
         sh:class schema:Place ;
         sh:node _:PlaceShape ;
         sh:description """
-            An *OPTIONAL* property that indicates the Organization’s location,
+            The Organization’s location,
             useful for distinguishing the organization from others with similar names.
 
             See Place for this property’s allowed values.
@@ -757,8 +770,9 @@ _:MediaObjectShape
             sh:minCount 1 ;
             sh:pattern "^https?://" ;
             sh:description """
-                A REQUIRED property that points to the URI of a license or rights statement
+                The license or rights statement
                 that applies to the digital reproduction.
+
                 This concerns the use of the reproduction, not of the heritage object itself.
                 The value *MUST* be the canonical URI of the license or rights statement.
                 For example, use https://creativecommons.org/licenses/by/4.0/ instead
@@ -787,7 +801,9 @@ _:MediaObjectShape
             sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
             sh:description """
-                Points to the URL of the media object, *REQUIRED* if the MediaObject is published under an open license.
+                The URL of the media object.
+                *REQUIRED* if the MediaObject is published under an open license.
+
                 The URL *MUST* allow embedding, which is how consumers display media that is not openly licensed.
 
                 For ImageObjects, this *SHOULD* be a high-resolution image to be used in full-screen viewers etc.
@@ -804,7 +820,9 @@ _:MediaObjectShape
             sh:pattern "^https?://" ;
             sh:severity sh:Warning ;
             sh:description """
-                Points to a smaller version of the MediaObject, *REQUIRED* if the MediaObject is published under an open license.
+                A smaller version of the MediaObject.
+                *REQUIRED* if the MediaObject is published under an open license.
+
                 The URL *MUST* allow embedding.
 
                 For ImageObjects, this *SHOULD* be a small image to be used in lists, search results etc.
@@ -819,7 +837,7 @@ _:MediaObjectShape
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
-                An *OPTIONAL* property that indicates the copyright aspects of the MediaObject,
+                The copyright aspects of the MediaObject,
                 particularly useful if the license requires attribution.
             """ ;
             rdfs:seeAlso [
@@ -891,7 +909,7 @@ _:PlaceShape
         sh:uniqueLang true ;
         sh:minCount 1 ;
         sh:description """
-            A *REQUIRED* property that indicates the name of the place.
+            The name of the place.
         """ ;
     ] ,
     _:SameAsShape ,
@@ -902,7 +920,8 @@ _:PlaceShape
         sh:node _:PostalAddressShape ;
         sh:minCount 0 ;
         sh:description """
-            A property that indicates the Place’s address, *REQUIRED* if known.
+            The Place’s physical address.
+            *REQUIRED* if known.
 
             See PostalAddress for this property’s allowed values.
         """ ;
@@ -929,7 +948,9 @@ _:PlaceShape
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
                         sh:description """
-                            The latitude of a location. For example 37.42242 (WGS 84).
+                            The latitude of a location.
+
+                            For example 37.42242 (WGS 84).
 
                             The value *MUST* be an `xsd:double` or an `xsd:decimal`.
                             Both are accepted because a plain decimal literal in Turtle (for example `52.379189`)
@@ -942,7 +963,9 @@ _:PlaceShape
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
                         sh:description """
-                            The longitude of a location. For example -122.08585 (WGS 84).
+                            The longitude of a location.
+
+                            For example -122.08585 (WGS 84).
 
                             The value *MUST* be an `xsd:double` or an `xsd:decimal`.
                             Both are accepted because a plain decimal literal in Turtle (for example `4.899431`)
@@ -956,7 +979,8 @@ _:PlaceShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            A property that indicates the Place’s [[!WGS84]] geo coordinates, *REQUIRED* if known.
+            The Place’s [[!WGS84]] geo coordinates.
+            *REQUIRED* if known.
         """ ;
         rdfs:seeAlso [
             rdfs:label "A place with coordinates:" ;
@@ -993,7 +1017,7 @@ _:PostalAddressShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            An *OPTIONAL* property that indicates the street address, e.g. ‘Street 123’.
+            The street address, e.g. ‘Street 123’.
         """ ;
     ] ,
     [
@@ -1002,7 +1026,7 @@ _:PostalAddressShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            An *OPTIONAL* property that indicates the postal code, e.g. ‘1234 AB’.
+            The postal code, e.g. ‘1234 AB’.
         """ ;
     ] ,
     [
@@ -1011,7 +1035,7 @@ _:PostalAddressShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            An *OPTIONAL* property that indicates the locality (city).
+            The locality (city).
         """ ;
     ] ,
     [
@@ -1020,7 +1044,7 @@ _:PostalAddressShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            An *OPTIONAL* property that indicates the region (province or state).
+            The region (province or state).
         """ ;
     ] ,
     [
@@ -1029,7 +1053,8 @@ _:PostalAddressShape
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
-            An *OPTIONAL* property that indicates the country.
+            The country.
+
             For countries that have an [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
             For historical countries, their name *MAY* be used instead (e.g. ‘Prussia’).
         """ ;

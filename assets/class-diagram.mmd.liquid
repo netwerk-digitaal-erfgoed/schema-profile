@@ -25,7 +25,7 @@ direction TB
         {%- elsif property.nodeKind -%}
             {{- property.nodeKind -}}
         {%- elsif property.node.or -%}
-            {{ property.node.or | map: "datatype" | join: " | " }}
+            {{ property.node.or | first | map: "datatype" | join: " | " }}
         {%- elsif property.node -%}
             {{ property.node.name | default: property.node.class }}
         {%- endif %} [

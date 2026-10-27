@@ -1,0 +1,42 @@
+{%- comment -%}
+    Renders what a property’s value must be, from its constraint shape: a datatype,
+    a class or node shape (linked when this document has a section for it), a URI,
+    a string of some format, or the alternatives of an sh:or. A constraint with an
+    rdfs:label, such as a pattern, shows that label instead. An alternative with
+    nothing to show, such as a creator without a type, is left for the property’s
+    section to explain. `sections` lists the names of the document’s sections.
+{%- endcomment -%}
+{%- assign label = constraint['rdfs:label'] | default: "" -%}
+{%- if label != "" -%}
+    {{ label | replace: "ISO 8601", "[[!ISO8601]]" }}
+{%- elsif constraint.or -%}
+    {%- assign shown = '' | split: '' -%}
+    {%- for alternative in constraint.or[0] -%}
+        {%- capture value %}{% render 'expected-value', constraint: alternative, sections: sections %}{% endcapture -%}
+        {%- if value != '' -%}{%- assign shown = shown | push: value -%}{%- endif -%}
+    {%- endfor -%}
+    {{- shown | join: ' or ' -}}
+{%- elsif constraint.datatype == "rdf:langString" -%}
+    [[#language|language-tagged string]]
+{%- elsif constraint.datatype -%}
+    `{{ constraint.datatype }}`
+{%- elsif constraint.node -%}
+    {%- if constraint.node.name == "DefinedTerm" -%}
+        [[#reference-terms|DefinedTerm]]
+    {%- elsif sections contains constraint.node.name -%}
+        [[#{{ constraint.node.name }}|{{ constraint.node.name }}]]
+    {%- else -%}
+        {%- render 'expected-value', constraint: constraint.node, sections: sections -%}
+    {%- endif -%}
+{%- elsif constraint.class -%}
+    {%- assign class = constraint.class | replace: "schema:", "" -%}
+    {%- if sections contains class -%}
+        [[#{{ class }}|{{ class }}]]
+    {%- else -%}
+        `{{ class }}`
+    {%- endif -%}
+{%- elsif constraint.nodeKind == "IRI" -%}
+    URI
+{%- elsif constraint.pattern -%}
+    string
+{%- endif -%}

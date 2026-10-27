@@ -457,11 +457,13 @@ For each of these classes, the sections below list the *REQUIRED* and *OPTIONAL*
 path: assets/class-diagram.svg
 </pre>
 
-{% render 'node-shape.liquid' for topLevelShapes as nodeShape %}
+{% for nodeShape in topLevelShapes %}
+    {% render 'node-shape.liquid', nodeShape: nodeShape, nodeShapes: nodeShapes %}
+{% endfor %}
 
 {% for nodeShape in allNamedShapes %}
     {% unless nodeShape.targetClass or nodeShape.name == "DefinedTerm" %}
-        {% render 'node-shape.liquid', nodeShape: nodeShape %}
+        {% render 'node-shape.liquid', nodeShape: nodeShape, nodeShapes: nodeShapes %}
     {% endunless %}
 {% endfor %}
 
@@ -566,6 +568,14 @@ Changes {#changes}
 ==========
 
 This section lists notable changes to this specification.
+
+Version 2.0 (planned) {#v2}
+----------
+
+Version 2.0 will turn some rules that are now warnings into violations,
+such as a `sameAs` value that is not a URI.
+The property tables mark such a rule with ‘v2.0’.
+Until then, data that breaks one of these rules still conforms, so publishers can prepare.
 
 <!-- CHANGELOG-START -->
 Version 1.5.2 (2026-10-16) {#v1.5.2}
