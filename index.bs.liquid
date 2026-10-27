@@ -44,13 +44,19 @@ The document is restricted in four ways:
 
 1. it applies to the Dutch heritage network (NDE), which implements the [[NDHS|National Digital Heritage Strategy]] and [[DERA|Digital Reference Heritage Architecture]];  
 2. it applies to the way published data is expressed, not how it is stored or managed internally;
-3. it prescribes a [=generic data model=] and leaves the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]]; 
+3. it prescribes a [=generic data model=] and leaves the use of [=domain data models=] up to [[NDE-DATASETS#publisher|dataset publishers]],
+    but specifies how to [[#publication-method|publish them alongside]] the generic data model;
 4. it bears upon [[NDE-DATASETS#dataset|datasets]], not their [[NDE-DATASETS#dataset-description|descriptions]]; for the latter see [[NDE-DATASETS]].
 
-Examples {#examples}
+Reading this document {#reading-guide}
 ---
 
-[[RDF-PRIMER|RDF]] examples in this document are in the *RECOMMENDED* JSON-LD [[#serialization]] format. 
+- To publish your data in the generic data model, start with [[#data-model-section]], which lists the required and optional properties of each class.
+- If you also publish a [=domain data model=], such as Linked Art or RiC-O, see [[#publication-method]].
+- [[#language]] and [[#reference-terms]] apply to properties throughout the data model.
+- To validate your data, see [[#formal-definition]].
+
+[[RDF-PRIMER|RDF]] examples in this document are in the *RECOMMENDED* JSON-LD [[#serialization]] format.
 
 Definitions {#definitions}
 ===
@@ -64,7 +70,7 @@ Definitions {#definitions}
 
 : <dfn>Domain data model</dfn>
 :: A domain-specific [=data model=], such as <a href="https://cidoc-crm.org">CIDOC-CRM</a>, [Linked Art](https://linked.art/model/), [RiC-O](https://github.com/ICA-EGAD/RiC-O) or <a href="https://www.rdaregistry.info/Elements/">RDA</a>.
-    Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope.
+    Can be used alongside a [=generic data model=]. Adds precision at the cost of complexity. Out of this document’s scope, except for [[#publication-method|publishing one alongside]] the generic data model.
 
 : <dfn>Metadata record</dfn>
 :: An [[RDF-PRIMER|RDF]] resource that expresses an entity in the heritage network 
