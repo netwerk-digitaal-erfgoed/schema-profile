@@ -145,32 +145,9 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
 <div class="example">
     Combine generic (Schema.org) with domain-specific (Linked Art) modelling.
 
-    <pre highlight=json-ld>
-        {
-          "@context": [
-            "https://linked.art/ns/v1/linked-art.json",
-            {
-              "schema": "https://schema.org/"
-            }
-          ],
-          "id": "https://literatuurmuseum.nl/id/123456789",
-          "type": ["HumanMadeObject", "schema:CreativeWork", "schema:VisualArtwork"],
-          "_label": "Het fluitketeltje en andere versjes",
-          "produced_by": {
-            "type": "Production",
-            "carried_out_by": [
-              {
-                "id": "http://data.rkd.nl/artists/8342",
-                "type": "Person"
-              }
-            ]
-          },
-          "schema:name": "Het fluitketeltje en andere versjes",
-          "schema:creator": {
-            "@id": "http://data.rkd.nl/artists/8342",
-            "@type": "schema:Person"
-          }
-        }
+    <pre class=include-code>
+    path: examples/combined-linked-art.jsonld
+    highlight: json-ld
     </pre>
 </div>
 
@@ -267,22 +244,11 @@ The language *MUST* be expressed as a well-formed language tag according to [[!B
 <div class="example">
     Specifying the language of the `name` property:
 
-    <pre highlight=json-ld line-numbers line-highlight="5-14">
-        {
-          "@context": "https://schema.org",
-          "@id": "https://n2t.net/ark:/123456/1",
-          "@type": "CreativeWork",
-          "name": [
-            {
-              "@language": "nl",
-              "@value": "De Sterrennacht"
-            },
-            {
-              "@language": "en",
-              "@value": "The Starry Night"
-            }
-          ]
-        }
+    <pre class=include-code>
+    path: examples/CreativeWork-name.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-14
     </pre>
 </div>
 
@@ -291,14 +257,11 @@ Even if only one language is available, the language *MUST* be specified.
 <div class="example">
     Specify the language property even for a single value:
 
-    <pre highlight=json-ld line-numbers line-highlight="3-6">
-        {
-          "@context": "https://schema.org",
-          "name": {
-            "@language": "nl",
-            "@value": "De Sterrennacht"
-          }
-        }
+    <pre class=include-code>
+    path: examples/language-single.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-8
     </pre>
 </div>
 
@@ -312,14 +275,11 @@ Because `und` is itself a well-formed language tag, the value stays a language-t
 <div class="example">
     Use `und` when the language cannot be determined – here a Han-script title that could be Chinese or Japanese:
 
-    <pre highlight=json-ld line-numbers line-highlight="3-6">
-        {
-          "@context": "https://schema.org",
-          "name": {
-            "@language": "und",
-            "@value": "山水"
-          }
-        }
+    <pre class=include-code>
+    path: examples/CreativeWork-name-undetermined.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 5-8
     </pre>
 </div>
 
@@ -509,12 +469,9 @@ Consumers can apply this context in place of Schema.org’s when expanding JSON-
 <div class="example">
     Override the context to produce `https://schema.org/` IRIs:
 
-    <pre highlight=json-ld>
-        {
-          "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
-          "@type": "CreativeWork",
-          "name": "Example"
-        }
+    <pre class=include-code>
+    path: examples/context-hosted.jsonld
+    highlight: json-ld
     </pre>
 </div>
 
@@ -523,18 +480,9 @@ Alternatively, consumers can inline the context to avoid a dependency on the hos
 <div class="example">
     Inline the context override:
 
-    <pre highlight=json-ld>
-        {
-          "@context": {
-            "@version": 1.1,
-            "@import": "https://def.nde.nl/context.jsonld",
-            "isPartOf": { "@type": "@id" },
-            "thumbnailUrl": { "@type": "@id" },
-            "url": { "@type": "@id" }
-          },
-          "@type": "CreativeWork",
-          "name": "Example"
-        }
+    <pre class=include-code>
+    path: examples/context-inline.jsonld
+    highlight: json-ld
     </pre>
 </div>
 
@@ -548,15 +496,9 @@ The inline override shown above leaves them out.
 <div class="example">
     Compacting with the context yields always-arrays:
 
-    <pre highlight=json-ld>
-        {
-          "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
-          "@type": "CreativeWork",
-          "name": { "@language": "nl", "@value": "De Nachtwacht" },
-          "creator": [
-            { "@type": "Person", "name": { "@language": "nl", "@value": "Rembrandt van Rijn" } }
-          ]
-        }
+    <pre class=include-code>
+    path: examples/context-compacted.jsonld
+    highlight: json-ld
     </pre>
 </div>
 

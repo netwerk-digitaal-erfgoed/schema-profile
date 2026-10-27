@@ -1,0 +1,28 @@
+{
+  "@context": [
+    "https://linked.art/ns/v1/linked-art.json",
+    {
+      "schema": "https://schema.org/"
+    }
+  ],
+  "id": "https://literatuurmuseum.nl/id/123456789",
+  "type": ["HumanMadeObject", "schema:CreativeWork", "schema:VisualArtwork"],
+  "_label": "Het fluitketeltje en andere versjes",
+  "produced_by": {
+    "type": "Production",
+    "carried_out_by": [
+      {
+        "id": "http://data.rkd.nl/artists/8342",
+        "type": "Person"
+      }
+    ]
+  },
+  "schema:name": {
+    "@language": "nl",
+    "@value": "Het fluitketeltje en andere versjes"
+  },
+  "schema:creator": {
+    "@id": "http://data.rkd.nl/artists/8342",
+    "@type": "schema:Person"
+  }
+}

@@ -24,11 +24,12 @@ echo "Parsing shacl.ttl..."
 riot --validate shacl.ttl >/dev/null
 shacl parse shacl.ttl >/dev/null
 
-# The examples are generic Schema.org, as publishers write them. Validate them
+# Most examples cite Schema.org’s context, as publishers write them; some cite
+# the hosted profile context, an inline context or Linked Art’s. Validate them
 # the way a consumer reads them: with the profile context in place of
 # Schema.org’s, which maps terms to http://schema.org/ and, since release 30.1,
-# types no property. Use the copy in this repository, so a change to it is
-# tested before release.
+# types no property, and in place of the hosted profile context. Use the copy
+# in this repository, so a change to it is tested before release.
 local_context="file://$PWD/public/context.jsonld"
 
 # The profile context imports https://def.nde.nl/context.jsonld for the type
@@ -77,8 +78,9 @@ for file in examples/*.jsonld; do
     report="/tmp/shacl-report-$basename.ttl"
     stderr="/tmp/shacl-stderr-$basename.txt"
 
-    # Matches both a plain context and one inside an array.
-    sed "s|\"https://schema.org\"|\"$local_context\"|" "$file" > "$data"
+    # Matches both a plain context and one inside an array, and also replaces the
+    # hosted profile context, so examples that cite it test this checkout’s version.
+    sed -E "s#\"https://(schema\\.org|docs\\.nde\\.nl/schema-profile/context\\.jsonld)\"#\"$local_context\"#" "$file" > "$data"
 
     # Run SHACL validation (don't let set -e abort the loop on shacl failure –
     # we want to surface its stderr and move on).
