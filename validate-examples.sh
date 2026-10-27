@@ -24,6 +24,39 @@ echo "Parsing shacl.ttl..."
 riot --validate shacl.ttl >/dev/null
 shacl parse shacl.ttl >/dev/null
 
+# The examples are generic Schema.org, as publishers write them. Validate them
+# the way a consumer reads them: with the profile context in place of
+# Schema.org’s, which maps terms to http://schema.org/ and, since release 30.1,
+# types no property. Use the copy in this repository, so a change to it is
+# tested before release.
+local_context="file://$PWD/public/context.jsonld"
+
+# The profile context imports https://def.nde.nl/context.jsonld for the type
+# coercions of Schema.org terms, which Schema.org’s own context dropped in
+# release 30.1. Check that every coercion the shapes rely on still holds, so a
+# change to the imported context cannot silently turn IRIs and dates into plain
+# strings.
+echo "Checking JSON-LD context coercions..."
+coercions="/tmp/shacl-coercions.jsonld"
+cat > "$coercions" <<EOF
+{
+  "@context": "$local_context",
+  "@id": "https://example.org/work",
+  "sameAs": "https://example.org/same",
+  "contentUrl": "https://example.org/content",
+  "license": "https://example.org/license",
+  "isPartOf": "https://example.org/collection",
+  "thumbnailUrl": "https://example.org/thumbnail",
+  "url": "https://example.org/page",
+  "dateCreated": "1642"
+}
+EOF
+triples=$(riot --output=nt "$coercions")
+for property in sameAs contentUrl license isPartOf thumbnailUrl url; do
+    grep -q "<https://schema.org/$property> <" <<<"$triples" || { fail "$property does not expand to an IRI"; exit 1; }
+done
+grep -q '<https://schema.org/dateCreated> "1642"^^<https://schema.org/Date>' <<<"$triples" || { fail "dateCreated is not typed schema:Date"; exit 1; }
+
 echo "Validating JSON-LD examples against SHACL shapes..."
 echo "----------------------------------------"
 
@@ -44,14 +77,8 @@ for file in examples/*.jsonld; do
     report="/tmp/shacl-report-$basename.ttl"
     stderr="/tmp/shacl-stderr-$basename.txt"
 
-    # Replace the JSON-LD context with NDE’s own context for Schema.org, which
-    # produces https://schema.org/ IRIs to match the SHACL shapes. Schema.org’s
-    # default context resolves terms to http://schema.org/ and, since release
-    # 30.1, no longer types any property, so values such as sameAs and
-    # dateCreated would come out as plain strings. The NDE context restores those
-    # typings; it is extended through @import with thumbnailUrl, which the dataset
-    # requirements that the context was written for do not use.
-    sed 's|"@context": "https://schema.org"|"@context": {"@version": 1.1, "@import": "https://def.nde.nl/context.jsonld", "thumbnailUrl": {"@id": "schema:thumbnailUrl", "@type": "@id"}}|' "$file" > "$data"
+    # Matches both a plain context and one inside an array.
+    sed "s|\"https://schema.org\"|\"$local_context\"|" "$file" > "$data"
 
     # Run SHACL validation (don't let set -e abort the loop on shacl failure –
     # we want to surface its stderr and move on).
