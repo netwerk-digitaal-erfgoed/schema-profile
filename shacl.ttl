@@ -335,6 +335,8 @@ _:CreativeWorkShape
                 years are numbered astronomically, with a year 0000 that equals 1 BCE,
                 so a negative year is one year older than its digits read as a label
                 (‘-0044’ denotes 45 BCE, and the range ‘-0430/-0403’ above denotes 431 to 404 BCE).
+                An ISO 8601 value *SHOULD* be a string without a language tag,
+                or a date typed `xsd:gYear`, `xsd:gYearMonth`, `xsd:date` or `schema:Date`.
                 If the period is a structured entity from a controlled vocabulary
                 (such as AAT), it *MUST* be referenced as a `DefinedTerm`
                 so that consumers receive structured typing.
@@ -348,6 +350,24 @@ _:CreativeWorkShape
                 rdfs:label "A period referenced as a DefinedTerm:" ;
                 rdfs:comment "file://examples/CreativeWork-temporalCoverage-term.jsonld" ;
             ] ;
+        ] ,
+        # The ISO 8601 option above is a bare pattern, so it also accepts "2011"@nl and "2011"^^xsd:int.
+        # A Warning for now, because those conform today.
+        [
+            a sh:PropertyShape ;
+            sh:path schema:temporalCoverage ;
+            sh:or (
+                [ sh:nodeKind sh:BlankNodeOrIRI ]
+                [ sh:datatype xsd:string ]
+                [ sh:node _:DateShape ]
+            ) ;
+            sh:severity sh:Warning ;
+            nde:futureChange [
+                nde:version "2.0" ;
+                sh:severity sh:Violation ;
+                rdfs:label "tekst zonder taalcode of getypeerde datum"@nl, "string without a language tag, or a typed date"@en ;
+            ] ;
+            sh:message "Gebruik een tekst zonder taalcode of een getypeerde datum voor een ISO 8601-datum of -interval als periode"@nl, "Use a string without a language tag, or a typed date, for an ISO 8601 date or interval as temporal coverage"@en ;
         ] ,
         [
             a sh:PropertyShape ;
