@@ -575,7 +575,7 @@ _:QuantitativeValueShape
         """ ;
     ] .
 
-# Documents sameAs on Person, Organization and Place; the constraint lives in _:SameAsUriShape.
+# Documents sameAs on Person, Organization and Place; the constraints live in _:SameAsUriShape and _:SameAsHttpShape.
 _:SameAsShape
     a sh:PropertyShape ;
     sh:path schema:sameAs ;
@@ -600,6 +600,25 @@ _:SameAsUriShape
             sh:severity sh:Violation ;
         ] ;
         sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
+    ] .
+
+# Term URIs must be dereferenceable (see Reference terms), which a URI such as urn:… is not.
+# A relative string that a JSON-LD context turns into a URI resolves against the document’s http(s) base,
+# so it passes; this shape does not catch it.
+# A Warning for now, also on DefinedTerm, for the same reasons as _:SameAsUriShape.
+_:SameAsHttpShape
+    a sh:NodeShape ;
+    sh:targetClass schema:DefinedTerm, schema:Person, schema:Organization, schema:Place, schema:Occupation ;
+    sh:property [
+        sh:path schema:sameAs ;
+        sh:pattern "^https?://" ;
+        sh:flags "i" ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Gebruik een http- of https-URI als waarde van sameAs"@nl, "Use an http or https URI as the value of sameAs"@en ;
     ] .
 
 _:PersonShape
