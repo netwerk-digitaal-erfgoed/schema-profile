@@ -17,7 +17,7 @@ jobs:
           docker run --rm -v $PWD:/work -w /work stain/jena:latest bash validate-examples.sh
 
   build:
-    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@v1.3.0
+    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@v1.4.0
 
   # Merges Dependabot’s updates, such as a new release of the shared workflow, once
   # the spec builds with them. An update that breaks the build stays open.
