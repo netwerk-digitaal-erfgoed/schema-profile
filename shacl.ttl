@@ -499,9 +499,13 @@ _:DefinedTermShape
         The `sameAs` URI is the *canonical* identifier and keeps its own typing in its source vocabulary
         (e.g. `skos:Concept` in a thesaurus).
 
+        If the term is in more than one vocabulary, `sameAs` *MAY* have several values, one per vocabulary.
+        The node groups them under the dataset’s own `name`, so the property still has one value per term.
+
         To recognise that two nodes reference the same term, consumers *MUST* compare their `sameAs` URIs
         rather than the nodes’ own blank-node or URI identities,
         which are local to each publishing dataset and therefore not shared across datasets.
+        Two nodes reference the same term if they share at least one `sameAs` URI.
     """ ;
     sh:property [
         sh:path schema:name ;
