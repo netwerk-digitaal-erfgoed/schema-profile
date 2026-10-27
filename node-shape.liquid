@@ -143,6 +143,11 @@
             {%- capture datatype_clause %}|values will have to be of type `{{ future_datatype }}`{% endcapture -%}
             {%- assign future_clauses = future_clauses | append: datatype_clause -%}
         {%- endif -%}
+        {%- comment %} A change that its constraints can’t describe names itself in rdfs:label. {% endcomment -%}
+        {%- assign change_label = change['rdfs:label'] | lang: "en" -%}
+        {%- if future_clauses == "" and change_label != "" and change_label != nil -%}
+            {%- assign future_clauses = change_label | prepend: "|" -%}
+        {%- endif -%}
         {%- assign future_text = future_clauses | remove_first: "|" | replace: "|", "; " -%}
         {%- if future_text != "" %}
 
