@@ -8,7 +8,11 @@
 {% if nodeShape.name == "CreativeWork" %}
     Note: CreativeWork does not reference the Dutch legal concept 'creatief werk'
     as used in the Auteurswet (Copyright Act of 1912) in any way.
+{% endif %}
 
+{% render 'attribute-table', nodeShape: nodeShape, nodeShapes: nodeShapes %}
+
+{% if nodeShape.name == "CreativeWork" %}
     ### Subclasses ### {#subclasses}
 
     Publishers *SHOULD* use more fine-grained classes alongside the top-level class `CreativeWork`.
@@ -90,6 +94,15 @@
         | replace: "reference terms", "[[#reference-terms|reference terms]]"
         | replace: " contentLocation", " [[#CreativeWork-contentLocation|contentLocation]]"
     -}}
+
+    {%- comment -%}
+        The overview tables show only the first paragraph of a description, so the
+        requirement keyword comes from the shape here rather than from each description.
+        A conditional requirement stays in the description, which names the condition.
+    {%- endcomment -%}
+    {%- if property.minCount > 0 and property.severity != "Warning" -%}
+        This property is *REQUIRED*.
+    {% endif %}
 
     {%- if property.datatype == "rdf:langString" -%}
         The value *MUST* be a [[#language|language-tagged]] string.

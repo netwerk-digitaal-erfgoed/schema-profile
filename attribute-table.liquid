@@ -1,0 +1,66 @@
+{%- comment -%}
+    Renders the overview of one class’s properties, which opens its section.
+    Besides the class’s own shape, shapes without a name that target the class,
+    such as the one that makes sameAs a URI, add their constraints to its rows.
+    The description is the first paragraph of the property’s sh:description,
+    which summarises it.
+    An expected value that is only a warning reads as preferred, so a future
+    change that makes it a violation does not seem to repeat it.
+{%- endcomment -%}
+{%- assign properties = nodeShape.property -%}
+{%- if nodeShape.targetClass -%}
+    {%- for shape in nodeShapes -%}
+        {%- if shape.name == nil and shape.targetClass contains nodeShape.targetClass -%}
+            {%- assign properties = properties | concat: shape.property -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- endif -%}
+{%- capture newline_paragraph %}
+
+{% endcapture -%}
+{%- assign sections = nodeShapes | where: "name" | map: "name" -%}
+<table>
+    <caption>{{ nodeShape.name }} properties</caption>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Expected value</th>
+            <th>Usage</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if nodeShape.nodeKind == "IRI" -%}
+        <tr>
+            <th scope="row">[[#{{ nodeShape.name }}-URI|URI]]</th>
+            <td>The {{ nodeShape.name }}’s persistent URI.</td>
+            <td>URI</td>
+            <td>Required, exactly one</td>
+        </tr>
+        {% endif -%}
+        {% assign merged_properties = properties | mergePropertiesByPath -%}
+        {% for property in merged_properties -%}
+        {% assign name = property.path | replace: "schema:", "" -%}
+        {%- comment -%}
+            The value is only preferred when every shape on the path that constrains
+            it is a warning; a warning about how many values there are does not count.
+        {%- endcomment -%}
+        {%- assign warned = false -%}
+        {%- assign enforced = false -%}
+        {%- for shape in properties -%}
+            {%- if shape.path == property.path -%}
+                {%- if shape.nodeKind or shape.datatype or shape.class or shape.node or shape.or or shape.pattern -%}
+                    {%- if shape.severity == "Warning" -%}{%- assign warned = true -%}{%- else -%}{%- assign enforced = true -%}{%- endif -%}
+                {%- endif -%}
+            {%- endif -%}
+        {%- endfor %}
+        <tr>
+            <th scope="row">[[#{{ nodeShape.name }}-{{ name }}|{{ name }}]]</th>
+            <td>{{ property.description | strip | split: newline_paragraph | first | strip_newlines }}</td>
+            <td>{% if warned and enforced == false %}preferably {% endif %}{% render 'expected-value', constraint: property, sections: sections %}
+                {%- render 'cardinality-and-usage', property: property, nodeShape: nodeShape, iri: 'URI', combined: true, part: 'value-note' %}</td>
+            {% render 'cardinality-and-usage', property: property, nodeShape: nodeShape, iri: 'URI', combined: true -%}
+        </tr>
+        {% endfor -%}
+    </tbody>
+</table>
