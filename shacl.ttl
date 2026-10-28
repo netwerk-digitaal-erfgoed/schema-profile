@@ -834,11 +834,15 @@ _:MediaObjectShape
         For other types of media, the generic class MediaObject *MUST* be used by itself.
     """ ;
     sh:property
+        _:MediaLicenseIriShape ,
+        _:MediaLicenseHttpShape ,
+        _:MediaContentUrlIriShape ,
+        _:MediaContentUrlHttpShape ,
+        _:MediaThumbnailUrlIriShape ,
+        _:MediaThumbnailUrlHttpShape ,
         [
             sh:path schema:license ;
-            sh:nodeKind sh:IRI ;
             sh:minCount 1 ;
-            sh:pattern "^https?://" ;
             sh:description """
                 The license or rights statement
                 that applies to the digital reproduction.
@@ -865,8 +869,9 @@ _:MediaObjectShape
             ]
         ] ,
         # The minimum count is a warning because only openly licensed media need these URLs; the URI checks
-        # are not. This shape is reached only through sh:or and sh:qualifiedValueShape on associatedMedia,
-        # which fail on a result of any severity, so even the missing URL makes associatedMedia a violation.
+        # (_:MediaContentUrlIriShape and the like, referenced above) are not. This shape is reached only through
+        # sh:or and sh:qualifiedValueShape on associatedMedia, which fail on a result of any severity, so even
+        # the missing URL makes associatedMedia a violation.
         [
             sh:path schema:contentUrl ;
             sh:minCount 1 ;
@@ -884,16 +889,6 @@ _:MediaObjectShape
                 rdfs:label "Full-sized image representation of the Starry Night." ;
                 rdfs:comment "file://examples/MediaObject-contentUrl.jsonld" ;
             ]
-        ] ,
-        [
-            sh:path schema:contentUrl ;
-            sh:nodeKind sh:IRI ;
-            sh:message "Gebruik een URI als waarde van contentUrl"@nl, "Use a URI as the value of contentUrl"@en ;
-        ] ,
-        [
-            sh:path schema:contentUrl ;
-            sh:pattern "^https?://" ;
-            sh:message "Gebruik een http- of https-URL als contentUrl"@nl, "Use an http or https URL as contentUrl"@en ;
         ] ,
         [
             sh:path schema:thumbnailUrl ;
@@ -914,16 +909,6 @@ _:MediaObjectShape
             ]
         ] ,
         [
-            sh:path schema:thumbnailUrl ;
-            sh:nodeKind sh:IRI ;
-            sh:message "Gebruik een URI als waarde van thumbnailUrl"@nl, "Use a URI as the value of thumbnailUrl"@en ;
-        ] ,
-        [
-            sh:path schema:thumbnailUrl ;
-            sh:pattern "^https?://" ;
-            sh:message "Gebruik een http- of https-URL als thumbnailUrl"@nl, "Use an http or https URL as thumbnailUrl"@en ;
-        ] ,
-        [
             sh:path schema:copyrightNotice ;
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
@@ -940,18 +925,64 @@ _:MediaObjectShape
 _:IIIFPresentationManifestShape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:property [
-        sh:path schema:license ;
-        sh:nodeKind sh:IRI ;
-        sh:minCount 1 ;
-        sh:pattern "^https?://" ;
-    ] ,
+    sh:property
+        _:MediaLicenseIriShape ,
+        _:MediaLicenseHttpShape ,
+        [
+            sh:path schema:license ;
+            sh:minCount 1 ;
+        ] ,
     [
         sh:path schema:encodingFormat ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:pattern "^application/ld\\+json;profile=(['\"])http://iiif\\.io/api/presentation/\\d+/context\\.json\\1$" ;
     ] .
+
+# The value checks of both kinds of associatedMedia entry. A result inside sh:or is never reported, so
+# on their own these would only surface as the sh:or’s general message, which reads as a missing value.
+# Applied to every entry as well, a literal or non-http(s) URL is also reported with its own message.
+# The http(s) checks leave anything but a URI to the URI checks, so one defect yields one result.
+_:AssociatedMediaValueShape
+    a sh:NodeShape ;
+    sh:targetObjectsOf schema:associatedMedia ;
+    sh:property
+        _:MediaLicenseIriShape ,
+        _:MediaLicenseHttpShape ,
+        _:MediaContentUrlIriShape ,
+        _:MediaContentUrlHttpShape ,
+        _:MediaThumbnailUrlIriShape ,
+        _:MediaThumbnailUrlHttpShape .
+
+_:MediaLicenseIriShape
+    sh:path schema:license ;
+    sh:nodeKind sh:IRI ;
+    sh:message "Gebruik een URI als waarde van license"@nl, "Use a URI as the value of license"@en .
+
+_:MediaLicenseHttpShape
+    sh:path schema:license ;
+    sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
+    sh:message "Gebruik een http- of https-URI als license"@nl, "Use an http or https URI as license"@en .
+
+_:MediaContentUrlIriShape
+    sh:path schema:contentUrl ;
+    sh:nodeKind sh:IRI ;
+    sh:message "Gebruik een URI als waarde van contentUrl"@nl, "Use a URI as the value of contentUrl"@en .
+
+_:MediaContentUrlHttpShape
+    sh:path schema:contentUrl ;
+    sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
+    sh:message "Gebruik een http- of https-URL als contentUrl"@nl, "Use an http or https URL as contentUrl"@en .
+
+_:MediaThumbnailUrlIriShape
+    sh:path schema:thumbnailUrl ;
+    sh:nodeKind sh:IRI ;
+    sh:message "Gebruik een URI als waarde van thumbnailUrl"@nl, "Use a URI as the value of thumbnailUrl"@en .
+
+_:MediaThumbnailUrlHttpShape
+    sh:path schema:thumbnailUrl ;
+    sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
+    sh:message "Gebruik een http- of https-URL als thumbnailUrl"@nl, "Use an http or https URL as thumbnailUrl"@en .
 
 # Kept apart from the manifest shape above: a warning inside that shape would make the node
 # fail sh:node, and so turn the associatedMedia entry into a violation.
