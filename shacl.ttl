@@ -834,12 +834,9 @@ _:MediaObjectShape
         For other types of media, the generic class MediaObject *MUST* be used by itself.
     """ ;
     sh:property
-        _:MediaLicenseIriShape ,
-        _:MediaLicenseHttpShape ,
-        _:MediaContentUrlIriShape ,
-        _:MediaContentUrlHttpShape ,
-        _:MediaThumbnailUrlIriShape ,
-        _:MediaThumbnailUrlHttpShape ,
+        _:MediaLicenseUriShape ,
+        _:MediaContentUrlUriShape ,
+        _:MediaThumbnailUrlUriShape ,
         [
             sh:path schema:license ;
             sh:minCount 1 ;
@@ -869,7 +866,7 @@ _:MediaObjectShape
             ]
         ] ,
         # The minimum count is a warning because only openly licensed media need these URLs; the URI checks
-        # (_:MediaContentUrlIriShape and the like, referenced above) are not. This shape is reached only through
+        # (_:MediaContentUrlUriShape and the like, referenced above) are not. This shape is reached only through
         # sh:or and sh:qualifiedValueShape on associatedMedia, which fail on a result of any severity, so even
         # the missing URL makes associatedMedia a violation.
         [
@@ -926,8 +923,7 @@ _:IIIFPresentationManifestShape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:property
-        _:MediaLicenseIriShape ,
-        _:MediaLicenseHttpShape ,
+        _:MediaLicenseUriShape ,
         [
             sh:path schema:license ;
             sh:minCount 1 ;
@@ -942,46 +938,34 @@ _:IIIFPresentationManifestShape
 # The value checks of both kinds of associatedMedia entry. A result inside sh:or is never reported, so
 # on their own these would only surface as the sh:or’s general message, which reads as a missing value.
 # Applied to every entry as well, a literal or non-http(s) URL is also reported with its own message.
-# The http(s) checks leave anything but a URI to the URI checks, so one defect yields one result.
 _:AssociatedMediaValueShape
     a sh:NodeShape ;
     sh:targetObjectsOf schema:associatedMedia ;
     sh:property
-        _:MediaLicenseIriShape ,
-        _:MediaLicenseHttpShape ,
-        _:MediaContentUrlIriShape ,
-        _:MediaContentUrlHttpShape ,
-        _:MediaThumbnailUrlIriShape ,
-        _:MediaThumbnailUrlHttpShape .
+        _:MediaLicenseUriShape ,
+        _:MediaContentUrlUriShape ,
+        _:MediaThumbnailUrlUriShape .
 
-_:MediaLicenseIriShape
-    sh:path schema:license ;
+# sh:node rather than two constraints on each property shape, so that a value failing both, such as
+# the literal "CC0", gives one result rather than two.
+_:WebUriShape
+    a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:message "Gebruik een waarde van type URI (RDF-resource), geen tekst"@nl, "Use a value of type URI (RDF resource), not text"@en .
+    sh:pattern "^https?://" .
 
-_:MediaLicenseHttpShape
+_:MediaLicenseUriShape
     sh:path schema:license ;
-    sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
+    sh:node _:WebUriShape ;
     sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
-_:MediaContentUrlIriShape
+_:MediaContentUrlUriShape
     sh:path schema:contentUrl ;
-    sh:nodeKind sh:IRI ;
-    sh:message "Gebruik een waarde van type URI (RDF-resource), geen tekst"@nl, "Use a value of type URI (RDF resource), not text"@en .
-
-_:MediaContentUrlHttpShape
-    sh:path schema:contentUrl ;
-    sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
+    sh:node _:WebUriShape ;
     sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
-_:MediaThumbnailUrlIriShape
+_:MediaThumbnailUrlUriShape
     sh:path schema:thumbnailUrl ;
-    sh:nodeKind sh:IRI ;
-    sh:message "Gebruik een waarde van type URI (RDF-resource), geen tekst"@nl, "Use a value of type URI (RDF resource), not text"@en .
-
-_:MediaThumbnailUrlHttpShape
-    sh:path schema:thumbnailUrl ;
-    sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
+    sh:node _:WebUriShape ;
     sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
 # Kept apart from the manifest shape above: a warning inside that shape would make the node
