@@ -957,32 +957,32 @@ _:AssociatedMediaValueShape
 _:MediaLicenseIriShape
     sh:path schema:license ;
     sh:nodeKind sh:IRI ;
-    sh:message "Gebruik een URI als waarde van license"@nl, "Use a URI as the value of license"@en .
+    sh:message "Gebruik een waarde van type URI (RDF-resource), geen tekst"@nl, "Use a value of type URI (RDF resource), not text"@en .
 
 _:MediaLicenseHttpShape
     sh:path schema:license ;
     sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
-    sh:message "Gebruik een http- of https-URI als license"@nl, "Use an http or https URI as license"@en .
+    sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
 _:MediaContentUrlIriShape
     sh:path schema:contentUrl ;
     sh:nodeKind sh:IRI ;
-    sh:message "Gebruik een URI als waarde van contentUrl"@nl, "Use a URI as the value of contentUrl"@en .
+    sh:message "Gebruik een waarde van type URI (RDF-resource), geen tekst"@nl, "Use a value of type URI (RDF resource), not text"@en .
 
 _:MediaContentUrlHttpShape
     sh:path schema:contentUrl ;
     sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
-    sh:message "Gebruik een http- of https-URL als contentUrl"@nl, "Use an http or https URL as contentUrl"@en .
+    sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
 _:MediaThumbnailUrlIriShape
     sh:path schema:thumbnailUrl ;
     sh:nodeKind sh:IRI ;
-    sh:message "Gebruik een URI als waarde van thumbnailUrl"@nl, "Use a URI as the value of thumbnailUrl"@en .
+    sh:message "Gebruik een waarde van type URI (RDF-resource), geen tekst"@nl, "Use a value of type URI (RDF resource), not text"@en .
 
 _:MediaThumbnailUrlHttpShape
     sh:path schema:thumbnailUrl ;
     sh:not [ sh:nodeKind sh:IRI ; sh:not [ sh:pattern "^https?://" ] ] ;
-    sh:message "Gebruik een http- of https-URL als thumbnailUrl"@nl, "Use an http or https URL as thumbnailUrl"@en .
+    sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
 # Kept apart from the manifest shape above: a warning inside that shape would make the node
 # fail sh:node, and so turn the associatedMedia entry into a violation.
