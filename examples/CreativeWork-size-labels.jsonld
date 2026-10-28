@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.org/print",
+  "@type": "CreativeWork",
+  "size": {
+    "@type": "QuantitativeValue",
+    "valueReference": { "@value": "hoogte", "@language": "nl" },
+    "value": 85,
+    "unitText": "mm"
+  }
+}
