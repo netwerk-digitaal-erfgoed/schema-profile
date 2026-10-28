@@ -290,7 +290,7 @@ _:CreativeWorkShape
                 rdfs:label "The same dimensions, additionally as machine-readable measurements:" ;
                 rdfs:comment "file://examples/CreativeWork-size-structured.jsonld" ;
             ] , [
-                rdfs:label "A measurement whose dimension and unit have no public term yet:" ;
+                rdfs:label "A measurement whose dimension and unit have no known term:" ;
                 rdfs:comment "file://examples/CreativeWork-size-labels.jsonld" ;
             ] ;
         ] ,
@@ -539,14 +539,16 @@ _:QuantitativeValueShape
         Each measured dimension *MUST* be a separate `QuantitativeValue`;
         a single node *MUST NOT* combine several dimensions.
 
-        The dimension and the unit are terms, so like any [[#reference-terms|term]] they need only a `name`
-        when no public term is known, such as a dimension “hoogte”@nl or a unit “mm”@nl.
-        Adding `sameAs` later, once the term’s URI is known, changes nothing else in the measurement.
-
         The dimension *MUST NOT* be given only as the `name` of the `QuantitativeValue`:
         Schema.org leaves underspecified what that `name` denotes,
         so consumers cannot tell a dimension from, say, the measured part.
+
+        The measurement *MUST* have a `unitCode` or a `unitText`, or both.
     """ ;
+    sh:or (
+        [ sh:path schema:unitCode ; sh:minCount 1 ]
+        [ sh:path schema:unitText ; sh:minCount 1 ]
+    ) ;
     sh:property [
         sh:path schema:value ;
         sh:or (
@@ -559,12 +561,15 @@ _:QuantitativeValueShape
         sh:description """
             The measured number.
 
-            The number *MUST NOT* carry the unit, which belongs in `unitCode`.
+            The number *MUST NOT* carry the unit, which belongs in `unitCode` or `unitText`.
         """ ;
     ] ,
     [
         sh:path schema:valueReference ;
-        sh:node _:DefinedTermShape ;
+        sh:or (
+            [ sh:node _:DefinedTermShape ]
+            [ sh:datatype rdf:langString ]
+        ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:description """
@@ -572,21 +577,35 @@ _:QuantitativeValueShape
 
             Without it, the measurement cannot be interpreted.
 
-            The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]),
+            The value *SHOULD* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]),
             for example http://vocab.getty.edu/aat/300055644 for height.
+            If no term is known, the value *MUST* be a language-tagged string, such as “hoogte”@nl.
         """ ;
     ] ,
     [
         sh:path schema:unitCode ;
         sh:node _:DefinedTermShape ;
-        sh:minCount 1 ;
+        sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:description """
             The unit of measurement,
             for example http://vocab.getty.edu/aat/300379098 for centimetres.
+            *REQUIRED* if the unit’s term is known; otherwise, give the unit in `unitText`.
 
             The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]).
             Because `schema:unitCode` expects `Text` or `URL`, the `DefinedTerm` node *MUST* also be co-typed as `URL` (`"@type": ["DefinedTerm", "URL"]`).
+        """ ;
+    ] ,
+    [
+        sh:path schema:unitText ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:description """
+            The unit of measurement as text, such as “mm”.
+            *REQUIRED* if the measurement has no `unitCode`.
+
+            Because a unit symbol does not depend on language, the value *MUST* be a plain string (`xsd:string`).
         """ ;
     ] .
 

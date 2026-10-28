@@ -4,14 +4,8 @@
   "@type": "CreativeWork",
   "size": {
     "@type": "QuantitativeValue",
-    "valueReference": {
-      "@type": "DefinedTerm",
-      "name": { "@value": "hoogte", "@language": "nl" }
-    },
+    "valueReference": { "@value": "hoogte", "@language": "nl" },
     "value": 85,
-    "unitCode": {
-      "@type": ["DefinedTerm", "URL"],
-      "name": { "@value": "mm", "@language": "nl" }
-    }
+    "unitText": "mm"
   }
 }
