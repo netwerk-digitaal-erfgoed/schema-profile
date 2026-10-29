@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.6.0...1.7.0) (2026-10-29)
+
+
+### Features
+
+* accept a dimension label and unitText in a measurement ([#246](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/246)) ([255ec74](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/255ec7472a6b7b37cb5303ca390d4d1969f79f3c))
+
+
+### Bug Fixes
+
+* report each media URL that is not a URI with its own message ([#248](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/248)) ([c3f098d](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/c3f098db23d8ee5b11da76e5bea485203a972e8c))
+
 ## [1.6.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.5.2...1.6.0) (2026-10-27)
 
 
