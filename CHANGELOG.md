@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.7.0...1.7.1) (2026-10-31)
+
+
+### Documentation
+
+* explain why profile negotiation does not suit SPARQL endpoints ([#249](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/249)) ([4863052](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/48630522e31078a54728d41642fd5e0361b613ee))
+
 ## [1.7.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.6.0...1.7.0) (2026-10-29)
 
 
