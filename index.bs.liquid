@@ -158,7 +158,7 @@ To do so, publish a profile with URI `https://docs.nde.nl/schema-profile/`.
 
 Note: While still a draft, [[!DX-PROF-CONNEG]] has already been implemented, for example by the [Rijksmuseum](https://data.rijksmuseum.nl/docs/http/#http-content-negotiation).
 
-Note: This method does not apply to SPARQL endpoints, which use the SPARQL protocol and do not support profile-based content negotiation.
+Note: This method does not suit SPARQL endpoints. A SPARQL query, not the server, decides what a response contains, so there is no representation for the server to pick by profile.
 
 <div class="example">
     Expose the generic data model in its own content-negotiated profile.    
