@@ -259,7 +259,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:size ;
-            sh:message "Gebruik een tekst (maximaal één per taal) of een QuantitativeValue met value, valueReference en unitCode als afmeting"@nl, "Use a text (at most one per language) or a QuantitativeValue with value, valueReference and unitCode as size"@en ;
+            sh:message "Gebruik een tekst (maximaal één per taal) of een QuantitativeValue met value, valueReference en unitCode of unitText als afmeting"@nl, "Use a text (at most one per language) or a QuantitativeValue with value, valueReference and unitCode or unitText as size"@en ;
             sh:or (
                 [ sh:datatype rdf:langString ]
                 [ sh:datatype xsd:string ]
