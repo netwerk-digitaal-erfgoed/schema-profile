@@ -474,7 +474,7 @@ so values such as `sameAs`, `license` and `dateCreated` come out as plain string
 A ready-to-use context is available at `https://docs.nde.nl/schema-profile/context.jsonld`.
 It overrides the namespace to `https://` and restores the type coercions this profile relies on.
 It uses [[JSON-LD11]]’s `@import` to take most of them from NDE’s context for Schema.org at `https://def.nde.nl/context.jsonld`,
-and declares `isPartOf`, `thumbnailUrl` and `url` as IRIs itself.
+and declares `isPartOf`, `thumbnailUrl` and `url` as IRIs and `birthDate` and `deathDate` as dates itself.
 Consumers can apply this context in place of Schema.org’s when expanding JSON-LD data before validation or querying:
 
 <div class="example">

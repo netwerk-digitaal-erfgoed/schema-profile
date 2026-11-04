@@ -19,6 +19,9 @@
 
     "isPartOf":     { "@type": "@id" },
     "thumbnailUrl": { "@type": "@id" },
-    "url":          { "@type": "@id" }
+    "url":          { "@type": "@id" },
+
+    "birthDate": { "@type": "schema:Date" },
+    "deathDate": { "@type": "schema:Date" }
   }
 }
