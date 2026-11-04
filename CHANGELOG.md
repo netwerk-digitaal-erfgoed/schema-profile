@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.8.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.7.0...1.8.0) (2026-11-04)
+
+
+### Features
+
+* accept EDTF-typed dates for uncertain dates and intervals ([#252](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/252)) ([27f2c90](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/27f2c908a8c62b765f6d39ace912c656c0210b86))
+
+
+### Bug Fixes
+
+* name unitText as an alternative to unitCode in the size message ([#251](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/251)) ([fb80a4f](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/fb80a4fc6933dfdc5344f7a2e608a32655913e01))
+
+
+### Documentation
+
+* explain why profile negotiation does not suit SPARQL endpoints ([#249](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/249)) ([4863052](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/48630522e31078a54728d41642fd5e0361b613ee))
+
 ## [1.7.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.6.0...1.7.0) (2026-10-29)
 
 
