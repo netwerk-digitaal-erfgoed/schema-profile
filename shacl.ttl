@@ -321,6 +321,7 @@ _:CreativeWorkShape
                 [ sh:node _:DefinedTermShape ]
                 [ sh:nodeKind sh:IRI ; sh:pattern "^https?://" ]
                 [ sh:pattern "^(-?([1-9]\\d{3,}|0\\d{3})(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\.\\.)(/(-?([1-9]\\d{3,}|0\\d{3})(-\\d{2}(-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?)?)?)?|\\d{2}(-\\d{2})?|\\.\\.))?$" ;
+                  sh:not [ sh:datatype edtf:EDTF ] ;
                   rdfs:label "ISO 8601 date or interval" ]
                 [ sh:node _:EdtfShape ]
             ) ;
@@ -1256,6 +1257,7 @@ _:EdtfShape
     sh:pattern "^(-?[0-9]{4}-2[1-4]|-?[0-9]{4}-((0[1-9]|1[0-2])-XX|XX(-XX)?)|-?[0-9]{2}([0-9]X|XX)|Y-?[1-9][0-9]{4,}|-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~%]?(/(-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~%]?|\\.\\.)?)?|(\\.\\.)?/-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~%]?)$" .
 
 # A single date that EDTF can express is also a plain ISO 8601 date, which more consumers understand.
+# Each date property repeats the warning that uses this shape, so that its result keeps sh:resultPath.
 _:EdtfSingleDateShape
     a sh:NodeShape ;
     sh:datatype edtf:EDTF ;
