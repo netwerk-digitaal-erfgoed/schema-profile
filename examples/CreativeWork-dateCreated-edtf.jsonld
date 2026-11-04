@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/3",
+  "@type": "CreativeWork",
+  "name": {
+    "@language": "nl",
+    "@value": "Portret van een onbekende man"
+  },
+  "dateCreated": {
+    "@value": "1620~",
+    "@type": "http://id.loc.gov/datatypes/edtf/EDTF"
+  }
+}
