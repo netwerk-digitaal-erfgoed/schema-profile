@@ -49,14 +49,18 @@ cat > "$coercions" <<EOF
   "isPartOf": "https://example.org/collection",
   "thumbnailUrl": "https://example.org/thumbnail",
   "url": "https://example.org/page",
-  "dateCreated": "1642"
+  "dateCreated": "1642",
+  "birthDate": "1642",
+  "deathDate": "1642"
 }
 EOF
 triples=$(riot --output=nt "$coercions")
 for property in sameAs contentUrl license isPartOf thumbnailUrl url; do
     grep -q "<https://schema.org/$property> <" <<<"$triples" || { fail "$property does not expand to an IRI"; exit 1; }
 done
-grep -q '<https://schema.org/dateCreated> "1642"^^<https://schema.org/Date>' <<<"$triples" || { fail "dateCreated is not typed schema:Date"; exit 1; }
+for property in dateCreated birthDate deathDate; do
+    grep -q "<https://schema.org/$property> \"1642\"^^<https://schema.org/Date>" <<<"$triples" || { fail "$property is not typed schema:Date"; exit 1; }
+done
 
 echo "Validating JSON-LD examples against SHACL shapes..."
 echo "----------------------------------------"
