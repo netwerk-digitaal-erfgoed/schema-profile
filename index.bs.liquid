@@ -17,126 +17,6 @@ Local Boilerplate: logo yes
 
 <pre class=include>path: nde.include</pre>
 
-<style>
-/* JSON-LD and Turtle versions of an example, shown as tabs that switch together. */
-.syntax-tablist {
-    display: flex;
-    gap: 0.25em;
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid var(--example-border);
-}
-.syntax-tablist [role="tab"] {
-    margin-bottom: -1px;
-    padding: 0.25em 0.75em;
-    border: none;
-    border-bottom: 3px solid transparent;
-    background: none;
-    color: var(--text);
-    font: inherit;
-    cursor: pointer;
-}
-.syntax-tablist [role="tab"][aria-selected="true"] {
-    border-bottom-color: var(--a-normal-text);
-    color: var(--a-normal-text);
-    font-weight: bold;
-}
-.syntax-tablist [role="tab"]:focus-visible,
-.syntax-tabs > [role="tabpanel"]:focus-visible {
-    outline: 2px solid var(--a-normal-text);
-    outline-offset: 2px;
-}
-:root[data-syntax="jsonld"] .syntax-tabs > [data-syntax="turtle"],
-:root[data-syntax="turtle"] .syntax-tabs > [data-syntax="jsonld"] {
-    /* Beats Bikeshed’s display: grid on line-numbered code blocks. */
-    display: none !important;
-}
-</style>
-
-<script>
-// Turns each .syntax-tabs group into tabs. Picking a syntax in one group
-// switches every group on the page, and the choice is remembered.
-(() => {
-  const syntaxes = { jsonld: 'JSON-LD', turtle: 'Turtle' };
-  const storageKey = 'nde-schema-profile-syntax';
-  const tabs = [];
-
-  const select = (syntax) => {
-    document.documentElement.dataset.syntax = syntax;
-    for (const tab of tabs) {
-      const selected = tab.dataset.syntax === syntax;
-      tab.setAttribute('aria-selected', String(selected));
-      tab.tabIndex = selected ? 0 : -1;
-    }
-  };
-
-  // Hide the other syntax before the page renders, so a deep link
-  // does not land on content that is about to disappear.
-  let stored = null;
-  try {
-    stored = localStorage.getItem(storageKey);
-  } catch {}
-  select(Object.hasOwn(syntaxes, stored ?? '') ? stored : 'jsonld');
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.syntax-tabs').forEach((group, groupIndex) => {
-      const tablist = document.createElement('div');
-      tablist.className = 'syntax-tablist';
-      tablist.setAttribute('role', 'tablist');
-      tablist.setAttribute('aria-label', 'Syntax');
-
-      for (const panel of group.querySelectorAll(':scope > [data-syntax]')) {
-        const syntax = panel.dataset.syntax;
-        const tab = document.createElement('button');
-        tab.type = 'button';
-        tab.id = `syntax-tab-${groupIndex}-${syntax}`;
-        tab.dataset.syntax = syntax;
-        tab.textContent = syntaxes[syntax];
-        tab.setAttribute('role', 'tab');
-        panel.id ||= `syntax-panel-${groupIndex}-${syntax}`;
-        panel.tabIndex = 0;
-        panel.setAttribute('role', 'tabpanel');
-        panel.setAttribute('aria-labelledby', tab.id);
-        tab.setAttribute('aria-controls', panel.id);
-
-        tab.addEventListener('click', () => {
-          // Keep the clicked tab in place while groups above it change height.
-          const topBefore = tab.getBoundingClientRect().top;
-          select(syntax);
-          window.scrollBy(0, tab.getBoundingClientRect().top - topBefore);
-          try {
-            localStorage.setItem(storageKey, syntax);
-          } catch {}
-        });
-        tab.addEventListener('keydown', (event) => {
-          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-          const siblings = [...tablist.children];
-          const step = event.key === 'ArrowRight' ? 1 : -1;
-          const next = siblings[(siblings.indexOf(tab) + step + siblings.length) % siblings.length];
-          next.click();
-          next.focus();
-        });
-
-        tablist.append(tab);
-        tabs.push(tab);
-      }
-      group.prepend(tablist);
-    });
-    select(document.documentElement.dataset.syntax);
-
-    // The tab bars added height above a deep link’s target.
-    if (location.hash) {
-      let id = location.hash.slice(1);
-      try {
-        id = decodeURIComponent(id);
-      } catch {
-        // A malformed escape such as #100% is not a valid ID either way.
-      }
-      document.getElementById(id)?.scrollIntoView();
-    }
-  });
-})();
-</script>
-
 Introduction {#intro}
 ===============
 
@@ -440,8 +320,8 @@ In Turtle and other RDF serializations, write the URI between angle brackets.
 <div class="example">
     The URL of an image as a URI:
 
-    <div class="syntax-tabs">
-    <div data-syntax="jsonld">
+    <div class="nde-tabs" data-tabs="syntax" data-label="Syntax">
+    <div data-tab="jsonld" data-tab-label="JSON-LD">
     <pre class=include-code>
     path: examples/MediaObject-contentUrl.jsonld
     highlight: json-ld
@@ -449,7 +329,7 @@ In Turtle and other RDF serializations, write the URI between angle brackets.
     line-highlight: 4
     </pre>
     </div>
-    <xmp highlight=turtle data-syntax="turtle">
+    <xmp highlight=turtle data-tab="turtle" data-tab-label="Turtle">
         PREFIX schema: <https://schema.org/>
 
         [] a schema:MediaObject, schema:ImageObject ;
@@ -461,8 +341,8 @@ In Turtle and other RDF serializations, write the URI between angle brackets.
 <div class="example">
     ❌ Do not give a link as a literal:
 
-    <div class="syntax-tabs">
-    <xmp highlight=json-ld data-syntax="jsonld">
+    <div class="nde-tabs" data-tabs="syntax" data-label="Syntax">
+    <xmp highlight=json-ld data-tab="jsonld" data-tab-label="JSON-LD">
         {
           "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
           "@type": ["MediaObject", "ImageObject"],
@@ -472,7 +352,7 @@ In Turtle and other RDF serializations, write the URI between angle brackets.
           }
         }
     </xmp>
-    <xmp highlight=turtle data-syntax="turtle">
+    <xmp highlight=turtle data-tab="turtle" data-tab-label="Turtle">
         PREFIX schema: <https://schema.org/>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
