@@ -295,6 +295,18 @@ _:CreativeWorkShape
                 rdfs:comment "file://examples/CreativeWork-size-labels.jsonld" ;
             ] ;
         ] ,
+        # A Warning for now: a plain string conformed until now, so it must not turn data into a violation.
+        [
+            sh:path schema:size ;
+            sh:not [ sh:datatype xsd:string ] ;
+            sh:severity sh:Warning ;
+            nde:futureChange [
+                nde:version "2.0" ;
+                sh:severity sh:Violation ;
+                rdfs:label "`xsd:string` niet meer toegestaan"@nl, "`xsd:string` no longer allowed"@en ;
+            ] ;
+            sh:message "Geef de afmeting als tekst met taallabel of als QuantitativeValue, niet als tekst zonder taal"@nl, "Give the size as a language-tagged string or a QuantitativeValue, not as a string without a language"@en ;
+        ] ,
         [
             a sh:PropertyShape ;
             sh:path schema:contentLocation ;

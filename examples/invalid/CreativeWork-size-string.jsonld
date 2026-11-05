@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "name": {
+    "@language": "nl",
+    "@value": "De Sterrennacht"
+  },
+  "sdDatePublished": {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2024-01-15"
+  },
+  "size": "74 x 92 cm"
+}
