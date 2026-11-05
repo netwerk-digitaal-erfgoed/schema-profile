@@ -933,74 +933,9 @@ _:MediaObjectShape
         _:MediaLicenseUriShape ,
         _:MediaContentUrlUriShape ,
         _:MediaThumbnailUrlUriShape ,
-        [
-            sh:path schema:license ;
-            sh:minCount 1 ;
-            sh:description """
-                The license or rights statement
-                that applies to the digital reproduction.
-
-                This concerns the use of the reproduction, not of the heritage object itself.
-                The value *MUST* be the canonical URI of the license or rights statement.
-                For example, use https://creativecommons.org/licenses/by/4.0/ instead
-                of http://creativecommons.org/licenses/by/4.0/deed.nl.
-
-                The value *SHOULD* be an open license that allows the media to be consumed,
-                for example one of the [Creative Commons](https://creativecommons.org/choose/) licenses.
-                Media that cannot be openly licensed, for example because it is in copyright,
-                *SHOULD* have one of the [rightsstatements.org](https://rightsstatements.org) URIs instead.
-                Even then, consumers may display the media by embedding its contentUrl and thumbnailUrl;
-                for any further use, consult the rights statement.
-            """ ;
-            rdfs:seeAlso [
-                rdfs:label "CC0 “No Rights Reserved” license on an ImageObject:" ;
-                rdfs:comment "file://examples/MediaObject-license.jsonld" ;
-            ] ,
-            [
-                rdfs:label "An in-copyright image that consumers may view but not reuse:" ;
-                rdfs:comment "file://examples/MediaObject-license-rights-statement.jsonld" ;
-            ]
-        ] ,
-        # The minimum count is a warning because only openly licensed media need these URLs; the URI checks
-        # (_:MediaContentUrlUriShape and the like, referenced above) are not. This shape is reached only through
-        # sh:or and sh:qualifiedValueShape on associatedMedia, which fail on a result of any severity, so even
-        # the missing URL makes associatedMedia a violation.
-        [
-            sh:path schema:contentUrl ;
-            sh:minCount 1 ;
-            sh:severity sh:Warning ;
-            sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
-            sh:description """
-                The URL of the media object.
-                *REQUIRED* if the MediaObject is published under an open license.
-
-                The URL *MUST* allow embedding, which is how consumers display media that is not openly licensed.
-
-                For ImageObjects, this *SHOULD* be a high-resolution image to be used in full-screen viewers etc.
-            """ ;
-            rdfs:seeAlso [
-                rdfs:label "Full-sized image representation of the Starry Night." ;
-                rdfs:comment "file://examples/MediaObject-contentUrl.jsonld" ;
-            ]
-        ] ,
-        [
-            sh:path schema:thumbnailUrl ;
-            sh:minCount 1 ;
-            sh:severity sh:Warning ;
-            sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
-            sh:description """
-                A smaller version of the MediaObject.
-                *REQUIRED* if the MediaObject is published under an open license.
-
-                The URL *MUST* allow embedding.
-
-                For ImageObjects, this *SHOULD* be a small image to be used in lists, search results etc.
-            """ ;
-            rdfs:seeAlso [
-                rdfs:label "Both full-sized image and thumbnail of the Starry Night." ;
-                rdfs:comment "file://examples/MediaObject-thumbnailUrl.jsonld" ;
-            ]
-        ] ,
+        _:MediaLicenseRequiredShape ,
+        _:MediaContentUrlRequiredShape ,
+        _:MediaThumbnailUrlRequiredShape ,
         [
             sh:path schema:copyrightNotice ;
             sh:datatype rdf:langString ;
@@ -1014,6 +949,87 @@ _:MediaObjectShape
                 rdfs:comment "file://examples/MediaObject-copyrightNotice.jsonld" ;
             ]
         ] .
+
+# Reports a missing license, contentUrl or thumbnailUrl with its own message. _:MediaObjectShape is reached
+# only through sh:or and sh:qualifiedValueShape on associatedMedia, whose results are never reported, so
+# there a missing value surfaces only as the general associatedMedia message. Media that are not typed
+# still get only that message. The URI checks are reported by _:AssociatedMediaValueShape.
+_:MediaObjectRequiredValuesShape
+    a sh:NodeShape ;
+    sh:targetClass schema:MediaObject, schema:ImageObject, schema:VideoObject, schema:AudioObject, schema:3DModel ;
+    sh:property
+        _:MediaLicenseRequiredShape ,
+        _:MediaContentUrlRequiredShape ,
+        _:MediaThumbnailUrlRequiredShape .
+
+_:MediaLicenseRequiredShape
+    sh:path schema:license ;
+    sh:minCount 1 ;
+    sh:message "Voeg een licentie of rechtenverklaring toe aan het MediaObject"@nl, "Add a license or rights statement to the MediaObject"@en ;
+    sh:description """
+        The license or rights statement
+        that applies to the digital reproduction.
+
+        This concerns the use of the reproduction, not of the heritage object itself.
+        The value *MUST* be the canonical URI of the license or rights statement.
+        For example, use https://creativecommons.org/licenses/by/4.0/ instead
+        of http://creativecommons.org/licenses/by/4.0/deed.nl.
+
+        The value *SHOULD* be an open license that allows the media to be consumed,
+        for example one of the [Creative Commons](https://creativecommons.org/choose/) licenses.
+        Media that cannot be openly licensed, for example because it is in copyright,
+        *SHOULD* have one of the [rightsstatements.org](https://rightsstatements.org) URIs instead.
+        Even then, consumers may display the media by embedding its contentUrl and thumbnailUrl;
+        for any further use, consult the rights statement.
+    """ ;
+    rdfs:seeAlso [
+        rdfs:label "CC0 “No Rights Reserved” license on an ImageObject:" ;
+        rdfs:comment "file://examples/MediaObject-license.jsonld" ;
+    ] ,
+    [
+        rdfs:label "An in-copyright image that consumers may view but not reuse:" ;
+        rdfs:comment "file://examples/MediaObject-license-rights-statement.jsonld" ;
+    ] .
+
+# The minimum count is a warning because only openly licensed media need these URLs; the URI checks
+# (_:MediaContentUrlUriShape and the like) are not. Inside _:MediaObjectShape, reached through sh:or and
+# sh:qualifiedValueShape on associatedMedia, which fail on a result of any severity, even the missing URL
+# makes associatedMedia a violation.
+_:MediaContentUrlRequiredShape
+    sh:path schema:contentUrl ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
+    sh:description """
+        The URL of the media object.
+        *REQUIRED* if the MediaObject is published under an open license.
+
+        The URL *MUST* allow embedding, which is how consumers display media that is not openly licensed.
+
+        For ImageObjects, this *SHOULD* be a high-resolution image to be used in full-screen viewers etc.
+    """ ;
+    rdfs:seeAlso [
+        rdfs:label "Full-sized image representation of the Starry Night." ;
+        rdfs:comment "file://examples/MediaObject-contentUrl.jsonld" ;
+    ] .
+
+_:MediaThumbnailUrlRequiredShape
+    sh:path schema:thumbnailUrl ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
+    sh:description """
+        A smaller version of the MediaObject.
+        *REQUIRED* if the MediaObject is published under an open license.
+
+        The URL *MUST* allow embedding.
+
+        For ImageObjects, this *SHOULD* be a small image to be used in lists, search results etc.
+    """ ;
+    rdfs:seeAlso [
+        rdfs:label "Both full-sized image and thumbnail of the Starry Night." ;
+        rdfs:comment "file://examples/MediaObject-thumbnailUrl.jsonld" ;
+    ] .
 
 _:IIIFPresentationManifestShape
     a sh:NodeShape ;
