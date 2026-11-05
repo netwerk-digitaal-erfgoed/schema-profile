@@ -1,0 +1,12 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://n2t.net/ark:/123456/2",
+  "@type": "Person",
+  "name": {
+    "@language": "nl",
+    "@value": "Rembrandt van Rijn"
+  },
+  "sameAs": {
+    "@value": "https://rkd.nl/explore/artists/66219"
+  }
+}

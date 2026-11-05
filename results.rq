@@ -1,0 +1,18 @@
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+# Lists every result of a validation report as severity, path and English message,
+# so that a counterexample can be compared with the results it is expected to give.
+# A result whose shape has no sh:message keeps the validator’s own, untagged message.
+SELECT ?severity ?path ?message
+WHERE {
+    ?report a sh:ValidationReport ;
+        sh:result ?result .
+    ?result sh:resultSeverity ?resultSeverity ;
+        sh:resultMessage ?resultMessage .
+    OPTIONAL { ?result sh:resultPath ?resultPath }
+    FILTER (lang(?resultMessage) IN ("en", ""))
+    BIND (STRAFTER(STR(?resultSeverity), "#") AS ?severity)
+    BIND (COALESCE(REPLACE(STR(?resultPath), "^https://schema\\.org/", ""), "(none)") AS ?path)
+    BIND (STR(?resultMessage) AS ?message)
+}
+ORDER BY ?severity ?path ?message
