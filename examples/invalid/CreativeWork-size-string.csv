@@ -1,0 +1,2 @@
+Warning,associatedMedia,At least one renderable MediaObject is required when media is available.
+Warning,size,"Give the size as a language-tagged string or a QuantitativeValue, not as a string without a language"
