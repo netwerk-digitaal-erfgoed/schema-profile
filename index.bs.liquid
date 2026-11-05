@@ -231,7 +231,7 @@ However, to avoid mixed namespaces and enable future-proof interoperability acro
 
 Both `https://schema.org/` and `http://schema.org/` *MUST* be accepted by consumers.
 
-Note: Schema.org's default JSON-LD context resolves terms to `http://schema.org/` IRIs,
+Note: Schema.org's default JSON-LD context resolves terms to `http://schema.org/` URIs,
 even when using `"@context": "https://schema.org"`.
 See [[#formal-definition]] for how to override this when processing JSON-LD.
 
@@ -303,6 +303,68 @@ Each language *MUST* occur only once, so only a single value per language is all
           ]
         }
     </pre>
+</div>
+
+Links {#links}
+----------
+
+A value that refers to a resource on the web,
+such as a media file, a license, an IIIF manifest, a dataset or a term in a controlled vocabulary,
+*MUST* be a URI, not a literal.
+This applies to `contentUrl`, `thumbnailUrl`, `license`, `sameAs` and `isPartOf`.
+
+In JSON-LD, a string value is a URI when the data is read with the profile context (see [[#formal-definition]]);
+with any other context, write `{"@id": "…"}`.
+In Turtle and other RDF serializations, write the URI between angle brackets.
+
+<div class="example">
+    The URL of an image as a URI:
+
+    <div class="nde-tabs" data-tabs="syntax" data-label="Syntax">
+    <div data-tab="jsonld" data-tab-label="JSON-LD">
+    <pre class=include-code>
+    path: examples/MediaObject-contentUrl.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 4
+    </pre>
+    </div>
+    <xmp highlight=turtle data-tab="turtle" data-tab-label="Turtle">
+        PREFIX schema: <https://schema.org/>
+
+        [] a schema:MediaObject, schema:ImageObject ;
+          schema:contentUrl <https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg> .
+    </xmp>
+    </div>
+</div>
+
+<div class="example">
+    ❌ Do not give a link as a literal:
+
+    <div class="nde-tabs" data-tabs="syntax" data-label="Syntax">
+    <xmp highlight=json-ld data-tab="jsonld" data-tab-label="JSON-LD">
+        {
+          "@context": "https://docs.nde.nl/schema-profile/context.jsonld",
+          "@type": ["MediaObject", "ImageObject"],
+          "contentUrl": {
+            "@value": "https://example.org/image.jpg",
+            "@type": "http://www.w3.org/2001/XMLSchema#anyURI"
+          }
+        }
+    </xmp>
+    <xmp highlight=turtle data-tab="turtle" data-tab-label="Turtle">
+        PREFIX schema: <https://schema.org/>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+        # A literal typed xsd:anyURI
+        [] a schema:MediaObject, schema:ImageObject ;
+          schema:contentUrl "https://example.org/image.jpg"^^xsd:anyURI .
+
+        # A plain string
+        [] a schema:MediaObject, schema:ImageObject ;
+          schema:contentUrl "https://example.org/image.jpg" .
+    </xmp>
+    </div>
 </div>
 
 Reference terms {#reference-terms}
@@ -464,21 +526,21 @@ To guarantee consistency, this specification document is built from those SHACL 
 
 The SHACL shapes use the `https://schema.org/` namespace.
 However, Schema.org’s default JSON-LD context at `https://schema.org/docs/jsonldcontext.jsonld`
-resolves all terms to `http://schema.org/` IRIs.
+resolves all terms to `http://schema.org/` URIs.
 Consumers that process JSON-LD data need to override the context
 so that the resulting RDF triples use the `https://schema.org/` namespace.
 
 Since release 30.1, Schema.org’s context also no longer declares type coercions,
-so values such as `sameAs`, `license` and `dateCreated` come out as plain strings instead of IRIs and dates.
+so values such as `sameAs`, `license` and `dateCreated` come out as plain strings instead of URIs and dates.
 
 A ready-to-use context is available at `https://docs.nde.nl/schema-profile/context.jsonld`.
 It overrides the namespace to `https://` and restores the type coercions this profile relies on.
 It uses [[JSON-LD11]]’s `@import` to take most of them from NDE’s context for Schema.org at `https://def.nde.nl/context.jsonld`,
-and declares `isPartOf`, `thumbnailUrl` and `url` as IRIs and `birthDate` and `deathDate` as dates itself.
+and declares `isPartOf`, `thumbnailUrl` and `url` as URIs and `birthDate` and `deathDate` as dates itself.
 Consumers can apply this context in place of Schema.org’s when expanding JSON-LD data before validation or querying:
 
 <div class="example">
-    Override the context to produce `https://schema.org/` IRIs:
+    Override the context to produce `https://schema.org/` URIs:
 
     <pre class=include-code>
     path: examples/context-hosted.jsonld
