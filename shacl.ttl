@@ -562,7 +562,7 @@ _:DefinedTermShape
         it carries the dataset’s own `name` for the term (which *MAY* differ from the label used by the external source)
         and makes no claims about the resource it points at.
         “Local” refers to the provenance of these statements, not to an RDF node kind:
-        the node *MAY* be a blank node or an IRI, such as the IRI of a term in the publisher’s own vocabulary.
+        the node *MAY* be a blank node or a URI, such as the URI of a term in the publisher’s own vocabulary.
         The `sameAs` URI is the *canonical* identifier and keeps its own typing in its source vocabulary
         (e.g. `skos:Concept` in a thesaurus).
 

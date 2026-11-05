@@ -231,7 +231,7 @@ However, to avoid mixed namespaces and enable future-proof interoperability acro
 
 Both `https://schema.org/` and `http://schema.org/` *MUST* be accepted by consumers.
 
-Note: Schema.org's default JSON-LD context resolves terms to `http://schema.org/` IRIs,
+Note: Schema.org's default JSON-LD context resolves terms to `http://schema.org/` URIs,
 even when using `"@context": "https://schema.org"`.
 See [[#formal-definition]] for how to override this when processing JSON-LD.
 
@@ -310,15 +310,15 @@ Links {#links}
 
 A value that refers to a resource on the web,
 such as a media file, a license, an IIIF manifest, a dataset or a term in a controlled vocabulary,
-*MUST* be an IRI, not a literal.
+*MUST* be a URI, not a literal.
 This applies to `contentUrl`, `thumbnailUrl`, `license`, `sameAs` and `isPartOf`.
 
-In JSON-LD, a string value is an IRI when the data is read with the profile context (see [[#formal-definition]]);
+In JSON-LD, a string value is a URI when the data is read with the profile context (see [[#formal-definition]]);
 with any other context, write `{"@id": "…"}`.
-In Turtle and other RDF serializations, write the IRI between angle brackets.
+In Turtle and other RDF serializations, write the URI between angle brackets.
 
 <div class="example">
-    The URL of an image, which the profile context reads as an IRI:
+    The URL of an image, which the profile context reads as a URI:
 
     <pre class=include-code>
     path: examples/MediaObject-contentUrl.jsonld
@@ -496,21 +496,21 @@ To guarantee consistency, this specification document is built from those SHACL 
 
 The SHACL shapes use the `https://schema.org/` namespace.
 However, Schema.org’s default JSON-LD context at `https://schema.org/docs/jsonldcontext.jsonld`
-resolves all terms to `http://schema.org/` IRIs.
+resolves all terms to `http://schema.org/` URIs.
 Consumers that process JSON-LD data need to override the context
 so that the resulting RDF triples use the `https://schema.org/` namespace.
 
 Since release 30.1, Schema.org’s context also no longer declares type coercions,
-so values such as `sameAs`, `license` and `dateCreated` come out as plain strings instead of IRIs and dates.
+so values such as `sameAs`, `license` and `dateCreated` come out as plain strings instead of URIs and dates.
 
 A ready-to-use context is available at `https://docs.nde.nl/schema-profile/context.jsonld`.
 It overrides the namespace to `https://` and restores the type coercions this profile relies on.
 It uses [[JSON-LD11]]’s `@import` to take most of them from NDE’s context for Schema.org at `https://def.nde.nl/context.jsonld`,
-and declares `isPartOf`, `thumbnailUrl` and `url` as IRIs and `birthDate` and `deathDate` as dates itself.
+and declares `isPartOf`, `thumbnailUrl` and `url` as URIs and `birthDate` and `deathDate` as dates itself.
 Consumers can apply this context in place of Schema.org’s when expanding JSON-LD data before validation or querying:
 
 <div class="example">
-    Override the context to produce `https://schema.org/` IRIs:
+    Override the context to produce `https://schema.org/` URIs:
 
     <pre class=include-code>
     path: examples/context-hosted.jsonld
