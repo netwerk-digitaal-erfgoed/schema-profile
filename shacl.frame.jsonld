@@ -7,6 +7,7 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "nde": "https://def.nde.nl#",
     "crm": "http://www.cidoc-crm.org/cidoc-crm/",
+    "edtf": "http://id.loc.gov/datatypes/edtf/",
     "targetClass": {
       "@type": "@id"
     },
