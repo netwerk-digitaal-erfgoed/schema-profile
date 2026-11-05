@@ -164,6 +164,63 @@ for file in examples/*.jsonld; do
     fi
 done
 
+# Counterexamples in examples/invalid must give exactly the results listed in
+# the .csv file next to them: one “severity,path,message” line per result, as
+# results.rq prints them. Exactly, so a missing warning fails as much as an
+# extra one, such as a second warning about the same value.
+echo "----------------------------------------"
+echo "Validating counterexamples against their expected results..."
+echo "----------------------------------------"
+
+for file in examples/invalid/*.jsonld; do
+    [[ -f "$file" ]] || continue
+
+    total=$((total + 1))
+    basename=$(basename "$file")
+    expected_file="${file%.jsonld}.csv"
+    echo -n "Validating $basename... "
+
+    data="/tmp/shacl-data-invalid-$basename.jsonld"
+    report="/tmp/shacl-report-invalid-$basename.ttl"
+    stderr="/tmp/shacl-stderr-invalid-$basename.txt"
+    sed -E "s#\"https://(schema\\.org|docs\\.nde\\.nl/schema-profile/context\\.jsonld)\"#\"$local_context\"#" "$file" > "$data"
+
+    set +e
+    shacl validate --data "$data" --shapes shacl.ttl >"$report" 2>"$stderr" &&
+        actual=$(sparql --data "$report" --query results.rq --results CSV 2>>"$stderr")
+    exit_code=$?
+    set -e
+
+    if [[ $exit_code -ne 0 ]]; then
+        fail "(could not validate)"
+        sed 's/^/    /' "$stderr"
+        failed=$((failed + 1))
+        continue
+    fi
+
+    actual=$(tail -n +2 <<<"$actual" | tr -d '\r' | sort)
+
+    if [[ ! -f "$expected_file" ]]; then
+        fail "(no $(basename "$expected_file") with the expected results)"
+        warn "  Results:"
+        sed 's/^/    /' <<<"$actual"
+        echo
+        failed=$((failed + 1))
+        continue
+    fi
+
+    expected=$(sort "$expected_file")
+
+    if [[ "$actual" == "$expected" ]]; then
+        pass
+    else
+        fail "(results differ from $(basename "$expected_file"))"
+        diff <(echo "$expected") <(echo "$actual") | sed 's/^/    /' || true
+        echo
+        failed=$((failed + 1))
+    fi
+done
+
 # Summary
 echo "----------------------------------------"
 echo "Validation Summary:"

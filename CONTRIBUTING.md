@@ -63,6 +63,7 @@ Edits are made to the source files, not the generated output:
 - `shacl.ttl`: the SHACL shapes that are the single source of truth; the specification is built from them.
 - `index.bs.liquid`, `node-shape.liquid`, `assets/class-diagram.mmd.liquid`: templates for the rendered document and diagram.
 - `examples/`: JSON-LD examples, validated against the shapes.
+- `examples/invalid/`: counterexamples, each with a `.csv` file of the warnings and violations it must give – no more, no fewer. To add one, write the example and copy its results from the failing `make validate` into the `.csv`, once you have checked that they are the ones you expect.
 
 Build the spec with `make spec` and validate the examples with `make validate` (see the [README](README.md)).
 Both run in continuous integration on every pull request.
