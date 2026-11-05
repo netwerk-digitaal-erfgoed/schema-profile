@@ -1,0 +1,5 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/resource",
+  "@type": "CreativeWork"
+}

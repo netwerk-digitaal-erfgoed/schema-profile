@@ -7,6 +7,6 @@ on:
 
 jobs:
   deploy:
-    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@v1.5.2
+    uses: netwerk-digitaal-erfgoed/workflows/.github/workflows/spec.yml@v1.6.0
     with:
       publish: true

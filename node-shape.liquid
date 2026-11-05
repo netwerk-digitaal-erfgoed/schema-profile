@@ -30,13 +30,7 @@
     <div class="example">
         A painting is typed as both top-level CreativeWork and the more specific Painting:
 
-        <pre highlight=json-ld>
-            {
-              "@context": "https://schema.org",
-              "@id": "https://n2t.net/ark:/123456/1",
-              "@type": ["CreativeWork", "Painting"]
-            }
-        </pre>
+        {% render 'nde-example', path: 'examples/CreativeWork-Painting.jsonld' %}
     </div>
 
     Even though the superclass can be derived from its subclasses using RDF inferencing
@@ -64,13 +58,8 @@
     <div class="example">
         Specify the URI in the JSON-LD `@id` property:
 
-        <pre highlight=json-ld line-numbers line-highlight="3">
-            {
-              "@context": "https://schema.org",
-              "@id": "https://example.com/resource",
-              "@type": "{{ nodeShape.name }}"
-            }
-        </pre>
+        {% assign uriExample = 'examples/' | append: nodeShape.name | append: '-URI.jsonld' %}
+        {% render 'nde-example', path: uriExample, lineHighlight: '3' %}
     </div>
 {% endif %}
 
@@ -164,11 +153,8 @@ Advisement: Planned for version {{ change['nde:version'] }}: {{ future_text }}. 
             <div class="example">
                 {{ example['rdfs:label'] }}
 
-                <pre class=include-code>
-                    path: {{ example['rdfs:comment'] | remove: 'file://' }}
-                    highlight: json-ld
-                    line-numbers: true
-                </pre>
+                {% assign examplePath = example['rdfs:comment'] | remove: 'file://' %}
+                {% render 'nde-example', path: examplePath %}
             </div>
         {% endfor %}
     {% endif %}
