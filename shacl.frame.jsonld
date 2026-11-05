@@ -6,6 +6,7 @@
     "schema": "https://schema.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "nde": "https://def.nde.nl#",
+    "crm": "http://www.cidoc-crm.org/cidoc-crm/",
     "targetClass": {
       "@type": "@id"
     },

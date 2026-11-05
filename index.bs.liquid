@@ -145,10 +145,7 @@ Therefore, the [=generic data model|generic=] and [=domain data models=] *MAY* c
 <div class="example">
     Combine generic (Schema.org) with domain-specific (Linked Art) modelling.
 
-    <pre class=include-code>
-    path: examples/combined-linked-art.jsonld
-    highlight: json-ld
-    </pre>
+    {% render 'nde-example', path: 'examples/combined-linked-art.jsonld' %}
 </div>
 
 ### Separate profiles ### {#profiles}
@@ -244,12 +241,7 @@ The language *MUST* be expressed as a well-formed language tag according to [[!B
 <div class="example">
     Specifying the language of the `name` property:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-name.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-14
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-name.jsonld', lineHighlight: '5-14' %}
 </div>
 
 Even if only one language is available, the language *MUST* be specified.
@@ -257,12 +249,7 @@ Even if only one language is available, the language *MUST* be specified.
 <div class="example">
     Specify the language property even for a single value:
 
-    <pre class=include-code>
-    path: examples/language-single.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-8
-    </pre>
+    {% render 'nde-example', path: 'examples/language-single.jsonld', lineHighlight: '5-8' %}
 </div>
 
 If the language of value is unknown, for example because it’s not recorded in the source data, 
@@ -275,12 +262,7 @@ Because `und` is itself a well-formed language tag, the value stays a language-t
 <div class="example">
     Use `und` when the language cannot be determined – here a Han-script title that could be Chinese or Japanese:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-name-undetermined.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-8
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-name-undetermined.jsonld', lineHighlight: '5-8' %}
 </div>
 
 Each language *MUST* occur only once, so only a single value per language is allowed.
@@ -320,22 +302,7 @@ In Turtle and other RDF serializations, write the URI between angle brackets.
 <div class="example">
     The URL of an image as a URI:
 
-    <div class="nde-tabs" data-tabs="syntax" data-label="Syntax">
-    <div data-tab="jsonld" data-tab-label="JSON-LD">
-    <pre class=include-code>
-    path: examples/MediaObject-contentUrl.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 4
-    </pre>
-    </div>
-    <xmp highlight=turtle data-tab="turtle" data-tab-label="Turtle">
-        PREFIX schema: <https://schema.org/>
-
-        [] a schema:MediaObject, schema:ImageObject ;
-          schema:contentUrl <https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg> .
-    </xmp>
-    </div>
+    {% render 'nde-example', path: 'examples/MediaObject-contentUrl.jsonld', lineHighlight: '4' %}
 </div>
 
 <div class="example">
@@ -381,34 +348,19 @@ Reference terms {#reference-terms}
 <div class="example">
     Reference a term using `sameAs`:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-genre.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-12
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-genre.jsonld', lineHighlight: '5-12' %}
 </div>
 
 <div class="example">
     Reference the same term in two vocabularies, the AAT and Wikidata:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-genre-sameAs-multiple.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 11-14
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-genre-sameAs-multiple.jsonld', lineHighlight: '11-14' %}
 </div>
 
 <div class="example">
     Reference a term for a person from a `Person`, for example an artist in [RKDartists](https://rkd.nl/en/collections/explore/artists):
 
-    <pre class=include-code>
-    path: examples/CreativeWork-creator.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-12
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-creator.jsonld', lineHighlight: '5-12' %}
 </div>
 
 If a public term is known, `sameAs` *MUST* be present and reference it. Otherwise, `sameAs` *MAY* be omitted:
@@ -416,12 +368,7 @@ If a public term is known, `sameAs` *MUST* be present and reference it. Otherwis
 <div class="example">
     Reference a term without a known URI:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-genre-no-sameAs.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 5-10
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-genre-no-sameAs.jsonld', lineHighlight: '5-10' %}
 </div>
 
 A `DefinedTerm` *MAY* also carry its own `@id`, making the local term node dereferenceable within the dataset.
@@ -431,12 +378,7 @@ the two can coexist.
 <div class="example">
     Give the `DefinedTerm` a local `@id` alongside the canonical `sameAs`:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-genre-id.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 6,12
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-genre-id.jsonld', lineHighlight: '6,12' %}
 </div>
 
 A `DefinedTerm` value *MUST* additionally be typed with a type from the property’s Schema.org range
@@ -452,12 +394,7 @@ such as `creator`, `contentLocation` and `hasOccupation`, so it needs no co-type
 <div class="example">
     Co-type the `DefinedTerm` with `URL`, because `material` does not accept a `DefinedTerm` directly:
 
-    <pre class=include-code>
-    path: examples/CreativeWork-material.jsonld
-    highlight: json-ld
-    line-numbers: true
-    line-highlight: 7,15
-    </pre>
+    {% render 'nde-example', path: 'examples/CreativeWork-material.jsonld', lineHighlight: '7,15' %}
 </div>
 
 Note: Earlier versions of this application profile co-typed people, organizations, places and occupations as `DefinedTerm`, for example `["DefinedTerm", "Person"]`.
@@ -510,10 +447,7 @@ Story {#example-story}
 
 <div class="example">
 
-    <pre class=include-code>
-    path: examples/story.jsonld
-    highlight: jsonld
-    </pre>
+    {% render 'nde-example', path: 'examples/story.jsonld' %}
 </div>
 
 Formal definition {#formal-definition}
