@@ -305,6 +305,38 @@ Each language *MUST* occur only once, so only a single value per language is all
     </pre>
 </div>
 
+Links {#links}
+----------
+
+A value that refers to a resource on the web,
+such as a media file, a license, an IIIF manifest, a dataset or a term in a controlled vocabulary,
+*MUST* be an IRI, not a literal.
+This applies to `contentUrl`, `thumbnailUrl`, `license`, `sameAs` and `isPartOf`.
+
+In JSON-LD, a string value is an IRI when the data is read with the profile context (see [[#formal-definition]]);
+with any other context, write `{"@id": "…"}`.
+In Turtle and other RDF serializations, write the IRI between angle brackets.
+
+<div class="example">
+    The URL of an image, which the profile context reads as an IRI:
+
+    <pre class=include-code>
+    path: examples/MediaObject-contentUrl.jsonld
+    highlight: json-ld
+    line-numbers: true
+    line-highlight: 4
+    </pre>
+</div>
+
+<div class="example">
+    ❌ Do not give a link as a literal, whether a plain string or typed `xsd:anyURI`:
+
+    <pre highlight=turtle>
+        &lt;https://example.org/image> schema:contentUrl "https://example.org/image.jpg" .
+        &lt;https://example.org/image> schema:contentUrl "https://example.org/image.jpg"^^xsd:anyURI .
+    </pre>
+</div>
+
 Reference terms {#reference-terms}
 ---
 
