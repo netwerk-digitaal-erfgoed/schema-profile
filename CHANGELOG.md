@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.9.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.8.0...1.9.0) (2026-11-05)
+
+
+### Features
+
+* warn about dates with an impossible month or day ([#254](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/254)) ([e199597](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/e199597d80d01aa68045ed093e9feafaebd22d30))
+
+
+### Bug Fixes
+
+* type birthDate and deathDate as dates in the JSON-LD context ([#253](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/253)) ([7fbc6a8](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/7fbc6a8f3c3e828261f17b7a9ef7b7bec25b0b0c))
+
+
+### Documentation
+
+* add Rembrandt’s death date to the EDTF birth date example ([#256](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/256)) ([5fc75ed](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/5fc75edf587dcf8b6c8d7ba5bf629992aa057f10))
+* require links to be URIs, not literals ([#257](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/257)) ([fbb5385](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/fbb5385962fdcb71eaecbff6ee28439fa16f5917))
+
 ## [1.8.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.7.0...1.8.0) (2026-11-04)
 
 
