@@ -673,7 +673,7 @@ _:QuantitativeValueShape
         """ ;
     ] .
 
-# Documents sameAs on Person, Organization and Place; the constraints live in _:SameAsUriShape and _:SameAsHttpShape.
+# Documents sameAs on Person, Organization and Place; the constraints live in _:SameAsUriShape.
 _:SameAsShape
     a sh:PropertyShape ;
     sh:path schema:sameAs ;
@@ -686,27 +686,29 @@ _:SameAsShape
 # A Warning for now, because sameAs was not constrained on these classes before; a literal value must not
 # turn previously conforming data into a violation. Kept apart from the class shapes: a warning inside
 # PlaceShape or OccupationShape would make the node fail sh:node, and so turn the value into a violation.
+# Term URIs must be dereferenceable (see Reference terms), which a URI such as urn:… is not, so the value
+# must be an http(s) URI; _:WebUriShape checks both in one, so a literal gets one warning rather than two.
+# A relative string that a JSON-LD context turns into a URI resolves against the document’s http(s) base,
+# so it passes; this shape does not catch it.
 _:SameAsUriShape
     a sh:NodeShape ;
     sh:targetClass schema:Person, schema:Organization, schema:Place, schema:Occupation ;
     sh:property [
         sh:path schema:sameAs ;
-        sh:nodeKind sh:IRI ;
+        sh:node _:WebUriShape ;
         sh:severity sh:Warning ;
         nde:futureChange [
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Gebruik een URI als waarde van sameAs"@nl, "Use a URI as the value of sameAs"@en ;
+        sh:message "Gebruik een http- of https-URI als waarde van sameAs"@nl, "Use an http or https URI as the value of sameAs"@en ;
     ] .
 
-# Term URIs must be dereferenceable (see Reference terms), which a URI such as urn:… is not.
-# A relative string that a JSON-LD context turns into a URI resolves against the document’s http(s) base,
-# so it passes; this shape does not catch it.
-# A Warning for now, also on DefinedTerm, for the same reasons as _:SameAsUriShape.
+# On DefinedTerm, the shape requires a URI already (a Violation), so only the http(s) check is a Warning,
+# for the same reasons as _:SameAsUriShape.
 _:SameAsHttpShape
     a sh:NodeShape ;
-    sh:targetClass schema:DefinedTerm, schema:Person, schema:Organization, schema:Place, schema:Occupation ;
+    sh:targetClass schema:DefinedTerm ;
     sh:property [
         sh:path schema:sameAs ;
         sh:pattern "^https?://" ;
@@ -1041,9 +1043,10 @@ _:AssociatedMediaValueShape
         _:MediaThumbnailUrlUriShape .
 
 # sh:node rather than two constraints on each property shape, so that a value failing both, such as
-# the literal "CC0", gives one result rather than two.
+# the literal "CC0", gives one result rather than two. The label names it in the property tables.
 _:WebUriShape
     a sh:NodeShape ;
+    rdfs:label "[[#links|web URI]]" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "^https?://" .
 
