@@ -9,5 +9,6 @@
   "birthDate": {
     "@value": "1606-07-15/1607",
     "@type": "http://id.loc.gov/datatypes/edtf/EDTF"
-  }
+  },
+  "deathDate": "1669-10-04"
 }
