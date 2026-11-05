@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.10.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.9.0...1.10.0) (2026-11-05)
+
+
+### Features
+
+* show every example in Turtle too ([#268](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/268)) ([e957007](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/e95700790a5b9a259b5edef56730746b2ddd89e8))
+* warn about a size given as a plain string ([#262](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/262)) ([6f8967b](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/6f8967bf6147bc00e283152ffa0f2e280ccff8dc))
+
+
+### Bug Fixes
+
+* report a missing media URL or license with its own message ([#261](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/261)) ([7147f08](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/7147f089c32d72c5d9ffd7d7bf776ea7bf9233ba))
+* warn once about a sameAs that is not an http(s) URI ([#260](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/260)) ([9291f1a](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/9291f1adad62b452eb780d9d2531e9d6d87932ff))
+
 ## [1.9.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.8.0...1.9.0) (2026-11-05)
 
 
