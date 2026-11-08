@@ -1,0 +1,2 @@
+Violation,associatedMedia,"Use a MediaObject with license, contentUrl and thumbnailUrl, or an IIIF Presentation manifest with license and encodingFormat"
+Violation,license,Add a license or rights statement to the MediaObject
