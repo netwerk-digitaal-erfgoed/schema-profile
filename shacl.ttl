@@ -962,17 +962,46 @@ _:MediaObjectShape
             ]
         ] .
 
-# Reports a missing license, contentUrl or thumbnailUrl with its own message. _:MediaObjectShape is reached
-# only through sh:or and sh:qualifiedValueShape on associatedMedia, whose results are never reported, so
-# there a missing value surfaces only as the general associatedMedia message. Media that are not typed
-# still get only that message. The URI checks are reported by _:AssociatedMediaValueShape.
-_:MediaObjectRequiredValuesShape
+# Report a missing contentUrl or thumbnailUrl with its own message. _:MediaObjectShape is reached only
+# through sh:or and sh:qualifiedValueShape on associatedMedia, whose results are never reported, so there
+# a missing value surfaces only as the general associatedMedia message. Like _:AssociatedMediaValueShape,
+# which reports a missing license, these target associatedMedia entries rather than classes: a dataset may
+# publish media that no CreativeWork links to, and those are not checked. An IIIF Presentation manifest,
+# recognised by its encodingFormat, has neither URL, so it passes, as does a literal, which already gets
+# the general associatedMedia message. Results on these node shapes carry no sh:resultPath; the message
+# names the property.
+_:MediaContentUrlPresenceShape
     a sh:NodeShape ;
-    sh:targetClass schema:MediaObject, schema:ImageObject, schema:VideoObject, schema:AudioObject, schema:3DModel ;
-    sh:property
-        _:MediaLicenseRequiredShape ,
-        _:MediaContentUrlRequiredShape ,
-        _:MediaThumbnailUrlRequiredShape .
+    sh:targetObjectsOf schema:associatedMedia ;
+    sh:severity sh:Warning ;
+    sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
+    sh:or (
+        [ sh:nodeKind sh:Literal ]
+        _:IIIFPresentationManifestFormatShape
+        [ sh:property _:MediaContentUrlRequiredShape ]
+    ) .
+
+_:MediaThumbnailUrlPresenceShape
+    a sh:NodeShape ;
+    sh:targetObjectsOf schema:associatedMedia ;
+    sh:severity sh:Warning ;
+    sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
+    sh:or (
+        [ sh:nodeKind sh:Literal ]
+        _:IIIFPresentationManifestFormatShape
+        [ sh:property _:MediaThumbnailUrlRequiredShape ]
+    ) .
+
+# Tells an IIIF Presentation manifest from a MediaObject. Looser than the pattern in
+# _:IIIFPresentationManifestShape, so that a manifest with a malformed profile is still recognised as one;
+# that shape reports the malformed format.
+_:IIIFPresentationManifestFormatShape
+    a sh:NodeShape ;
+    sh:property [
+        sh:path schema:encodingFormat ;
+        sh:minCount 1 ;
+        sh:pattern "^application/ld\\+json;\\s*profile=['\"]?http://iiif\\.io/api/presentation/" ;
+    ] .
 
 _:MediaLicenseRequiredShape
     sh:path schema:license ;
@@ -1061,11 +1090,13 @@ _:IIIFPresentationManifestShape
 
 # The value checks of both kinds of associatedMedia entry. A result inside sh:or is never reported, so
 # on their own these would only surface as the sh:or’s general message, which reads as a missing value.
-# Applied to every entry as well, a literal or non-http(s) URL is also reported with its own message.
+# Applied to every entry as well, a literal or non-http(s) URL is also reported with its own message, and
+# so is a missing license, which both kinds of entry need.
 _:AssociatedMediaValueShape
     a sh:NodeShape ;
     sh:targetObjectsOf schema:associatedMedia ;
     sh:property
+        _:MediaLicenseRequiredShape ,
         _:MediaLicenseUriShape ,
         _:MediaContentUrlUriShape ,
         _:MediaThumbnailUrlUriShape .

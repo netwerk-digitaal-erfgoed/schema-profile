@@ -1,0 +1,34 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@id": "http://www.wikidata.org/entity/Q45585",
+      "@type": "CreativeWork",
+      "name": {
+        "@language": "nl",
+        "@value": "De Sterrennacht"
+      },
+      "sdDatePublished": {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2024-01-15"
+      },
+      "associatedMedia": [
+        {
+          "@type": ["MediaObject", "ImageObject"],
+          "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "contentUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/max/0/default.jpg",
+          "thumbnailUrl": "https://demo.limb-gallery.com/i/?IIIF=/7b/2e/bc/4c/7b2ebc4c-1a55-4d5d-a154-8b590764caa6/iiif/Van_Gogh_-_Starry_Night_-_Google_Art_Project.tif/full/%5E!256,256/0/default.jpg"
+        },
+        {
+          "@id": "https://demo.limb-gallery.com/iiif/25290/manifest",
+          "encodingFormat": "application/ld+json;profile=\"http://iiif.io/api/presentation/3/context.json\""
+        }
+      ]
+    },
+    {
+      "@id": "https://example.com/media/starry-night-detail",
+      "@type": ["MediaObject", "ImageObject"],
+      "name": "A detail of the Starry Night that no CreativeWork links to through associatedMedia"
+    }
+  ]
+}
