@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.11.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.10.0...1.11.0) (2026-11-13)
+
+
+### Features
+
+* warn about malformed license URIs ([#275](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/275)) ([f60f56e](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/f60f56e174b017bb6a1baf1ad781fab12f5ec984))
+
+
+### Bug Fixes
+
+* check associatedMedia entries from the CreativeWork instead of targeting them ([#272](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/272)) ([ca3e3e7](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/ca3e3e744f4a4f7d8badbace4563b3fb65fcfd8d))
+* check media license and URLs only on associatedMedia entries ([#270](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/270)) ([51a4af7](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/51a4af775e43222f9497f994c3bd1300a05c9755))
+
+
+### Documentation
+
+* use http:// for canonical license URIs ([#274](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/274)) ([78f6ead](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/78f6eadfa617605eb9e1510777a1fe937c6181f6))
+
 ## [1.10.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.9.0...1.10.0) (2026-11-05)
 
 

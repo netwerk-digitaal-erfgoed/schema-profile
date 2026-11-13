@@ -3,7 +3,7 @@ Title: Schema.org Application Profile for NDE (SCHEMA-AP-NDE)
 Shortname: schema-ap-nde
 Level: 1
 Status: LS
-!Version: <a href="#v1.10.0">1.10.0</a>
+!Version: <a href="#v1.11.0">1.11.0</a>
 Markup Shorthands: css yes, markdown yes, biblio yes
 URL: https://docs.nde.nl/schema-profile/
 Editor: 
@@ -527,6 +527,14 @@ The property tables mark such a rule with ‘v2.0’.
 Until then, data that breaks one of these rules still conforms, so publishers can prepare.
 
 <!-- CHANGELOG-START -->
+Version 1.11.0 (2026-11-13) {#v1.11.0}
+----------
+
+- Warn about malformed license URIs ([f60f56e](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/f60f56e174b017bb6a1baf1ad781fab12f5ec984)).
+- Check associatedMedia entries from the CreativeWork instead of targeting them ([ca3e3e7](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/ca3e3e744f4a4f7d8badbace4563b3fb65fcfd8d)).
+- Check media license and URLs only on associatedMedia entries ([51a4af7](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/51a4af775e43222f9497f994c3bd1300a05c9755)).
+- Use http:// for canonical license URIs ([78f6ead](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/78f6eadfa617605eb9e1510777a1fe937c6181f6)).
+
 Version 1.10.0 (2026-11-05) {#v1.10.0}
 ----------
 
