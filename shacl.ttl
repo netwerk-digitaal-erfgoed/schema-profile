@@ -1140,6 +1140,55 @@ _:IIIFPresentationManifestProfileQuotesShape
         sh:message "Gebruik dubbele aanhalingstekens om de profiel-URI van een IIIF Presentation-manifest; enkele aanhalingstekens zijn verouderd."@nl, "Use double quotes around the profile URI of an IIIF Presentation manifest; single quotes are deprecated."@en ;
     ] .
 
+# Rejects known malformed Creative Commons and rightsstatements.org URIs rather than allowing a fixed
+# list, so that any other license stays possible. Keep in sync with the license check in the
+# requirements for datasets (dataset-register requirements/shacl.ttl) and with canonicalLicense() in
+# dataset-register packages/core/src/literal.ts, which rewrites the same forms. Apart from the manifest
+# and MediaObject shapes for the same reason as _:IIIFPresentationManifestProfileQuotesShape.
+_:MediaLicenseCanonicalShape
+    a sh:NodeShape ;
+    sh:targetObjectsOf schema:associatedMedia ;
+    sh:property [
+        sh:path schema:license ;
+        sh:not [ sh:pattern "^https?://creativecommons\\.org/.*/deed" ] ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Gebruik de URI van de Creative Commons-licentie zonder deed, bijvoorbeeld http://creativecommons.org/licenses/by/4.0/ in plaats van …/deed.nl"@nl, "Use the Creative Commons license URI without the deed, for example http://creativecommons.org/licenses/by/4.0/ instead of …/deed.nl"@en ;
+    ] ,
+    [
+        sh:path schema:license ;
+        sh:not [ sh:pattern "^https?://creativecommons\\.org/licenses/(zero|mark)/" ] ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Gebruik http://creativecommons.org/publicdomain/ voor CC0 en het Public Domain Mark, niet …/licenses/"@nl, "Use http://creativecommons.org/publicdomain/ for CC0 and the Public Domain Mark, not …/licenses/"@en ;
+    ] ,
+    [
+        sh:path schema:license ;
+        sh:not [ sh:pattern "^https?://rightsstatements\\.org/page/" ] ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Gebruik de URI van de rechtenverklaring, bijvoorbeeld http://rightsstatements.org/vocab/InC/1.0/ in plaats van …/page/InC/1.0/"@nl, "Use the rights statement URI, for example http://rightsstatements.org/vocab/InC/1.0/ instead of …/page/InC/1.0/"@en ;
+    ] ,
+    [
+        sh:path schema:license ;
+        sh:not [ sh:pattern "^https?://(creativecommons|rightsstatements)\\.org/.*/[0-9]+\\.[0-9]+(//+)?$" ] ;
+        sh:severity sh:Warning ;
+        nde:futureChange [
+            nde:version "2.0" ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:message "Sluit de URI af met één slash na het versienummer, bijvoorbeeld http://creativecommons.org/licenses/by/4.0/"@nl, "End the URI with one slash after the version, for example http://creativecommons.org/licenses/by/4.0/"@en ;
+    ] .
+
 _:CreativeWorkAssociatedMediaCardinalityShape
     a sh:NodeShape ;
     sh:targetClass schema:CreativeWork ;
