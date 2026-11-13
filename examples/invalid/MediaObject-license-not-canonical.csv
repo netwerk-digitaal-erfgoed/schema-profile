@@ -1,0 +1,4 @@
+Warning,license,"End the URI with one slash after the version, for example http://creativecommons.org/licenses/by/4.0/"
+Warning,license,"Use http://creativecommons.org/publicdomain/ for CC0 and the Public Domain Mark, not …/licenses/"
+Warning,license,"Use the Creative Commons license URI without the deed, for example http://creativecommons.org/licenses/by/4.0/ instead of …/deed.nl"
+Warning,license,"Use the rights statement URI, for example http://rightsstatements.org/vocab/InC/1.0/ instead of …/page/InC/1.0/"
