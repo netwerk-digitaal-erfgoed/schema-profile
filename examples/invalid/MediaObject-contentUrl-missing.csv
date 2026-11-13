@@ -1,3 +1,3 @@
 Violation,associatedMedia,"Use a MediaObject with license, contentUrl and thumbnailUrl, or an IIIF Presentation manifest with license and encodingFormat"
-Warning,(none),Add a contentUrl if the MediaObject is published under an open license
+Warning,associatedMedia,Add a contentUrl if the MediaObject is published under an open license
 Warning,associatedMedia,At least one renderable MediaObject is required when media is available.

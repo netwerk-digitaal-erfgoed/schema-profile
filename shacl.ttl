@@ -962,19 +962,11 @@ _:MediaObjectShape
             ]
         ] .
 
-# Report a missing contentUrl or thumbnailUrl with its own message. _:MediaObjectShape is reached only
-# through sh:or and sh:qualifiedValueShape on associatedMedia, whose results are never reported, so there
-# a missing value surfaces only as the general associatedMedia message. Like _:AssociatedMediaValueShape,
-# which reports a missing license, these target associatedMedia entries rather than classes: a dataset may
-# publish media that no CreativeWork links to, and those are not checked. An IIIF Presentation manifest,
-# recognised by its encodingFormat, has neither URL, so it passes, as does a literal, which already gets
-# the general associatedMedia message. Results on these node shapes carry no sh:resultPath; the message
-# names the property.
+# Checks for a missing contentUrl or thumbnailUrl, applied by _:CreativeWorkAssociatedMediaValueShape.
+# An IIIF Presentation manifest, recognised by its encodingFormat, has neither URL, so it passes, as does
+# a literal, which already gets the general associatedMedia message.
 _:MediaContentUrlPresenceShape
     a sh:NodeShape ;
-    sh:targetObjectsOf schema:associatedMedia ;
-    sh:severity sh:Warning ;
-    sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
     sh:or (
         [ sh:nodeKind sh:Literal ]
         _:IIIFPresentationManifestFormatShape
@@ -983,9 +975,6 @@ _:MediaContentUrlPresenceShape
 
 _:MediaThumbnailUrlPresenceShape
     a sh:NodeShape ;
-    sh:targetObjectsOf schema:associatedMedia ;
-    sh:severity sh:Warning ;
-    sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
     sh:or (
         [ sh:nodeKind sh:Literal ]
         _:IIIFPresentationManifestFormatShape
@@ -1088,19 +1077,6 @@ _:IIIFPresentationManifestShape
         sh:pattern "^application/ld\\+json;profile=(['\"])http://iiif\\.io/api/presentation/\\d+/context\\.json\\1$" ;
     ] .
 
-# The value checks of both kinds of associatedMedia entry. A result inside sh:or is never reported, so
-# on their own these would only surface as the sh:or’s general message, which reads as a missing value.
-# Applied to every entry as well, a literal or non-http(s) URL is also reported with its own message, and
-# so is a missing license, which both kinds of entry need.
-_:AssociatedMediaValueShape
-    a sh:NodeShape ;
-    sh:targetObjectsOf schema:associatedMedia ;
-    sh:property
-        _:MediaLicenseRequiredShape ,
-        _:MediaLicenseUriShape ,
-        _:MediaContentUrlUriShape ,
-        _:MediaThumbnailUrlUriShape .
-
 # sh:node rather than two constraints on each property shape, so that a value failing both, such as
 # the literal "CC0", gives one result rather than two. The label names it in the property tables.
 _:WebUriShape
@@ -1124,21 +1100,65 @@ _:MediaThumbnailUrlUriShape
     sh:node _:WebUriShape ;
     sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
 
-# Kept apart from the manifest shape above: a warning inside that shape would make the node
-# fail sh:node, and so turn the associatedMedia entry into a violation.
-_:IIIFPresentationManifestProfileQuotesShape
+# Each check on a CreativeWork’s associatedMedia entries, reported with its own message. In
+# _:CreativeWorkShape the entries are checked through sh:or and sh:qualifiedValueShape, whose results are
+# never reported, so there a failing entry surfaces only as the general associatedMedia message. Here each
+# property shape’s sh:node holds a single check: a result names the CreativeWork, the path and the failing
+# entry (sh:value), and its message says what is wrong. Media that only something other than a
+# CreativeWork links to are not checked. sh:node fails on a nested result of any severity, so each
+# property shape sets its own. The IIIF quotes check stays out of _:IIIFPresentationManifestShape, where
+# a warning would make the entry fail sh:node there and so turn associatedMedia into a violation.
+_:CreativeWorkAssociatedMediaValueShape
     a sh:NodeShape ;
-    sh:targetObjectsOf schema:associatedMedia ;
-    sh:property [
-        sh:path schema:encodingFormat ;
-        sh:not [ sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/presentation/" ] ;
-        sh:severity sh:Warning ;
-        nde:futureChange [
-            nde:version "2.0" ;
-            sh:severity sh:Violation ;
-        ] ;
-        sh:message "Gebruik dubbele aanhalingstekens om de profiel-URI van een IIIF Presentation-manifest; enkele aanhalingstekens zijn verouderd."@nl, "Use double quotes around the profile URI of an IIIF Presentation manifest; single quotes are deprecated."@en ;
-    ] .
+    sh:targetClass schema:CreativeWork ;
+    sh:property
+        [
+            sh:path schema:associatedMedia ;
+            sh:node [ sh:property _:MediaLicenseRequiredShape ] ;
+            sh:message "Voeg een licentie of rechtenverklaring toe aan het MediaObject"@nl, "Add a license or rights statement to the MediaObject"@en ;
+        ] ,
+        [
+            sh:path schema:associatedMedia ;
+            sh:node [ sh:property _:MediaLicenseUriShape ] ;
+            sh:message "Gebruik als license van het MediaObject een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s license"@en ;
+        ] ,
+        [
+            sh:path schema:associatedMedia ;
+            sh:node [ sh:property _:MediaContentUrlUriShape ] ;
+            sh:message "Gebruik als contentUrl van het MediaObject een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s contentUrl"@en ;
+        ] ,
+        [
+            sh:path schema:associatedMedia ;
+            sh:node [ sh:property _:MediaThumbnailUrlUriShape ] ;
+            sh:message "Gebruik als thumbnailUrl van het MediaObject een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s thumbnailUrl"@en ;
+        ] ,
+        [
+            sh:path schema:associatedMedia ;
+            sh:node _:MediaContentUrlPresenceShape ;
+            sh:severity sh:Warning ;
+            sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
+        ] ,
+        [
+            sh:path schema:associatedMedia ;
+            sh:node _:MediaThumbnailUrlPresenceShape ;
+            sh:severity sh:Warning ;
+            sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
+        ] ,
+        [
+            sh:path schema:associatedMedia ;
+            sh:node [
+                sh:property [
+                    sh:path schema:encodingFormat ;
+                    sh:not [ sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/presentation/" ] ;
+                ]
+            ] ;
+            sh:severity sh:Warning ;
+            nde:futureChange [
+                nde:version "2.0" ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:message "Gebruik dubbele aanhalingstekens om de profiel-URI van een IIIF Presentation-manifest; enkele aanhalingstekens zijn verouderd."@nl, "Use double quotes around the profile URI of an IIIF Presentation manifest; single quotes are deprecated."@en ;
+        ] .
 
 _:CreativeWorkAssociatedMediaCardinalityShape
     a sh:NodeShape ;
