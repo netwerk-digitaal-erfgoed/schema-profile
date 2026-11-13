@@ -1002,8 +1002,10 @@ _:MediaLicenseRequiredShape
 
         This concerns the use of the reproduction, not of the heritage object itself.
         The value *MUST* be the canonical URI of the license or rights statement.
-        For example, use https://creativecommons.org/licenses/by/4.0/ instead
+        For example, use http://creativecommons.org/licenses/by/4.0/ instead
         of http://creativecommons.org/licenses/by/4.0/deed.nl.
+        Creative Commons and rightsstatements.org publish their URIs on http:// in their RDF,
+        so that is the canonical form; consumers *SHOULD* also accept the https:// form.
 
         The value *SHOULD* be an open license that allows the media to be consumed,
         for example one of the [Creative Commons](https://creativecommons.org/choose/) licenses.
