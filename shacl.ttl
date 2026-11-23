@@ -27,6 +27,7 @@ _:CreativeWorkShape
     sh:property
         [
             sh:path schema:name ;
+            sh:message "Geef minimaal één naam met taalcode; gebruik elke taal maximaal één keer"@nl, "Provide at least one language-tagged name; use each language at most once"@en ;
             sh:datatype rdf:langString ;
             sh:uniqueLang true ;
             sh:minCount 1 ;
@@ -62,6 +63,7 @@ _:CreativeWorkShape
         ] ,
         [
             sh:path schema:isPartOf ;
+            sh:message "Gebruik een IRI om naar de dataset of het bovenliggende werk te verwijzen"@nl, "Use an IRI to reference the dataset or parent work"@en ;
             sh:nodeKind sh:IRI ;
             sh:description """
                 The dataset(s) that the CreativeWork is part of.
@@ -211,6 +213,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:description ;
+            sh:message "Geef de beschrijving als tekst met een taalcode"@nl, "Provide the description as language-tagged text"@en ;
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
@@ -224,6 +227,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:abstract ;
+            sh:message "Geef de samenvatting als tekst met een taalcode"@nl, "Provide the abstract as language-tagged text"@en ;
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
@@ -239,6 +243,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:text ;
+            sh:message "Geef de volledige tekst als tekst met een taalcode"@nl, "Provide the full text as language-tagged text"@en ;
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
@@ -546,10 +551,12 @@ _:CreatorShape
     """ ;
     sh:not [
         sh:path rdf:type ;
+        sh:message "Laat het type weg als niet bekend is of de maker een persoon of organisatie is"@nl, "Omit the type when it is unknown whether the creator is a person or organization"@en ;
         sh:minCount 1
     ] ;
     sh:property [
         sh:path schema:name ;
+        sh:message "Geef minimaal één naam met taalcode voor de maker, maximaal één per taal"@nl, "Provide at least one language-tagged creator name, at most one per language"@en ;
         sh:datatype rdf:langString ;
         sh:uniqueLang true ;
         sh:minCount 1 ;
@@ -588,6 +595,7 @@ _:DefinedTermShape
     """ ;
     sh:property [
         sh:path schema:name ;
+        sh:message "Geef minimaal één naam met taalcode voor de term, maximaal één per taal"@nl, "Provide at least one language-tagged term name, at most one per language"@en ;
         sh:datatype rdf:langString ;
         sh:uniqueLang true ;
         sh:minCount 1 ;
@@ -597,6 +605,7 @@ _:DefinedTermShape
     ] ,
     [
         sh:path schema:sameAs ;
+        sh:message "Gebruik een IRI als waarde van sameAs"@nl, "Use an IRI as the value of sameAs"@en ;
         sh:nodeKind sh:IRI ;
         sh:minCount 0 ;
         sh:description """
@@ -622,11 +631,12 @@ _:QuantitativeValueShape
         The measurement *MUST* have a `unitCode` or a `unitText`, or both.
     """ ;
     sh:or (
-        [ sh:path schema:unitCode ; sh:minCount 1 ]
-        [ sh:path schema:unitText ; sh:minCount 1 ]
+        [ sh:path schema:unitCode ; sh:message "Geef een unitCode op voor de meeteenheid"@nl, "Provide a unitCode for the measurement unit"@en ; sh:minCount 1 ]
+        [ sh:path schema:unitText ; sh:message "Geef een unitText op voor de meeteenheid"@nl, "Provide a unitText for the measurement unit"@en ; sh:minCount 1 ]
     ) ;
     sh:property [
         sh:path schema:value ;
+        sh:message "Geef precies één numerieke waarde op als decimal, double of integer"@nl, "Provide exactly one numeric value typed as decimal, double or integer"@en ;
         sh:or (
             [ sh:datatype xsd:decimal ]
             [ sh:datatype xsd:double ]
@@ -642,6 +652,7 @@ _:QuantitativeValueShape
     ] ,
     [
         sh:path schema:valueReference ;
+        sh:message "Geef precies één gemeten dimensie op als DefinedTerm of tekst met taalcode"@nl, "Provide exactly one measured dimension as a DefinedTerm or language-tagged text"@en ;
         sh:or (
             [ sh:node _:DefinedTermShape ]
             [ sh:datatype rdf:langString ]
@@ -660,6 +671,7 @@ _:QuantitativeValueShape
     ] ,
     [
         sh:path schema:unitCode ;
+        sh:message "Geef maximaal één unitCode op als DefinedTerm"@nl, "Provide at most one unitCode as a DefinedTerm"@en ;
         sh:node _:DefinedTermShape ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -674,6 +686,7 @@ _:QuantitativeValueShape
     ] ,
     [
         sh:path schema:unitText ;
+        sh:message "Geef maximaal één unitText op als tekst zonder taalcode"@nl, "Provide at most one unitText as a string without a language tag"@en ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -689,6 +702,7 @@ _:QuantitativeValueShape
 _:SameAsShape
     a sh:PropertyShape ;
     sh:path schema:sameAs ;
+    sh:message "Gebruik maximaal één of meer IRI’s als verwijzing via sameAs"@nl, "Use IRIs for references through sameAs"@en ;
     sh:minCount 0 ;
     sh:description """
         The [[#reference-terms|term(s)]] for this entity in public sources, such as RKDartists, GeoNames, the AAT or Wikidata.
@@ -760,6 +774,7 @@ _:PersonShape
     sh:property
         [
             sh:path schema:name ;
+            sh:message "Geef minimaal één naam met taalcode voor de persoon, maximaal één per taal"@nl, "Provide at least one language-tagged person name, at most one per language"@en ;
             sh:datatype rdf:langString ;
             sh:uniqueLang true ;
             sh:minCount 1 ;
@@ -897,6 +912,7 @@ _:OrganizationShape
     """ ;
     sh:property [
         sh:path schema:name ;
+        sh:message "Geef minimaal één naam met taalcode voor de organisatie, maximaal één per taal"@nl, "Provide at least one language-tagged organization name, at most one per language"@en ;
         sh:datatype rdf:langString ;
         sh:uniqueLang true ;
         sh:minCount 1 ;
@@ -950,6 +966,7 @@ _:MediaObjectShape
         _:MediaThumbnailUrlRequiredShape ,
         [
             sh:path schema:copyrightNotice ;
+            sh:message "Geef de copyrightvermelding als tekst met een taalcode"@nl, "Provide the copyright notice as language-tagged text"@en ;
             sh:datatype rdf:langString ;
             sh:minCount 0 ;
             sh:description """
@@ -988,6 +1005,7 @@ _:IIIFPresentationManifestFormatShape
     a sh:NodeShape ;
     sh:property [
         sh:path schema:encodingFormat ;
+        sh:message "Geef een encodingFormat op dat begint met het IIIF Presentation JSON-LD-mediatype en profiel"@nl, "Provide an encodingFormat starting with the IIIF Presentation JSON-LD media type and profile"@en ;
         sh:minCount 1 ;
         sh:pattern "^application/ld\\+json;\\s*profile=['\"]?http://iiif\\.io/api/presentation/" ;
     ] .
@@ -1070,10 +1088,12 @@ _:IIIFPresentationManifestShape
         _:MediaLicenseUriShape ,
         [
             sh:path schema:license ;
+            sh:message "Voeg een licentie of rechtenverklaring toe aan het IIIF Presentation-manifest"@nl, "Add a license or rights statement to the IIIF Presentation manifest"@en ;
             sh:minCount 1 ;
         ] ,
     [
         sh:path schema:encodingFormat ;
+        sh:message "Geef precies één encodingFormat op met een geldig IIIF Presentation JSON-LD-profiel"@nl, "Provide exactly one encodingFormat with a valid IIIF Presentation JSON-LD profile"@en ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:pattern "^application/ld\\+json;profile=(['\"])http://iiif\\.io/api/presentation/\\d+/context\\.json\\1$" ;
@@ -1151,6 +1171,7 @@ _:CreativeWorkAssociatedMediaValueShape
             sh:node [
                 sh:property [
                     sh:path schema:encodingFormat ;
+                    sh:message "Gebruik voor het manifestprofiel dubbele aanhalingstekens in plaats van enkele"@nl, "Use double quotes rather than single quotes for the manifest profile"@en ;
                     sh:not [ sh:pattern "^application/ld\\+json;profile='http://iiif\\.io/api/presentation/" ] ;
                 ]
             ] ;
@@ -1221,10 +1242,12 @@ _:CreativeWorkAssociatedMediaCardinalityShape
     sh:or (
         [ sh:property [
             sh:path schema:associatedMedia ;
+            sh:message "Laat associatedMedia weg wanneer er geen media beschikbaar zijn"@nl, "Omit associatedMedia when no media are available"@en ;
             sh:maxCount 0 ;
         ] ]
         [ sh:property [
             sh:path schema:associatedMedia ;
+            sh:message "Voeg minimaal één geldig MediaObject toe als er media beschikbaar zijn"@nl, "Add at least one valid MediaObject when media are available"@en ;
             sh:qualifiedValueShape _:MediaObjectShape ;
             sh:qualifiedMinCount 1 ;
         ] ]
@@ -1248,6 +1271,7 @@ _:PlaceShape
     """ ;
     sh:property [
         sh:path schema:name ;
+        sh:message "Geef minimaal één naam met taalcode voor de plaats, maximaal één per taal"@nl, "Provide at least one language-tagged place name, at most one per language"@en ;
         sh:datatype rdf:langString ;
         sh:uniqueLang true ;
         sh:minCount 1 ;
@@ -1287,6 +1311,7 @@ _:PlaceShape
                     """ ;
                     sh:property [
                         sh:path schema:latitude ;
+                        sh:message "Geef precies één breedtegraad als xsd:double of xsd:decimal"@nl, "Provide exactly one latitude typed as xsd:double or xsd:decimal"@en ;
                         sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
@@ -1302,6 +1327,7 @@ _:PlaceShape
                     ] ,
                     [
                         sh:path schema:longitude ;
+                        sh:message "Geef precies één lengtegraad als xsd:double of xsd:decimal"@nl, "Provide exactly one longitude typed as xsd:double or xsd:decimal"@en ;
                         sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
                         sh:minCount 1 ;
                         sh:maxCount 1 ;
@@ -1339,6 +1365,7 @@ _:OccupationShape
     """ ;
     sh:property [
         sh:path schema:name ;
+        sh:message "Geef minimaal één naam met taalcode voor het adres, maximaal één per taal"@nl, "Provide at least one language-tagged address name, at most one per language"@en ;
         sh:datatype rdf:langString ;
         sh:uniqueLang true ;
         sh:minCount 1 ;
@@ -1356,6 +1383,7 @@ _:PostalAddressShape
     """ ;
     sh:property [
         sh:path schema:streetAddress ;
+        sh:message "Geef maximaal één straatadres als tekst zonder taalcode"@nl, "Provide at most one street address as a string without a language tag"@en ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -1365,6 +1393,7 @@ _:PostalAddressShape
     ] ,
     [
         sh:path schema:postalCode ;
+        sh:message "Geef maximaal één postcode als tekst zonder taalcode"@nl, "Provide at most one postal code as a string without a language tag"@en ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -1374,6 +1403,7 @@ _:PostalAddressShape
     ] ,
     [
         sh:path schema:addressLocality ;
+        sh:message "Geef maximaal één plaatsnaam als tekst zonder taalcode"@nl, "Provide at most one address locality as a string without a language tag"@en ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -1383,6 +1413,7 @@ _:PostalAddressShape
     ] ,
     [
         sh:path schema:addressRegion ;
+        sh:message "Geef maximaal één regio als tekst zonder taalcode"@nl, "Provide at most one address region as a string without a language tag"@en ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
@@ -1392,6 +1423,7 @@ _:PostalAddressShape
     ] ,
     [
         sh:path schema:addressCountry ;
+        sh:message "Geef maximaal één land op als tekst zonder taalcode; gebruik waar mogelijk de ISO 3166-1 alpha-2-code"@nl, "Provide at most one country as a string without a language tag; use the ISO 3166-1 alpha-2 code where available"@en ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
