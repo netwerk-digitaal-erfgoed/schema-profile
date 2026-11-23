@@ -1214,18 +1214,28 @@ _:MediaLicenseCanonicalShape
 _:CreativeWorkAssociatedMediaCardinalityShape
     a sh:NodeShape ;
     sh:targetClass schema:CreativeWork ;
+    sh:severity sh:Warning ;
+    sh:message "Voeg minimaal één weergeefbaar MediaObject toe als er media beschikbaar is."@nl,
+        "At least one renderable MediaObject is required when media is available."@en ;
+    # Either no media is linked, or at least one linked value is a MediaObject.
+    sh:or (
+        [ sh:property [
+            sh:path schema:associatedMedia ;
+            sh:maxCount 0 ;
+        ] ]
+        [ sh:property [
+            sh:path schema:associatedMedia ;
+            sh:qualifiedValueShape _:MediaObjectShape ;
+            sh:qualifiedMinCount 1 ;
+        ] ]
+    ) ;
     sh:property [
-        sh:path schema:associatedMedia ;
-        sh:qualifiedValueShape _:MediaObjectShape ;
-        sh:qualifiedMinCount 1 ;
-        sh:severity sh:Warning ;
-        sh:message "Voeg minimaal één weergeefbaar MediaObject toe als er media beschikbaar is."@nl, "At least one renderable MediaObject is required when media is available."@en ;
-    ] ,
-    [
         sh:path schema:associatedMedia ;
         sh:qualifiedValueShape _:IIIFPresentationManifestShape ;
         sh:qualifiedMaxCount 1 ;
-        sh:message "Gebruik maximaal één IIIF Presentation-manifest per CreativeWork."@nl, "At most one IIIF Presentation manifest may be exposed per CreativeWork."@en ;
+        sh:severity sh:Violation ;
+        sh:message "Gebruik maximaal één IIIF Presentation-manifest per CreativeWork."@nl,
+            "At most one IIIF Presentation manifest may be exposed per CreativeWork."@en ;
     ] .
 
 _:PlaceShape
