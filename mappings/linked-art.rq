@@ -119,31 +119,47 @@ WHERE {
             # A Name that carries no classifier. Linked Art asks for the
             # Primary Name term only to pick between several names, so where
             # an entity has just one Name it is conformant without it.
+            #
+            # A plain E41_Appellation in place of Linked Art’s Name class is
+            # a tolerant read: out of spec, but unmistakably a name.
             VALUES ?recordClass {
                 crm:E22_Human-Made_Object
                 crm:E21_Person
                 crm:E74_Group
                 crm:E53_Place
             }
+            VALUES ?nameClass {
+                crm:E33_E41_Linguistic_Appellation
+                crm:E41_Appellation
+            }
             ?record a ?recordClass ;
                 crm:P1_is_identified_by ?contentNode .
-            ?contentNode a crm:E33_E41_Linguistic_Appellation ;
+            ?contentNode a ?nameClass ;
                 crm:P190_has_symbolic_content ?rawContent .
             FILTER NOT EXISTS { ?contentNode crm:P2_has_type ?anyClassifier }
             FILTER NOT EXISTS {
-                ?record crm:P1_is_identified_by/crm:P2_has_type aat:300404670
+                ?record crm:P1_is_identified_by ?primaryName .
+                ?primaryName crm:P2_has_type aat:300404670 ;
+                    crm:P190_has_symbolic_content ?primaryNameContent .
             }
             BIND(schema:name AS ?textProperty)
         }
         UNION
         {
-            # Records that carry no Name at all, only a label.
+            # Records that the two branches above give no name. From here on every source
+            # is a tolerant read, taken because a record without a name
+            # cannot conform; each one applies only when all sources before
+            # it are absent:
             #
-            # This is a tolerant read, not a conformant one. Linked Art reserves
-            # _label for developers reading the data, gives it no language and
-            # allows only one, and it does not define skos:prefLabel at all.
-            # Without this branch such records carry no name and cannot conform,
-            # so the label is taken as a last resort.
+            # 1. a Title (crm:P102_has_title), which Linked Art does not use;
+            # 2. skos:prefLabel, which Linked Art does not define;
+            # 3. _label (rdfs:label), which Linked Art requires on every
+            #    record but reserves for developers, without a language;
+            # 4. an identifier, the accession number first.
+            #
+            # A record without any of them is not valid Linked Art, as it
+            # lacks the required _label, and is left out; see the filter at
+            # the end of this query.
             VALUES ?recordClass {
                 crm:E22_Human-Made_Object
                 crm:E21_Person
@@ -152,13 +168,75 @@ WHERE {
             }
             ?record a ?recordClass .
             FILTER NOT EXISTS {
-                ?record crm:P1_is_identified_by/crm:P2_has_type aat:300404670
+                ?record crm:P1_is_identified_by ?primaryName .
+                ?primaryName crm:P2_has_type aat:300404670 ;
+                    crm:P190_has_symbolic_content ?primaryNameContent .
             }
-            OPTIONAL { ?record skos:prefLabel ?prefLabel }
-            OPTIONAL { ?record rdfs:label ?fallbackLabel }
-            BIND(COALESCE(?prefLabel, ?fallbackLabel) AS ?rawContent)
-            BIND(?record AS ?contentNode)
-            FILTER(BOUND(?rawContent))
+            FILTER NOT EXISTS {
+                ?record crm:P1_is_identified_by ?unclassifiedName .
+                ?unclassifiedName a ?nameClass ;
+                    crm:P190_has_symbolic_content ?unclassifiedNameContent .
+                FILTER(?nameClass IN (crm:E33_E41_Linguistic_Appellation, crm:E41_Appellation))
+                FILTER NOT EXISTS { ?unclassifiedName crm:P2_has_type ?anyClassifier }
+            }
+            {
+                # A Title gives its content, else its _label.
+                ?record crm:P102_has_title ?contentNode .
+                OPTIONAL { ?contentNode crm:P190_has_symbolic_content ?titleContent }
+                OPTIONAL { ?contentNode rdfs:label ?titleLabel }
+                BIND(COALESCE(?titleContent, ?titleLabel) AS ?rawContent)
+                FILTER(BOUND(?rawContent))
+            }
+            UNION
+            {
+                FILTER NOT EXISTS {
+                    ?record crm:P102_has_title/(crm:P190_has_symbolic_content|rdfs:label) ?anyTitle
+                }
+                ?record skos:prefLabel ?rawContent .
+                BIND(?record AS ?contentNode)
+            }
+            UNION
+            {
+                FILTER NOT EXISTS {
+                    ?record crm:P102_has_title/(crm:P190_has_symbolic_content|rdfs:label)|skos:prefLabel ?anyTitle
+                }
+                ?record rdfs:label ?rawContent .
+                BIND(?record AS ?contentNode)
+            }
+            UNION
+            {
+                FILTER NOT EXISTS {
+                    ?record crm:P102_has_title/(crm:P190_has_symbolic_content|rdfs:label)|skos:prefLabel|rdfs:label ?anyTitle
+                }
+                # A single identifier, so that the name stays unique per
+                # language: the lowest accession number, else the lowest
+                # identifier of any other kind.
+                {
+                    SELECT ?record (MIN(?identifierContent) AS ?rawContent) WHERE {
+                        ?record crm:P1_is_identified_by ?accessionNumber .
+                        ?accessionNumber a crm:E42_Identifier ;
+                            crm:P2_has_type aat:300312355 ; # accession number
+                            crm:P190_has_symbolic_content ?identifierContent .
+                    }
+                    GROUP BY ?record
+                }
+                UNION
+                {
+                    SELECT ?record (MIN(?identifierContent) AS ?rawContent) WHERE {
+                        ?record crm:P1_is_identified_by ?identifierNode .
+                        ?identifierNode a crm:E42_Identifier ;
+                            crm:P190_has_symbolic_content ?identifierContent .
+                        FILTER NOT EXISTS {
+                            ?record crm:P1_is_identified_by ?accessionNumber .
+                            ?accessionNumber a crm:E42_Identifier ;
+                                crm:P2_has_type aat:300312355 ;
+                                crm:P190_has_symbolic_content ?accessionNumberContent .
+                        }
+                    }
+                    GROUP BY ?record
+                }
+                BIND(?record AS ?contentNode)
+            }
             BIND(schema:name AS ?textProperty)
         }
         UNION
@@ -361,18 +439,29 @@ WHERE {
             # this profile does not allow. The span is therefore reduced to
             # its lowest common precision, and dropped when it straddles
             # more than one year.
-            VALUES (?recordClass ?eventProperty ?dateProperty) {
-                (crm:E22_Human-Made_Object crm:P108i_was_produced_by schema:dateCreated)
-                (crm:E21_Person crm:P98i_was_born schema:birthDate)
-                (crm:E21_Person crm:P100i_died_in schema:deathDate)
+            # A record with several events of one kind, such as two
+            # productions, gets a single span from the earliest begin to the
+            # latest end, so that it never yields more than one date.
+            {
+                SELECT ?record ?dateProperty
+                    (MIN(?spanBegin) AS ?beginDate)
+                    (MAX(?spanEnd) AS ?endDate)
+                WHERE {
+                    VALUES (?recordClass ?eventProperty ?dateProperty) {
+                        (crm:E22_Human-Made_Object crm:P108i_was_produced_by schema:dateCreated)
+                        (crm:E21_Person crm:P98i_was_born schema:birthDate)
+                        (crm:E21_Person crm:P100i_died_in schema:deathDate)
+                    }
+                    ?record a ?recordClass ;
+                        ?eventProperty ?event .
+                    ?event crm:P4_has_time-span ?timeSpan .
+                    ?timeSpan crm:P82a_begin_of_the_begin ?beginOfTheBegin .
+                    OPTIONAL { ?timeSpan crm:P82b_end_of_the_end ?endOfTheEnd }
+                    BIND(SUBSTR(STR(?beginOfTheBegin), 1, 10) AS ?spanBegin)
+                    BIND(SUBSTR(STR(COALESCE(?endOfTheEnd, ?beginOfTheBegin)), 1, 10) AS ?spanEnd)
+                }
+                GROUP BY ?record ?dateProperty
             }
-            ?record a ?recordClass ;
-                ?eventProperty ?event .
-            ?event crm:P4_has_time-span ?timeSpan .
-            ?timeSpan crm:P82a_begin_of_the_begin ?beginOfTheBegin .
-            OPTIONAL { ?timeSpan crm:P82b_end_of_the_end ?endOfTheEnd }
-            BIND(SUBSTR(STR(?beginOfTheBegin), 1, 10) AS ?beginDate)
-            BIND(SUBSTR(STR(COALESCE(?endOfTheEnd, ?beginOfTheBegin)), 1, 10) AS ?endDate)
             FILTER(SUBSTR(?beginDate, 1, 4) = SUBSTR(?endDate, 1, 4))
             BIND(
                 IF(?beginDate = ?endDate,
@@ -445,4 +534,22 @@ WHERE {
             ?record a crm:E22_Human-Made_Object .
         }
     }
+
+    # Which entities become records.
+    #
+    # A record is a document with a URI of its own. An entity described
+    # inside another one, such as a part without a URI, belongs to that
+    # description and is not mapped separately. And an entity with no name,
+    # label or identifier to name it by is left out (the digital objects that
+    # carry a rights statement are not records and need neither).
+    FILTER(
+        EXISTS { ?record a dig:D1_Digital_Object }
+        || (
+            isIRI(?record) && REGEX(STR(?record), "^https?://")
+            && EXISTS {
+                ?record (crm:P1_is_identified_by|crm:P102_has_title)/crm:P190_has_symbolic_content
+                    |crm:P102_has_title/rdfs:label|skos:prefLabel|rdfs:label ?anyName
+            }
+        )
+    )
 }

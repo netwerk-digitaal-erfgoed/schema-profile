@@ -530,7 +530,7 @@ The mapping below takes [Linked Art’s own Schema.org mapping](https://linked.a
 and narrows it to the classes and properties of this profile.
 It produces only properties that this profile defines;
 everything Linked Art expresses beyond them stays in the Linked Art representation,
-which publishers *MAY* keep alongside the generic one (see [[#publication-method]]).
+which publishers can keep alongside the generic one (see [[#publication-method]]).
 
 Note: Linked Art property names below are the terms from the
 [Linked Art JSON-LD context](https://linked.art/ns/v1/linked-art.json), which resolve to CIDOC-CRM properties;
@@ -561,7 +561,7 @@ the mapping adds that counterpart as a [[#subclasses|subclass]] alongside `Creat
         <tr><th>Linked Art<th>SCHEMA-AP-NDE
     <tbody>
         <tr><td colspan=2><strong>On `HumanMadeObject`</strong>
-        <tr><td>`identified_by[Name][classified_as=Primary Name]/content`<td>`name`
+        <tr><td>`identified_by[Name][classified_as=Primary Name]/content`, or a fallback (see [[#mapping-linked-art-records]])<td>`name`
         <tr><td>`identified_by[Identifier]/content`<td>`identifier`
         <tr><td>`referred_to_by[classified_as=Description]/content`<td>`description`
         <tr><td>`referred_to_by[classified_as=Summary]/content`<td>`abstract`
@@ -600,18 +600,59 @@ Note: Linked Art maps an object’s Description statement to `abstract`.
 This profile distinguishes the two, so the mapping sends the Description statement to `description`
 and the Summary statement to `abstract`, matching their definitions in [[#CreativeWork]].
 
+### Records and their names ### {#mapping-linked-art-records}
+
+Only an entity with an HTTP(S) URI of its own becomes a record.
+(Digital objects are not records, so this does not apply to them.)
+In Linked Art a record is a document with its own URI;
+an entity described inside another one, such as a part without a URI, belongs to that description.
+
+Linked Art only recommends a name, while this profile requires one on every record.
+Where a record has no Primary Name and no single unclassified Name, the query takes the first of these that is present:
+
+1. a Title (`crm:P102_has_title`);
+2. a `skos:prefLabel`;
+3. the `_label`;
+4. an identifier, preferring the accession number.
+
+These are tolerant reads: Linked Art does not use the first two,
+and it reserves `_label` for developers, without a language.
+They are taken because a record without a name cannot conform.
+The query likewise accepts a plain `crm:E41_Appellation` where Linked Art prescribes its Name class.
+A record with none of these is left out.
+It is not valid Linked Art either, since Linked Art requires a `_label` on every record.
+
+A creator that the data types only as an actor, neither `Person` nor `Group`,
+stays untyped, which the profile allows as long as it has a name.
+Typing it as a `Group` would be the safe choice in Linked Art,
+but a `Group` maps to [[#Organization|Organization]], which would present individual artists as organizations.
+
+Note: The pipeline that runs the query should report to the publisher which records it left out
+and where it fell back on a tolerant read, so that the publisher can fix the source data.
+
 ### What the mapping cannot derive ### {#mapping-linked-art-gaps}
 
 Some of this profile’s requirements have no counterpart in Linked Art
 and have to be filled in by the pipeline that runs the mapping:
 
-- [[#CreativeWork-sdDatePublished|sdDatePublished]] and [[#CreativeWork-isPartOf|isPartOf]] describe the [=metadata record=]
-    and the dataset it belongs to, neither of which Linked Art expresses.
-    The query carries them in a marked `VALUES` block for publishers to fill in.
+- [[#CreativeWork-isPartOf|isPartOf]]. Linked Art does not say which dataset a record belongs to.
+    The query sets one value for the whole export, in a marked `VALUES` block that publishers fill in.
+- [[#CreativeWork-sdDatePublished|sdDatePublished]]. Linked Art records no date on which a record last changed.
+    Publishers should supply it per record,
+    for example from their collection management system or from the Activity Streams feed in which Linked Art publishes changes.
+    The single date in the `VALUES` block is only a fallback:
+    it makes every record look changed on each run,
+    so consumers that harvest incrementally fetch everything again.
+
+    Linked Art is discussing an optional embedded DCAT record that could carry both values
+    ([linked-art#800](https://github.com/linked-art/linked.art/issues/800),
+    [linked-art#801](https://github.com/linked-art/linked.art/issues/801)).
+    As `_embedded` is not in the Linked Art JSON-LD context, it disappears when the JSON is converted to RDF,
+    so a pipeline would read it from the JSON and pass the values to the query.
 - Language. Linked Art records the language of a text by pointing at an AAT concept,
     while this profile requires a language-tagged string.
     The query translates the most common concepts and falls back on the `und` tag
-    for text whose language is unlisted or absent; publishers *SHOULD* extend that table to cover their data.
+    for text whose language is unlisted or absent; publishers should extend that table to cover their data.
 - Thumbnails. Linked Art has no dedicated thumbnail.
     Where the image is served through a <a href="https://iiif.io/api/image/">IIIF Image API</a> service,
     the query derives both [[#MediaObject-contentUrl|contentUrl]] and [[#MediaObject-thumbnailUrl|thumbnailUrl]] from the service base URI;
@@ -621,9 +662,10 @@ and have to be filled in by the pipeline that runs the mapping:
     which [[#CreativeWork-dateCreated|dateCreated]] does not allow.
     The query reduces a span to its lowest common precision and drops it when it straddles more than one year,
     as the profile prescribes.
+    Where a record has several events of one kind, such as two productions, it combines their spans first.
 - Term labels. A term that is referenced by its vocabulary URI alone carries no name,
     and a [[#reference-terms|DefinedTerm]] without a name is not conformant.
-    The query falls back on the term’s `_label`, and drops the reference when there is neither.
+    The query falls back on the term’s `skos:prefLabel`, then its `_label`, and drops the reference when it has none of these.
 - [[#CreativeWork-temporalCoverage|temporalCoverage]] and the IIIF Presentation manifest entry on
     [[#CreativeWork-associatedMedia|associatedMedia]] are not mapped;
     publishers who model these in Linked Art can extend the query along the same lines.
