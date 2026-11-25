@@ -8,7 +8,8 @@ direction TB
 {% for nodeShape in mainNodeShapes %}
     class {{ nodeShape.name }} {
         {% if nodeShape.nodeKind == "IRI" -%}**URI**&nbsp;{%- endif -%}
-    {%- for property in nodeShape.property -%}
+    {%- assign merged_properties = nodeShape.property | mergePropertiesByPath -%}
+    {%- for property in merged_properties -%}
         {%- assign name = property.path | replace: "schema:", "" %}
 
         {%- if property.or -%}
@@ -29,7 +30,15 @@ direction TB
         {%- elsif property.node -%}
             {{ property.node.name | default: property.node.class }}
         {%- endif %} [
-        {%- assign minCount = property.minCount | default: 0 -%}
+        {%- comment -%} A merged row can take its sh:minCount from a Warning, which does not make the property required. {%- endcomment -%}
+        {%- assign minCount = 0 -%}
+        {%- for shape in nodeShape.property -%}
+            {%- assign shape_severity = shape.severity | default: "Violation" -%}
+            {%- if shape.path == property.path and shape.minCount > 0 and shape_severity == "Violation" -%}
+                {%- assign minCount = shape.minCount -%}
+                {%- break -%}
+            {%- endif -%}
+        {%- endfor -%}
         {%- assign maxCount = property.maxCount | default: "*" -%}
         {%- if minCount == maxCount -%}
              {{- minCount -}}
