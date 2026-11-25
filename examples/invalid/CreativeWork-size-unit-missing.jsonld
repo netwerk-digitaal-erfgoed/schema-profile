@@ -1,0 +1,22 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q45585",
+  "@type": "CreativeWork",
+  "name": {
+    "@language": "nl",
+    "@value": "De Sterrennacht"
+  },
+  "sdDatePublished": {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2024-01-15"
+  },
+  "size": {
+    "@type": "QuantitativeValue",
+    "value": 74,
+    "valueReference": {
+      "@type": "DefinedTerm",
+      "name": { "@value": "hoogte", "@language": "nl" },
+      "sameAs": "http://vocab.getty.edu/aat/300055644"
+    }
+  }
+}

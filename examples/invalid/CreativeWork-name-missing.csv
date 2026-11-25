@@ -1,0 +1,2 @@
+Violation,name,Enter a name.
+Warning,associatedMedia,At least one renderable MediaObject is required when media is available.

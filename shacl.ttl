@@ -10,6 +10,8 @@ _:CreativeWorkShape
     a sh:NodeShape ;
     sh:targetClass schema:CreativeWork ;
     sh:nodeKind sh:IRI ;
+    # Applies to every constraint on the node itself, which is only sh:nodeKind; property shapes have their own.
+    sh:message "Geef het CreativeWork een URI."@nl, "Give the CreativeWork a URI."@en ;
     sh:name "CreativeWork" ;
     sh:description """
         The type for [=heritage objects=] ([[DERA]]’s *cultuurhistorisch object*) in this application profile.
@@ -25,11 +27,12 @@ _:CreativeWorkShape
         For more fine-grained typing, [[#CreativeWork-additionalType]] *SHOULD* be used.
     """ ;
     sh:property
+        _:NameLanguageShape ,
+        _:NameUniqueLangShape ,
         [
             sh:path schema:name ;
-            sh:datatype rdf:langString ;
-            sh:uniqueLang true ;
             sh:minCount 1 ;
+            sh:message "Vul een naam in."@nl, "Enter a name."@en ;
             sh:description """
                 The CreativeWork’s name or title, assigned either by its creator, collection managers or by others.
             """ ;
@@ -41,7 +44,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:sdDatePublished ;
-            sh:message "Geef precies één datum waarop het record voor het laatst is gewijzigd, in ISO 8601-formaat: YYYY-MM-DD of YYYY-MM-DDThh:mm:ssZ"@nl, "Give exactly one date on which the record was last changed, in ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDThh:mm:ssZ"@en ;
+            sh:message "Geef precies één datum waarop het record voor het laatst is gewijzigd, in ISO 8601-formaat: YYYY-MM-DD of YYYY-MM-DDThh:mm:ssZ."@nl, "Give exactly one date on which the record was last changed, in ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDThh:mm:ssZ."@en ;
             sh:or (
                 [
                     sh:datatype xsd:date ;
@@ -63,6 +66,7 @@ _:CreativeWorkShape
         [
             sh:path schema:isPartOf ;
             sh:nodeKind sh:IRI ;
+            sh:message "Gebruik de URI van de dataset als waarde van isPartOf."@nl, "Use the dataset’s URI as the value of isPartOf."@en ;
             sh:description """
                 The dataset(s) that the CreativeWork is part of.
                 *REQUIRED* if the CreativeWork is part of one or more datasets.
@@ -87,7 +91,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:associatedMedia ;
-            sh:message "Gebruik een MediaObject met license, contentUrl en thumbnailUrl, of een IIIF Presentation-manifest met license en encodingFormat"@nl, "Use a MediaObject with license, contentUrl and thumbnailUrl, or an IIIF Presentation manifest with license and encodingFormat"@en ;
+            sh:message "Gebruik een MediaObject met license, contentUrl en thumbnailUrl, of een IIIF Presentation-manifest met license en encodingFormat."@nl, "Use a MediaObject with license, contentUrl and thumbnailUrl, or an IIIF Presentation manifest with license and encodingFormat."@en ;
             sh:or (
                 [ sh:node _:MediaObjectShape ]
                 [ sh:node _:IIIFPresentationManifestShape ; rdfs:label "IIIF Presentation manifest" ]
@@ -123,7 +127,7 @@ _:CreativeWorkShape
         ] ,
         [
             sh:path schema:creator ;
-            sh:message "Gebruik een Person of Organization als maker, of een maker zonder type met een naam met taalcode"@nl, "Use a Person or Organization as creator, or an untyped creator with a language-tagged name"@en ;
+            sh:message "Gebruik een Person of Organization als maker, of een maker zonder type met een naam met taalcode."@nl, "Use a Person or Organization as creator, or an untyped creator with a language-tagged name."@en ;
             sh:or (
                 [ sh:class schema:Person ]
                 [ sh:class schema:Organization ]
@@ -164,7 +168,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:identifier ;
-            sh:message "Gebruik een tekst of een PropertyValue als identifier"@nl, "Use a string or a PropertyValue as identifier"@en ;
+            sh:message "Gebruik een tekst of een PropertyValue als identifier."@nl, "Use a string or a PropertyValue as identifier."@en ;
             sh:or (
               [ sh:datatype xsd:string ]
               [ sh:class schema:PropertyValue ]
@@ -189,7 +193,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:additionalType ;
-            sh:message "Gebruik een DefinedTerm met een naam met taalcode als aanvullend type"@nl, "Use a DefinedTerm with a language-tagged name as additional type"@en ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als aanvullend type."@nl, "Use a DefinedTerm with a language-tagged name as additional type."@en ;
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
@@ -212,6 +216,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:description ;
             sh:datatype rdf:langString ;
+            sh:message "Geef de beschrijving een taalcode, zoals nl of en."@nl, "Give the description a language tag, such as nl or en."@en ;
             sh:minCount 0 ;
             sh:description """
                 A full description of the CreativeWork.
@@ -225,6 +230,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:abstract ;
             sh:datatype rdf:langString ;
+            sh:message "Geef de samenvatting een taalcode, zoals nl of en."@nl, "Give the abstract a language tag, such as nl or en."@en ;
             sh:minCount 0 ;
             sh:description """
                 A one-sentence summary of the CreativeWork.
@@ -240,6 +246,7 @@ _:CreativeWorkShape
             a sh:PropertyShape ;
             sh:path schema:text ;
             sh:datatype rdf:langString ;
+            sh:message "Geef de tekst een taalcode, zoals nl of en."@nl, "Give the text a language tag, such as nl or en."@en ;
             sh:minCount 0 ;
             sh:description """
                 The complete textual content of the CreativeWork,
@@ -260,13 +267,12 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:size ;
-            sh:message "Gebruik een tekst (maximaal één per taal) of een QuantitativeValue met value, valueReference en unitCode of unitText als afmeting"@nl, "Use a text (at most one per language) or a QuantitativeValue with value, valueReference and unitCode or unitText as size"@en ;
+            sh:message "Gebruik een tekst of een QuantitativeValue met value, valueReference en unitCode of unitText als afmeting."@nl, "Use a text or a QuantitativeValue with value, valueReference and unitCode or unitText as size."@en ;
             sh:or (
                 [ sh:datatype rdf:langString ]
                 [ sh:datatype xsd:string ]
                 [ sh:node _:QuantitativeValueShape ]
             ) ;
-            sh:uniqueLang true ;
             sh:minCount 0 ;
             sh:description """
                 The physical size of the CreativeWork.
@@ -295,6 +301,11 @@ _:CreativeWorkShape
                 rdfs:comment "file://examples/CreativeWork-size-labels.jsonld" ;
             ] ;
         ] ,
+        [
+            sh:path schema:size ;
+            sh:uniqueLang true ;
+            sh:message "Gebruik maximaal één afmeting per taal."@nl, "Use at most one size per language."@en ;
+        ] ,
         # A Warning for now: a plain string conformed until now, so it must not turn data into a violation.
         [
             sh:path schema:size ;
@@ -305,12 +316,12 @@ _:CreativeWorkShape
                 sh:severity sh:Violation ;
                 rdfs:label "`xsd:string` niet meer toegestaan"@nl, "`xsd:string` no longer allowed"@en ;
             ] ;
-            sh:message "Geef de afmeting als tekst met taallabel of als QuantitativeValue, niet als tekst zonder taal"@nl, "Give the size as a language-tagged string or a QuantitativeValue, not as a string without a language"@en ;
+            sh:message "Geef de afmeting als tekst met taallabel of als QuantitativeValue, niet als tekst zonder taal."@nl, "Give the size as a language-tagged string or a QuantitativeValue, not as a string without a language."@en ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:path schema:contentLocation ;
-            sh:message "Gebruik een Place met een naam met taalcode als afgebeelde locatie"@nl, "Use a Place with a language-tagged name as content location"@en ;
+            sh:message "Gebruik een Place met een naam met taalcode als afgebeelde locatie."@nl, "Use a Place with a language-tagged name as content location."@en ;
             sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
@@ -328,7 +339,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:temporalCoverage ;
-            sh:message "Gebruik een ISO 8601-datum of -interval (zoals 2011 of 2011/2012), een EDTF-waarde met datatype edtf:EDTF (zoals 1953?) of een DefinedTerm met een naam met taalcode als periode"@nl, "Use an ISO 8601 date or interval (such as 2011 or 2011/2012), an EDTF value typed edtf:EDTF (such as 1953?) or a DefinedTerm with a language-tagged name as temporal coverage"@en ;
+            sh:message "Gebruik een ISO 8601-datum of -interval (zoals 2011 of 2011/2012), een EDTF-waarde met datatype edtf:EDTF (zoals 1953?) of een DefinedTerm met een naam met taalcode als periode."@nl, "Use an ISO 8601 date or interval (such as 2011 or 2011/2012), an EDTF value typed edtf:EDTF (such as 1953?) or a DefinedTerm with a language-tagged name as temporal coverage."@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:nodeKind sh:IRI ; sh:pattern "^https?://" ]
@@ -388,18 +399,18 @@ _:CreativeWorkShape
                 sh:severity sh:Violation ;
                 rdfs:label "tekst zonder taalcode of getypeerde datum"@nl, "string without a language tag, or a typed date"@en ;
             ] ;
-            sh:message "Gebruik een tekst zonder taalcode of een getypeerde datum voor een ISO 8601-datum of -interval als periode"@nl, "Use a string without a language tag, or a typed date, for an ISO 8601 date or interval as temporal coverage"@en ;
+            sh:message "Gebruik een tekst zonder taalcode of een getypeerde datum voor een ISO 8601-datum of -interval als periode."@nl, "Use a string without a language tag, or a typed date, for an ISO 8601 date or interval as temporal coverage."@en ;
         ] ,
         [
             sh:path schema:temporalCoverage ;
             sh:not _:EdtfSingleDateShape ;
             sh:severity sh:Warning ;
-            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF"@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF"@en ;
+            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF."@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF."@en ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:path schema:locationCreated ;
-            sh:message "Gebruik een Place met een naam met taalcode als plaats van vervaardiging"@nl, "Use a Place with a language-tagged name as location of creation"@en ;
+            sh:message "Gebruik een Place met een naam met taalcode als plaats van vervaardiging."@nl, "Use a Place with a language-tagged name as location of creation."@en ;
             sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:description """
@@ -416,7 +427,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:dateCreated ;
-            sh:message "Geef maximaal één vervaardigingsdatum in ISO 8601-formaat (YYYY, YYYY-MM of YYYY-MM-DD) of als EDTF-waarde met datatype edtf:EDTF"@nl, "Give at most one creation date in ISO 8601 format (YYYY, YYYY-MM or YYYY-MM-DD) or as an EDTF value typed edtf:EDTF"@en ;
+            sh:message "Geef maximaal één vervaardigingsdatum in ISO 8601-formaat (YYYY, YYYY-MM of YYYY-MM-DD) of als EDTF-waarde met datatype edtf:EDTF."@nl, "Give at most one creation date in ISO 8601 format (YYYY, YYYY-MM or YYYY-MM-DD) or as an EDTF value typed edtf:EDTF."@en ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -448,12 +459,12 @@ _:CreativeWorkShape
             sh:path schema:dateCreated ;
             sh:not _:EdtfSingleDateShape ;
             sh:severity sh:Warning ;
-            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF"@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF"@en ;
+            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF."@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF."@en ;
         ] ,
         [
             a sh:PropertyShape ;
             sh:path schema:about ;
-            sh:message "Gebruik een DefinedTerm met een naam met taalcode, een CreativeWork, een Person of een Organization als onderwerp"@nl, "Use a DefinedTerm with a language-tagged name, a CreativeWork, a Person or an Organization as subject"@en ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode, een CreativeWork, een Person of een Organization als onderwerp."@nl, "Use a DefinedTerm with a language-tagged name, a CreativeWork, a Person or an Organization as subject."@en ;
             sh:or (
                 [ sh:node _:DefinedTermShape ]
                 [ sh:class schema:CreativeWork ]
@@ -483,7 +494,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:material ;
-            sh:message "Gebruik een DefinedTerm met een naam met taalcode als materiaal"@nl, "Use a DefinedTerm with a language-tagged name as material"@en ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als materiaal."@nl, "Use a DefinedTerm with a language-tagged name as material."@en ;
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
@@ -500,7 +511,7 @@ _:CreativeWorkShape
         [
             a sh:PropertyShape ;
             sh:path schema:genre ;
-            sh:message "Gebruik een DefinedTerm met een naam met taalcode als genre"@nl, "Use a DefinedTerm with a language-tagged name as genre"@en ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als genre."@nl, "Use a DefinedTerm with a language-tagged name as genre."@en ;
             sh:node _:DefinedTermShape ;
             sh:minCount 0 ;
             sh:description """
@@ -523,7 +534,7 @@ _:CreativeWorkShape
                 sh:severity sh:Violation ;
                 rdfs:label "maand 01–12 en dag 01–31"@nl, "month 01–12 and day 01–31"@en ;
             ] ;
-            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31"@nl, "Use a month from 01 to 12 and a day from 01 to 31"@en ;
+            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31."@nl, "Use a month from 01 to 12 and a day from 01 to 31."@en ;
         ] ,
         [
             sh:path schema:temporalCoverage ;
@@ -534,7 +545,7 @@ _:CreativeWorkShape
                 sh:severity sh:Violation ;
                 rdfs:label "maand 01–12 en dag 01–31"@nl, "month 01–12 and day 01–31"@en ;
             ] ;
-            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31"@nl, "Use a month from 01 to 12 and a day from 01 to 31"@en ;
+            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31."@nl, "Use a month from 01 to 12 and a day from 01 to 31."@en ;
         ]
     .
 
@@ -548,15 +559,26 @@ _:CreatorShape
         sh:path rdf:type ;
         sh:minCount 1
     ] ;
-    sh:property [
+    sh:property _:NameLanguageShape , _:NameUniqueLangShape , [
         sh:path schema:name ;
-        sh:datatype rdf:langString ;
-        sh:uniqueLang true ;
         sh:minCount 1 ;
+        sh:message "Vul een naam in."@nl, "Enter a name."@en ;
         sh:description """
             A *REQUIRED* property that indicates the creator’s name in its preferred display form.
         """ ;
     ] .
+
+# The checks on a name that every class shares, each with its own message. The shapes that use them add
+# the required name with its description.
+_:NameLanguageShape
+    sh:path schema:name ;
+    sh:datatype rdf:langString ;
+    sh:message "Geef de naam een taalcode, zoals nl of en."@nl, "Give the name a language tag, such as nl or en."@en .
+
+_:NameUniqueLangShape
+    sh:path schema:name ;
+    sh:uniqueLang true ;
+    sh:message "Gebruik per taal maximaal één naam."@nl, "Use at most one name per language."@en .
 
 _:DefinedTermShape
     a sh:NodeShape ;
@@ -586,11 +608,10 @@ _:DefinedTermShape
         which are local to each publishing dataset and therefore not shared across datasets.
         Two nodes reference the same term if they share at least one `sameAs` URI.
     """ ;
-    sh:property [
+    sh:property _:NameLanguageShape , _:NameUniqueLangShape , [
         sh:path schema:name ;
-        sh:datatype rdf:langString ;
-        sh:uniqueLang true ;
         sh:minCount 1 ;
+        sh:message "Vul een naam in."@nl, "Enter a name."@en ;
         sh:description """
             A *REQUIRED* property that indicates the term’s preferred label.
         """ ;
@@ -621,69 +642,162 @@ _:QuantitativeValueShape
 
         The measurement *MUST* have a `unitCode` or a `unitText`, or both.
     """ ;
+    sh:node _:QuantitativeValueUnitShape ;
+    sh:property
+        _:ValueCountShape ,
+        _:ValueNumberShape ,
+        _:ValueReferenceCountShape ,
+        _:ValueReferenceFormShape ,
+        _:UnitCodeShape ,
+        _:UnitCodeCountShape ,
+        _:UnitTextShape ,
+        _:UnitTextCountShape .
+
+_:QuantitativeValueUnitShape
     sh:or (
         [ sh:path schema:unitCode ; sh:minCount 1 ]
         [ sh:path schema:unitText ; sh:minCount 1 ]
     ) ;
-    sh:property [
-        sh:path schema:value ;
-        sh:or (
-            [ sh:datatype xsd:decimal ]
-            [ sh:datatype xsd:double ]
-            [ sh:datatype xsd:integer ]
-        ) ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The measured number.
+    sh:message "Geef de eenheid in unitCode of unitText."@nl, "Give the unit in unitCode or unitText."@en .
 
-            The number *MUST NOT* carry the unit, which belongs in `unitCode` or `unitText`.
-        """ ;
-    ] ,
-    [
-        sh:path schema:valueReference ;
-        sh:or (
-            [ sh:node _:DefinedTermShape ]
-            [ sh:datatype rdf:langString ]
-        ) ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The dimension that is measured, such as height, width, depth or diameter.
+_:ValueCountShape
+    sh:path schema:value ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Geef precies één waarde."@nl, "Give exactly one value."@en ;
+    sh:description """
+        The measured number.
 
-            Without it, the measurement cannot be interpreted.
+        The number *MUST NOT* carry the unit, which belongs in `unitCode` or `unitText`.
+    """ .
 
-            The value *SHOULD* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]),
-            for example http://vocab.getty.edu/aat/300055644 for height.
-            If no term is known, the value *MUST* be a language-tagged string, such as “hoogte”@nl.
-        """ ;
-    ] ,
-    [
-        sh:path schema:unitCode ;
-        sh:node _:DefinedTermShape ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The unit of measurement,
-            for example http://vocab.getty.edu/aat/300379098 for centimetres.
-            *REQUIRED* if the unit’s term is known; otherwise, give the unit in `unitText`.
+_:ValueNumberShape
+    sh:path schema:value ;
+    sh:or (
+        [ sh:datatype xsd:decimal ]
+        [ sh:datatype xsd:double ]
+        [ sh:datatype xsd:integer ]
+    ) ;
+    sh:message "Geef de waarde als getal zonder eenheid, zoals 74."@nl, "Give the value as a number without the unit, such as 74."@en .
 
-            The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]).
-            Because `schema:unitCode` expects `Text` or `URL`, the `DefinedTerm` node *MUST* also be co-typed as `URL` (`"@type": ["DefinedTerm", "URL"]`).
-        """ ;
-    ] ,
-    [
-        sh:path schema:unitText ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The unit of measurement as text, such as “mm”.
-            *REQUIRED* if the measurement has no `unitCode`.
+_:ValueReferenceCountShape
+    sh:path schema:valueReference ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Geef precies één valueReference met de gemeten afmeting, zoals hoogte."@nl, "Give exactly one valueReference with the measured dimension, such as height."@en ;
+    sh:description """
+        The dimension that is measured, such as height, width, depth or diameter.
 
-            Because a unit symbol does not depend on language, the value *MUST* be a plain string (`xsd:string`).
-        """ ;
-    ] .
+        Without it, the measurement cannot be interpreted.
+
+        The value *SHOULD* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]),
+        for example http://vocab.getty.edu/aat/300055644 for height.
+        If no term is known, the value *MUST* be a language-tagged string, such as “hoogte”@nl.
+    """ .
+
+_:ValueReferenceFormShape
+    sh:path schema:valueReference ;
+    sh:or (
+        [ sh:node _:DefinedTermShape ]
+        [ sh:datatype rdf:langString ]
+    ) ;
+    sh:message "Gebruik een DefinedTerm met een naam met taalcode of een tekst met taalcode als valueReference."@nl, "Use a DefinedTerm with a language-tagged name or a language-tagged text as valueReference."@en .
+
+_:UnitCodeShape
+    sh:path schema:unitCode ;
+    sh:node _:DefinedTermShape ;
+    sh:minCount 0 ;
+    sh:message "Gebruik een DefinedTerm met een naam met taalcode als unitCode."@nl, "Use a DefinedTerm with a language-tagged name as unitCode."@en ;
+    sh:description """
+        The unit of measurement,
+        for example http://vocab.getty.edu/aat/300379098 for centimetres.
+        *REQUIRED* if the unit’s term is known; otherwise, give the unit in `unitText`.
+
+        The value *MUST* reference a term, modeled as a `DefinedTerm` (see [[#reference-terms]]).
+        Because `schema:unitCode` expects `Text` or `URL`, the `DefinedTerm` node *MUST* also be co-typed as `URL` (`"@type": ["DefinedTerm", "URL"]`).
+    """ .
+
+_:UnitCodeCountShape
+    sh:path schema:unitCode ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één unitCode."@nl, "Use at most one unitCode."@en .
+
+_:UnitTextShape
+    sh:path schema:unitText ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:message "Geef unitText als tekst zonder taalcode, zoals mm."@nl, "Give unitText as text without a language tag, such as mm."@en ;
+    sh:description """
+        The unit of measurement as text, such as “mm”.
+        *REQUIRED* if the measurement has no `unitCode`.
+
+        Because a unit symbol does not depend on language, the value *MUST* be a plain string (`xsd:string`).
+    """ .
+
+_:UnitTextCountShape
+    sh:path schema:unitText ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één unitText."@nl, "Use at most one unitText."@en .
+
+# Each check on a CreativeWork’s measurements, reported with its own message. In _:CreativeWorkShape they are
+# checked through sh:or, whose results are never reported, so there a missing value surfaces only as the
+# general size message. As in _:CreativeWorkAssociatedMediaValueShape, each property shape’s sh:node holds a
+# single check. A size that is not a QuantitativeValue passes them, so they report only values that
+# _:CreativeWorkShape already rejects. Only these messages are reported, so keep each one the same as the
+# message of the shape it checks.
+_:CreativeWorkSizeValueShape
+    a sh:NodeShape ;
+    sh:targetClass schema:CreativeWork ;
+    sh:property
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape _:QuantitativeValueUnitShape ) ] ;
+            sh:message "Geef de eenheid in unitCode of unitText."@nl, "Give the unit in unitCode or unitText."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:ValueCountShape ] ) ] ;
+            sh:message "Geef precies één waarde."@nl, "Give exactly one value."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:ValueNumberShape ] ) ] ;
+            sh:message "Geef de waarde als getal zonder eenheid, zoals 74."@nl, "Give the value as a number without the unit, such as 74."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:ValueReferenceCountShape ] ) ] ;
+            sh:message "Geef precies één valueReference met de gemeten afmeting, zoals hoogte."@nl, "Give exactly one valueReference with the measured dimension, such as height."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:ValueReferenceFormShape ] ) ] ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode of een tekst met taalcode als valueReference."@nl, "Use a DefinedTerm with a language-tagged name or a language-tagged text as valueReference."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:UnitCodeShape ] ) ] ;
+            sh:message "Gebruik een DefinedTerm met een naam met taalcode als unitCode."@nl, "Use a DefinedTerm with a language-tagged name as unitCode."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:UnitCodeCountShape ] ) ] ;
+            sh:message "Gebruik maximaal één unitCode."@nl, "Use at most one unitCode."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:UnitTextShape ] ) ] ;
+            sh:message "Geef unitText als tekst zonder taalcode, zoals mm."@nl, "Give unitText as text without a language tag, such as mm."@en ;
+        ] ,
+        [
+            sh:path schema:size ;
+            sh:node [ sh:or ( _:NotQuantitativeValueShape [ sh:property _:UnitTextCountShape ] ) ] ;
+            sh:message "Gebruik maximaal één unitText."@nl, "Use at most one unitText."@en ;
+        ] .
+
+_:NotQuantitativeValueShape
+    a sh:NodeShape ;
+    sh:not [ sh:class schema:QuantitativeValue ] .
 
 # Documents sameAs on Person, Organization and Place; the constraints live in _:SameAsUriShape.
 _:SameAsShape
@@ -713,7 +827,7 @@ _:SameAsUriShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Gebruik een http- of https-URI als waarde van sameAs"@nl, "Use an http or https URI as the value of sameAs"@en ;
+        sh:message "Gebruik een http- of https-URI als waarde van sameAs."@nl, "Use an http or https URI as the value of sameAs."@en ;
     ] .
 
 # On DefinedTerm, the shape requires a URI already (a Violation), so only the http(s) check is a Warning,
@@ -730,7 +844,7 @@ _:SameAsHttpShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Gebruik een http- of https-URI als waarde van sameAs"@nl, "Use an http or https URI as the value of sameAs"@en ;
+        sh:message "Gebruik een http- of https-URI als waarde van sameAs."@nl, "Use an http or https URI as the value of sameAs."@en ;
     ] .
 
 # A plain or schema:Date value with a date whose month or day is out of range, also as either end of an interval.
@@ -758,11 +872,12 @@ _:PersonShape
         but to easily identify and distinguish between similar persons.
     """ ;
     sh:property
+        _:NameLanguageShape ,
+        _:NameUniqueLangShape ,
         [
             sh:path schema:name ;
-            sh:datatype rdf:langString ;
-            sh:uniqueLang true ;
             sh:minCount 1 ;
+            sh:message "Vul een naam in."@nl, "Enter a name."@en ;
             sh:description """
                 The Person’s full name in its preferred display form.
 
@@ -776,7 +891,7 @@ _:PersonShape
         _:SameAsShape ,
         [
             sh:path schema:birthDate ;
-            sh:message "Geef maximaal één geboortedatum in ISO 8601-formaat (YYYY, YYYY-MM of YYYY-MM-DD) of als EDTF-waarde met datatype edtf:EDTF"@nl, "Give at most one date of birth in ISO 8601 format (YYYY, YYYY-MM or YYYY-MM-DD) or as an EDTF value typed edtf:EDTF"@en ;
+            sh:message "Geef maximaal één geboortedatum in ISO 8601-formaat (YYYY, YYYY-MM of YYYY-MM-DD) of als EDTF-waarde met datatype edtf:EDTF."@nl, "Give at most one date of birth in ISO 8601 format (YYYY, YYYY-MM or YYYY-MM-DD) or as an EDTF value typed edtf:EDTF."@en ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -792,11 +907,11 @@ _:PersonShape
             sh:path schema:birthDate ;
             sh:not _:EdtfSingleDateShape ;
             sh:severity sh:Warning ;
-            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF"@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF"@en ;
+            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF."@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF."@en ;
         ] ,
         [
             sh:path schema:birthPlace ;
-            sh:message "Geef maximaal één Place met een naam met taalcode als geboorteplaats"@nl, "Give at most one Place with a language-tagged name as place of birth"@en ;
+            sh:message "Geef maximaal één Place met een naam met taalcode als geboorteplaats."@nl, "Give at most one Place with a language-tagged name as place of birth."@en ;
             sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -812,7 +927,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:deathDate ;
-            sh:message "Geef maximaal één overlijdensdatum in ISO 8601-formaat (YYYY, YYYY-MM of YYYY-MM-DD) of als EDTF-waarde met datatype edtf:EDTF"@nl, "Give at most one date of death in ISO 8601 format (YYYY, YYYY-MM or YYYY-MM-DD) or as an EDTF value typed edtf:EDTF"@en ;
+            sh:message "Geef maximaal één overlijdensdatum in ISO 8601-formaat (YYYY, YYYY-MM of YYYY-MM-DD) of als EDTF-waarde met datatype edtf:EDTF."@nl, "Give at most one date of death in ISO 8601 format (YYYY, YYYY-MM or YYYY-MM-DD) or as an EDTF value typed edtf:EDTF."@en ;
             sh:node _:DateShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -824,11 +939,11 @@ _:PersonShape
             sh:path schema:deathDate ;
             sh:not _:EdtfSingleDateShape ;
             sh:severity sh:Warning ;
-            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF"@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF"@en ;
+            sh:message "Geef een enkele datum als ISO 8601-datum zonder datatype edtf:EDTF."@nl, "Give a single date as an ISO 8601 date, not typed edtf:EDTF."@en ;
         ] ,
         [
             sh:path schema:deathPlace ;
-            sh:message "Geef maximaal één Place met een naam met taalcode als plaats van overlijden"@nl, "Give at most one Place with a language-tagged name as place of death"@en ;
+            sh:message "Geef maximaal één Place met een naam met taalcode als plaats van overlijden."@nl, "Give at most one Place with a language-tagged name as place of death."@en ;
             sh:node _:PlaceShape ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
@@ -844,7 +959,7 @@ _:PersonShape
         ] ,
         [
             sh:path schema:hasOccupation ;
-            sh:message "Gebruik een Occupation met een naam met taalcode als beroep"@nl, "Use an Occupation with a language-tagged name as occupation"@en ;
+            sh:message "Gebruik een Occupation met een naam met taalcode als beroep."@nl, "Use an Occupation with a language-tagged name as occupation."@en ;
             sh:node _:OccupationShape ;
             sh:minCount 0 ;
             sh:description """
@@ -871,7 +986,7 @@ _:PersonShape
                 sh:severity sh:Violation ;
                 rdfs:label "maand 01–12 en dag 01–31"@nl, "month 01–12 and day 01–31"@en ;
             ] ;
-            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31"@nl, "Use a month from 01 to 12 and a day from 01 to 31"@en ;
+            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31."@nl, "Use a month from 01 to 12 and a day from 01 to 31."@en ;
         ] ,
         [
             sh:path schema:deathDate ;
@@ -882,7 +997,7 @@ _:PersonShape
                 sh:severity sh:Violation ;
                 rdfs:label "maand 01–12 en dag 01–31"@nl, "month 01–12 and day 01–31"@en ;
             ] ;
-            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31"@nl, "Use a month from 01 to 12 and a day from 01 to 31"@en ;
+            sh:message "Gebruik een maand van 01 tot en met 12 en een dag van 01 tot en met 31."@nl, "Use a month from 01 to 12 and a day from 01 to 31."@en ;
         ] .
 
 _:OrganizationShape
@@ -895,11 +1010,10 @@ _:OrganizationShape
         so that consumers can deduplicate it within and across datasets.
         Where no URI is known, it *MAY* be defined inline by its properties, like a Person.
     """ ;
-    sh:property [
+    sh:property _:NameLanguageShape , _:NameUniqueLangShape , [
         sh:path schema:name ;
-        sh:datatype rdf:langString ;
-        sh:uniqueLang true ;
         sh:minCount 1 ;
+        sh:message "Vul een naam in."@nl, "Enter a name."@en ;
         sh:description """
             The Organization’s full name in its preferred display form.
         """ ;
@@ -911,7 +1025,7 @@ _:OrganizationShape
     _:SameAsShape ,
     [
         sh:path schema:location ;
-        sh:message "Geef maximaal één Place met een naam met taalcode als locatie"@nl, "Give at most one Place with a language-tagged name as location"@en ;
+        sh:message "Geef maximaal één Place met een naam met taalcode als locatie."@nl, "Give at most one Place with a language-tagged name as location."@en ;
         sh:minCount 0 ;
         sh:maxCount 1 ;
         sh:class schema:Place ;
@@ -995,7 +1109,7 @@ _:IIIFPresentationManifestFormatShape
 _:MediaLicenseRequiredShape
     sh:path schema:license ;
     sh:minCount 1 ;
-    sh:message "Voeg een licentie of rechtenverklaring toe aan het MediaObject"@nl, "Add a license or rights statement to the MediaObject"@en ;
+    sh:message "Voeg een licentie of rechtenverklaring toe aan het MediaObject."@nl, "Add a license or rights statement to the MediaObject."@en ;
     sh:description """
         The license or rights statement
         that applies to the digital reproduction.
@@ -1031,7 +1145,7 @@ _:MediaContentUrlRequiredShape
     sh:path schema:contentUrl ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
+    sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd."@nl, "Add a contentUrl if the MediaObject is published under an open license."@en ;
     sh:description """
         The URL of the media object.
         *REQUIRED* if the MediaObject is published under an open license.
@@ -1049,7 +1163,7 @@ _:MediaThumbnailUrlRequiredShape
     sh:path schema:thumbnailUrl ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
+    sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd."@nl, "Add a thumbnailUrl if the MediaObject is published under an open license."@en ;
     sh:description """
         A smaller version of the MediaObject.
         *REQUIRED* if the MediaObject is published under an open license.
@@ -1090,17 +1204,17 @@ _:WebUriShape
 _:MediaLicenseUriShape
     sh:path schema:license ;
     sh:node _:WebUriShape ;
-    sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
+    sh:message "Gebruik een web URI die begint met http:// of https://."@nl, "Use a web URI starting with http:// or https://."@en .
 
 _:MediaContentUrlUriShape
     sh:path schema:contentUrl ;
     sh:node _:WebUriShape ;
-    sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
+    sh:message "Gebruik een web URI die begint met http:// of https://."@nl, "Use a web URI starting with http:// or https://."@en .
 
 _:MediaThumbnailUrlUriShape
     sh:path schema:thumbnailUrl ;
     sh:node _:WebUriShape ;
-    sh:message "Gebruik een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https://"@en .
+    sh:message "Gebruik een web URI die begint met http:// of https://."@nl, "Use a web URI starting with http:// or https://."@en .
 
 # Each check on a CreativeWork’s associatedMedia entries, reported with its own message. In
 # _:CreativeWorkShape the entries are checked through sh:or and sh:qualifiedValueShape, whose results are
@@ -1117,34 +1231,34 @@ _:CreativeWorkAssociatedMediaValueShape
         [
             sh:path schema:associatedMedia ;
             sh:node [ sh:property _:MediaLicenseRequiredShape ] ;
-            sh:message "Voeg een licentie of rechtenverklaring toe aan het MediaObject"@nl, "Add a license or rights statement to the MediaObject"@en ;
+            sh:message "Voeg een licentie of rechtenverklaring toe aan het MediaObject."@nl, "Add a license or rights statement to the MediaObject."@en ;
         ] ,
         [
             sh:path schema:associatedMedia ;
             sh:node [ sh:property _:MediaLicenseUriShape ] ;
-            sh:message "Gebruik als license van het MediaObject een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s license"@en ;
+            sh:message "Gebruik als license van het MediaObject een web URI die begint met http:// of https://."@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s license."@en ;
         ] ,
         [
             sh:path schema:associatedMedia ;
             sh:node [ sh:property _:MediaContentUrlUriShape ] ;
-            sh:message "Gebruik als contentUrl van het MediaObject een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s contentUrl"@en ;
+            sh:message "Gebruik als contentUrl van het MediaObject een web URI die begint met http:// of https://."@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s contentUrl."@en ;
         ] ,
         [
             sh:path schema:associatedMedia ;
             sh:node [ sh:property _:MediaThumbnailUrlUriShape ] ;
-            sh:message "Gebruik als thumbnailUrl van het MediaObject een web URI die begint met http:// of https://"@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s thumbnailUrl"@en ;
+            sh:message "Gebruik als thumbnailUrl van het MediaObject een web URI die begint met http:// of https://."@nl, "Use a web URI starting with http:// or https:// as the MediaObject’s thumbnailUrl."@en ;
         ] ,
         [
             sh:path schema:associatedMedia ;
             sh:node _:MediaContentUrlPresenceShape ;
             sh:severity sh:Warning ;
-            sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a contentUrl if the MediaObject is published under an open license"@en ;
+            sh:message "Voeg een contentUrl toe als het MediaObject onder een open licentie is gepubliceerd."@nl, "Add a contentUrl if the MediaObject is published under an open license."@en ;
         ] ,
         [
             sh:path schema:associatedMedia ;
             sh:node _:MediaThumbnailUrlPresenceShape ;
             sh:severity sh:Warning ;
-            sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd"@nl, "Add a thumbnailUrl if the MediaObject is published under an open license"@en ;
+            sh:message "Voeg een thumbnailUrl toe als het MediaObject onder een open licentie is gepubliceerd."@nl, "Add a thumbnailUrl if the MediaObject is published under an open license."@en ;
         ] ,
         [
             sh:path schema:associatedMedia ;
@@ -1178,7 +1292,7 @@ _:MediaLicenseCanonicalShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Gebruik de URI van de Creative Commons-licentie zonder deed, bijvoorbeeld http://creativecommons.org/licenses/by/4.0/ in plaats van …/deed.nl"@nl, "Use the Creative Commons license URI without the deed, for example http://creativecommons.org/licenses/by/4.0/ instead of …/deed.nl"@en ;
+        sh:message "Gebruik de URI van de Creative Commons-licentie zonder deed, bijvoorbeeld http://creativecommons.org/licenses/by/4.0/ in plaats van …/deed.nl."@nl, "Use the Creative Commons license URI without the deed, for example http://creativecommons.org/licenses/by/4.0/ instead of …/deed.nl."@en ;
     ] ,
     [
         sh:path schema:license ;
@@ -1188,7 +1302,7 @@ _:MediaLicenseCanonicalShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Gebruik http://creativecommons.org/publicdomain/ voor CC0 en het Public Domain Mark, niet …/licenses/"@nl, "Use http://creativecommons.org/publicdomain/ for CC0 and the Public Domain Mark, not …/licenses/"@en ;
+        sh:message "Gebruik http://creativecommons.org/publicdomain/ voor CC0 en het Public Domain Mark, niet …/licenses/."@nl, "Use http://creativecommons.org/publicdomain/ for CC0 and the Public Domain Mark, not …/licenses/."@en ;
     ] ,
     [
         sh:path schema:license ;
@@ -1198,7 +1312,7 @@ _:MediaLicenseCanonicalShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Gebruik de URI van de rechtenverklaring, bijvoorbeeld http://rightsstatements.org/vocab/InC/1.0/ in plaats van …/page/InC/1.0/"@nl, "Use the rights statement URI, for example http://rightsstatements.org/vocab/InC/1.0/ instead of …/page/InC/1.0/"@en ;
+        sh:message "Gebruik de URI van de rechtenverklaring, bijvoorbeeld http://rightsstatements.org/vocab/InC/1.0/ in plaats van …/page/InC/1.0/."@nl, "Use the rights statement URI, for example http://rightsstatements.org/vocab/InC/1.0/ instead of …/page/InC/1.0/."@en ;
     ] ,
     [
         sh:path schema:license ;
@@ -1208,7 +1322,7 @@ _:MediaLicenseCanonicalShape
             nde:version "2.0" ;
             sh:severity sh:Violation ;
         ] ;
-        sh:message "Sluit de URI af met één slash na het versienummer, bijvoorbeeld http://creativecommons.org/licenses/by/4.0/"@nl, "End the URI with one slash after the version, for example http://creativecommons.org/licenses/by/4.0/"@en ;
+        sh:message "Sluit de URI af met één slash na het versienummer, bijvoorbeeld http://creativecommons.org/licenses/by/4.0/."@nl, "End the URI with one slash after the version, for example http://creativecommons.org/licenses/by/4.0/."@en ;
     ] .
 
 _:CreativeWorkAssociatedMediaCardinalityShape
@@ -1236,11 +1350,10 @@ _:PlaceShape
         If a term is available for the place, for example in GeoNames or Wikidata,
         it *MUST* be referenced via [[#Place-sameAs|`sameAs`]]; otherwise, the place *MUST* be defined by the properties listed below.
     """ ;
-    sh:property [
+    sh:property _:NameLanguageShape , _:NameUniqueLangShape , [
         sh:path schema:name ;
-        sh:datatype rdf:langString ;
-        sh:uniqueLang true ;
         sh:minCount 1 ;
+        sh:message "Vul een naam in."@nl, "Enter a name."@en ;
         sh:description """
             The name of the place.
         """ ;
@@ -1248,9 +1361,8 @@ _:PlaceShape
     _:SameAsShape ,
     [
         sh:path schema:address ;
-        sh:message "Gebruik een PostalAddress als adres"@nl, "Use a PostalAddress as address"@en ;
+        sh:message "Gebruik een PostalAddress als adres."@nl, "Use a PostalAddress as address."@en ;
         sh:class schema:PostalAddress ;
-        sh:node _:PostalAddressShape ;
         sh:minCount 0 ;
         sh:description """
             The Place’s physical address.
@@ -1264,8 +1376,18 @@ _:PlaceShape
         ]
     ] ,
     [
+        sh:path schema:address ;
+        sh:node _:PostalAddressShape ;
+        sh:message "Geef elk adresveld als tekst zonder taalcode, maximaal één per veld."@nl, "Give each address field as text without a language tag, at most one per field."@en ;
+    ] ,
+    [
         sh:path schema:geo ;
-        sh:message "Geef maximaal één GeoCoordinates met latitude en longitude, of een GeoShape"@nl, "Give at most one GeoCoordinates with latitude and longitude, or a GeoShape"@en ;
+        sh:maxCount 1 ;
+        sh:message "Gebruik maximaal één geo."@nl, "Use at most one geo."@en ;
+    ] ,
+    [
+        sh:path schema:geo ;
+        sh:message "Gebruik een GeoCoordinates met latitude en longitude of een GeoShape als geo."@nl, "Use a GeoCoordinates with latitude and longitude or a GeoShape as geo."@en ;
         sh:or (
             [
                 sh:class schema:GeoCoordinates ;
@@ -1275,42 +1397,16 @@ _:PlaceShape
                     sh:description """
                         Geographic coordinates for a Place.
                     """ ;
-                    sh:property [
-                        sh:path schema:latitude ;
-                        sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
-                        sh:minCount 1 ;
-                        sh:maxCount 1 ;
-                        sh:description """
-                            The latitude of a location.
-
-                            For example 37.42242 (WGS 84).
-
-                            The value *MUST* be an `xsd:double` or an `xsd:decimal`.
-                            Both are accepted because a plain decimal literal in Turtle (for example `52.379189`)
-                            is typed `xsd:decimal`, while the same value in JSON-LD becomes `xsd:double`.
-                        """ ;
-                    ] ,
-                    [
-                        sh:path schema:longitude ;
-                        sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
-                        sh:minCount 1 ;
-                        sh:maxCount 1 ;
-                        sh:description """
-                            The longitude of a location.
-
-                            For example -122.08585 (WGS 84).
-
-                            The value *MUST* be an `xsd:double` or an `xsd:decimal`.
-                            Both are accepted because a plain decimal literal in Turtle (for example `4.899431`)
-                            is typed `xsd:decimal`, while the same value in JSON-LD becomes `xsd:double`.
-                        """ ;
-                    ]
+                    sh:property
+                        _:LatitudeCountShape ,
+                        _:LatitudeNumberShape ,
+                        _:LongitudeCountShape ,
+                        _:LongitudeNumberShape ;
                 ] ;
             ]
             [ sh:class schema:GeoShape ]
         ) ;
         sh:minCount 0 ;
-        sh:maxCount 1 ;
         sh:description """
             The Place’s [[!WGS84]] geo coordinates.
             *REQUIRED* if known.
@@ -1321,17 +1417,145 @@ _:PlaceShape
         ]
     ] .
 
+_:LatitudeCountShape
+    sh:path schema:latitude ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Geef precies één latitude."@nl, "Give exactly one latitude."@en ;
+    sh:description """
+        The latitude of a location.
+
+        For example 37.42242 (WGS 84).
+
+        The value *MUST* be an `xsd:double` or an `xsd:decimal`.
+        Both are accepted because a plain decimal literal in Turtle (for example `52.379189`)
+        is typed `xsd:decimal`, while the same value in JSON-LD becomes `xsd:double`.
+    """ .
+
+_:LatitudeNumberShape
+    sh:path schema:latitude ;
+    sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
+    sh:message "Geef de latitude als getal, zoals 52.379189."@nl, "Give the latitude as a number, such as 52.379189."@en .
+
+_:LongitudeCountShape
+    sh:path schema:longitude ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Geef precies één longitude."@nl, "Give exactly one longitude."@en ;
+    sh:description """
+        The longitude of a location.
+
+        For example -122.08585 (WGS 84).
+
+        The value *MUST* be an `xsd:double` or an `xsd:decimal`.
+        Both are accepted because a plain decimal literal in Turtle (for example `4.899431`)
+        is typed `xsd:decimal`, while the same value in JSON-LD becomes `xsd:double`.
+    """ .
+
+_:LongitudeNumberShape
+    sh:path schema:longitude ;
+    sh:or ( [ sh:datatype xsd:double ] [ sh:datatype xsd:decimal ] ) ;
+    sh:message "Geef de longitude als getal, zoals 4.899431."@nl, "Give the longitude as a number, such as 4.899431."@en .
+
+# Each check on a Place’s coordinates and address, reported with its own message. In _:PlaceShape they are
+# checked through sh:or and sh:node, whose results are never reported, so there a wrong latitude surfaces
+# only as the general geo message. As in _:CreativeWorkAssociatedMediaValueShape, each property shape’s
+# sh:node holds a single check. A geo value that is not a GeoCoordinates, or that is also a GeoShape, passes
+# them, so they report only values that _:PlaceShape already rejects. Places that only a property of another
+# node points at, without the Place type, are not checked. Only these messages are reported, so keep each one
+# the same as the message of the shape it checks.
+_:PlaceValueShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Place ;
+    sh:property
+        [
+            sh:path schema:geo ;
+            sh:node [ sh:or ( _:NotGeoCoordinatesShape [ sh:property _:LatitudeCountShape ] ) ] ;
+            sh:message "Geef precies één latitude."@nl, "Give exactly one latitude."@en ;
+        ] ,
+        [
+            sh:path schema:geo ;
+            sh:node [ sh:or ( _:NotGeoCoordinatesShape [ sh:property _:LatitudeNumberShape ] ) ] ;
+            sh:message "Geef de latitude als getal, zoals 52.379189."@nl, "Give the latitude as a number, such as 52.379189."@en ;
+        ] ,
+        [
+            sh:path schema:geo ;
+            sh:node [ sh:or ( _:NotGeoCoordinatesShape [ sh:property _:LongitudeCountShape ] ) ] ;
+            sh:message "Geef precies één longitude."@nl, "Give exactly one longitude."@en ;
+        ] ,
+        [
+            sh:path schema:geo ;
+            sh:node [ sh:or ( _:NotGeoCoordinatesShape [ sh:property _:LongitudeNumberShape ] ) ] ;
+            sh:message "Geef de longitude als getal, zoals 4.899431."@nl, "Give the longitude as a number, such as 4.899431."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:StreetAddressShape ] ;
+            sh:message "Geef streetAddress als tekst zonder taalcode."@nl, "Give streetAddress as text without a language tag."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:StreetAddressCountShape ] ;
+            sh:message "Gebruik maximaal één streetAddress."@nl, "Use at most one streetAddress."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:PostalCodeShape ] ;
+            sh:message "Geef postalCode als tekst zonder taalcode."@nl, "Give postalCode as text without a language tag."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:PostalCodeCountShape ] ;
+            sh:message "Gebruik maximaal één postalCode."@nl, "Use at most one postalCode."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:AddressLocalityShape ] ;
+            sh:message "Geef addressLocality als tekst zonder taalcode."@nl, "Give addressLocality as text without a language tag."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:AddressLocalityCountShape ] ;
+            sh:message "Gebruik maximaal één addressLocality."@nl, "Use at most one addressLocality."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:AddressRegionShape ] ;
+            sh:message "Geef addressRegion als tekst zonder taalcode."@nl, "Give addressRegion as text without a language tag."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:AddressRegionCountShape ] ;
+            sh:message "Gebruik maximaal één addressRegion."@nl, "Use at most one addressRegion."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:AddressCountryShape ] ;
+            sh:message "Geef addressCountry als tekst zonder taalcode."@nl, "Give addressCountry as text without a language tag."@en ;
+        ] ,
+        [
+            sh:path schema:address ;
+            sh:node [ sh:property _:AddressCountryCountShape ] ;
+            sh:message "Gebruik maximaal één addressCountry."@nl, "Use at most one addressCountry."@en ;
+        ] .
+
+_:NotGeoCoordinatesShape
+    a sh:NodeShape ;
+    sh:or (
+        [ sh:class schema:GeoShape ]
+        [ sh:not [ sh:class schema:GeoCoordinates ] ]
+    ) .
+
 _:OccupationShape
     a sh:NodeShape ;
     sh:class schema:Occupation ;
     sh:description """
         A Person’s occupation.
     """ ;
-    sh:property [
+    sh:property _:NameLanguageShape , _:NameUniqueLangShape , [
         sh:path schema:name ;
-        sh:datatype rdf:langString ;
-        sh:uniqueLang true ;
         sh:minCount 1 ;
+        sh:message "Vul een naam in."@nl, "Enter a name."@en ;
         sh:description """
             A *REQUIRED* property that indicates the occupation’s name.
         """ ;
@@ -1344,54 +1568,90 @@ _:PostalAddressShape
         A postal address for an Organization or Place.
         All properties are *OPTIONAL*.
     """ ;
-    sh:property [
-        sh:path schema:streetAddress ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The street address, e.g. ‘Street 123’.
-        """ ;
-    ] ,
-    [
-        sh:path schema:postalCode ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The postal code, e.g. ‘1234 AB’.
-        """ ;
-    ] ,
-    [
-        sh:path schema:addressLocality ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The locality (city).
-        """ ;
-    ] ,
-    [
-        sh:path schema:addressRegion ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The region (province or state).
-        """ ;
-    ] ,
-    [
-        sh:path schema:addressCountry ;
-        sh:datatype xsd:string ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:description """
-            The country.
+    sh:property
+        _:StreetAddressShape ,
+        _:StreetAddressCountShape ,
+        _:PostalCodeShape ,
+        _:PostalCodeCountShape ,
+        _:AddressLocalityShape ,
+        _:AddressLocalityCountShape ,
+        _:AddressRegionShape ,
+        _:AddressRegionCountShape ,
+        _:AddressCountryShape ,
+        _:AddressCountryCountShape .
 
-            For countries that have an [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
-            For historical countries, their name *MAY* be used instead (e.g. ‘Prussia’).
-        """ ;
-    ] .
+_:StreetAddressShape
+    sh:path schema:streetAddress ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:message "Geef streetAddress als tekst zonder taalcode."@nl, "Give streetAddress as text without a language tag."@en ;
+    sh:description """
+        The street address, e.g. ‘Street 123’.
+    """ .
+
+_:StreetAddressCountShape
+    sh:path schema:streetAddress ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één streetAddress."@nl, "Use at most one streetAddress."@en .
+
+_:PostalCodeShape
+    sh:path schema:postalCode ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:message "Geef postalCode als tekst zonder taalcode."@nl, "Give postalCode as text without a language tag."@en ;
+    sh:description """
+        The postal code, e.g. ‘1234 AB’.
+    """ .
+
+_:PostalCodeCountShape
+    sh:path schema:postalCode ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één postalCode."@nl, "Use at most one postalCode."@en .
+
+_:AddressLocalityShape
+    sh:path schema:addressLocality ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:message "Geef addressLocality als tekst zonder taalcode."@nl, "Give addressLocality as text without a language tag."@en ;
+    sh:description """
+        The locality (city).
+    """ .
+
+_:AddressLocalityCountShape
+    sh:path schema:addressLocality ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één addressLocality."@nl, "Use at most one addressLocality."@en .
+
+_:AddressRegionShape
+    sh:path schema:addressRegion ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:message "Geef addressRegion als tekst zonder taalcode."@nl, "Give addressRegion as text without a language tag."@en ;
+    sh:description """
+        The region (province or state).
+    """ .
+
+_:AddressRegionCountShape
+    sh:path schema:addressRegion ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één addressRegion."@nl, "Use at most one addressRegion."@en .
+
+_:AddressCountryShape
+    sh:path schema:addressCountry ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:message "Geef addressCountry als tekst zonder taalcode."@nl, "Give addressCountry as text without a language tag."@en ;
+    sh:description """
+        The country.
+
+        For countries that have an [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) alpha-2 country code (e.g. ‘NL’), that *MUST* be used.
+        For historical countries, their name *MAY* be used instead (e.g. ‘Prussia’).
+    """ .
+
+_:AddressCountryCountShape
+    sh:path schema:addressCountry ;
+    sh:maxCount 1 ;
+    sh:message "Gebruik maximaal één addressCountry."@nl, "Use at most one addressCountry."@en .
 
 _:DateShape
     a sh:NodeShape ;
