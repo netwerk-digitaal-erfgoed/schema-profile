@@ -1,0 +1,3 @@
+Violation,size,"Use a text or a QuantitativeValue with value, valueReference and unitCode or unitText as size."
+Violation,size,Give exactly one value.
+Warning,associatedMedia,At least one renderable MediaObject is required when media is available.

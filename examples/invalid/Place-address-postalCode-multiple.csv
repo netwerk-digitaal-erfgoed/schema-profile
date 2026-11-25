@@ -1,0 +1,2 @@
+Violation,address,"Give each address field as text without a language tag, at most one per field."
+Violation,address,Use at most one postalCode.

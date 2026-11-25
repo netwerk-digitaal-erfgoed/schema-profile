@@ -1,0 +1,2 @@
+Violation,geo,Use a GeoCoordinates with latitude and longitude or a GeoShape as geo.
+Violation,geo,"Give the latitude as a number, such as 52.379189."
