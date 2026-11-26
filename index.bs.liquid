@@ -237,6 +237,7 @@ Language {#language}
 
 For all name and description values, their language *MUST* be specified.
 The language *MUST* be expressed as a well-formed language tag according to [[!BCP47]], such as ‘nl’ (language only) or ‘nl-NL’ (including region).
+Validation warns about a tag that is not well-formed, such as ‘dutch’ or ‘nederlands’, and will reject it from [[#v2|version 2.0]].
 
 <div class="example">
     Specifying the language of the `name` property:
@@ -523,7 +524,8 @@ Version 2.0 (planned) {#v2}
 
 Version 2.0 will turn some rules that are now warnings into violations,
 such as a `sameAs` value that is not a URI.
-The property tables mark such a rule with ‘v2.0’.
+The property tables mark such a rule with ‘v2.0’;
+[[#language]] describes the one for language tags, which applies to every property.
 Until then, data that breaks one of these rules still conforms, so publishers can prepare.
 
 <!-- CHANGELOG-START -->

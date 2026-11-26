@@ -847,6 +847,36 @@ _:SameAsHttpShape
         sh:message "Gebruik een http- of https-URI als waarde van sameAs."@nl, "Use an http or https URI as the value of sameAs."@en ;
     ] .
 
+# A language tag must be well-formed BCP 47 (see Language): a primary language subtag of 2 or 3 letters, or the
+# x- and i- prefixes, then subtags of 1 to 8 letters or digits. BCP 47’s syntax also allows a primary subtag of
+# 4 to 8 letters, but none is registered, so this rejects tags such as `dutch` and `nederlands` too.
+# JSON-LD admits any @language, so such a tag gets through parsing in validators such as the dataset register’s,
+# yet RDF tooling that enforces BCP 47 then rejects the whole document. Jena’s JSON-LD parser keeps `dutch`
+# but drops a value tagged `nederlands` or `nl_NL`, so that counterexample is in Turtle.
+# Targets every node with a property that the profile gives language-tagged values, whatever its type, and checks
+# all of that node’s literals. A Warning for now, because such tags conform today.
+# Keep in sync with WellFormedLanguageTagShape in the requirements for datasets
+# (dataset-register requirements/shacl.ttl).
+_:WellFormedLanguageTagShape
+    a sh:NodeShape ;
+    sh:targetSubjectsOf schema:name, schema:description, schema:abstract, schema:text, schema:size,
+        schema:copyrightNotice, schema:valueReference ;
+    sh:severity sh:Warning ;
+    nde:futureChange [
+        nde:version "2.0" ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:message "Gebruik een geldige taalcode, zoals nl of en."@nl, "Use a valid language tag, such as nl or en."@en ;
+    sh:sparql [
+        sh:select """
+            SELECT $this ?path ?value WHERE {
+                $this ?path ?value .
+                FILTER(isLiteral(?value) && LANG(?value) != ""
+                    && !REGEX(LANG(?value), "^([a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*|[xXiI](-[a-zA-Z0-9]{1,8})+)$"))
+            }
+        """ ;
+    ] .
+
 # A plain or schema:Date value with a date whose month or day is out of range, also as either end of an interval.
 # The date patterns accept any two digits as month and day, so "1606-13" and "1606-07-32" conform today;
 # the date properties warn about them, because tightening those patterns would turn conforming data into violations.
