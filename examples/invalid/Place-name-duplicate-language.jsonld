@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/dataset/place",
+  "@type": "Place",
+  "name": [
+    {
+      "@language": "nl",
+      "@value": "Den Haag"
+    },
+    {
+      "@language": "nl",
+      "@value": "’s-Gravenhage"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+@prefix schema: <https://schema.org/> .
+
+<http://www.wikidata.org/entity/Q5582> a schema:Person ;
+    schema:name "Vincent van Gogh"@nederlands .

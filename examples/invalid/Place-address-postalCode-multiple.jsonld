@@ -1,0 +1,16 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.com/dataset/place",
+  "@type": "Place",
+  "name": {
+    "@language": "nl",
+    "@value": "Rijksmuseum"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Museumstraat 1",
+    "postalCode": ["1071 XX", "1070 DN"],
+    "addressLocality": "Amsterdam",
+    "addressCountry": "NL"
+  }
+}

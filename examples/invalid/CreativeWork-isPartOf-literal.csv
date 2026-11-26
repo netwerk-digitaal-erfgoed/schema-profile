@@ -1,0 +1,2 @@
+Violation,isPartOf,Use the dataset’s URI as the value of isPartOf.
+Warning,associatedMedia,At least one renderable MediaObject is required when media is available.

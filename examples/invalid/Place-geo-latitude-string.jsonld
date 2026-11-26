@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "@id": "https://example.com/dataset/place",
+  "name": {
+    "@language": "nl",
+    "@value": "Amsterdam"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "52.379189 N",
+    "longitude": 4.899431
+  }
+}
