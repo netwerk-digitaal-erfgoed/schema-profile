@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.11.0...1.12.0) (2026-11-26)
+
+
+### Features
+
+* add specific validation messages ([#279](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/279)) ([a8f7ae9](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/a8f7ae97515feea6e78dc54165a3a6efbed069ef))
+* warn about language tags that are not well-formed ([#281](https://github.com/netwerk-digitaal-erfgoed/schema-profile/issues/281)) ([b3a1f3f](https://github.com/netwerk-digitaal-erfgoed/schema-profile/commit/b3a1f3fcc32936fec06da092387cf77e25573c26))
+
 ## [1.11.0](https://github.com/netwerk-digitaal-erfgoed/schema-profile/compare/1.10.0...1.11.0) (2026-11-13)
 
 
