@@ -167,23 +167,29 @@ done
 # Counterexamples in examples/invalid must give exactly the results listed in
 # the .csv file next to them: one “severity,path,message” line per result, as
 # results.rq prints them. Exactly, so a missing warning fails as much as an
-# extra one, such as a second warning about the same value.
+# extra one, such as a second warning about the same value. A counterexample is
+# in Turtle only when JSON-LD cannot express it, such as an ill-formed language
+# tag, which Jena’s JSON-LD parser drops.
 echo "----------------------------------------"
 echo "Validating counterexamples against their expected results..."
 echo "----------------------------------------"
 
-for file in examples/invalid/*.jsonld; do
+for file in examples/invalid/*.jsonld examples/invalid/*.ttl; do
     [[ -f "$file" ]] || continue
 
     total=$((total + 1))
     basename=$(basename "$file")
-    expected_file="${file%.jsonld}.csv"
+    expected_file="${file%.*}.csv"
     echo -n "Validating $basename... "
 
-    data="/tmp/shacl-data-invalid-$basename.jsonld"
+    data="/tmp/shacl-data-invalid-$basename"
     report="/tmp/shacl-report-invalid-$basename.ttl"
     stderr="/tmp/shacl-stderr-invalid-$basename.txt"
-    sed -E "s#\"https://(schema\\.org|docs\\.nde\\.nl/schema-profile/context\\.jsonld)\"#\"$local_context\"#" "$file" > "$data"
+    if [[ "$file" == *.jsonld ]]; then
+        sed -E "s#\"https://(schema\\.org|docs\\.nde\\.nl/schema-profile/context\\.jsonld)\"#\"$local_context\"#" "$file" > "$data"
+    else
+        cp "$file" "$data"
+    fi
 
     set +e
     shacl validate --data "$data" --shapes shacl.ttl >"$report" 2>"$stderr" &&

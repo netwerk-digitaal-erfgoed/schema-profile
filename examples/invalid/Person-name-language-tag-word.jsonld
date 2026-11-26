@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@id": "http://www.wikidata.org/entity/Q5582",
+  "@type": "Person",
+  "name": {
+    "@language": "dutch",
+    "@value": "Vincent van Gogh"
+  }
+}
