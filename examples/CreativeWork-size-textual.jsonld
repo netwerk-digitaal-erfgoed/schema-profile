@@ -1,0 +1,64 @@
+{
+  "@context": "https://schema.org",
+  "@id": "https://example.org/work",
+  "@type": "CreativeWork",
+  "size": [
+    {
+      "@type": "QuantitativeValue",
+      "value": "ca. 17",
+      "unitText": "mm",
+      "valueReference": {
+        "@value": "breedte",
+        "@language": "nl"
+      }
+    },
+    {
+      "@type": "QuantitativeValue",
+      "value": "<17",
+      "unitText": "mm",
+      "valueReference": {
+        "@value": "breedte",
+        "@language": "nl"
+      }
+    },
+    {
+      "@type": "QuantitativeValue",
+      "value": "10 x 20",
+      "unitText": "mm",
+      "valueReference": {
+        "@value": "oppervlakte (hxb)",
+        "@language": "nl"
+      }
+    },
+    {
+      "@type": "QuantitativeValue",
+      "value": "46,5",
+      "unitText": "mm",
+      "valueReference": {
+        "@value": "breedte",
+        "@language": "nl"
+      }
+    },
+    {
+      "@type": "QuantitativeValue",
+      "value": "17-20",
+      "unitText": "mm",
+      "valueReference": {
+        "@value": "breedte",
+        "@language": "nl"
+      }
+    },
+    {
+      "@type": "QuantitativeValue",
+      "value": {
+        "@value": "ongeveer 17",
+        "@language": "nl"
+      },
+      "unitText": "mm",
+      "valueReference": {
+        "@value": "breedte",
+        "@language": "nl"
+      }
+    }
+  ]
+}
